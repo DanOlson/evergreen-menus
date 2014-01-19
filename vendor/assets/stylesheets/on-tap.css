@@ -1,0 +1,93 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 50px;
+  margin-bottom: 0;
+}
+
+input#beer {
+  padding: 6px;
+  width: 200px;
+  border-radius: 5px;
+}
+
+header {
+  margin-bottom: 2em;
+}
+
+.body-container {
+  width: 90%;
+  height: 100%;
+  margin: auto;
+}
+
+#map {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  height: 85%;
+  border: solid 1px #cecece;
+}
+
+.footer {
+  height: 10em;
+}
+
+.flash {
+  margin-top: .5em;
+  width: 20em;
+  left: 50%;
+  margin-left: -10em;
+  padding: 8px 8px;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  position: absolute;
+}
+
+.ot-alert {
+  background-color: #D35454;
+}
+
+.ot-notice {
+  background-color: #3bc43b;
+}
+
+.establishment-address a {
+  cursor: pointer;
+}
+
+.establishment-info-window ul {
+  list-style: none;
+  font-size: 10px;
+  padding-left: 0px;
+}
+
+.js-get-directions {
+  font-size: 10px;
+}
+
+.modal {
+  display: none;
+}
+
+.data-sources {
+  list-style: none;
+  padding-left: 0px;
+}
+
+.establishment-address {
+  font-size: 10px;
+}
+
+.whatis-beermapper {
+  display: none;
+  width: 90%;
+  margin: auto;
+}
