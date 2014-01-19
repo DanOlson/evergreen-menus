@@ -1,17 +1,17 @@
 module Api
   module V1
-    class EstablishmentSuggestionsController < ApplicationController
+    class EstablishmentSuggestionsController < ApiController
       before_filter :validate_api_key
 
       def index
         suggestions = EstablishmentSuggestion.all
-        render json: suggestions, root: 'suggestions'
+        respond_with suggestions, root: 'suggestions'
       end
 
       def create
         suggestion = EstablishmentSuggestion.new suggestion_params
         status = suggestion.save ? :created : :bad_request
-        render json: suggestion, status: status
+        respond_with suggestion, status: status
       end
 
       private

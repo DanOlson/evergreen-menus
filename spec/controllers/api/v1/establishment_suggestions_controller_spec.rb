@@ -8,21 +8,21 @@ module Api
         before do
           allow(controller).to receive(:valid_api_key?){ true }
           expect(EstablishmentSuggestion).to receive(:all)
-          get :index
+          get :index, format: :json
         end
 
         it { expect(response).to be_success }
       end
 
       describe 'POST to #create' do
-        let(:suggestion){ double(error_messages: {}) }
+        let!(:suggestion){ EstablishmentSuggestion.new }
         let(:params){ { name: "Lebowski's", beer_list_url: 'lebowski.com/beers' } }
 
         before do
           allow(controller).to receive(:valid_api_key?){ true }
           expect(EstablishmentSuggestion).to receive(:new){ suggestion }
           expect(suggestion).to receive(:save){ saved }
-          post :create, establishment_suggestion: params
+          post :create, establishment_suggestion: params, format: :json
         end
 
         context 'when request is successful' do

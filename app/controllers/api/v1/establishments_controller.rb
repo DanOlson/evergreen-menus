@@ -17,11 +17,6 @@ module Api
         respond_with establishments, root: false
       end
 
-      def create
-        return unless valid_api_key?
-        create_beers if params[:beer_list]
-      end
-
       private
 
       def create_beers
