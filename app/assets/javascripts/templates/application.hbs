@@ -1,0 +1,38 @@
+  <header>
+    <nav class='navbar navbar-default' role='navigation'>
+      <div class='navbar-header'>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href='/'>Beer Mapper</a>
+      </div>
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <form class="navbar-form navbar-left" action='/search' id='beer-search' role="search">
+          <div class="form-group">
+            <input name='beer' id='beer' placeholder='Thirsty? Enter a beer name.'>
+            <button type="submit" class="btn btn-default">Search</button>
+          </div>
+        </form>
+        <ul class="nav navbar-nav">
+          <li><a id='js-what-is-beermapper' href='#'>What is Beer Mapper?</a></li>
+          <li><a id='js-get-sources' href='/sources'>Establishments</a></li>
+          <li><a id='js-suggest' href='/suggestions/new'>Suggest an Establishment</a></li>
+        </ul>
+      </div>
+      <div class='flash-messages'></div>
+    </nav>
+    <div class='whatis-beermapper'>
+      <p><strong>What is Beer Mapper?</strong></p>
+      <p>
+        Beer Mapper is a tool for finding a Minnesota establishment that serves your favorite beer. Just enter the name of a beer you want to find and Beer Mapper will show you the establishments that serve it. Beer Mapper gets its information from the websites of the establishments it knows about, and keeps up to date daily with changes to those websites. So look no further... <em>find your beer right now!</em>
+      </p>
+    </div>
+  </header>
+  <div class='body-container'>
+
+    <footer class='footer'><small>Copyright &copy; 2013 beermapper.com All rights reserved.</small></footer>
+  </div>
+  <div class='modal'></div>

@@ -8,6 +8,8 @@ gem 'jquery-rails'
 gem 'geocoder',                 '~> 1.1.8'
 gem 'active_model_serializers', '~> 0.8.1'
 gem 'beer_list', git: 'git@github.com:DanOlson/beer_list.git', branch: '2.0'
+gem 'ember-rails',              '~> 0.14.1'
+gem 'ember-source',             '1.3.0'
 gem 'kaminari'
 gem 'newrelic_rpm'
 

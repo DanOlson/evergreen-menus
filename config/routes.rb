@@ -1,4 +1,6 @@
 Beermapper::Application.routes.draw do
+  root to: 'home#index'
+  
   namespace :api do
     namespace :v1 do
       resources :establishments, only: [:show, :index, :create] do
