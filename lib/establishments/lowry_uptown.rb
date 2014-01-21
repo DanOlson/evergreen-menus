@@ -7,6 +7,7 @@ module BeerList
       def get_list
         base_list
         strip
+        reject_updated
       end
 
       def url
@@ -24,15 +25,19 @@ module BeerList
       end
 
       def taps
-        page.search('.menu-beer-on-tap .menu-item-title').map(&:text)
+        page.search('.menu-on-tap .menu-item-title').map &:text
       end
 
       def tall_boys
-        page.search('.menu-tall-boys .menu-item-title').map(&:text)
+        page.search('.menu-tall-boys .menu-item-title').map &:text
       end
 
       def strip
-        @beers = @beers.map{ |beer| beer.gsub(/\A\W*|\W*\z/, '') }
+        @beers = @beers.map { |beer| beer.gsub(/\A\W*|\W*\z/, '') }
+      end
+
+      def reject_updated
+        @beers = @beers.reject { |beer| !!beer.match(/Updated/) }
       end
     end
   end
