@@ -20,6 +20,8 @@
 //= require beermapper
 
 // for more details see: http://emberjs.com/guides/application/
-Beermapper = Ember.Application.create();
+Beermapper = Ember.Application.create({
+  LOG_TRANSITIONS: true
+});
 
 //= require_tree .
