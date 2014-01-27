@@ -10,7 +10,7 @@ h1 {
   margin-bottom: 0;
 }
 
-input#beer {
+.search input {
   padding: 6px;
   width: 200px;
   border-radius: 5px;

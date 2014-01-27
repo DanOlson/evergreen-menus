@@ -20,8 +20,16 @@
 //= require beermapper
 
 // for more details see: http://emberjs.com/guides/application/
+ENV = {FEATURES: {'query-params-new': true}};
 Beermapper = Ember.Application.create({
-  LOG_TRANSITIONS: true
+  LOG_TRANSITIONS: true,
+  LOG_TRANSITIONS_INTERNAL: true,
+  LOG_ACTIVE_GENERATION: true
 });
+
+Beermapper.ApplicationAdapter = DS.RESTAdapter.extend({
+  namespace: 'api/v1'
+});
+
 
 //= require_tree .

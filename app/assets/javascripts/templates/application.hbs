@@ -10,9 +10,9 @@
         <a class="navbar-brand" href='/'>Beer Mapper</a>
       </div>
       <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <form class="navbar-form navbar-left" action='/search' id='beer-search' role="search">
+        <form class="navbar-form navbar-left" id='beer-search' role="search" {{action "search" on="submit"}}>
           <div class="form-group">
-            <input name='beer' id='beer' placeholder='Thirsty? Enter a beer name.'>
+            {{input type='text' value=query placeholder='Thirsty? Enter a beer name.'}}
             <button type="submit" class="btn btn-default">Search</button>
           </div>
         </form>
