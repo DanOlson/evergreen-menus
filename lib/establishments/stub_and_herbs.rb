@@ -2,7 +2,7 @@ module BeerList
   module Establishments
     class StubAndHerbs < Establishment
       URL     = 'http://www.stubandherbsbar.com/Taps.html'
-      ADDRESS = nil
+      ADDRESS = '227 SE Oak St, Minneapolis, MN 55455'
 
       def get_list
         base_list
