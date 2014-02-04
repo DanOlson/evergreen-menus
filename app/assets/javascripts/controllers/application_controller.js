@@ -1,11 +1,12 @@
-Beermapper.ApplicationController = Ember.Controller.extend({
+Beermapper.ApplicationController = Ember.ObjectController.extend({
   query: null,
+  queryField: Ember.computed.oneWay('query'),
 
   actions: {
     search: function(){
       this.transitionToRoute('search', {
         queryParams: {
-          query: this.get('query')
+          query: this.get('queryField')
         }
       });
     }

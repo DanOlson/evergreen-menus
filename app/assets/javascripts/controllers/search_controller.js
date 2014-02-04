@@ -1,4 +1,5 @@
 Beermapper.SearchController = Ember.ArrayController.extend({
+  needs: 'application',
   queryParams: ['query'],
-  query: null
+  query: Ember.computed.alias('controllers.application.queryField')
 });
