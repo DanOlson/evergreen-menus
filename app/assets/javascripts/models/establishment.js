@@ -5,9 +5,5 @@ Beermapper.Establishment = DS.Model.extend({
   address: attr(),
   url: attr(),
   latitude: attr(),
-  longitude: attr(),
-
-  latLng: function(){
-    return [this.get('latitude'), this.get('longitude')];
-  }
+  longitude: attr()
 });
