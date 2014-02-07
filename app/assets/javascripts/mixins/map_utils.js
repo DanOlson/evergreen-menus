@@ -1,4 +1,5 @@
 Beermapper.MapUtils = Ember.Mixin.create({
+  markers: [],
   mapOptions: function(){
     return {
       zoom: 11,
@@ -9,5 +10,11 @@ Beermapper.MapUtils = Ember.Mixin.create({
 
   map: function(el){
     return new google.maps.Map(el, this.mapOptions());
+  },
+
+  clearMarkers: function(){
+    this.markers.forEach(function(marker){
+      marker.setMap(null)
+    });
   }
 });

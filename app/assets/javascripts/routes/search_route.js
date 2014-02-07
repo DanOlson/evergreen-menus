@@ -7,6 +7,14 @@ Beermapper.SearchRoute = Ember.Route.extend({
     return this.store.find('establishment', { beer: query });
   },
 
+  afterModel: function(){
+    var controller = this.controllerFor('search');
+    var map = controller.get('map');
+    if (map.hasOwnProperty('mapTypeId')) {
+      controller.placeMarkers();
+    }
+  },
+
   actions: {
     queryParamsDidChange: function(){
       this.refresh();
