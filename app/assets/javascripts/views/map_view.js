@@ -12,16 +12,9 @@ Beermapper.MapView = Ember.View.extend({
     });
 
     var controller = this.get('controller');
-    var latitude   = controller.get('latitude');
-    var longitude  = controller.get('longitude');
-    var options    = {
-      zoom: 11,
-      center: new google.maps.LatLng(latitude, longitude),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
+    var map = controller.map(this.$()[0]);
 
-    var map = new google.maps.Map(this.$()[0], options);
-    this.set('map', map);
+    controller.set('map', map);
 
     // Call this for Search, not Index
     if (typeof controller.placeMarkers === 'function'){
