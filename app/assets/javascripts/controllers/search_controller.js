@@ -8,21 +8,12 @@ Beermapper.SearchController = Ember.ArrayController.extend(Beermapper.MapUtils, 
 
   placeMarkers: function(){
     this.clearMarkers();
-    var bounds  = new google.maps.LatLngBounds();
+    var bounds = new google.maps.LatLngBounds();
     this.forEach(function(establishment){
-      var lat = establishment.get('latitude');
-      var lng = establishment.get('longitude')
-      var latLng = new google.maps.LatLng(lat, lng);
-      var marker = new google.maps.Marker({
-        position:  latLng,
-        animation: google.maps.Animation.DROP,
-        map:       this.get('map'),
-        name:      establishment.name,
-        id:        establishment.id
-      });
-
-      this.markers.push(marker);
-      bounds.extend(latLng);
+      var map = this.get('map');
+      var decorator = Beermapper.EstablishmentDecorator.create({establishment: establishment});
+      this.markers.push(decorator.marker(map));
+      bounds.extend(decorator.get('latLng'));
     }, this);
     this.get('map').fitBounds(bounds);
   }
