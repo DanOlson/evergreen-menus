@@ -5,10 +5,13 @@ Beermapper.SearchController = Ember.ArrayController.extend(Beermapper.MapUtils, 
 
   latitude: 44.983334,
   longitude: -93.266670,
+  bounds: function(){
+    return new google.maps.LatLngBounds();
+  },
 
   placeMarkers: function(){
     this.clearMarkers();
-    var bounds = new google.maps.LatLngBounds();
+    var bounds = this.get('bounds')();
     this.forEach(function(establishment){
       var map = this.get('map');
       var decorator = Beermapper.EstablishmentDecorator.create({establishment: establishment});
