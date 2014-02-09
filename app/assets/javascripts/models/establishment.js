@@ -5,5 +5,7 @@ Beermapper.Establishment = DS.Model.extend({
   address: attr(),
   url: attr(),
   latitude: attr(),
-  longitude: attr()
+  longitude: attr(),
+
+  beers: DS.hasMany('beer')
 });
