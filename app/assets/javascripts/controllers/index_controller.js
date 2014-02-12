@@ -1,4 +1,4 @@
 Beermapper.IndexController = Ember.ObjectController.extend(Beermapper.MapUtils, {
-  latitude: '',
-  longitude: ''
+  map: null,
+  infoWindow: null,
 });

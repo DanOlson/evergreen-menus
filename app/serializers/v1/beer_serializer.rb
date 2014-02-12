@@ -1,5 +1,5 @@
 module V1
   class BeerSerializer < AppSerializer
-    attributes :name
+    attributes :id, :name
   end
 end

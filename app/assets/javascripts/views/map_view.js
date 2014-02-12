@@ -1,4 +1,4 @@
-Beermapper.MapView = Ember.View.extend({
+Beermapper.MapView = Ember.ContainerView.create({
   didInsertElement: function(){
     console.log("[MapView] didInsertElement");
     // Size the view so that the map can render
@@ -12,13 +12,17 @@ Beermapper.MapView = Ember.View.extend({
     });
 
     var controller = this.get('controller');
-    var map = controller.map(this.$()[0]);
+    var map        = controller.createMap(this.$()[0]);
+    var infoWindow = new google.maps.InfoWindow({maxWidth:300});
 
+    controller.set('infoWindow', infoWindow);
     controller.set('map', map);
 
     // Call this for Search, not Index
     if (typeof controller.placeMarkers === 'function'){
-      controller.placeMarkers();
+      controller.placeMarkers(this);
     }
-  }
+  },
+
+  childViews: []
 });

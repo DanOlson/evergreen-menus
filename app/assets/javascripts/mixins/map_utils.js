@@ -1,5 +1,10 @@
 Beermapper.MapUtils = Ember.Mixin.create({
+  // templates
+  latitude: 44.983334,
+  longitude: -93.266670,
+
   markers: [],
+
   mapOptions: function(){
     return {
       zoom: 11,
@@ -8,7 +13,7 @@ Beermapper.MapUtils = Ember.Mixin.create({
     }
   },
 
-  map: function(el){
+  createMap: function(el){
     return new google.maps.Map(el, this.mapOptions());
   },
 

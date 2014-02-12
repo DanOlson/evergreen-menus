@@ -8,9 +8,6 @@ module V1
                :longitude
 
     has_many :beers
-
-    def include_beers?
-      object.include_beers?
-    end
+    embed :ids
   end
 end
