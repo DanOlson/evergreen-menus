@@ -27,7 +27,7 @@ Beermapper = Ember.Application.create({
   LOG_ACTIVE_GENERATION: true
 });
 
-Beermapper.ApplicationAdapter = DS.RESTAdapter.extend({
+Beermapper.ApplicationAdapter = DS.ActiveModelAdapter.extend({
   namespace: 'api/v1'
 });
 

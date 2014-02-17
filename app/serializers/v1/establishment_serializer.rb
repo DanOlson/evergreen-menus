@@ -8,6 +8,6 @@ module V1
                :longitude
 
     has_many :beers
-    embed :ids
+    embed :ids, include: true
   end
 end

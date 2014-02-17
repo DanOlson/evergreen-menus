@@ -1,6 +1,5 @@
 Beermapper.MapView = Ember.ContainerView.create({
   didInsertElement: function(){
-    console.log("[MapView] didInsertElement");
     // Size the view so that the map can render
     this.$().css({
       width: function(){

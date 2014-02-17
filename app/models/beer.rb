@@ -12,4 +12,11 @@ class Beer < ActiveRecord::Base
       select(arel_table[:name]).where arel_table[:name].matches("%#{name}%")
     end
   end
+
+  ###
+  # FIXME: Work around this. This is an issue with embedding.
+  # Use links hash, maybe?
+  def active_model_serializer
+    V1::BeerSerializer
+  end
 end
