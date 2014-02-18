@@ -44,9 +44,7 @@ module BeerList
       # FIXME. This is gross. Should be replaced with some sort of
       # canonical list and pattern matching.
       def fix_surly_abrasive
-        abrasive = @beers.find { |b| b == 'Sulry Abrasive Double IPA 9' }
-        abrasive.sub! 'Sulry', 'Surly'
-        abrasive.sub! 'Double IPA 9', 'Ale'
+        @beers = @beers.map { |b| b.sub 'Sulry', 'Surly' }
       end
 
       def raw_text
