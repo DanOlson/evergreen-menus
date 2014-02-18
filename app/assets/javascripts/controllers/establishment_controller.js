@@ -1,6 +1,7 @@
 Beermapper.EstablishmentController = Ember.ObjectController.extend({
   needs: 'search',
   map: Ember.computed.alias('controllers.search.map'),
+  query: Ember.computed.alias('controllers.search.query'),
   infoWindow: Ember.computed.alias('controllers.search.infoWindow'),
 
   marker: function(mapView){
@@ -26,7 +27,8 @@ Beermapper.EstablishmentController = Ember.ObjectController.extend({
           marker: marker,
           infoWindow: that.get('infoWindow'),
           map: that.get('map'),
-          establishment: that.get('model')
+          establishment: that.get('model'),
+          query: that.get('query')
         });
         containerView.set('currentView', markerView);
       }

@@ -13,6 +13,10 @@ Beermapper.MarkerView = Ember.View.extend({
   }.property('establishment'),
 
   beers: function(){
-    return this.get('establishment').get('beers').get('content');
-  }.property('establishment')
+    var query = this.get('query');
+    var filtered = this.get('establishment').get('beers').filter(function(beer){
+      return beer.get('name').match(new RegExp(query, 'i'));
+    });
+    return filtered
+  }.property('establishment', 'query')
 });
