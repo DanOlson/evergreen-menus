@@ -28,7 +28,8 @@ Beermapper.EstablishmentController = Ember.ObjectController.extend({
           infoWindow: that.get('infoWindow'),
           map: that.get('map'),
           establishment: that.get('model'),
-          query: that.get('query')
+          query: that.get('query'),
+          controller: that
         });
         containerView.set('currentView', markerView);
       }
