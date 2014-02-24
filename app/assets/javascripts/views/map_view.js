@@ -1,5 +1,6 @@
-Beermapper.MapView = Ember.ContainerView.create({
+Beermapper.MapView = Ember.ContainerView.extend({
   didInsertElement: function(){
+    console.log("[mapView] didInsertElement");
     // Size the view so that the map can render
     this.$().css({
       width: function(){
@@ -16,11 +17,7 @@ Beermapper.MapView = Ember.ContainerView.create({
 
     controller.set('infoWindow', infoWindow);
     controller.set('map', map);
-
-    // Call this for Search, not Index
-    if (typeof controller.placeMarkers === 'function'){
-      controller.placeMarkers(this);
-    }
+    controller.placeMarkers(this);
   },
 
   childViews: []
