@@ -10,7 +10,7 @@ module Api
 
       def index
         establishments = if params[:beer]
-          Establishment.distinct.active.with_beer_named_like params[:beer]
+          Establishment.distinct.active.with_beer_named_like(params[:beer]).includes(:beers)
         else
           Establishment.active.order(:name).page params[:page]
         end
