@@ -4,6 +4,8 @@ Beermapper.MapUtils = Ember.Mixin.create({
   longitude: -93.266670,
 
   markers: [],
+  mapView: null,
+  infoWindow: '',
 
   mapOptions: function(){
     return {

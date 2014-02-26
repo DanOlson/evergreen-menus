@@ -17,6 +17,7 @@ Beermapper.MapView = Ember.ContainerView.extend({
 
     controller.set('infoWindow', infoWindow);
     controller.set('map', map);
+    controller.set('mapView', this);
     controller.placeMarkers(this);
   },
 

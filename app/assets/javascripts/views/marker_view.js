@@ -9,7 +9,8 @@ Beermapper.MarkerView = Ember.View.extend({
   },
 
   name: function(){
-    return this.get('establishment').get('name');
+    var establishment = this.get('controller').get('model');
+    return establishment.get('name');
   }.property('establishment'),
 
   beers: function(){
@@ -18,5 +19,5 @@ Beermapper.MarkerView = Ember.View.extend({
       return beer.get('name').match(new RegExp(query, 'i'));
     });
     return filtered
-  }.property('establishment', 'query')
+  }.property('establishment')
 });

@@ -21,15 +21,15 @@ Beermapper.EstablishmentController = Ember.ObjectController.extend({
 
   addClickHandler: function(marker, containerView){
     var that = this;
-    google.maps.event.addListener(marker, 'click', (function(marker) {
-      return function() {
+    google.maps.event.addListener(marker, 'click', (function(marker){
+      return function(){
         var markerView = Beermapper.MarkerView.create({
-          marker: marker,
-          infoWindow: that.get('infoWindow'),
-          map: that.get('map'),
+          marker:        marker,
+          infoWindow:    that.get('infoWindow'),
+          map:           that.get('map'),
           establishment: that.get('model'),
-          query: that.get('query'),
-          controller: that
+          query:         that.get('query'),
+          controller:    that
         });
         containerView.set('currentView', markerView);
       }
