@@ -25,7 +25,7 @@ module BeerList
       end
 
       def remove_prices
-        @beers = @beers.map { |beer| beer.match(/\$/) ? $` : nil }.compact
+        @beers = @beers.map { |beer| beer.match(/\s\d?\.?\d{1,2}\z/) ? $` : nil }.compact
       end
 
       def strip
@@ -33,7 +33,7 @@ module BeerList
       end
 
       def beer_section
-        @beer_section ||= page.search('.text p')[1..3]
+        @beer_section ||= page.search('.container h3').to_a[0..-9]
       end
     end
   end

@@ -1,7 +1,7 @@
 module BeerList
   module Establishments
     class MuddyPig < Establishment
-      URL   = 'http://muddypig.com/draft-beer/'
+      URL     = 'http://muddypig.com/draft-beer/'
       ADDRESS = '162 Dale St N, St Paul, MN 55102'
 
       def get_list
