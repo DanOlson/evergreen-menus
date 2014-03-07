@@ -1,7 +1,7 @@
 module BeerList
   module Establishments
     class PigAndFiddle < Establishment
-      URL     = 'http://pignfiddle.com/beer'
+      URL     = 'http://www.pignfiddle.com/beer'
       NAME    = 'Pig & Fiddle'
       ADDRESS = '3812 W 50th St, Minneapolis, MN 55410'
 
