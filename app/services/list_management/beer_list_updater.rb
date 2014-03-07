@@ -20,8 +20,8 @@ module ListManagement
         end
       end
 
-      def update!(establishment, list, &blk)
-        new(establishment, list).update! &blk
+      def update!(establishment, list, opts={}, &blk)
+        new(establishment, list).update! force: !!opts[:force], &blk
       end
 
       private
@@ -44,8 +44,8 @@ module ListManagement
       @list          = list
     end
 
-    def update!(&blk)
-      if there_might_be_a_problem?
+    def update!(force: false, &blk)
+      if !force && there_might_be_a_problem?
         yield Status.failure('list size unacceptable') if block_given?
         return
       end

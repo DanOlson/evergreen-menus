@@ -86,6 +86,24 @@ module ListManagement
         let(:list){ super()[0..-3] }
 
         it_behaves_like 'unacceptable update'
+
+        context 'when the +force+ option is passed' do
+          it 'should delete the old beer names' do
+            expect(Beer).to receive(:where).with(name: %w(Moylan's McSorley's coors summit)){ rel }
+            expect(beers).to receive(:delete).with rel
+            allow(instance).to receive(:create_new_beers)
+            instance.update! force: true
+          end
+
+          it 'should add the new beer names to the establishment' do
+            beer = double
+            allow(instance).to receive(:delete_old_beers)
+            expect(Beer).to receive(:where).with(name: 'miller'){ rel }
+            expect(rel).to receive(:first_or_create){ beer }
+            expect(beers).to receive(:<<).with beer
+            instance.update! force: true
+          end
+        end
       end
     end
   end
