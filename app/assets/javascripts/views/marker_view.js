@@ -9,7 +9,7 @@ Beermapper.MarkerView = Ember.View.extend({
   },
 
   name: function(){
-    var establishment = this.get('controller').get('model');
+    var establishment = this.get('establishment');
     return establishment.get('name');
   }.property('establishment'),
 

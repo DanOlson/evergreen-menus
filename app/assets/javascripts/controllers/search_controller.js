@@ -9,13 +9,16 @@ Beermapper.SearchController = Ember.ArrayController.extend(Beermapper.MapUtils, 
   },
 
   placeMarkers: function(mapView){
-    console.log('[SearchController] placeMarkers()');
-    this.clearMarkers();
-    var bounds = this.get('bounds')();
-    this.forEach(function(establishment){
-      this.markers.push(establishment.marker(mapView));
-      bounds.extend(establishment.latLng());
-    }, this);
-    this.get('map').fitBounds(bounds);
+    var func = function(){
+      console.log('[SearchController] placeMarkers()');
+      this.clearMarkers();
+      var bounds = this.get('bounds')();
+      this.forEach(function(establishment){
+        this.get('markers').pushObject(establishment.marker(mapView));
+        bounds.extend(establishment.latLng());
+      }, this);
+      this.get('map').fitBounds(bounds);
+    }
+    return Ember.run.debounce(this, func, 250);
   }
 });

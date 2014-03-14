@@ -2,6 +2,7 @@ Beermapper.EstablishmentController = Ember.ObjectController.extend({
   needs: 'search',
   map: Ember.computed.alias('controllers.search.map'),
   query: Ember.computed.alias('controllers.search.query'),
+  markerViews: Ember.computed.alias('controllers.search.markerViews'),
   infoWindow: Ember.computed.alias('controllers.search.infoWindow'),
 
   marker: function(mapView){
@@ -19,19 +20,25 @@ Beermapper.EstablishmentController = Ember.ObjectController.extend({
     return marker
   },
 
-  addClickHandler: function(marker, containerView){
+  addClickHandler: function(marker, mapView){
     var that = this;
+    var infoWindow = that.get('infoWindow');
     google.maps.event.addListener(marker, 'click', (function(marker){
       return function(){
+        var current = mapView.get('currentView');
         var markerView = Beermapper.MarkerView.create({
           marker:        marker,
-          infoWindow:    that.get('infoWindow'),
+          infoWindow:    infoWindow,
           map:           that.get('map'),
           establishment: that.get('model'),
           query:         that.get('query'),
           controller:    that
         });
-        containerView.set('currentView', markerView);
+        that.get('markerViews').pushObject(markerView);
+
+        if(current){ mapView.removeChild(current); }
+
+        mapView.set('currentView', markerView);
       }
     })(marker));
   },

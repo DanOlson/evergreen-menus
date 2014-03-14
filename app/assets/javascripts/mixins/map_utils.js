@@ -3,7 +3,8 @@ Beermapper.MapUtils = Ember.Mixin.create({
   latitude: 44.983334,
   longitude: -93.266670,
 
-  markers: [],
+  markers: Ember.A(),
+  markerViews: Ember.A(),
   mapView: null,
   infoWindow: '',
 
@@ -20,8 +21,11 @@ Beermapper.MapUtils = Ember.Mixin.create({
   },
 
   clearMarkers: function(){
-    this.markers.forEach(function(marker){
-      marker.setMap(null)
+    this.get('markerViews').forEach(function(markerView){
+      markerView.destroy();
+    });
+    this.get('markers').forEach(function(marker){
+      marker.setMap(null);
     });
   }
 });
