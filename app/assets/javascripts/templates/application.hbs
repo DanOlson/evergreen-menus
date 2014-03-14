@@ -18,7 +18,7 @@
         </form>
         <ul class="nav navbar-nav">
           <li><a id='js-what-is-beermapper' href='#'>What is Beer Mapper?</a></li>
-          <li><a id='js-get-sources' href='/sources'>Establishments</a></li>
+          <li><a {{action 'openModal' 'establishment_list'}}>Establishments</a></li>
           <li><a id='js-suggest' href='/suggestions/new'>Suggest an Establishment</a></li>
         </ul>
       </div>
@@ -33,6 +33,6 @@
   </header>
   <div class='body-container'>
     {{outlet}}
+    {{outlet modal}}
     <footer class='footer'><small>Copyright &copy; 2014 beermapper.com All rights reserved.</small></footer>
   </div>
-  <div class='modal'></div>
