@@ -6,9 +6,9 @@
     </div>
     <div class="modal-body">
       <ul class='establishment-list'>
-        {{#each}}
+        {{#each establishment in content}}
           <li>
-            <span>{{name}} - {{address}}</span>
+            <span>{{establishment.name}} - <a {{action 'linkToEstablishment' establishment view}}>{{establishment.address}}</a></span>
           </li>
         {{/each}}
       </ul>

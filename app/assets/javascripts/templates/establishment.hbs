@@ -1,0 +1,14 @@
+<div class='container'>
+  <div class='establishment-title'>
+    <h1>{{name}}</h1>
+    <h4>{{address}}</h4>
+  </div>
+  <div>
+    <h3>Beer List</h3>
+    <ul>
+      {{#each beer in beers}}
+        <li>{{beer.name}}</li>
+      {{/each}}
+    </ul>
+  </div>
+</div>

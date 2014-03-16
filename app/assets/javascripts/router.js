@@ -2,4 +2,5 @@
 
 Beermapper.Router.map(function() {
   this.route('search');
+  this.resource('establishment', { path: 'establishment/:id' });
 });
