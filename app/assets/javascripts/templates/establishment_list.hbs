@@ -1,4 +1,18 @@
-{{#modal-dialog action="close"}}
-  <button type='button' class='close' aria-hidden='true' {{action "close"}}>&times;</button>
-  <h4 class='flush--top'>Establishments</h4>
-{{/modal-dialog}}
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">{{modalTitle}}</h4>
+    </div>
+    <div class="modal-body">
+      <ul class='establishment-list'>
+        {{#each}}
+          <li>
+            <span>{{name}} - {{address}}</span>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="modal-footer"></div>
+  </div>
+</div>

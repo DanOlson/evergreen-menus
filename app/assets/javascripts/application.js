@@ -18,6 +18,7 @@
 //= require ember-data
 //= require_self
 //= require beermapper
+//= require ../../../vendor/assets/javascripts/bootstrap.min.js
 
 // for more details see: http://emberjs.com/guides/application/
 Beermapper = Ember.Application.create({

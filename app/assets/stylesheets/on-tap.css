@@ -88,24 +88,6 @@ header {
   margin: auto;
 }
 
-
-.overlay {
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.beermapper-modal {
-  border-radius: 15px;
-  margin: 100px auto;
-  width: 500px;
-  background-color: #fff;
-  padding: 1em;
-}
-
-.flush--top {
-  margin-top: 0;
+.establishment-list {
+  list-style: none;
 }

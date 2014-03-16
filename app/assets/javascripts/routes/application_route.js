@@ -1,17 +1,19 @@
 Beermapper.ApplicationRoute = Ember.Route.extend({
   actions: {
     openModal: function(modalName){
-      return this.render(modalName, {
-        into: 'application',
-        outlet: 'modal'
+      var controller = this.controllerFor(modalName);
+      var resource   = controller.get('resource');
+      var content    = this.store.find(resource)
+      var modal      = Beermapper.ModalView.create({
+        controller: controller,
+        container: this.container,
+        templateName: modalName
       });
-    },
 
-    closeModal: function() {
-      return this.disconnectOutlet({
-        outlet: 'modal',
-        parentView: 'application'
-      });
+      content.then(function(){
+        controller.set('content', content);
+        modal.append();
+      })
     }
   }
 })
