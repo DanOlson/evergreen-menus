@@ -14,6 +14,13 @@ Beermapper.ApplicationRoute = Ember.Route.extend({
         controller.set('content', content);
         modal.append();
       })
+    },
+
+    showSiteDescription: function(){
+      Beermapper.ModalView.create({
+        container: this.container,
+        templateName: 'what_is_beermapper'
+      }).append();
     }
   }
 })
