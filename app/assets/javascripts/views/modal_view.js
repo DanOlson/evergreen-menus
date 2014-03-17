@@ -10,12 +10,19 @@ Beermapper.ModalView = Ember.View.extend({
   // modal dismissed by example clicked in X, make sure the modal view is destroyed
   _viewDidHide: function() {
     if (!this.isDestroyed) {
-      console.log("destroying ModalView");
       this.destroy();
     }
   },
-  // here we click in close button so _viewDidHide is called
-  close: function() {
-    this.$(".close").click();
+
+  actions: {
+    // here we click in close button so _viewDidHide is called
+    close: function() {
+      var that = this;
+      if (!this.isDestroyed) {
+        setTimeout(function(){
+          that.destroy();
+        }, 200);
+      }
+    }
   }
 });
