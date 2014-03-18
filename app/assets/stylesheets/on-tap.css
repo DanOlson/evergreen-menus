@@ -95,3 +95,12 @@ header {
 .establishment-list {
   list-style: none;
 }
+
+.establishment-suggestion {
+  display: block;
+  margin: 0% 20% 5% 20%;
+}
+
+.description {
+  padding-bottom: 40px;
+}

@@ -21,7 +21,7 @@
         <ul class="nav navbar-nav">
           <li><a {{action 'showSiteDescription'}}>What is Beer Mapper?</a></li>
           <li><a {{action 'openModal' 'establishment_list'}}>Establishments</a></li>
-          <li><a id='js-suggest' href='/suggestions/new'>Suggest an Establishment</a></li>
+          <li>{{#link-to 'establishment_suggestions.new'}}Suggest an Establishment{{/link-to}}</li>
         </ul>
       </div>
       <div class='flash-messages'></div>
