@@ -1,9 +1,31 @@
-Beermapper.EstablishmentController = Ember.ObjectController.extend({
+Beermapper.EstablishmentController = Ember.ObjectController.extend(Beermapper.MapUtils, {
   needs: 'search',
   map: Ember.computed.alias('controllers.search.map'),
   query: Ember.computed.alias('controllers.search.query'),
   markerViews: Ember.computed.alias('controllers.search.markerViews'),
   infoWindow: Ember.computed.alias('controllers.search.infoWindow'),
+  mapWidthMultiplier: 0.5,
+  mapHeightMultiplier: 0.8,
+
+  placeMarkers: function(mapView){
+    console.log("[EstablishmentController] placeMarkers()");
+    var func = function(){
+      var map = this.get('map');
+      var bounds = new google.maps.LatLngBounds();
+      var zoomChangeBoundsListener = google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+        if (this.getZoom()){ this.setZoom(14); }
+      });
+
+      this.clearMarkers();
+      this.get('markers').pushObject(this.marker(mapView));
+      bounds.extend(this.latLng());
+      map.fitBounds(bounds);
+      setTimeout(function(){
+        google.maps.event.removeListener(zoomChangeBoundsListener)
+      }, 0);
+    }
+    return Ember.run.debounce(this, func, 300);
+  },
 
   marker: function(mapView){
     var establishment = this.get('model');

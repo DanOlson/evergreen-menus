@@ -17,6 +17,10 @@ ul {
   -webkit-margin-after: 0;
 }
 
+.gmap {
+  margin-top: 20px;
+}
+
 .search input {
   padding: 6px;
   width: 200px;
@@ -106,6 +110,10 @@ header {
 
 .description {
   padding-bottom: 40px;
+}
+
+.page-heading {
+  border-bottom: 1px #cecece solid;
 }
 
 footer {

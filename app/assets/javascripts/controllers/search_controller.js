@@ -3,16 +3,14 @@ Beermapper.SearchController = Ember.ArrayController.extend(Beermapper.MapUtils, 
   queryParams: ['query'],
   query: Ember.computed.alias('controllers.application.queryField'),
   itemController: 'establishment',
-
-  bounds: function(){
-    return new google.maps.LatLngBounds();
-  },
+  mapWidthMultiplier: 0.9,
+  mapHeightMultiplier: 0.9,
 
   placeMarkers: function(mapView){
     var func = function(){
       console.log('[SearchController] placeMarkers()');
       this.clearMarkers();
-      var bounds = this.get('bounds')();
+      var bounds = new google.maps.LatLngBounds();
       this.forEach(function(establishment){
         this.get('markers').pushObject(establishment.marker(mapView));
         bounds.extend(establishment.latLng());

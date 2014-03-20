@@ -1,9 +1,9 @@
 <div class='container'>
-  <div class='establishment-title'>
+  <div class='establishment-title page-heading'>
     <h1>{{name}}</h1>
     <h4>{{address}}</h4>
   </div>
-  <div>
+  <div class='col-md-4'>
     <h3>Beer List</h3>
     <ul>
       {{#each beer in beers}}
@@ -11,4 +11,5 @@
       {{/each}}
     </ul>
   </div>
+  <div class='gmap col-md-4'>{{view Beermapper.MapView}}</div>
 </div>
