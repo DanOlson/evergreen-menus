@@ -10,6 +10,13 @@ h1 {
   margin-bottom: 0;
 }
 
+ul {
+  padding: 0;
+  list-style-type: none;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+}
+
 .search input {
   padding: 6px;
   width: 200px;
@@ -92,10 +99,6 @@ header {
   margin: auto;
 }
 
-.establishment-list {
-  list-style: none;
-}
-
 .establishment-suggestion {
   display: block;
   margin: 0% 20% 5% 20%;
@@ -103,4 +106,10 @@ header {
 
 .description {
   padding-bottom: 40px;
+}
+
+footer {
+  border-top: 1px #cecece solid;
+  padding-top: 20px;
+  margin-top: 20px;
 }
