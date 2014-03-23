@@ -121,3 +121,22 @@ footer {
   padding-top: 20px;
   margin-top: 20px;
 }
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: .80;
+  background-color: white;
+  z-index: 90;
+}
+
+.loading {
+  margin: 180px auto;
+  width: 220px;
+  height: 220px;
+  background-image: url('/images/loading.gif');
+  z-index: 100;
+}
