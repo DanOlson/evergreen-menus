@@ -1,5 +1,12 @@
 {{view Beermapper.HeaderView}}
 <div class='body-container'>
+  <div class='flash-queue'>
+    {{#each Beermapper.flashQueueController}}
+      {{view Beermapper.FlashMessageView}}
+    {{/each}}
+  </div>
   {{outlet}}
-  <footer class='footer'><small>Copyright &copy; 2014 beermapper.com All rights reserved.</small></footer>
+  <footer class='footer'>
+    <small>Copyright &copy; 2014 beermapper.com All rights reserved.</small>
+  </footer>
 </div>
