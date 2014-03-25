@@ -52,28 +52,6 @@ header {
   height: 10em;
 }
 
-.flash {
-  margin-top: .5em;
-  width: 20em;
-  left: 50%;
-  margin-left: -10em;
-  padding: 8px 8px;
-  color: white;
-  text-align: center;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  position: absolute;
-}
-
-.ot-alert {
-  background-color: #D35454;
-}
-
-.ot-notice {
-  background-color: #3bc43b;
-}
-
 .establishment-address a {
   cursor: pointer;
 }
