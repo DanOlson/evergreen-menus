@@ -81,9 +81,9 @@ header {
   margin: auto;
 }
 
-.establishment-suggestion {
+.establishment-form {
   display: block;
-  margin: 0% 20% 5% 20%;
+  margin: 0% 40% 5% 0%;
 }
 
 .description {
@@ -92,6 +92,20 @@ header {
 
 .page-heading {
   border-bottom: 1px #cecece solid;
+  width: 100%;
+  margin-bottom: 20px;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.establishment-name {
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.page-heading .address {
+  font-size: 18px;
+  font-weight: 500;
 }
 
 footer {
