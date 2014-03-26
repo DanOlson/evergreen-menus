@@ -72,5 +72,13 @@ Beermapper.EstablishmentController = Ember.ObjectController.extend(Beermapper.Ma
     var lat = establishment.get('latitude');
     var lng = establishment.get('longitude');
     return new google.maps.LatLng(lat, lng);
+  },
+
+  actions: {
+    transitionToDetails: function(){
+      var establishment = this.content;
+      establishment.reload();
+      this.transitionToRoute('establishment', establishment);
+    }
   }
 });
