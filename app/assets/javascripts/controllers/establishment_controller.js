@@ -17,18 +17,18 @@ Beermapper.EstablishmentController = Ember.ObjectController.extend(Beermapper.Ma
       });
 
       this.clearMarkers();
-      this.get('markers').pushObject(this.marker(mapView));
+      this.get('markers').pushObject(this.marker(mapView, true));
       bounds.extend(this.latLng());
       map.fitBounds(bounds);
       setTimeout(function(){
         google.maps.event.removeListener(zoomChangeBoundsListener)
       }, 0);
     }
-    return Ember.run.debounce(this, func, 300);
+    return Ember.run.debounce(this, func, 250);
   },
 
-  marker: function(mapView){
-    var establishment = this.get('model');
+  marker: function(mapView, skipClickHandler){
+    var establishment = this.get('content');
     var marker = new google.maps.Marker({
       position:  this.latLng(),
       animation: google.maps.Animation.DROP,
@@ -37,7 +37,9 @@ Beermapper.EstablishmentController = Ember.ObjectController.extend(Beermapper.Ma
       id:        establishment.get('id')
     });
 
-    this.addClickHandler(marker, mapView);
+    if(!skipClickHandler){
+      this.addClickHandler(marker, mapView);
+    }
 
     return marker
   },
