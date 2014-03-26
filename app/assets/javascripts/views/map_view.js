@@ -1,7 +1,6 @@
 Beermapper.MapView = Ember.ContainerView.extend({
   didInsertElement: function(){
     var controller = this.get('controller');
-    var map        = controller.createMap(this.$()[0]);
     var infoWindow = new google.maps.InfoWindow({maxWidth:300});
 
     // Size the view's container so that the map can render
@@ -14,6 +13,7 @@ Beermapper.MapView = Ember.ContainerView.extend({
       }
     });
 
+    var map = controller.createMap(this.$()[0]);
     controller.set('infoWindow', infoWindow);
     controller.set('map', map);
     controller.set('mapView', this);
