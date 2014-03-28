@@ -48,31 +48,18 @@ header {
   border: solid 1px #cecece;
 }
 
-.footer {
-  height: 10em;
-}
-
-.establishment-address a {
-  cursor: pointer;
-}
-
 .establishment-info-window ul {
   list-style: none;
   font-size: 10px;
   padding-left: 0px;
 }
 
-.js-get-directions {
-  font-size: 10px;
-}
-
-.data-sources {
-  list-style: none;
-  padding-left: 0px;
-}
-
 .establishment-address {
   font-size: 10px;
+}
+
+.establishment-address a {
+  cursor: pointer;
 }
 
 .what-is-beermapper {
@@ -98,14 +85,13 @@ header {
   vertical-align: top;
 }
 
-.establishment-name {
-  font-size: 30px;
-  font-weight: 500;
-}
-
 .page-heading .address {
   font-size: 18px;
   font-weight: 500;
+}
+
+.footer {
+  height: 10em;
 }
 
 footer {
