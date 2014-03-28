@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails',                    '4.0.2'
-gem 'pg',                       '~> 0.16.0'
+gem 'rails',                    '4.0.4'
+gem 'pg',                       '~> 0.17.0'
 gem 'sass-rails',               '~> 4.0.0'
 gem 'uglifier',                 '>= 1.3.0'
 gem 'jquery-rails'
@@ -9,7 +9,7 @@ gem 'geocoder',                 '~> 1.1.8'
 gem 'active_model_serializers', '~> 0.8.1'
 gem 'beer_list', git: 'git@github.com:DanOlson/beer_list.git', branch: '2.0'
 gem 'ember-rails',              '~> 0.14.1'
-gem 'ember-source',             '1.3.0'
+gem 'ember-source',             '1.4.0'
 gem 'kaminari'
 gem 'newrelic_rpm'
 
