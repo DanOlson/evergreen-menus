@@ -2,11 +2,31 @@ Beermapper.EstablishmentSuggestionsController = Ember.ObjectController.extend({
   actions: {
     formSubmit: function(){
       var that = this;
-      this.get('model').save().then(function(){
+      var suggestion = this.content;
+      var name = suggestion.get('name');
+      var url  = suggestion.get('beerListUrl');
+
+      if(!name || !url){
+        if(!name){
+          this.set('nameIsRequired', true);
+          Beermapper.flashQueueController.flash('alert', 'Name is required');
+        } else {
+          this.set('nameIsRequired', false);
+        }
+        if(!url){
+          this.set('urlIsRequired', true);
+          Beermapper.flashQueueController.flash('alert', 'URL is required');
+        } else {
+          this.set('urlIsRequired', false);
+        }
+        return;
+      }
+
+      suggestion.save().then(function(){
         Beermapper.flashQueueController.flash('notice', 'Thanks for the suggestion!');
         that.transitionToRoute('index');
-      }, function(){
-        Beermapper.flashQueueController.flash('alert', 'We could not accept your suggestion at this time.');
+      }, function(reason){
+        Beermapper.flashQueueController.flash('alert', 'Could not save suggestion');
       });
     },
 
