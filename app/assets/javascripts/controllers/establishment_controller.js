@@ -8,7 +8,6 @@ Beermapper.EstablishmentController = Ember.ObjectController.extend(Beermapper.Ma
   mapHeightMultiplier: 0.8,
 
   placeMarkers: function(mapView){
-    console.log("[EstablishmentController] placeMarkers()");
     var func = function(){
       var map = this.get('map');
       var bounds = new google.maps.LatLngBounds();

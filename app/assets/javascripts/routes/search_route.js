@@ -8,7 +8,6 @@ Beermapper.SearchRoute = Ember.Route.extend({
   afterModel: function(){
     var controller = this.controllerFor('search');
     var map = controller.get('map');
-    console.log("[SearchRoute] afterModel");
     if (map.hasOwnProperty('mapTypeId')) {
       controller.placeMarkers(controller.get('mapView'));
     }
@@ -16,7 +15,6 @@ Beermapper.SearchRoute = Ember.Route.extend({
 
   actions: {
     queryParamsDidChange: function(){
-      console.log('[SearchRoute] queryParamsDidChange');
       this.refresh();
     }
   }

@@ -16,7 +16,6 @@ Beermapper.SearchController = Ember.ArrayController.extend(Beermapper.MapUtils, 
 
   placeMarkers: function(mapView){
     var func = function(){
-      console.log('[SearchController] placeMarkers()');
       this.clearMarkers();
       if(this.get('isEmpty')){
         return Beermapper.flashQueueController.flash('alert', 'No Results');
