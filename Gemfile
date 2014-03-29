@@ -14,7 +14,7 @@ gem 'kaminari'
 gem 'newrelic_rpm'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', platforms: :ruby
 
 group :development, :test do
   gem "rspec-rails", "~> 2.14.0"
