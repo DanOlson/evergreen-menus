@@ -22,9 +22,9 @@
 
 // for more details see: http://emberjs.com/guides/application/
 Beermapper = Ember.Application.create({
-  LOG_TRANSITIONS: true,
-  LOG_TRANSITIONS_INTERNAL: true,
-  LOG_ACTIVE_GENERATION: true
+  LOG_TRANSITIONS: false,
+  LOG_TRANSITIONS_INTERNAL: false,
+  LOG_ACTIVE_GENERATION: false
 });
 
 Beermapper.ApplicationAdapter = DS.ActiveModelAdapter.extend({
