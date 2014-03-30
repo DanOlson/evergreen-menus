@@ -9,5 +9,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 </head>
 <body>
+  <div id='ember-app'></div>
+  <%= render('layouts/google_analytics') if Rails.env.production? %>
 </body>
 </html>

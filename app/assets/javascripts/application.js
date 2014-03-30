@@ -24,7 +24,8 @@
 Beermapper = Ember.Application.create({
   LOG_TRANSITIONS: false,
   LOG_TRANSITIONS_INTERNAL: false,
-  LOG_ACTIVE_GENERATION: false
+  LOG_ACTIVE_GENERATION: false,
+  rootElement: '#ember-app'
 });
 
 Beermapper.ApplicationAdapter = DS.ActiveModelAdapter.extend({
