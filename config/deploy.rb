@@ -1,15 +1,15 @@
 require 'rvm/capistrano'
 require 'bundler/capistrano'
 
-set :application, "on_tap" # app directory name
-set :repository,  "git@github.com:DanOlson/on_tap.git"
+set :application, "beermapper" # app directory name
+set :repository,  "git@github.com:DanOlson/beermapper.git"
 
 default_run_options[:pty]   = true
 ssh_options[:forward_agent] = true
 
 set :deploy_to, "/var/apps/#{application}"
 set :scm, :git
-set :rvm_ruby_string, 'ruby-2.0.0-p247'
+set :rvm_ruby_string, 'ruby-2.1.1'
 set :rvm_type,        :system
 set :use_sudo,        false
 set :user,            "deploy"
