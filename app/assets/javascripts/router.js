@@ -6,3 +6,14 @@ Beermapper.Router.map(function() {
     this.route('new');
   });
 });
+
+Beermapper.Router.reopen({
+  didTransition: function(infos){
+    this._super(infos);
+    if(window.ga === undefined){ return; }
+
+    Ember.run.next(function(){
+      ga('send', 'pageview', window.location.hash.substring(1));
+    });
+  }
+})
