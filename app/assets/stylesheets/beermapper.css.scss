@@ -21,12 +21,6 @@ ul {
   margin-top: 20px;
 }
 
-.search input {
-  padding: 6px;
-  width: 200px;
-  border-radius: 5px;
-}
-
 #beer-search {
   width: 310px;
 }
@@ -56,10 +50,10 @@ header {
 
 .establishment-address {
   font-size: 10px;
-}
 
-.establishment-address a {
-  cursor: pointer;
+  a {
+    cursor: pointer;
+  }
 }
 
 .what-is-beermapper {
@@ -69,8 +63,7 @@ header {
 }
 
 .establishment-form {
-  display: block;
-  margin: 0% 40% 5% 0%;
+  width: 60%;
 }
 
 .description {
@@ -83,11 +76,12 @@ header {
   margin-bottom: 20px;
   overflow: hidden;
   vertical-align: top;
-}
 
-.page-heading .address {
-  font-size: 18px;
-  font-weight: 500;
+  .address {
+    font-size: 18px;
+    font-weight: 500;
+    padding-top: 28px
+  }
 }
 
 .footer {
