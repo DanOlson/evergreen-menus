@@ -1,20 +1,17 @@
-<div class='clearfix page-heading'>
-  <div class='col-sm-10'>
-    <h2>Establishments</h2>
+<div class='row'>
+  <div class='page-heading'>
+    <div class='col-sm-12'>
+      <h2>Establishments</h2>
+    </div>
   </div>
-</div>
-<div class='clearfix'>
-  <div class='col-sm-10'>
-    <ul>
-      <li>
-        <span class='col-sm-4'><strong>Name</strong></span>
-        <span><strong>Address</strong></span>
-      </li>
-      {{#each establishment in content}}
-        <li>
-          <span class='col-sm-4'>{{establishment.name}}</span><span>{{#link-to 'establishment' establishment}}{{establishment.address}}{{/link-to}}</span>
-        </li>
-      {{/each}}
-    </ul>
+  <div>
+    <div class='col-sm-4'><strong>Name</strong></div>
+    <div class='col-sm-8'><strong>Address</strong></div>
+    {{#each establishment in content}}
+      <div class='col-sm-4'>{{establishment.name}}</div>
+      <div class='col-sm-8'>
+        {{#link-to 'establishment' establishment}}{{establishment.address}}{{/link-to}}
+      </div>
+    {{/each}}
   </div>
 </div>
