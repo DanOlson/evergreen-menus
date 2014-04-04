@@ -5,8 +5,9 @@ module BeerList
       ADDRESS = '2500 University Ave NE, Minneapolis, MN 55418'
 
       def get_list
-        base_list
-        remove_blank
+        beers = base_list
+        beers = remove_blank beers
+        beers
       end
 
       def url
@@ -20,11 +21,11 @@ module BeerList
       private
 
       def base_list
-        @beers = page.search('td ul li').map(&:text)
+        page.search('.entry-content li').map(&:text)
       end
 
-      def remove_blank
-        @beers = @beers.map(&:strip).reject{ |beer| beer.empty? }
+      def remove_blank(beers)
+        beers.map(&:strip).reject{ |beer| beer.empty? }
       end
     end
   end
