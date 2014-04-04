@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131208013216) do
+ActiveRecord::Schema.define(version: 20140404013818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_keys", force: true do |t|
+    t.integer  "user_id",      null: false
+    t.string   "access_token", null: false
+    t.datetime "expires_at",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "api_keys", ["access_token"], name: "index_api_keys_on_access_token", unique: true, using: :btree
 
   create_table "beer_establishments", force: true do |t|
     t.integer "beer_id"
@@ -46,5 +56,17 @@ ActiveRecord::Schema.define(version: 20131208013216) do
     t.string   "url"
     t.boolean  "active",                             default: true
   end
+
+  create_table "users", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "username",        null: false
+    t.string   "email",           null: false
+    t.string   "password_digest", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
 end
