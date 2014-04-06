@@ -21,7 +21,7 @@ module V1
 
     def add_serializer_options(resources, options)
       serializer_key = resources.last.respond_to?(:each) ? :each_serializer : :serializer
-      options[serializer_key] = serializer_for_api_version
+      options[serializer_key] ||= serializer_for_api_version
     end
 
     def serializer_for_api_version

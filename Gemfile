@@ -13,6 +13,7 @@ gem 'ember-rails',              '~> 0.14.1'
 gem 'ember-source',             '1.4.0'
 gem 'kaminari'
 gem 'newrelic_rpm'
+gem 'logvisible'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby

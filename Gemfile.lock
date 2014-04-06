@@ -81,6 +81,7 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     libv8 (3.16.14.3)
+    logvisible (0.0.1)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -195,6 +196,7 @@ DEPENDENCIES
   geocoder (~> 1.1.8)
   jquery-rails
   kaminari
+  logvisible
   newrelic_rpm
   pg (~> 0.17.0)
   rails (= 4.0.4)
