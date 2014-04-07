@@ -10,9 +10,9 @@ module Api
           let(:api_key){ stub_model ApiKey, access_token: token, user_id: user.id }
 
           before do
-            allow(User).to receive(:find_by_id){ user }
+            allow(User).to receive(:find_by_username){ user }
             expect(controller).to receive(:create_api_key){ api_key }
-            post :create, user_id: user.id, format: :json
+            post :create, username: 'foo', password: 'bar', format: :json
           end
 
           it 'returns an api_key' do
@@ -32,8 +32,8 @@ module Api
 
         context 'with an invalid user_id' do
           before do
-            allow(User).to receive(:find_by_id)
-            post :create, user_id: 1, format: :json
+            allow(User).to receive(:find_by_username)
+            post :create, username: 'foo', password: 'bar', format: :json
           end
 
           it 'returns 401' do

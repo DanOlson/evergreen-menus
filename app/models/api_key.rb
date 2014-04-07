@@ -6,4 +6,10 @@ class ApiKey < ActiveRecord::Base
             :access_token,
             :expires_at,
             presence: true
+
+  class << self
+    def active
+      where arel_table[:expires_at].gt(Time.zone.now)
+    end
+  end
 end

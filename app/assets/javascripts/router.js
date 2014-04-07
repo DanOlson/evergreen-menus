@@ -5,6 +5,9 @@ Beermapper.Router.map(function() {
   this.resource('establishment_suggestions', function(){
     this.route('new');
   });
+  this.resource('sessions', function(){
+    this.route('new');
+  });
 });
 
 Beermapper.Router.reopen({

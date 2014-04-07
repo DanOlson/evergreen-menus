@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery
+//= require jquery.cookie
 //= require handlebars
 //= require ember
 //= require ember-data
