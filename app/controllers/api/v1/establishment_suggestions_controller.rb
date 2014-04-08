@@ -1,9 +1,13 @@
 module Api
   module V1
     class EstablishmentSuggestionsController < ApiController
+      before_filter :ensure_authenticated_user, only: :index
+
+      ###
+      # TODO: Paginate
       def index
         suggestions = EstablishmentSuggestion.all
-        respond_with suggestions, root: 'suggestions'
+        respond_with suggestions, root: 'establishment_suggestions'
       end
 
       def create
