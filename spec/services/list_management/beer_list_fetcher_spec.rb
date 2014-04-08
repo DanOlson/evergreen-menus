@@ -1,4 +1,4 @@
-require File.expand_path('../../../../app/services/list_management/beer_list_fetcher', __FILE__)
+require 'fast_spec_helper'
 
 module ListManagement
   describe BeerListFetcher do

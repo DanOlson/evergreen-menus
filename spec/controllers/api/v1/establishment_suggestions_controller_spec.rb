@@ -6,7 +6,7 @@ module Api
 
       describe 'GET to #index' do
         before do
-          allow(controller).to receive(:valid_api_key?){ true }
+          expect(controller).to receive(:ensure_authenticated_user){ true }
           expect(EstablishmentSuggestion).to receive(:all)
           get :index, format: :json
         end

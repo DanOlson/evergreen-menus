@@ -1,4 +1,4 @@
-Beermapper.EstablishmentSuggestionsController = Ember.ObjectController.extend({
+Beermapper.EstablishmentSuggestionsNewController = Ember.ObjectController.extend({
   actions: {
     formSubmit: function(){
       var that = this;
