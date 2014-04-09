@@ -8,14 +8,22 @@ module ListManagement
         fetcher.lists.each do |list|
           hsh = list.to_hash
           establishment = find_or_create_establishment hsh
+          list_update = ListUpdate.new({
+            raw_data: list.to_json,
+            establishment: establishment
+          })
           update!(establishment, list) do |status|
             status.on_success do
+              list_update.status = 'Success'
               logger.info "#{hsh[:name]} Success!"
             end
 
             status.on_failure do |reason|
+              list_update.status = 'Failed'
+              list_update.notes = reason
               logger.warn "#{hsh[:name]} Failed! #{reason}"
             end
+            list_update.save
           end
         end
       end
