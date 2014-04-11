@@ -9,6 +9,8 @@ Beermapper.Router.map(function() {
   this.resource('sessions', function(){
     this.route('new');
   });
+  this.resource('list_updates');
+  this.resource('list_update', { path: '/list_updates/:id' });
 });
 
 Beermapper.Router.reopen({

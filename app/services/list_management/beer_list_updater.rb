@@ -1,6 +1,5 @@
 module ListManagement
   class BeerListUpdater
-
     class << self
       def update_lists!(logger=ListUpdateLogger)
         logger.info "\n\n******* Beginning update *******"
