@@ -5,13 +5,23 @@ module Api
     describe ListUpdatesController do
       describe 'GET to #index' do
         context 'when authenticated' do
-          let(:first){ stub_model ListUpdate }
-          let(:second){ stub_model ListUpdate }
+          let(:establishment){ stub_model Establishment, name: 'Dude' }
+          let(:first) do
+            stub_model ListUpdate,
+              establishment: establishment,
+              raw_data: { list: ['Miller'] }.to_json
+          end
+          let(:second) do
+            stub_model ListUpdate,
+              establishment: establishment,
+              raw_data: { list: ['Bud'] }.to_json
+          end
+          let(:relation){ double 'relation', includes: updates }
           let(:updates){ [first, second] }
 
           before do
             expect(controller).to receive(:ensure_authenticated_user){ true }
-            expect(ListUpdate).to receive(:all){ updates }
+            expect(ListUpdate).to receive(:all){ relation }
             get :index, format: :json
           end
 
@@ -25,14 +35,18 @@ module Api
                 {
                   id: first.id,
                   establishment_id: first.establishment_id,
+                  name: establishment.name,
                   status: first.status,
+                  raw_data: first.raw_data,
                   notes: first.notes,
                   created_at: first.created_at
                 },
                 {
                   id: second.id,
                   establishment_id: second.establishment_id,
+                  name: establishment.name,
                   status: second.status,
+                  raw_data: second.raw_data,
                   notes: second.notes,
                   created_at: second.created_at
                 }
