@@ -17,10 +17,13 @@ Beermapper.AuthManager = Ember.Object.extend({
       headers: { 'Authorization': 'Bearer ' + accessToken }
     });
     var user = Beermapper.__container__.lookup('store:main').find('user', userId);
-    this.set('apiKey', Beermapper.ApiKey.create({
-      accessToken: accessToken,
-      user: user
-    }));
+    var that = this;
+    user.then(function(){
+      that.set('apiKey', Beermapper.ApiKey.create({
+        accessToken: accessToken,
+        user: user
+      }));
+    });
   },
 
   reset: function(){
