@@ -4,7 +4,7 @@ Beermapper.ApplicationRoute = Ember.Route.extend({
     Beermapper.AuthManager = Beermapper.AuthManager.create();
   },
 
-  events: {
+  actions: {
     logout: function(){
       Beermapper.AuthManager.reset();
       this.transitionTo('index');

@@ -7,6 +7,7 @@ class Establishment < ActiveRecord::Base
 
   has_many :beer_establishments, dependent: :destroy
   has_many :beers, through: :beer_establishments
+  has_many :list_updates
 
   paginates_per 100
 

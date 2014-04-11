@@ -1,5 +1,5 @@
 Beermapper.AuthenticatedRoute = Ember.Route.extend({
-  beforeModel: function(transition){
+  afterModel: function(transition){
     if (!Beermapper.AuthManager.isAuthenticated()){
       this.redirectToLogin(transition);
     }
@@ -11,7 +11,7 @@ Beermapper.AuthenticatedRoute = Ember.Route.extend({
     this.transitionTo('sessions.new');
   },
 
-  events: {
+  actions: {
     error: function(reason, transition){
       this.redirectToLogin(transition);
     }
