@@ -1,21 +1,23 @@
-<div class='row'>
-  <div class='page-heading'>
-    <div class='col-sm-12'>
-      <h2>Establishment Suggestions</h2>
+<div class='page'>
+  <div class='row'>
+    <div class='page-heading'>
+      <div class='col-sm-12'>
+        <h2>Establishment Suggestions</h2>
+      </div>
     </div>
-  </div>
-  <div class='table-responsive'>
-    <table class='table table-hover'>
-      <tr>
-        <th>Name</th>
-        <th>URL</th>
-      </tr>
-      {{#each}}
+    <div class='table-responsive'>
+      <table class='table table-hover'>
         <tr>
-          <td>{{name}}</td>
-          <td>{{beerListUrl}}</td>
+          <th>Name</th>
+          <th>URL</th>
         </tr>
-      {{/each}}
-    </table>
+        {{#each}}
+          <tr>
+            <td>{{name}}</td>
+            <td>{{beerListUrl}}</td>
+          </tr>
+        {{/each}}
+      </table>
+    </div>
   </div>
 </div>

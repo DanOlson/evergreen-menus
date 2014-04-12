@@ -3,7 +3,7 @@ Beermapper.SearchController = Ember.ArrayController.extend(Beermapper.MapUtils, 
   queryParams: ['query'],
   query: Ember.computed.alias('controllers.application.queryField'),
   itemController: 'establishment',
-  mapWidthMultiplier: 0.9,
+  mapWidthMultiplier: 1.0,
   mapHeightMultiplier: 0.9,
 
   numResults: function(){

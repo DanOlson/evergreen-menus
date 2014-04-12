@@ -1,14 +1,16 @@
-<div class='row'>
-  <div class='page-heading col-md-12'>
-    <div class='pull-left'><h2>{{name}}</h2></div><div class='pull-right address'>{{address}}</div>
+<div class='page'>
+  <div class='row'>
+    <div class='page-heading col-md-12'>
+      <div class='pull-left'><h2>{{name}}</h2></div><div class='pull-right address'>{{address}}</div>
+    </div>
+    <div class='col-md-4'>
+      <h3>Beer List</h3>
+      <ul>
+        {{#each beer in beers}}
+          <li>{{beer.name}}</li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class='gmap col-md-8'>{{view Beermapper.MapView}}</div>
   </div>
-  <div class='col-md-4'>
-    <h3>Beer List</h3>
-    <ul>
-      {{#each beer in beers}}
-        <li>{{beer.name}}</li>
-      {{/each}}
-    </ul>
-  </div>
-  <div class='gmap col-md-8'>{{view Beermapper.MapView}}</div>
 </div>

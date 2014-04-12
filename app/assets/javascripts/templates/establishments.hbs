@@ -1,17 +1,19 @@
-<div class='row'>
-  <div class='page-heading'>
-    <div class='col-sm-12'>
-      <h2>Establishments</h2>
-    </div>
-  </div>
-  <div>
-    <div class='col-sm-4'><strong>Name</strong></div>
-    <div class='col-sm-8'><strong>Address</strong></div>
-    {{#each establishment in content}}
-      <div class='col-sm-4'>{{establishment.name}}</div>
-      <div class='col-sm-8'>
-        {{#link-to 'establishment' establishment}}{{establishment.address}}{{/link-to}}
+<div class='page'>
+  <div class='row'>
+    <div class='page-heading'>
+      <div class='col-sm-12'>
+        <h2>Establishments</h2>
       </div>
-    {{/each}}
+    </div>
+    <div>
+      <div class='col-sm-4'><strong>Name</strong></div>
+      <div class='col-sm-8'><strong>Address</strong></div>
+      {{#each establishment in content}}
+        <div class='col-sm-4'>{{establishment.name}}</div>
+        <div class='col-sm-8'>
+          {{#link-to 'establishment' establishment}}{{establishment.address}}{{/link-to}}
+        </div>
+      {{/each}}
+    </div>
   </div>
 </div>
