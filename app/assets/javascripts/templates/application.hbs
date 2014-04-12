@@ -8,5 +8,12 @@
   {{outlet}}
   <footer class='footer'>
     <small>Copyright &copy; 2014 beermapper.com All rights reserved.</small>
+    <small>
+    {{#if isAuthenticated}}
+      <a href='#' {{action logout}}>Logout</a>
+    {{else}}
+      {{#link-to 'sessions.new'}}Login{{/link-to}}
+    {{/if}}
+    </small>
   </footer>
 </div>

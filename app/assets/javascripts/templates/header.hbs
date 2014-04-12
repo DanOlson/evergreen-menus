@@ -6,7 +6,6 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href='/'>Beer Mapper</a>
     </div>
@@ -23,11 +22,6 @@
         {{view view.whatIsBeermapperView}}
         <li>{{#link-to 'establishments'}}Establishments{{/link-to}}</li>
         <li>{{#link-to 'establishment_suggestions.new'}}Suggest an Establishment{{/link-to}}</li>
-        {{#if isAuthenticated}}
-          <li><a href='#' {{action logout}}>Logout</a></li>
-        {{else}}
-          <li>{{#link-to 'sessions.new'}}Login{{/link-to}}</li>
-        {{/if}}
       </ul>
     </div>
     <div class='flash-messages'></div>
