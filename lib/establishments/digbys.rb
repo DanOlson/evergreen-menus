@@ -2,7 +2,7 @@ module BeerList
   module Establishments
     class Digbys < Establishment
       URL     = 'http://eatdigbys.com/on-tap/'
-      ADDRESS = 'Center St, St Paul, MN 55113'
+      ADDRESS = '854 Rosedale Shopping Center Roseville, MN 55113'
       NAME    = "Digby's"
 
       def get_list
