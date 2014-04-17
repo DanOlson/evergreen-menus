@@ -4,7 +4,7 @@ module Api
       before_filter :ensure_authenticated_user
 
       def index
-        list_updates = ListUpdate.all.includes :establishment
+        list_updates = ListUpdate.most_recent.includes :establishment
         respond_with list_updates
       end
 

@@ -21,7 +21,7 @@ module Api
 
           before do
             expect(controller).to receive(:ensure_authenticated_user){ true }
-            expect(ListUpdate).to receive(:all){ relation }
+            expect(ListUpdate).to receive(:most_recent){ relation }
             get :index, format: :json
           end
 
