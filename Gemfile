@@ -12,7 +12,7 @@ gem 'active_model_serializers', '~> 0.8.1'
 gem 'beer_list', git: 'git@github.com:DanOlson/beer_list.git', branch: '2.0'
 gem 'ember-rails',              '~> 0.14.1'
 gem 'ember-source',             '1.4.0'
-gem 'kaminari'
+gem 'kaminari',                 '~> 0.15.1'
 gem 'newrelic_rpm'
 gem 'logvisible'
 
@@ -21,6 +21,7 @@ gem 'therubyracer', platforms: :ruby
 
 group :development, :test do
   gem "rspec-rails", "~> 2.14.0"
+  gem 'pry-rails',   '~> 0.3.2'
 end
 
 group :development do

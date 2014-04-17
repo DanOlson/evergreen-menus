@@ -16,12 +16,11 @@ module Api
               establishment: establishment,
               raw_data: { list: ['Bud'] }.to_json
           end
-          let(:relation){ double 'relation', includes: updates }
           let(:updates){ [first, second] }
 
           before do
             expect(controller).to receive(:ensure_authenticated_user){ true }
-            expect(ListUpdate).to receive(:most_recent){ relation }
+            expect(controller).to receive(:find_list_updates){ updates }
             get :index, format: :json
           end
 

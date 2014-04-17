@@ -4,13 +4,18 @@ module Api
       before_filter :ensure_authenticated_user
 
       def index
-        list_updates = ListUpdate.most_recent.includes :establishment
-        respond_with list_updates
+        respond_with find_list_updates
       end
 
       def show
         list_update = ListUpdate.find params[:id]
         respond_with list_update
+      end
+
+      private
+
+      def find_list_updates
+        Queries::ListUpdate.with_filters(params).run
       end
     end
   end
