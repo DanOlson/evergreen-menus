@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.cookie
+//= require jquery.ui.datepicker
 //= require handlebars
 //= require ember
 //= require ember-data

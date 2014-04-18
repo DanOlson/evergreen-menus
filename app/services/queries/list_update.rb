@@ -1,6 +1,8 @@
 module Queries
   class ListUpdate
-    attr_reader :status, :establishment_id, :start_date, :end_date, :page
+    ANY = 'any'
+
+    attr_reader :establishment_id, :start_date, :end_date, :page
 
     class << self
       def with_filters(args)
@@ -9,8 +11,8 @@ module Queries
     end
 
     def initialize(args={})
-      @status           = args[:status]
-      @establishment_id = args[:establishment]
+      @status           = args[:status] || ANY
+      @establishment_id = args[:establishment_id]
       @start_date       = args[:start_date]
       @end_date         = args[:end_date]
       @page             = args[:page]
@@ -31,7 +33,7 @@ module Queries
 
     def add_status(updates)
       return updates unless status
-      updates.where arel_table[:status].lower.eq status
+      updates.where arel_table[:status].lower.eq status.downcase
     end
 
     def add_establishment(updates)
@@ -40,12 +42,12 @@ module Queries
     end
 
     def add_start_date(updates)
-      return updates unless start_date
+      return updates unless start_date.present?
       updates.where arel_table[:created_at].gteq start_date
     end
 
     def add_end_date(updates)
-      return updates unless end_date
+      return updates unless end_date.present?
       updates.where arel_table[:created_at].lteq end_date
     end
 
@@ -58,14 +60,19 @@ module Queries
       updates.includes :establishment
     end
 
+    def status
+      return if @status.downcase == ANY
+      @status
+    end
+
     def start_date
-      return unless @start_date
+      return unless @start_date.present?
       Date.parse(@start_date).beginning_of_day
     end
 
     def end_date
-      return unless @end_date
-      Date.parse(@end_date).beginning_of_day
+      return unless @end_date.present?
+      Date.parse(@end_date).end_of_day
     end
 
     def arel_table

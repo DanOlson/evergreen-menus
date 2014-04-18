@@ -68,8 +68,8 @@ module Queries
       end
     end
 
-    describe 'establishment' do
-      let(:args){ super().merge establishment: bar1.id }
+    describe 'establishment_id' do
+      let(:args){ super().merge establishment_id: bar1.id }
       let(:expected) do
         [successful_update1, old_successful_update1]
       end

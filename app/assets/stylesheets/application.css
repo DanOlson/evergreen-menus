@@ -12,4 +12,5 @@
  *= require_tree .
  *= require ../../../vendor/assets/stylesheets/bootstrap.min.css
  *= require ../../../vendor/assets/stylesheets/bootstrap-theme.min.css
+ *= require jquery.ui.datepicker
  */
