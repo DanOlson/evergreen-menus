@@ -16,6 +16,7 @@ module Queries
       @start_date       = args[:start_date]
       @end_date         = args[:end_date]
       @page             = args[:page]
+      @order            = args[:order]
     end
 
     def run
@@ -26,6 +27,7 @@ module Queries
       updates = add_end_date updates
       updates = add_pagination updates
       updates = add_includes updates
+      updates = add_order updates
       updates
     end
 
@@ -60,9 +62,17 @@ module Queries
       updates.includes :establishment
     end
 
+    def add_order(updates)
+      updates.order order
+    end
+
     def status
       return if @status.downcase == ANY
       @status
+    end
+
+    def order
+      @order || 'establishments.name'
     end
 
     def start_date
