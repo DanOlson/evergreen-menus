@@ -4,7 +4,8 @@ Beermapper.ListUpdateDateSelectView = Ember.View.extend({
 
   didInsertElement: function(){
     this.$('.list-update-date-filter').datepicker({
-      dateFormat: 'yy-mm-dd'
+      dateFormat: 'yy-mm-dd',
+      maxDate: 0
     });
   },
   
