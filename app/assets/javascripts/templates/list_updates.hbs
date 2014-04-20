@@ -6,13 +6,7 @@
       </div>
     </div>
     <div class='sm-col-12 list-update-filters'>
-      <form class='form-inline'>
-        {{view Beermapper.ListUpdateDateSelectView}}
-        <div class='form-group'>
-          <label>Status</label>
-          {{view Ember.Select viewName='select' content=statuses value=status class='form-control list-update-filter input-sm'}}
-        </div>
-      </form>
+      {{view Beermapper.ListUpdateFilterView}}
     </div>
     <div class='table-responsive'>
       <table class='table table-hover'>
