@@ -23,6 +23,8 @@ Beermapper.AuthManager = Ember.Object.extend({
         accessToken: accessToken,
         user: user
       }));
+    }, function(err){
+      that.reset();
     });
   },
 
