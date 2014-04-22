@@ -4,6 +4,13 @@ Beermapper.ApplicationRoute = Ember.Route.extend({
     Beermapper.AuthManager = Beermapper.AuthManager.create();
   },
 
+  activate: function(){
+    this._super();
+    return Ember.run.next(function(){
+      twttr.widgets.load();
+    });
+  },
+
   actions: {
     logout: function(){
       Beermapper.AuthManager.reset();

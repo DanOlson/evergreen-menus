@@ -6,7 +6,6 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href='/'>Beer Mapper</a>
     </div>
@@ -35,9 +34,14 @@
               <li role='presentation'><a href='#' {{action logout}}>Logout</a></li>
             </ul>
           </li>
-        {{else}}
-          <li>{{#link-to 'sessions.new'}}Login{{/link-to}}</li>
         {{/if}}
+      </ul>
+      <ul class='nav navbar-nav navbar-right'>
+        <li>
+          <div class='social-share'>
+            {{share-twitter customUrl=twitterUrl data-text=twitterText}}
+          </div>
+        </li>
       </ul>
     </div>
     <div class='flash-messages'></div>
