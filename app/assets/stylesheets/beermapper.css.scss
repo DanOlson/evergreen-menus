@@ -5,6 +5,10 @@ html, body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+a {
+  cursor: pointer;
+}
+
 h1 {
   font-size: 50px;
   margin-bottom: 0;
@@ -50,10 +54,6 @@ ul {
 
 .establishment-address {
   font-size: 10px;
-
-  a {
-    cursor: pointer;
-  }
 }
 
 .what-is-beermapper {

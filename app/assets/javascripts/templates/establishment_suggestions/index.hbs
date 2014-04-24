@@ -10,11 +10,13 @@
         <tr>
           <th>Name</th>
           <th>URL</th>
+          <th>Action</th>
         </tr>
         {{#each}}
           <tr>
             <td>{{name}}</td>
             <td>{{beerListUrl}}</td>
+            <td><a {{action 'destroy'}}>Delete</a></td>
           </tr>
         {{/each}}
       </table>
