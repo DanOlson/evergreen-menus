@@ -36,7 +36,20 @@ module Api
           
           it { expect(response.code).to eq '400' }
         end
+      end
 
+      describe 'DELETE to #destroy' do
+        let(:suggestion){ stub_model EstablishmentSuggestion }
+        let(:interactor){ double 'interactor', destroy: true }
+
+        before do
+          allow(controller).to receive(:ensure_authenticated_user)
+          allow(controller).to receive(:find_suggestion){ suggestion }
+          expect(controller).to receive(:init_interactor).with(suggestion){ interactor }
+          delete :destroy, id: suggestion.id, format: :json
+        end
+
+        it { expect(response).to be_success }
       end
     end
   end
