@@ -25,11 +25,11 @@ module BeerList
       end
 
       def taps
-        page.search('.menu-on-tap .menu-item-title').map &:text
+        page.search('//div[starts-with(@class, "menu menu-on-tap")]').search('.menu-item-title').map &:text
       end
 
       def tall_boys
-        page.search('.menu-tall-boys .menu-item-title').map &:text
+        page.search('//div[starts-with(@class, "menu menu-tall-boys")]').search('.menu-item-title').map &:text
       end
 
       def strip
