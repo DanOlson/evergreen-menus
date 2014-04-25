@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140424020903) do
+ActiveRecord::Schema.define(version: 20140425015657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,14 @@ ActiveRecord::Schema.define(version: 20140424020903) do
     t.string   "status",           limit: 50, null: false
     t.string   "notes"
     t.text     "raw_data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "scrapers", force: true do |t|
+    t.integer  "establishment_id"
+    t.string   "scraper_class_name"
+    t.time     "scheduled_run_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
