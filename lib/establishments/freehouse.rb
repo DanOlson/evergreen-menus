@@ -36,7 +36,7 @@ module BeerList
 
       def base_list
         @beers = menu_subsections.inject([]) do |ary, css_class|
-          ary << menus.search(".#{css_class} .menu-item-title").map(&:text)
+          ary << menus.search("//div[starts-with(@class, 'menu #{css_class}')]").search(".menu-item-title").map(&:text)
         end.flatten
       end
 
