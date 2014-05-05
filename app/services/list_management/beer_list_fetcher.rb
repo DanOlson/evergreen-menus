@@ -1,6 +1,5 @@
 module ListManagement
   class BeerListFetcher
-
     def initialize(logger=nil)
       @logger = logger || Logger.new(STDOUT)
     end
