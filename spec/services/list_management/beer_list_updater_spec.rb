@@ -1,36 +1,39 @@
-require 'fast_spec_helper'
+require 'spec_helper'
 
 module ListManagement
   describe BeerListUpdater do
     let(:current_beers){ %w(Moylan's McSorley's bud coors summit) }
     let(:beers){ double 'CollectionProxy', pluck: current_beers }
     let(:establishment){ double('establishment', beers: beers) }
+    let(:scraper){ double 'BeerList::Establishment', list: list }
     let(:list){ %w(bud miller coors summit) }
-    let(:instance){ BeerListUpdater.new establishment, list }
+    let(:instance){ BeerListUpdater.new establishment, scraper }
 
     describe '.update!' do
       let(:instance){ double(update!: true) }
 
       it 'instantiates an instance' do
         expect(BeerListUpdater).to receive(:new){ instance }
-        BeerListUpdater.update! establishment, []
+        BeerListUpdater.update! establishment, scraper
       end
 
       it 'calls #update! on the instance' do
         allow(BeerListUpdater).to receive(:new){ instance }
-        BeerListUpdater.update! establishment, []
+        BeerListUpdater.update! establishment, scraper
         expect(instance).to have_received(:update!)
       end
     end
 
     describe '#new_beer_names' do
       it "returns the list of names it doesn't already have" do
+        allow(instance).to receive(:list){ list }
         expect(instance.new_beer_names).to eq(['miller'])
       end
     end
 
     describe '#old_beer_names' do
       it 'returns a list of names that need to be removed' do
+        allow(instance).to receive(:list){ list }
         expect(instance.old_beer_names).to eq(%w(Moylan's McSorley's))
       end
     end

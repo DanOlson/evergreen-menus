@@ -1,6 +1,10 @@
+require 'forwardable'
+
 module Interactions
   class Scraper < BaseInteractor
-    delegate :establishment, :scraper_class_name, to: :scraper
+    extend Forwardable
+    def_delegators :@scraper, :establishment, :scraper_class_name
+
     attr_reader :scraper
 
     def initialize(scraper)
@@ -8,14 +12,14 @@ module Interactions
     end
 
     def scrape!
-      ListManagement::BeerListUpdater.update!(establishment, beer_list) do |status|
+      ListManagement::BeerListUpdater.update!(establishment, scraper_instance) do |status|
         status.on_success do
           list_update.status = 'Success'
         end
 
         status.on_failure do |reason|
           list_update.status = 'Failed'
-          list_update.notes = reason
+          list_update.notes  = reason
         end
         list_update.save
       end
@@ -24,14 +28,7 @@ module Interactions
     private
 
     def list_update
-      @list_update ||= ListUpdate.new({
-        raw_data: beer_list.to_json,
-        establishment: establishment
-      })
-    end
-
-    def beer_list
-      scraper_instance.list
+      @list_update ||= ListUpdate.new establishment: establishment
     end
 
     def scraper_instance
