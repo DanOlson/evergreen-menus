@@ -23,9 +23,14 @@ module Interactions
         end
         list_update.save
       end
+      set_last_run_time
     end
 
     private
+
+    def set_last_run_time
+      scraper.update_attribute :last_run_at, Time.zone.now
+    end
 
     def list_update
       @list_update ||= ListUpdate.new establishment: establishment

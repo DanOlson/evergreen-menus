@@ -1,6 +1,9 @@
 Beermapper::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Production DB is on UTC
+  config.active_record.default_timezone = :utc
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
