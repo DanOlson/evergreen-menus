@@ -29,7 +29,7 @@ module Interactions
     private
 
     def set_last_run_time
-      scraper.update_attribute :last_run_at, Time.zone.now
+      scraper.update_attribute :last_ran_at, Time.zone.now
     end
 
     def list_update
