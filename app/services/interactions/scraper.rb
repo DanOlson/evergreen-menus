@@ -21,6 +21,7 @@ module Interactions
           list_update.status = 'Failed'
           list_update.notes  = reason
         end
+        list_update.raw_data = list_as_json
         list_update.save
       end
       set_last_run_time
@@ -36,9 +37,20 @@ module Interactions
       @list_update ||= ListUpdate.new establishment: establishment
     end
 
+    def list_as_json
+      list.to_json
+    end
+
+    def list
+      scraper_instance.list
+    end
+
     def scraper_instance
-      klass = scraper_class_name.safe_constantize
-      klass.new
+      @scraper_instance ||= scraper_class.new
+    end
+
+    def scraper_class
+      scraper_class_name.safe_constantize
     end
   end
 end
