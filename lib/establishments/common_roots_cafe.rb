@@ -19,7 +19,7 @@ module BeerList
       private
 
       def beer_section
-        @beer_section ||= page.search('.menu--beer-wine .menu-section')[0]
+        @beer_section ||= page.search("//div[starts-with(@class, 'menu menu--beer-wine')]").search('.menu-section')[0]
       end
 
       def breweries
