@@ -99,6 +99,40 @@ module Api
           end
         end
       end
+
+      describe 'POST to #create' do
+        context 'when not authenticated' do
+          it 'returns 401' do
+            post :create, list_update: {}, format: :json
+            expect(response.status).to eq 401
+          end
+        end
+
+        context 'when authenticated' do
+          let(:establishment){ stub_model Establishment }
+          let(:list_update){ stub_model ListUpdate, establishment: establishment }
+          let(:scraper){ double 'Scraper' }
+          let(:interactor){ double 'Interactions::Scraper', scrape!: true, list_update: list_update }
+
+          before do
+            expect(controller).to receive(:ensure_authenticated_user){ true }
+          end
+
+          it 'returns 200' do
+            allow(controller).to receive(:find_scraper){ scraper }
+            allow(Interactions::Scraper).to receive(:new){ interactor }
+            post :create, list_update: { establishment_id: 1 }, format: :json
+            expect(response.status).to eq 201
+          end
+
+          it 'initiates a list update' do
+            expect(controller).to receive(:find_scraper){ scraper }
+            expect(Interactions::Scraper).to receive(:new).with(scraper){ interactor }
+            post :create, list_update: { establishment_id: 1 }, format: :json
+            expect(interactor).to have_received :scrape!
+          end
+        end
+      end
     end
   end
 end

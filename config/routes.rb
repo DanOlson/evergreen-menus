@@ -10,7 +10,7 @@ Beermapper::Application.routes.draw do
       resources :establishment_suggestions
       resources :sessions, only: :create
       resources :users, only: :show
-      resources :list_updates, only: [:index, :show]
+      resources :list_updates, only: [:index, :show, :create]
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,11 +1,13 @@
 Beermapper.EstablishmentController = Ember.ObjectController.extend(Beermapper.MapUtils, {
-  needs: 'search',
+  needs: ['search', 'application'],
   map: Ember.computed.alias('controllers.search.map'),
   query: Ember.computed.alias('controllers.search.query'),
   markerViews: Ember.computed.alias('controllers.search.markerViews'),
   infoWindow: Ember.computed.alias('controllers.search.infoWindow'),
+  isAuthenticated: Ember.computed.alias('controllers.application.isAuthenticated'),
   mapWidthMultiplier: 0.5,
   mapHeightMultiplier: 0.8,
+  updating: false,
 
   placeMarkers: function(mapView){
     var func = function(){
@@ -78,6 +80,18 @@ Beermapper.EstablishmentController = Ember.ObjectController.extend(Beermapper.Ma
       var establishment = this.content;
       establishment.reload();
       this.transitionToRoute('establishment', establishment);
+    },
+
+    updateList: function(){
+      var listUpdate = this.store.createRecord('listUpdate', {establishment: this.content});
+      var that = this;
+      this.set('updating', true)
+      listUpdate.save().then(function(){
+        Beermapper.flashQueueController.flash('notice', 'Beer list updated!')
+        that.set('updating', false)
+      }, function(){
+        Beermapper.flashQueueController.flash('alert', 'Beer list was not updated!')
+      })
     }
   }
 });

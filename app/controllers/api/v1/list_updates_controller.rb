@@ -12,7 +12,17 @@ module Api
         respond_with list_update
       end
 
+      def create
+        scraper = Interactions::Scraper.new find_scraper
+        scraper.scrape! force: true
+        respond_with scraper.list_update
+      end
+
       private
+
+      def find_scraper
+        Scraper.find_by establishment_id: params[:list_update][:establishment_id]
+      end
 
       def find_list_updates
         Queries::ListUpdate.with_filters(params).run

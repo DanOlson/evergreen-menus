@@ -11,8 +11,8 @@ module Interactions
       @scraper = scraper
     end
 
-    def scrape!
-      ListManagement::BeerListUpdater.update!(establishment, scraper_instance) do |status|
+    def scrape!(opts={})
+      ListManagement::BeerListUpdater.update!(establishment, scraper_instance, opts) do |status|
         status.on_success do
           list_update.status = 'Success'
         end
@@ -27,14 +27,14 @@ module Interactions
       set_last_run_time
     end
 
+    def list_update
+      @list_update ||= ListUpdate.new establishment: establishment
+    end
+
     private
 
     def set_last_run_time
       scraper.update_attribute :last_ran_at, Time.zone.now
-    end
-
-    def list_update
-      @list_update ||= ListUpdate.new establishment: establishment
     end
 
     def list_as_json
