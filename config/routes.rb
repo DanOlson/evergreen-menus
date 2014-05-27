@@ -3,7 +3,7 @@ Beermapper::Application.routes.draw do
   
   namespace :api do
     namespace :v1 do
-      resources :establishments, only: [:show, :index, :create] do
+      resources :establishments, only: [:show, :index, :update] do
         resources :beers, only: :index
       end
 

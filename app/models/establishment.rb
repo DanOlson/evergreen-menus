@@ -3,7 +3,7 @@ class Establishment < ActiveRecord::Base
   after_create :geocode
   after_update :geocode, if: ->(est){ est.address_changed? }
 
-  validates :name, :address, presence: true
+  validates :name, :address, :url, presence: true
 
   has_many :beer_establishments, dependent: :destroy
   has_many :beers, through: :beer_establishments

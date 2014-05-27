@@ -1,9 +1,10 @@
 module Api
   module V1
     class EstablishmentsController < ApiController
+      before_filter :ensure_authenticated_user, only: :update
 
       def show
-        establishment = Establishment.active.find params[:id]
+        establishment = find_establishment
         establishment.include_beers!
         respond_with establishment
       end
@@ -15,6 +16,22 @@ module Api
           Establishment.active.includes(:beers).order(:name).page params[:page]
         end
         respond_with establishments
+      end
+
+      def update
+        establishment = find_establishment
+        establishment.update_attributes establishment_params
+        respond_with establishment
+      end
+
+      private
+
+      def find_establishment
+        Establishment.find params[:id]
+      end
+
+      def establishment_params
+        params[:establishment].permit(:name, :address, :latitude, :longitude, :url, :active)
       end
     end
   end

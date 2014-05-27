@@ -9,9 +9,9 @@ module Queries
     let(:instance){ ListUpdate.new args }
     let(:results){ instance.run }
 
-    let!(:bar1){ Establishment.create! name: 'Bar1', address: '123 Main' }
-    let!(:bar2){ Establishment.create! name: 'Bar2', address: '123 2nd St' }
-    let!(:bar3){ Establishment.create! name: 'Bar3', address: '300 University' }
+    let!(:bar1){ Establishment.create! name: 'Bar1', address: '123 Main', url: 'http://bar1.com' }
+    let!(:bar2){ Establishment.create! name: 'Bar2', address: '123 2nd St', url: 'http://bar2.com' }
+    let!(:bar3){ Establishment.create! name: 'Bar3', address: '300 University', url: 'http://bar3.com' }
 
     let!(:successful_update1){ ::ListUpdate.create! establishment: bar1, status: 'Success' }
     let!(:successful_update2){ ::ListUpdate.create! establishment: bar2, status: 'Success' }
