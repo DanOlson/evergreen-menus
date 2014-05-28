@@ -1,9 +1,14 @@
 <div class='page'>
   <div class='row'>
-    <div class='page-heading'>
-      <div class='col-sm-12'>
+    <div class='page-heading col-sm-12'>
+      <div class='pull-left'>
         <h2>Establishments</h2>
       </div>
+      {{#if isAuthenticated}}
+        <div class='pull-left'>
+          <button class='btn btn-default action-button' {{action 'newEstablishment'}}>Add New</button>
+        </div>
+      {{/if}}
     </div>
     <div>
       <div class='col-sm-4'><strong>Name</strong></div>

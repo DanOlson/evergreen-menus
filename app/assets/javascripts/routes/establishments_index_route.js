@@ -1,4 +1,4 @@
-Beermapper.EstablishmentsRoute = Ember.Route.extend({
+Beermapper.EstablishmentsIndexRoute = Ember.Route.extend({
   model: function(){
     return this.store.find('establishment');
   },
@@ -16,6 +16,10 @@ Beermapper.EstablishmentsRoute = Ember.Route.extend({
         view.destroy();
       });
       return false;
+    },
+
+    newEstablishment: function(){
+      this.transitionTo('establishments.new');
     }
   }
 })
