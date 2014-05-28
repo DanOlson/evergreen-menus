@@ -4,8 +4,11 @@ module V1
                :name,
                :url,
                :address,
+               :active,
                :latitude,
-               :longitude
+               :longitude,
+               :created_at,
+               :updated_at
 
     has_many :beers
     embed :ids, include: true

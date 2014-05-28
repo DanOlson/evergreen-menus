@@ -3,7 +3,19 @@ require 'spec_helper'
 module Api
   module V1
     describe EstablishmentsController do
-      let(:establishment){ stub_model Establishment, address: '123 foo street' }
+      let(:time){ Time.zone.now.iso8601(3) }
+      let(:establishment) do
+        stub_model Establishment, {
+          name: 'Foo',
+          address: '123 foo street',
+          url: 'http://foo.com/beers',
+          active: true,
+          latitude: BigDecimal.new('44.978375'),
+          longitude: BigDecimal.new('-93.261214'),
+          created_at: time,
+          updated_at: time,
+        }
+      end
 
       describe 'GET to #show' do
         before do
@@ -12,6 +24,17 @@ module Api
         end
 
         it { expect(response).to be_success }
+        it 'returns the expected JSON' do
+          json = JSON.parse(response.body)['establishment']
+          expect(json['name']).to eq establishment.name
+          expect(json['address']).to eq establishment.address
+          expect(json['url']).to eq establishment.url
+          expect(json['active']).to eq true
+          expect(json['latitude']).to eq '44.978375'
+          expect(json['longitude']).to eq '-93.261214'
+          expect(json['created_at']).to eq time
+          expect(json['updated_at']).to eq time
+        end
       end
 
       describe 'GET to #index' do
@@ -84,6 +107,76 @@ module Api
 
             it 'returns 422' do
               expect(response.status).to eq 422
+            end
+          end
+        end
+      end
+
+      describe 'POST to #create' do
+        let(:params) do
+          {
+            name: 'Foo',
+            address: '123 Foo St',
+            url: 'http://foo.com/beers',
+            latitude: BigDecimal.new('44.978375'),
+            longitude: BigDecimal.new('-93.261214'),
+            active: true
+          }
+        end
+
+        before do
+          patch :create, establishment: params, format: :json
+        end
+
+        context 'when not authenticated' do
+          it 'returns 401' do
+            expect(response.status).to eq 401
+          end
+        end
+
+        context 'when authenticated' do
+          let(:establishment){ stub_model Establishment, params.merge(created_at: Time.zone.now, updated_at: Time.zone.now) }
+          before do
+            allow(establishment).to receive(:save)
+            allow(controller).to receive(:init_establishment){ establishment }
+            expect(controller).to receive(:ensure_authenticated_user){ true }
+            post :create, establishment: params, format: :json
+          end
+
+          context 'with valid parameters' do
+            it 'returns 201' do
+              expect(response.status).to eq 201
+            end
+
+            it 'returns a json representation of the record' do
+              json = JSON.parse(response.body)['establishment']
+              expect(json['name']).to eq params[:name]
+              expect(json['address']).to eq params[:address]
+              expect(json['url']).to eq params[:url]
+              expect(json['latitude']).to eq params[:latitude].to_s
+              expect(json['longitude']).to eq params[:longitude].to_s
+              expect(json['active']).to eq params[:active]
+              expect(json['created_at']).to_not be_nil
+              expect(json['updated_at']).to_not be_nil
+              expect(json['beer_ids']).to eq []
+            end
+          end
+
+          context 'with invalid parameters' do
+            let(:params){ super().merge(name: '', url: '') }
+
+            it 'returns 422' do
+              expect(response.status).to eq 422
+            end
+
+            it 'returns appropriate errors' do
+              expected = {
+                errors: {
+                  name: ["can't be blank"],
+                  url: ["can't be blank"]
+                }
+              }.to_json
+              expect(response.body).to eq expected
             end
           end
         end
