@@ -3,13 +3,18 @@ module BeerList
     class BustersOn28th < Establishment
       URL     = 'http://busterson28th.com/bottles/'
       ADDRESS = '4204 S 28th Ave, Minneapolis, Minnesota 55406'
+      OPEN_FOR_LUNCH   = 'Open for brunch @ 10AM on weekends.'
+      NEITHER_SHOULD_U = 'And neither should you:'
+      REJECTS = [
+        OPEN_FOR_LUNCH,
+        NEITHER_SHOULD_U
+      ]
 
       def get_list
         base_list
         split_on_newline
         reject_headers
-        match_pre_vol
-        reject_nils
+        remove_rejects
       end
 
       def url
@@ -53,6 +58,10 @@ module BeerList
 
       def reject_nils
         @busters = @busters.reject(&:nil?)
+      end
+
+      def remove_rejects
+        @busters = @busters.reject { |b| REJECTS.include? b }
       end
     end
   end
