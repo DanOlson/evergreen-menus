@@ -5,6 +5,7 @@
 //= require_tree ./views
 //= require_tree ./helpers
 //= require_tree ./services
+//= require_tree ./serializers
 //= require_tree ./components
 //= require_tree ./templates
 //= require ./router

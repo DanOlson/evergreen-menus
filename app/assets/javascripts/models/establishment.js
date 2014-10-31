@@ -8,5 +8,6 @@ Beermapper.Establishment = DS.Model.extend({
   latitude: attr(),
   longitude: attr(),
 
-  beers: DS.hasMany('beer')
+  beers: DS.hasMany('beer'),
+  scraper: DS.belongsTo('scraper')
 });

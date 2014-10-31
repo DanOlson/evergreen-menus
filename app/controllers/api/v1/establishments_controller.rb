@@ -20,7 +20,12 @@ module Api
 
       def create
         establishment = init_establishment
-        establishment.save if establishment.valid?
+        if establishment.valid?
+          establishment.save
+          scraper = Scraper.find params[:establishment][:scraper_id]
+          scraper.establishment = establishment
+          scraper.save
+        end
         respond_with establishment
       end
 

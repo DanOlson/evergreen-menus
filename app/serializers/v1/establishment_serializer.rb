@@ -11,6 +11,15 @@ module V1
                :updated_at
 
     has_many :beers
+    has_one :scraper
     embed :ids, include: true
+
+    # def include_beers?
+    #   object.include_beers?
+    # end
+
+    def include_scraper?
+      !!current_user
+    end
   end
 end
