@@ -12,6 +12,8 @@ Beermapper.ApplicationController = Ember.ObjectController.extend({
 
   actions: {
     search: function(){
+      // close the navbar if it's open
+      Ember.$('.navbar-collapse').collapse('hide');
       this.transitionToRoute('search', {
         queryParams: {
           query: this.get('queryField')
