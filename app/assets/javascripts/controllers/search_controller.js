@@ -7,8 +7,8 @@ Beermapper.SearchController = Ember.ArrayController.extend(Beermapper.MapUtils, 
   mapHeightMultiplier: 0.9,
 
   numResults: function(){
-    return this.get('content').get('length');
-  }.property('content.@each'),
+    return this.get('model').get('length');
+  }.property('@each'),
 
   isEmpty: function(){
     return this.get('numResults') == 0

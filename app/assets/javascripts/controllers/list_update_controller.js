@@ -5,11 +5,11 @@ Beermapper.ListUpdateController = Ember.ObjectController.extend({
 
   scrapedList: function(){
     return JSON.parse(this.get('rawData')).list
-  }.property('content'),
+  }.property('model'),
 
   listSize: function(){
     return this.get('scrapedList').length
-  }.property('content'),
+  }.property('model'),
 
   actions: {
     viewListUpdate: function(listUpdate){

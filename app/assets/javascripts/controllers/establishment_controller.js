@@ -29,7 +29,7 @@ Beermapper.EstablishmentController = Ember.ObjectController.extend(Beermapper.Ma
   },
 
   marker: function(mapView, skipClickHandler){
-    var establishment = this.get('content');
+    var establishment = this.get('model');
     var marker = new google.maps.Marker({
       position:  this.latLng(),
       animation: google.maps.Animation.DROP,
@@ -77,14 +77,16 @@ Beermapper.EstablishmentController = Ember.ObjectController.extend(Beermapper.Ma
 
   actions: {
     transitionToDetails: function(){
-      var establishment = this.content;
+      var establishment = this.get('model');
       establishment.reload();
       this.transitionToRoute('establishment', establishment);
     },
 
     updateList: function(){
-      var listUpdate = this.store.createRecord('listUpdate', {establishment: this.content});
       var that = this;
+      var listUpdate = this.store.createRecord('listUpdate', {
+        establishment: this.get('model')
+      });
       this.set('updating', true)
       listUpdate.save().then(function(){
         Beermapper.flashQueueController.flash('notice', 'Beer list updated!')

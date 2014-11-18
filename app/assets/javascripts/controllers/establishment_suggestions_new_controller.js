@@ -2,7 +2,7 @@ Beermapper.EstablishmentSuggestionsNewController = Ember.ObjectController.extend
   actions: {
     formSubmit: function(){
       var that = this;
-      var suggestion = this.content;
+      var suggestion = this.get('model');
       var name = suggestion.get('name');
       var url  = suggestion.get('beerListUrl');
 
