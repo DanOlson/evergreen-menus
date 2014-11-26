@@ -1,0 +1,32 @@
+<div class='page'>
+  <div class='row'>
+    <div class='page-heading'>
+      <div class='sm-col-12'>
+        <h2>List Updates</h2>
+      </div>
+    </div>
+    <div class='sm-col-12 list-update-filters'>
+      {{view 'list-update-filter-view'}}
+    </div>
+    <div class='table-responsive'>
+      <table class='table table-hover'>
+        <thead>
+          <th>Establishment</th>
+          <th>Status</th>
+          <th>Notes</th>
+          <th>Creation Date</th>
+        </thead>
+        <tbody>
+          {{#each listUpdate in controller}}
+            <tr {{bind-attr class='isFailure:danger'}} {{action viewListUpdate listUpdate}}>
+              <td>{{listUpdate.name}}</td>
+              <td>{{listUpdate.status}}</td>
+              <td>{{listUpdate.notes}}</td>
+              <td>{{listUpdate.createdAt}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

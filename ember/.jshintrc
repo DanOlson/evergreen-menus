@@ -2,7 +2,10 @@
   "predef": [
     "document",
     "window",
-    "-Promise"
+    "-Promise",
+    "google",
+    "ga",
+    "twttr"
   ],
   "browser" : true,
   "boss" : true,
