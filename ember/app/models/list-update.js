@@ -5,7 +5,7 @@ var ListUpdate = DS.Model.extend({
   status: DS.attr(),
   notes: DS.attr(),
   rawData: DS.attr(),
-  establishment: DS.belongsTo('establishment'),
+  establishment: DS.belongsTo('establishment', { async: true }),
   createdAt: DS.attr('date')
 });
 

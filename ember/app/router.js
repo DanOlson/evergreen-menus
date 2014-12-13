@@ -21,14 +21,14 @@ Router.map(function() {
     this.route('new');
   });
   this.resource('establishment', { path: 'establishment/:id' });
-  this.resource('establishment_suggestions', function(){
+  this.resource('establishment-suggestions', function(){
     this.route('new');
   });
   this.resource('sessions', function(){
     this.route('new');
   });
-  this.resource('list_updates');
-  this.resource('list_update', { path: '/list_updates/:id' });
+  this.resource('list-updates');
+  this.resource('list-update', { path: '/list-updates/:id' });
 });
 
 export default Router;

@@ -1,4 +1,4 @@
-import AuthenticatedRoute from '../routes/authenticated';
+import AuthenticatedRoute from '../authenticated';
 
 var EstablishmentsNewRoute = AuthenticatedRoute.extend({
   model: function(){

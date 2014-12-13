@@ -21,15 +21,15 @@
       <ul class="nav navbar-nav">
         {{view view.whatIsBeermapperView}}
         <li>{{#link-to 'establishments'}}Establishments{{/link-to}}</li>
-        <li>{{#link-to 'establishment_suggestions.new'}}Suggest an Establishment{{/link-to}}</li>
+        <li>{{#link-to 'establishment-suggestions.new'}}Suggest an Establishment{{/link-to}}</li>
         {{#if isAuthenticated}}
           <li class='dropdown'>
             <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
               Admin <span class='caret'></span>
             </a>
             <ul class='dropdown-menu'>
-              <li role='presentation'>{{#link-to 'list_updates' role='menuitem'}}List Updates{{/link-to}}</li>
-              <li role='presentation'>{{#link-to 'establishment_suggestions' role='menuitem'}}Est. Suggestions{{/link-to}}</li>
+              <li role='presentation'>{{#link-to 'list-updates' role='menuitem'}}List Updates{{/link-to}}</li>
+              <li role='presentation'>{{#link-to 'establishment-suggestions' role='menuitem'}}Est. Suggestions{{/link-to}}</li>
               <li role='presentation' class='divider'></li>
               <li role='presentation'><a href='#' {{action logout}}>Logout</a></li>
             </ul>

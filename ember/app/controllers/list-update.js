@@ -15,7 +15,7 @@ var ListUpdateController = Ember.ObjectController.extend({
 
   actions: {
     viewListUpdate: function(listUpdate){
-      this.transitionToRoute('list_update', listUpdate);
+      this.transitionToRoute('list-update', listUpdate);
     }
   }
 });

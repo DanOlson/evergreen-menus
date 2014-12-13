@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import flashQueueController from '../controllers/flash-queue';
+import flashQueueController from '../flash-queue';
 
 var EstablishmentSuggestionsNewController = Ember.ObjectController.extend({
   actions: {

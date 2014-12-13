@@ -5,14 +5,14 @@ module.exports = function(environment) {
     modulePrefix: 'beermapper',
     environment: environment,
     baseURL: '/',
-    locationType: 'auto',
+    locationType: 'hash',
     contentSecurityPolicy: {
       'default-src': "'none'",
-      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://maps.gstatic.com http://platform.twitter.com https://mts0.googleapis.com https://mts1.googleapis.com",
-      'font-src': "'self' https://fonts.gstatic.com",
+      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.gstatic.com http://platform.twitter.com https://*.googleapis.com https://*.googleapis.com",
+      'font-src': "'self' https://*.gstatic.com",
       'connect-src': "'self'",
       'img-src': "*",
-      'style-src': "'self' 'unsafe-inline' https://fonts.googleapis.com",
+      'style-src': "'self' 'unsafe-inline' https://*.googleapis.com",
       'media-src': "'self'"
     },
     EmberENV: {
@@ -29,10 +29,10 @@ module.exports = function(environment) {
   };
 
   if (environment === 'development') {
-    // ENV.APP.LOG_RESOLVER = true;
+    ENV.APP.LOG_RESOLVER = true;
     ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+    ENV.APP.LOG_TRANSITIONS = true;
+    ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
   }
 
@@ -49,7 +49,6 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
   }
 
   return ENV;

@@ -18,7 +18,7 @@
         </thead>
         <tbody>
           {{#each listUpdate in controller}}
-            <tr {{bind-attr class='isFailure:danger'}} {{action viewListUpdate listUpdate}}>
+            <tr {{bind-attr class='isFailure:danger'}} {{action 'viewListUpdate' listUpdate}}>
               <td>{{listUpdate.name}}</td>
               <td>{{listUpdate.status}}</td>
               <td>{{listUpdate.notes}}</td>

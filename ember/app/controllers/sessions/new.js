@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import AuthManager from '../services/auth-manager';
-import flashQueueController from '../controllers/flash-queue';
+import AuthManager from '../../services/auth-manager';
+import flashQueueController from '../flash-queue';
 
 var SessionsNewController = Ember.ObjectController.extend({
   attemptedTransition: null,

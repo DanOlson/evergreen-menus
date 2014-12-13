@@ -1,4 +1,4 @@
-import AuthenticatedRoute from '../routes/authenticated';
+import AuthenticatedRoute from '../authenticated';
 
 var EstablishmentSuggestionsIndexRoute = AuthenticatedRoute.extend({
   model: function(){

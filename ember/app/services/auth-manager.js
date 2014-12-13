@@ -21,7 +21,7 @@ var AuthManager = Ember.Object.extend({
     Ember.$.ajaxSetup({
       headers: { 'Authorization': 'Bearer ' + accessToken }
     });
-    var user = App.__container__.lookup('store:main').find('user', userId);
+    var user = Beermapper.__container__.lookup('store:main').find('user', userId);
     var that = this;
     user.then(function(){
       that.set('apiKey', ApiKey.create({
@@ -34,7 +34,7 @@ var AuthManager = Ember.Object.extend({
   },
 
   reset: function(){
-    App.__container__.lookup('route:application').transitionTo('sessions.new');
+    Beermapper.__container__.lookup('route:application').transitionTo('sessions.new');
     Ember.run.sync();
     Ember.run.next(this, function(){
       this.set('apiKey', null);
