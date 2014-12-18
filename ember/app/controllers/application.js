@@ -5,14 +5,15 @@ import flashQueueController from '../controllers/flash-queue';
 var ApplicationController = Ember.ObjectController.extend({
   query: null,
   queryField: Ember.computed.oneWay('query'),
+  authManager: AuthManager,
 
   currentUser: function(){
     return AuthManager.get('apiKey.user');
-  }.property('AuthManager.apiKey'),
+  }.property('authManager.apiKey'),
 
   isAuthenticated: function(){
     return AuthManager.isAuthenticated();
-  }.property('AuthManager.apiKey'),
+  }.property('authManager.apiKey'),
 
   actions: {
     search: function(){

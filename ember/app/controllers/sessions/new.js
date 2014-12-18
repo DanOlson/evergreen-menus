@@ -9,13 +9,12 @@ var SessionsNewController = Ember.ObjectController.extend({
     loginUser: function(){
       var data = this.getProperties('username', 'password');
       var that = this;
-      var authManager = AuthManager;
       var attemptedTransition = this.get('attemptedTransition');
 
       Ember.$.post('/api/v1/sessions', data).then(function(response){
-        authManager.authenticate(response.api_key.access_token, response.api_key.user_id);
+        AuthManager.authenticate(response.api_key.access_token, response.api_key.user_id);
         Ember.run.later(that, function(){
-          flashQueueController.flash('notice', 'Welcome, ' + authManager.get('apiKey.user').get('name'));
+          flashQueueController.flash('notice', 'Welcome, ' + AuthManager.get('apiKey.user').get('name'));
           if (attemptedTransition){
             attemptedTransition.retry();
             this.set('attemptedTransition', null);

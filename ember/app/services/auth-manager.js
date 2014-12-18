@@ -26,7 +26,7 @@ var AuthManager = Ember.Object.extend({
     user.then(function(){
       that.set('apiKey', ApiKey.create({
         accessToken: accessToken,
-        user: user
+        user: user.content
       }));
     }, function(){
       that.reset();
