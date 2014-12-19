@@ -3,6 +3,7 @@ import flashQueueController from '../flash-queue';
 
 var EstablishmentsNewController = Ember.ObjectController.extend({
   scrapers: null,
+  flashQueueController: flashQueueController,
 
   scraperClassName: function(){
     var scraper = this.get('scraper');

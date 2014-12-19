@@ -9,6 +9,7 @@ var SearchController = Ember.ArrayController.extend(MapUtils, {
   itemController: 'establishment',
   mapWidthMultiplier: 1.0,
   mapHeightMultiplier: 0.9,
+  flashQueueController: flashQueueController,
 
   numResults: function(){
     return this.get('model').get('length');

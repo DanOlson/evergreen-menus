@@ -2,7 +2,7 @@
 <div class='body-container'>
   <div class='flash-queue'>
     {{#each flashQueueController}}
-      {{view 'flash-message-view'}}
+      {{view 'flash-message'}}
     {{/each}}
   </div>
   {{outlet}}
@@ -10,7 +10,7 @@
     <small>Copyright &copy; 2014 beermapper.com All rights reserved.</small>
     <small>
       {{#if isAuthenticated}}
-        <a href='#' {{action logout}}>Logout</a>
+        <a href='#' {{action 'logout'}}>Logout</a>
       {{else}}
         {{#link-to 'sessions.new'}}Login{{/link-to}}
       {{/if}}

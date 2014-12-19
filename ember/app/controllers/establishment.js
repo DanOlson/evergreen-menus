@@ -13,6 +13,7 @@ var EstablishmentController = Ember.ObjectController.extend(MapUtils, {
   mapWidthMultiplier: 0.5,
   mapHeightMultiplier: 0.8,
   updating: false,
+  flashQueueController: flashQueueController,
 
   placeMarkers: function(mapView){
     var func = function(){

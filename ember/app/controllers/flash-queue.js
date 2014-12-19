@@ -18,6 +18,6 @@ var flashQueueController = Ember.ArrayController.extend({
       }, this.destroyTimeout);
     }
   }
-}).create();
+});
 
-export default flashQueueController;
+export default flashQueueController.create();

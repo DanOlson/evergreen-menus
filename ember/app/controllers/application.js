@@ -6,6 +6,7 @@ var ApplicationController = Ember.ObjectController.extend({
   query: null,
   queryField: Ember.computed.oneWay('query'),
   authManager: AuthManager,
+  flashQueueController: flashQueueController,
 
   currentUser: function(){
     return AuthManager.get('apiKey.user');

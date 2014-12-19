@@ -2,6 +2,8 @@ import Ember from 'ember';
 import flashQueueController from '../flash-queue';
 
 var EstablishmentSuggestionsNewController = Ember.ObjectController.extend({
+  flashQueueController: flashQueueController,
+
   actions: {
     formSubmit: function(){
       var that = this;

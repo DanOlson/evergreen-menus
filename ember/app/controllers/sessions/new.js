@@ -4,6 +4,7 @@ import flashQueueController from '../flash-queue';
 
 var SessionsNewController = Ember.ObjectController.extend({
   attemptedTransition: null,
+  flashQueueController: flashQueueController,
 
   actions: {
     loginUser: function(){
