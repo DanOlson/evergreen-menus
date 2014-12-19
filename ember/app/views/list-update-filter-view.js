@@ -1,16 +1,9 @@
 import Ember from 'ember';
 
 var ListUpdateFilterView = Ember.View.extend({
-  templateName: 'list_update_filters',
+  templateName: 'list-update-filters',
   tagName: 'form',
-  classNames: ['form-inline'],
-
-  didInsertElement: function(){
-    this.$('.date-filter').datepicker({
-      dateFormat: 'yy-mm-dd',
-      maxDate: 0
-    });
-  }
+  classNames: ['form-inline']
 });
 
 export default ListUpdateFilterView;
