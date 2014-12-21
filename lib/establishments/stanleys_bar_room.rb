@@ -1,7 +1,7 @@
 module BeerList
   module Establishments
     class StanleysBarRoom < Establishment
-      URL = 'http://www.stanleysbarroom.com/drinks/beer-list/'
+      URL = 'http://www.stanleysbarroom.com/drinks/craft-beer-list/'
       ADDRESS = '2500 University Ave NE, Minneapolis, MN 55418'
 
       def get_list
