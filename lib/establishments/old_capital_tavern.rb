@@ -5,7 +5,7 @@ module BeerList
       ADDRESS = '2 North Benton Drive, Sauk Rapids, MN 56379'
 
       def get_list
-        table = page.search('.container2').search('table')[1]
+        table = page.search('table')[0]
         rows  = table.search('tr')
         beer_names = rows.map { |r| r.search('td')[0].text }
         breweries  = rows.map { |r| r.search('td')[2].text }
