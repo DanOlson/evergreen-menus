@@ -5,7 +5,9 @@ module BeerList
       ADDRESS = '858 Payne Ave, St Paul, MN 55130'
 
       def get_list
-        page.search('h3 strong').map &:text
+        beers = base_list
+        beers = strip beers
+        beers.reject &:empty?
       end
 
       def url
@@ -14,6 +16,16 @@ module BeerList
 
       def address
         ADDRESS
+      end
+
+      private
+
+      def base_list
+        page.search('h3 strong').map &:text
+      end
+
+      def strip(beers)
+        beers.map { |b| b.gsub(/\A[[:space:]]+|[[:space:]]+\z/, '') }
       end
     end
   end

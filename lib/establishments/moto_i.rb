@@ -24,7 +24,7 @@ module BeerList
       private
 
       def beer_menu
-        bar_menu.search('.locu-subsection')[6]
+        bar_menu.search('.locu-subsection')[5]
       end
 
       def bar_menu

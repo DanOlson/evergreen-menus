@@ -5,7 +5,9 @@ module BeerList
       ADDRESS = '501 Washington Ave S, Minneapolis, MN 55415'
 
       def get_list
-        page.search('.item-page li').map &:text
+        beers = base_list
+        beers = remove_volume beers
+        beers = remove_empty beers
       end
 
       def url
@@ -14,6 +16,26 @@ module BeerList
 
       def address
         ADDRESS
+      end
+
+      private
+
+      def base_list
+        page.search('.g1-column li').map &:text
+      end
+
+      def remove_volume(beers)
+        beers.map do |beer|
+          if beer.match(/\(/)
+            $`
+          else
+            beer
+          end
+        end
+      end
+
+      def remove_empty(beers)
+        beers.reject &:empty?
       end
     end
   end
