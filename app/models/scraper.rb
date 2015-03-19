@@ -6,7 +6,7 @@ class Scraper < ActiveRecord::Base
     def queued_for_update
       joins(:establishment).
       merge(Establishment.active).
-      where arel_table[:scheduled_run_time].lt(Time.zone.now).and(arel_table[:last_ran_at].lt(23.hours.ago).or(arel_table[:last_ran_at].eq(nil)))
+      where arel_table[:last_ran_at].lt(23.hours.ago).or(arel_table[:last_ran_at].eq(nil))
     end
   end
 
