@@ -26,7 +26,7 @@ module BeerList
 
       def base_list
         text   = page.search('.entry-content').map(&:text).join
-        @beers = text.split("Sparkling & Rose").first.split("Bottles & Cans").last
+        @beers = text.split("sparkling & rose").first.split("bottles & cans").last
       end
 
       def split_on_newline

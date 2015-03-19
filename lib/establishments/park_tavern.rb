@@ -5,10 +5,11 @@ module BeerList
       ADDRESS = '3401 Louisiana Ave S St Louis Park, MN 55426'
 
       def get_list
-        base_list
-        reject_empty
-        match_before_paren
-        uniq
+        beers = base_list
+        beers = strip beers
+        beers = reject_empty beers
+        beers = match_before_paren beers
+        beers.uniq
       end
 
       def url
@@ -21,20 +22,20 @@ module BeerList
 
       private
 
+      def strip(beers)
+        beers.map { |b| b.gsub(/\A[[:space:]]+|[[:space:]]+\z/, '') }
+      end
+
       def base_list
-        @beers = page.search('p strong').map(&:text).map &:strip
+        @beers = page.search('p.p1').map(&:text).map &:strip
       end
 
-      def reject_empty
-        @beers = @beers.select { |b| b.match /\w/ }
+      def reject_empty(beers)
+        beers.select { |b| b.match /\w/ }
       end
 
-      def match_before_paren
-        @beers = @beers.map { |b| b.match(/\(/) ? $`.strip : b }
-      end
-
-      def uniq
-        @beers = @beers.uniq
+      def match_before_paren(beers)
+        beers.map { |b| b.match(/\(/) ? $`.strip : b }
       end
     end
   end

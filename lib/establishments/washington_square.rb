@@ -22,7 +22,7 @@ module BeerList
       private
 
       def base_list
-        @results = page.search('p strong').map(&:text)
+        @results = page.search('strong').map(&:text)
       end
 
       def split_on_newline

@@ -5,8 +5,9 @@ module BeerList
       ADDRESS = '1400 Lagoon Ave, Minneapolis, MN 55408'
 
       def get_list
-        base_list
-        strip_abv
+        beers = base_list
+        beers = strip beers
+        beers.reject &:empty?
       end
 
       def url
@@ -20,11 +21,11 @@ module BeerList
       private
 
       def base_list
-        @beers = page.search('div.wp-tab-content-wrapper').slice(3).search('h3').map &:text
+        page.search('div.wp-tab-content-wrapper').slice(5).search('p').map &:text
       end
 
-      def strip_abv
-        @beers = @beers.map { |beer| beer.match(/\d{1,2}\.?\d?%/); $` }.compact
+      def strip(beers)
+        beers.map { |b| b.gsub(/\A[[:space:]]+|[[:space:]]+\z/, '') }
       end
     end
   end
