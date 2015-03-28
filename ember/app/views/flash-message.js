@@ -7,7 +7,7 @@ var FlashMessageView = Ember.View.extend({
   isWarningBinding: 'context.isWarning',
   isNoticeBinding: 'context.isNotice',
   isInfoBinding: 'context.isInfo',
-  template: 'flash-message',
+  templateName: 'flash-message',
   actions: {
     close: function(){
       this.$().fadeOut(300);
