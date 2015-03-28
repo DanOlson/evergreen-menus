@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import ApiKey from '../models/api-key';
-import App from '../app';
 
 var AuthManager = Ember.Object.extend({
   init: function(){
@@ -9,7 +8,7 @@ var AuthManager = Ember.Object.extend({
     var accessToken = Ember.$.cookie('access_token');
     var authUserId  = Ember.$.cookie('user_id');
     if(!Ember.isEmpty(accessToken) && !Ember.isEmpty(authUserId)){
-      this.authenticate(accessToken, authUserId);
+      // this.authenticate(accessToken, authUserId);
     }
   },
 
@@ -17,11 +16,16 @@ var AuthManager = Ember.Object.extend({
     return !Ember.isEmpty(this.get('apiKey.accessToken')) && !Ember.isEmpty(this.get('apiKey.user'));
   },
 
+  store: null,
+  applicationRoute: null,
+
   authenticate: function(accessToken, userId){
     Ember.$.ajaxSetup({
       headers: { 'Authorization': 'Bearer ' + accessToken }
     });
-    var user = Beermapper.__container__.lookup('store:main').find('user', userId);
+    if (!this.store) { return this.reset(); }
+
+    var user = this.store.find('user', userId);
     var that = this;
     user.then(function(){
       that.set('apiKey', ApiKey.create({
@@ -34,7 +38,7 @@ var AuthManager = Ember.Object.extend({
   },
 
   reset: function(){
-    Beermapper.__container__.lookup('route:application').transitionTo('sessions.new');
+    this.applicationRoute.transitionTo('sessions.new');
     Ember.run.sync();
     Ember.run.next(this, function(){
       this.set('apiKey', null);

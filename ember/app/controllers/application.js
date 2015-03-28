@@ -28,6 +28,7 @@ var ApplicationController = Ember.ObjectController.extend({
     },
 
     logout: function(){
+      AuthManager.set('applicationRoute', (AuthManager.applicationRoute || this));
       AuthManager.reset();
       flashQueueController.flash('notice', 'You have logged out');
       this.transitionToRoute('index');

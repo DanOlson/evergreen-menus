@@ -13,6 +13,8 @@ var SessionsNewController = Ember.ObjectController.extend({
       var attemptedTransition = this.get('attemptedTransition');
 
       Ember.$.post('/api/v1/sessions', data).then(function(response){
+        AuthManager.set('store', that.store);
+        AuthManager.set('applicationRoute', this.applicationRoute);
         AuthManager.authenticate(response.api_key.access_token, response.api_key.user_id);
         Ember.run.later(that, function(){
           flashQueueController.flash('notice', 'Welcome, ' + AuthManager.get('apiKey.user').get('name'));
