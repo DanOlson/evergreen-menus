@@ -1,13 +1,12 @@
 module BeerList
   module Establishments
     class CrookedPint < Establishment
-      URL     = 'http://crookedpint.com/minneapolis/drinks/beer'
+      URL     = 'http://www.crookedpint.com/downtown-minneapolis/drinks/'
       ADDRESS = '501 Washington Ave S, Minneapolis, MN 55415'
 
       def get_list
         beers = base_list
-        beers = remove_volume beers
-        beers = remove_empty beers
+        beers = get_names beers
       end
 
       def url
@@ -21,21 +20,13 @@ module BeerList
       private
 
       def base_list
-        page.search('.g1-column li').map &:text
+        page.search('li.g1-three-fifth p').first.text.split("\n")
       end
 
-      def remove_volume(beers)
+      def get_names(beers)
         beers.map do |beer|
-          if beer.match(/\(/)
-            $`
-          else
-            beer
-          end
+          beer.split('•')[0].strip
         end
-      end
-
-      def remove_empty(beers)
-        beers.reject &:empty?
       end
     end
   end
