@@ -7,7 +7,7 @@ var FlashMessageView = Ember.View.extend({
   isWarningBinding: 'context.isWarning',
   isNoticeBinding: 'context.isNotice',
   isInfoBinding: 'context.isInfo',
-  template: Ember.Handlebars.compile('{{message}}{{#if dismissable}}<i class="flash-delete" {{action "close" target="view"}} >&times;</i>{{/if}}'),
+  template: 'flash-message',
   actions: {
     close: function(){
       this.$().fadeOut(300);

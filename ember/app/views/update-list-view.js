@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 var UpdateListView = Ember.View.extend({
-  template: Ember.Handlebars.compile("Update List"),
+  template: 'update-list-button',
   tagName: 'button',
   classNames: ['btn', 'btn-danger'],
   attributeBindings: ['isUpdating:disabled'],
