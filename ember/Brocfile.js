@@ -6,6 +6,11 @@ var app = new EmberApp({
   'ember-cli-bootstrap': {
     'importBootstrapJS': true,
     'importBootstrapTheme': true
+  },
+  vendorFiles: {
+    'handlebars.js': {
+      production: 'bower_components/handlebars/handlebars.js'
+    }
   }
 });
 
