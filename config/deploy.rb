@@ -16,13 +16,13 @@ set :user,            "deploy"
 
 set :hostname,  "beermapper.com"
 set :domain,    "beermapper.com"
-set :branch,    "master"
+set :branch,    "ember-cli"
 set :rails_env, "production"
 set :keep_releases, 3
 
 role :web, domain
 role :app, domain
-role :db,  domain, :primary => true # This is where Rails migrations will run
+role :db,  domain, primary: true # This is where Rails migrations will run
 
 # if you want to clean up old releases on each deploy uncomment this:
 after "deploy:restart", "deploy:cleanup"
@@ -43,7 +43,12 @@ namespace :deploy do
     run "rm #{release_path}/config/database.yml"
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/"
   end
+
+  task :build_dist, roles: :app, except: { no_release: true } do
+    run "cd #{release_path}/ember && ember install && ember build --environment=production"
+  end
 end
 
 after 'deploy:finalize_update', 'deploy:symlink_config'
 after 'deploy:finalize_update', 'deploy:symlink_database_yml'
+after 'deploy:finalize_update', 'deploy:build_dist'
