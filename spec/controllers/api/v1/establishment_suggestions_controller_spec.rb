@@ -39,7 +39,7 @@ module Api
       end
 
       describe 'DELETE to #destroy' do
-        let(:suggestion){ stub_model EstablishmentSuggestion }
+        let(:suggestion){ EstablishmentSuggestion.new(id: 1) }
         let(:interactor){ double 'interactor', destroy: true }
 
         before do

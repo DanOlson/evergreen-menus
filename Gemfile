@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails',                    '4.0.4'
+gem 'rails',                    '~> 4.0.4'
 gem 'pg',                       '~> 0.17.0'
 gem 'bcrypt',                   '~> 3.1.7'
 gem 'geocoder',                 '~> 1.1.8'
@@ -11,7 +11,7 @@ gem 'newrelic_rpm'
 gem 'logvisible'
 
 group :development, :test do
-  gem "rspec-rails", "~> 2.14.0"
+  gem "rspec-rails", "~> 3.4.0"
   gem 'pry-rails',   '~> 0.3.2'
 end
 

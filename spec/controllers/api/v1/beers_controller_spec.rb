@@ -5,7 +5,7 @@ module Api
     describe BeersController do
 
       describe 'GET to #index' do
-        let(:establishment){ stub_model Establishment }
+        let(:establishment){ double Establishment }
 
         before do
           rel = double('relation')

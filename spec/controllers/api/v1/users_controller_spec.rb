@@ -4,7 +4,14 @@ module Api
   module V1
     describe UsersController do
       describe 'GET to #show' do
-        let(:user){ stub_model User }
+        let(:user) do
+          User.new({
+            id: 1,
+            username: 'dude',
+            first_name: 'Dude',
+            last_name: 'Lebowski'
+          })
+        end
 
         context 'when the user is found' do
           before do

@@ -3,16 +3,20 @@ require 'spec_helper'
 module Api
   module V1
     describe ListUpdatesController do
-      let(:establishment){ stub_model Establishment, name: 'Dude' }
+      let(:establishment){ Establishment.new name: 'Dude' }
       let(:first) do
-        stub_model ListUpdate,
+        ListUpdate.new({
+          id: 1,
           establishment: establishment,
           raw_data: { list: ['Miller'] }.to_json
+        })
       end
       let(:second) do
-        stub_model ListUpdate,
+        ListUpdate.new({
+          id: 2,
           establishment: establishment,
           raw_data: { list: ['Bud'] }.to_json
+        })
       end
       let(:updates){ [first, second] }
 
@@ -109,8 +113,8 @@ module Api
         end
 
         context 'when authenticated' do
-          let(:establishment){ stub_model Establishment }
-          let(:list_update){ stub_model ListUpdate, establishment: establishment }
+          let(:establishment){ Establishment.new id: 1 }
+          let(:list_update){ ListUpdate.new establishment: establishment }
           let(:scraper){ double 'Scraper' }
           let(:interactor){ double 'Interactions::Scraper', scrape!: true, list_update: list_update }
 

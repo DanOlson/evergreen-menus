@@ -5,7 +5,7 @@ module Api
     describe EstablishmentsController do
       let(:time){ Time.zone.now.iso8601(3) }
       let(:establishment) do
-        stub_model Establishment, {
+        Establishment.new({
           name: 'Foo',
           address: '123 foo street',
           url: 'http://foo.com/beers',
@@ -14,7 +14,7 @@ module Api
           longitude: BigDecimal.new('-93.261214'),
           created_at: time,
           updated_at: time,
-        }
+        })
       end
 
       describe 'GET to #show' do
@@ -135,12 +135,23 @@ module Api
         end
 
         context 'when authenticated' do
-          let(:establishment){ stub_model Establishment, params.merge(created_at: Time.zone.now, updated_at: Time.zone.now) }
+          let(:scraper) do
+            double :establishment= => nil, save: nil
+          end
+          let(:establishment) do
+            Establishment.new(
+              params.merge({
+                created_at: Time.zone.now,
+                updated_at: Time.zone.now
+              })
+            )
+          end
           before do
             allow(establishment).to receive(:save)
             allow(controller).to receive(:init_establishment){ establishment }
+            allow(Scraper).to receive(:find).with(1){ scraper }
             expect(controller).to receive(:ensure_authenticated_user){ true }
-            post :create, establishment: params, format: :json
+            post :create, establishment: params.merge(scraper_id: 1), format: :json
           end
 
           context 'with valid parameters' do
