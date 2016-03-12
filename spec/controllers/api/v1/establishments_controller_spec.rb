@@ -62,7 +62,7 @@ module Api
             {
               name: 'Foo',
               url: 'http://example.com',
-              active: false
+              active: 'false'
             }
           end
 
@@ -76,7 +76,8 @@ module Api
             end
 
             it 'updates the record' do
-              expect(establishment).to receive(:update_attributes).with params.stringify_keys
+              strong_params = ActionController::Parameters.new(params).permit(:name, :url, :active)
+              expect(establishment).to receive(:update_attributes).with strong_params
               patch :update, id: 1, establishment: params, format: :json
             end
 
@@ -149,7 +150,7 @@ module Api
           before do
             allow(establishment).to receive(:save)
             allow(controller).to receive(:init_establishment){ establishment }
-            allow(Scraper).to receive(:find).with(1){ scraper }
+            allow(Scraper).to receive(:find).with('1'){ scraper }
             expect(controller).to receive(:ensure_authenticated_user){ true }
             post :create, establishment: params.merge(scraper_id: 1), format: :json
           end
