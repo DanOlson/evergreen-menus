@@ -1,7 +1,7 @@
 module Api
   module V1
     class ListUpdatesController < ApiController
-      before_filter :ensure_authenticated_user
+      before_action :ensure_authenticated_user
 
       def index
         respond_with find_list_updates
