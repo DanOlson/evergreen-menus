@@ -22,7 +22,7 @@ module Api
           allow(controller).to receive(:valid_api_key?){ true }
           expect(EstablishmentSuggestion).to receive(:new){ suggestion }
           expect(suggestion).to receive(:save){ saved }
-          post :create, establishment_suggestion: params, format: :json
+          post :create, params: { establishment_suggestion: params }, format: :json
         end
 
         context 'when request is successful' do
@@ -46,7 +46,7 @@ module Api
           allow(controller).to receive(:ensure_authenticated_user)
           allow(controller).to receive(:find_suggestion){ suggestion }
           expect(controller).to receive(:init_interactor).with(suggestion){ interactor }
-          delete :destroy, id: suggestion.id, format: :json
+          delete :destroy, params: { id: suggestion.id }, format: :json
         end
 
         it { expect(response).to be_success }

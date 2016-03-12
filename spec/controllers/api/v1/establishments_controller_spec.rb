@@ -20,7 +20,7 @@ module Api
       describe 'GET to #show' do
         before do
           expect(controller).to receive(:find_establishment){ establishment }
-          get :show, id: 1, format: :json
+          get :show, params: { id: 1 }, format: :json
         end
 
         it { expect(response).to be_success }
@@ -52,7 +52,7 @@ module Api
       describe 'PATCH to #update' do
         context 'when not authenticated' do
           it 'returns 401' do
-            patch :update, id: 1, format: :json
+            patch :update, params: { id: 1 }, format: :json
             expect(response.status).to eq 401
           end
         end
@@ -78,12 +78,12 @@ module Api
             it 'updates the record' do
               strong_params = ActionController::Parameters.new(params).permit(:name, :url, :active)
               expect(establishment).to receive(:update_attributes).with strong_params
-              patch :update, id: 1, establishment: params, format: :json
+              patch :update, params: { id: 1, establishment: params }, format: :json
             end
 
             it 'returns 204' do
               allow(establishment).to receive :update_attributes
-              patch :update, id: 1, establishment: params, format: :json
+              patch :update, params: { id: 1, establishment: params }, format: :json
               expect(response.status).to eq 204
             end
           end
@@ -93,7 +93,7 @@ module Api
 
             before do
               expect(controller).to receive(:find_establishment){ establishment }
-              patch :update, id: 1, establishment: params, format: :json
+              patch :update, params: { id: 1, establishment: params }, format: :json
             end
 
             it 'returns the appropriate errors' do
@@ -126,7 +126,7 @@ module Api
         end
 
         before do
-          patch :create, establishment: params, format: :json
+          patch :create, params: { establishment: params }, format: :json
         end
 
         context 'when not authenticated' do
@@ -152,7 +152,7 @@ module Api
             allow(controller).to receive(:init_establishment){ establishment }
             allow(Scraper).to receive(:find).with('1'){ scraper }
             expect(controller).to receive(:ensure_authenticated_user){ true }
-            post :create, establishment: params.merge(scraper_id: 1), format: :json
+            post :create, params: { establishment: params.merge(scraper_id: 1) }, format: :json
           end
 
           context 'with valid parameters' do

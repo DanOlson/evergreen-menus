@@ -20,7 +20,7 @@ module Api
           end
 
           it 'returns 200' do
-            get :show, id: user.id, format: :json
+            get :show, params: { id: user.id }, format: :json
             expect(response.status).to eq 200
           end
 
@@ -33,14 +33,14 @@ module Api
                 last_name: user.last_name
               }
             }.to_json
-            get :show, id: user.id, format: :json
+            get :show, params: { id: user.id }, format: :json
             expect(response.body).to eq expected
           end
         end
 
         context "when the user is not authenticated" do
           it 'returns 401' do
-            get :show, id: 100, format: :json
+            get :show, params: { id: 100 }, format: :json
             expect(response.status).to eq 401
           end
         end

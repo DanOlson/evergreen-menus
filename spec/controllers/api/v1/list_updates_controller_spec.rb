@@ -72,7 +72,7 @@ module Api
           before do
             expect(controller).to receive(:ensure_authenticated_user){ true }
             expect(ListUpdate).to receive(:find){ first }
-            get :show, id: first.id, format: :json
+            get :show, params: { id: first.id }, format: :json
           end
 
           it 'returns 200' do
@@ -98,7 +98,7 @@ module Api
 
         context 'when not authenticated' do
           it 'returns 401' do
-            get :show, id: first.id, format: :json
+            get :show, params: { id: first.id }, format: :json
             expect(response.status).to eq 401
           end
         end
@@ -107,7 +107,7 @@ module Api
       describe 'POST to #create' do
         context 'when not authenticated' do
           it 'returns 401' do
-            post :create, list_update: {}, format: :json
+            post :create, params: { list_update: {} }, format: :json
             expect(response.status).to eq 401
           end
         end
@@ -125,14 +125,14 @@ module Api
           it 'returns 200' do
             allow(controller).to receive(:find_scraper){ scraper }
             allow(Interactions::Scraper).to receive(:new){ interactor }
-            post :create, list_update: { establishment_id: 1 }, format: :json
+            post :create, params: { list_update: { establishment_id: 1 } }, format: :json
             expect(response.status).to eq 201
           end
 
           it 'initiates a list update' do
             expect(controller).to receive(:find_scraper){ scraper }
             expect(Interactions::Scraper).to receive(:new).with(scraper){ interactor }
-            post :create, list_update: { establishment_id: 1 }, format: :json
+            post :create, params: { list_update: { establishment_id: 1 } }, format: :json
             expect(interactor).to have_received :scrape!
           end
         end
