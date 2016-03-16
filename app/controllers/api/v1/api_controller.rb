@@ -20,7 +20,6 @@ module Api
 
       def token
         bearer = request.headers['HTTP_AUTHORIZATION']
-        logvisible bearer.inspect
         bearer ||= request.headers["rack.session"].try(:[], 'Authorization')
         bearer and bearer.split.last
       end
