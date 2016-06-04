@@ -5,7 +5,7 @@ module Api
     describe EstablishmentsController do
       let(:time){ Time.zone.now.iso8601(3) }
       let(:establishment) do
-        stub_model Establishment, {
+        Establishment.new({
           name: 'Foo',
           address: '123 foo street',
           url: 'http://foo.com/beers',
@@ -14,13 +14,13 @@ module Api
           longitude: BigDecimal.new('-93.261214'),
           created_at: time,
           updated_at: time,
-        }
+        })
       end
 
       describe 'GET to #show' do
         before do
           expect(controller).to receive(:find_establishment){ establishment }
-          get :show, id: 1, format: :json
+          get :show, params: { id: 1 }, format: :json
         end
 
         it { expect(response).to be_success }
@@ -52,7 +52,7 @@ module Api
       describe 'PATCH to #update' do
         context 'when not authenticated' do
           it 'returns 401' do
-            patch :update, id: 1, format: :json
+            patch :update, params: { id: 1 }, format: :json
             expect(response.status).to eq 401
           end
         end
@@ -62,7 +62,7 @@ module Api
             {
               name: 'Foo',
               url: 'http://example.com',
-              active: false
+              active: 'false'
             }
           end
 
@@ -76,13 +76,14 @@ module Api
             end
 
             it 'updates the record' do
-              expect(establishment).to receive(:update_attributes).with params.stringify_keys
-              patch :update, id: 1, establishment: params, format: :json
+              strong_params = ActionController::Parameters.new(params).permit(:name, :url, :active)
+              expect(establishment).to receive(:update_attributes).with strong_params
+              patch :update, params: { id: 1, establishment: params }, format: :json
             end
 
             it 'returns 204' do
               allow(establishment).to receive :update_attributes
-              patch :update, id: 1, establishment: params, format: :json
+              patch :update, params: { id: 1, establishment: params }, format: :json
               expect(response.status).to eq 204
             end
           end
@@ -92,7 +93,7 @@ module Api
 
             before do
               expect(controller).to receive(:find_establishment){ establishment }
-              patch :update, id: 1, establishment: params, format: :json
+              patch :update, params: { id: 1, establishment: params }, format: :json
             end
 
             it 'returns the appropriate errors' do
@@ -125,7 +126,7 @@ module Api
         end
 
         before do
-          patch :create, establishment: params, format: :json
+          patch :create, params: { establishment: params }, format: :json
         end
 
         context 'when not authenticated' do
@@ -135,12 +136,23 @@ module Api
         end
 
         context 'when authenticated' do
-          let(:establishment){ stub_model Establishment, params.merge(created_at: Time.zone.now, updated_at: Time.zone.now) }
+          let(:scraper) do
+            double :establishment= => nil, save: nil
+          end
+          let(:establishment) do
+            Establishment.new(
+              params.merge({
+                created_at: Time.zone.now,
+                updated_at: Time.zone.now
+              })
+            )
+          end
           before do
             allow(establishment).to receive(:save)
             allow(controller).to receive(:init_establishment){ establishment }
+            allow(Scraper).to receive(:find).with('1'){ scraper }
             expect(controller).to receive(:ensure_authenticated_user){ true }
-            post :create, establishment: params, format: :json
+            post :create, params: { establishment: params.merge(scraper_id: 1) }, format: :json
           end
 
           context 'with valid parameters' do

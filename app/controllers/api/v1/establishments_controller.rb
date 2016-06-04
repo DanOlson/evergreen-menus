@@ -1,7 +1,7 @@
 module Api
   module V1
     class EstablishmentsController < ApiController
-      before_filter :ensure_authenticated_user, only: [:update, :create]
+      before_action :ensure_authenticated_user, only: [:update, :create]
 
       def show
         establishment = find_establishment

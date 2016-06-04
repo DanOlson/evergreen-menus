@@ -5,14 +5,15 @@ module Api
     describe SessionsController do
       describe 'POST to #create' do
         context 'with a valid user_id' do
-          let(:user){ stub_model User, authenticate: true }
+          let(:user){ User.new(id: 1) }
           let(:token){ SecureRandom.hex }
-          let(:api_key){ stub_model ApiKey, access_token: token, user_id: user.id }
+          let(:api_key){ ApiKey.new access_token: token, user_id: user.id }
 
           before do
+            allow(user).to receive(:authenticate) { true }
             allow(User).to receive(:find_by_username){ user }
             expect(controller).to receive(:create_api_key){ api_key }
-            post :create, username: 'foo', password: 'bar', format: :json
+            post :create, params: { username: 'foo', password: 'bar' }, format: :json
           end
 
           it 'returns an api_key' do
@@ -33,7 +34,7 @@ module Api
         context 'with an invalid user_id' do
           before do
             allow(User).to receive(:find_by_username)
-            post :create, username: 'foo', password: 'bar', format: :json
+            post :create, params: { username: 'foo', password: 'bar' }, format: :json
           end
 
           it 'returns 401' do

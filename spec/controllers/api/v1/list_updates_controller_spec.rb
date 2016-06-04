@@ -3,16 +3,20 @@ require 'spec_helper'
 module Api
   module V1
     describe ListUpdatesController do
-      let(:establishment){ stub_model Establishment, name: 'Dude' }
+      let(:establishment){ Establishment.new name: 'Dude' }
       let(:first) do
-        stub_model ListUpdate,
+        ListUpdate.new({
+          id: 1,
           establishment: establishment,
           raw_data: { list: ['Miller'] }.to_json
+        })
       end
       let(:second) do
-        stub_model ListUpdate,
+        ListUpdate.new({
+          id: 2,
           establishment: establishment,
           raw_data: { list: ['Bud'] }.to_json
+        })
       end
       let(:updates){ [first, second] }
 
@@ -68,7 +72,7 @@ module Api
           before do
             expect(controller).to receive(:ensure_authenticated_user){ true }
             expect(ListUpdate).to receive(:find){ first }
-            get :show, id: first.id, format: :json
+            get :show, params: { id: first.id }, format: :json
           end
 
           it 'returns 200' do
@@ -94,7 +98,7 @@ module Api
 
         context 'when not authenticated' do
           it 'returns 401' do
-            get :show, id: first.id, format: :json
+            get :show, params: { id: first.id }, format: :json
             expect(response.status).to eq 401
           end
         end
@@ -103,14 +107,14 @@ module Api
       describe 'POST to #create' do
         context 'when not authenticated' do
           it 'returns 401' do
-            post :create, list_update: {}, format: :json
+            post :create, params: { list_update: {} }, format: :json
             expect(response.status).to eq 401
           end
         end
 
         context 'when authenticated' do
-          let(:establishment){ stub_model Establishment }
-          let(:list_update){ stub_model ListUpdate, establishment: establishment }
+          let(:establishment){ Establishment.new id: 1 }
+          let(:list_update){ ListUpdate.new establishment: establishment }
           let(:scraper){ double 'Scraper' }
           let(:interactor){ double 'Interactions::Scraper', scrape!: true, list_update: list_update }
 
@@ -121,14 +125,14 @@ module Api
           it 'returns 200' do
             allow(controller).to receive(:find_scraper){ scraper }
             allow(Interactions::Scraper).to receive(:new){ interactor }
-            post :create, list_update: { establishment_id: 1 }, format: :json
+            post :create, params: { list_update: { establishment_id: 1 } }, format: :json
             expect(response.status).to eq 201
           end
 
           it 'initiates a list update' do
             expect(controller).to receive(:find_scraper){ scraper }
             expect(Interactions::Scraper).to receive(:new).with(scraper){ interactor }
-            post :create, list_update: { establishment_id: 1 }, format: :json
+            post :create, params: { list_update: { establishment_id: 1 } }, format: :json
             expect(interactor).to have_received :scrape!
           end
         end

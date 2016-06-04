@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails',                    '4.0.4'
-gem 'pg',                       '~> 0.17.0'
+gem 'rails',                    '>= 5.0.0.rc1', '< 5.1'
+gem 'pg',                       '~> 0.18.0'
 gem 'bcrypt',                   '~> 3.1.7'
 gem 'geocoder',                 '~> 1.1.8'
 gem 'active_model_serializers', '~> 0.8.1'
@@ -9,9 +9,10 @@ gem 'beer_list', git: 'git@github.com:DanOlson/beer_list.git', branch: '2.0'
 gem 'kaminari',                 '~> 0.15.1'
 gem 'newrelic_rpm'
 gem 'logvisible'
+gem 'responders',               '~> 2.1.1'
 
 group :development, :test do
-  gem "rspec-rails", "~> 2.14.0"
+  gem "rspec-rails", "3.5.0.beta3"
   gem 'pry-rails',   '~> 0.3.2'
 end
 

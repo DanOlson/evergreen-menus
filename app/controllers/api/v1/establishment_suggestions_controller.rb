@@ -1,7 +1,7 @@
 module Api
   module V1
     class EstablishmentSuggestionsController < ApiController
-      before_filter :ensure_authenticated_user, only: [:index, :destroy]
+      before_action :ensure_authenticated_user, only: [:index, :destroy]
 
       ###
       # TODO: Paginate
