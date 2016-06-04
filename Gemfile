@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails',                    '>= 5.0.0.beta3', '< 5.1'
+gem 'rails',                    '>= 5.0.0.rc1', '< 5.1'
 gem 'pg',                       '~> 0.18.0'
 gem 'bcrypt',                   '~> 3.1.7'
 gem 'geocoder',                 '~> 1.1.8'
@@ -12,11 +12,7 @@ gem 'logvisible'
 gem 'responders',               '~> 2.1.1'
 
 group :development, :test do
-  gem "rspec-rails", "3.5.0.pre", github: 'rspec/rspec-rails', branch: 'master'
-  gem "rspec-support", "3.5.0.pre", github: 'rspec/rspec-support', branch: 'master'
-  gem "rspec-expectations", "3.5.0.pre", github: 'rspec/rspec-expectations', branch: 'master'
-  gem "rspec-mocks", "3.5.0.pre", github: 'rspec/rspec-mocks', branch: 'master'
-  gem "rspec-core", "3.5.0.pre", github: 'rspec/rspec-core', branch: 'master'
+  gem "rspec-rails", "3.5.0.beta3"
   gem 'pry-rails',   '~> 0.3.2'
 end
 
