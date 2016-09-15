@@ -9,14 +9,14 @@ ssh_options[:forward_agent] = true
 
 set :deploy_to, "/var/apps/#{application}"
 set :scm, :git
-set :rvm_ruby_string, 'ruby-2.1.1'
+set :rvm_ruby_string, 'ruby-2.3.0'
 set :rvm_type,        :system
 set :use_sudo,        false
 set :user,            "deploy"
 
 set :hostname,  "beermapper.com"
 set :domain,    "beermapper.com"
-set :branch,    "ember-cli"
+set :branch,    "master"
 set :rails_env, "production"
 set :keep_releases, 3
 
@@ -45,7 +45,7 @@ namespace :deploy do
   end
 
   task :build_dist, roles: :app, except: { no_release: true } do
-    run "cd #{release_path}/ember && ember install && ember build --environment=production"
+    run "cd #{release_path}/ember && npm install && bower install && ember build --environment=production"
   end
 end
 
