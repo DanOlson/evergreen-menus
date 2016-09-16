@@ -5,6 +5,9 @@ module Queries
     before(:all) do
       Establishment.skip_callback(:create, :after, :geocode)
     end
+    after(:all) do
+      Establishment.set_callback(:create, :after, :geocode)
+    end
     let(:args){ {} }
     let(:instance){ ListUpdate.new args }
     let(:results){ instance.run }

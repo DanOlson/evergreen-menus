@@ -2,6 +2,9 @@ require 'forwardable'
 
 module Interactions
   class Scraper < BaseInteractor
+    STATUS_SUCCESS = 'Success'
+    STATUS_FAILED  = 'Failed'
+
     extend Forwardable
     def_delegators :@scraper, :establishment, :scraper_class_name
 
@@ -14,14 +17,17 @@ module Interactions
     def scrape!(opts={})
       ListManagement::BeerListUpdater.update!(establishment, scraper_instance, opts) do |status|
         status.on_success do
-          list_update.status = 'Success'
+          list_update.status = STATUS_SUCCESS
         end
 
         status.on_failure do |reason|
-          list_update.status = 'Failed'
+          list_update.status = STATUS_FAILED
           list_update.notes  = reason
         end
-        list_update.raw_data = list_as_json
+
+        if list_update.status == STATUS_SUCCESS
+          list_update.raw_data = list_as_json
+        end
         list_update.save
       end
       set_last_run_time

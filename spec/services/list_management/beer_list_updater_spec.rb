@@ -47,7 +47,7 @@ module ListManagement
           instance.update!
         end
 
-        it 'should not create any new beers' do
+        it 'does not create any new beers' do
           expect(instance).to_not receive :create_new_beers
           instance.update!
         end
@@ -63,20 +63,26 @@ module ListManagement
         end
       end
 
-      it 'should delete the old beer names' do
+      it 'deletes the old beer names' do
         expect(Beer).to receive(:where).with(name: %w(Moylan's McSorley's)){ rel }
         expect(beers).to receive(:delete).with rel
         allow(instance).to receive(:create_new_beers)
         instance.update!
       end
 
-      it 'should add the new beer names to the establishment' do
+      it 'adds the new beer names to the establishment' do
         beer = double
         allow(instance).to receive(:delete_old_beers)
         expect(Beer).to receive(:where).with(name: 'miller'){ rel }
         expect(rel).to receive(:first_or_create){ beer }
         expect(beers).to receive(:<<).with beer
         instance.update!
+      end
+
+      context 'when fetching the list raises an exception' do
+        let(:list) { -> { raise '404 not found' } }
+
+        it_behaves_like 'unacceptable update'
       end
 
       context 'when the list is empty (the markup has likely changed)' do
