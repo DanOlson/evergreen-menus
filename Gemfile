@@ -10,6 +10,7 @@ gem 'kaminari',                 '~> 0.15.1'
 gem 'newrelic_rpm'
 gem 'logvisible'
 gem 'responders',               '~> 2.1.1'
+gem 'whenever',                 '~> 0.9.7', require: false
 
 group :development, :test do
   gem "rspec-rails", "3.5.0.beta3"

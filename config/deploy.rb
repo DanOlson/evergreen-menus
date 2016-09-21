@@ -1,5 +1,6 @@
 require 'rvm/capistrano'
 require 'bundler/capistrano'
+require 'whenever/capistrano'
 
 set :application, "beermapper" # app directory name
 set :repository,  "git@github.com:DanOlson/beermapper.git"
@@ -19,6 +20,8 @@ set :domain,    "beermapper.com"
 set :branch,    "master"
 set :rails_env, "production"
 set :keep_releases, 3
+
+set :whenever_command, 'bundle exec whenever'
 
 role :web, domain
 role :app, domain
