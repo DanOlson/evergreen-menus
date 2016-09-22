@@ -1,13 +1,12 @@
 module BeerList
   module Establishments
     class BlackBirdMinneapolis < Establishment
-      URL     = 'http://www.blackbirdmpls.com/search/label/beerwine'
+      URL     = 'http://www.blackbirdmpls.com/beer-wine/'
       ADDRESS = '3800 Nicollet Ave, Minneapolis, MN 55409'
       NAME    = 'Blackbird'
 
       def get_list
-        base_list
-        split_on_newline
+        menu_item_titles
       end
 
       def url
@@ -24,13 +23,14 @@ module BeerList
 
       private
 
-      def base_list
-        text   = page.search('.entry-content').map(&:text).join
-        @beers = text.split("sparkling & rose").first.split("bottles & cans").last
+      def menu_sections
+        page.search('.menu-section')[1..2]
       end
 
-      def split_on_newline
-        @beers = @beers.split("\n").map(&:strip).reject &:empty?
+      def menu_item_titles
+        menu_sections.search('.menu-item-title').map do |title|
+          title.text.strip.titleize
+        end
       end
     end
   end
