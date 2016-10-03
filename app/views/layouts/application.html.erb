@@ -6,15 +6,12 @@
   <meta name='description' content='BeerMapper is a search tool to help you find your favorite craft beer.'>
   <meta name='robots' content='index,follow'>
   <title>Beer Mapper</title>
-  <script>ENV = { FEATURES: { 'query-params-new': true } }</script>
-  <%= stylesheet_link_tag    :application %>
-  <%= javascript_include_tag :application %>
+<!--   <%= stylesheet_link_tag    :application %>
+  <%= javascript_include_tag :application %> -->
   <%= csrf_meta_tags %>
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-  <script type="text/javascript" src="http://platform.twitter.com/widgets.js" id="twitter-wjs"></script>
 </head>
 <body>
-  <div id='ember-app'></div>
+  <%= yield %>
   <%= render('layouts/google_analytics') if Rails.env.production? %>
 </body>
 </html>

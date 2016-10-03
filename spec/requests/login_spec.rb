@@ -6,7 +6,7 @@ describe 'session management', type: :request do
       User.create!({
         username: 'thedude',
         email: 'dude@lebowski.me',
-        password: 'abide'
+        password: 'abides'
       })
     end
 
@@ -23,7 +23,7 @@ describe 'session management', type: :request do
     end
 
     context 'successful authentication' do
-      let(:password) { 'abide' }
+      let(:password) { 'abides' }
 
       it 'returns 201' do
         expect(response.status).to eq 201
