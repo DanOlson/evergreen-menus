@@ -14,8 +14,12 @@ gem 'whenever',                 '~> 0.9.7', require: false
 gem 'devise',                   '~> 4.2.0'
 
 group :development, :test do
-  gem "rspec-rails", "3.5.0.beta3"
+  gem "rspec-rails", "3.5.0"
   gem 'pry-rails',   '~> 0.3.2'
+end
+
+group :test do
+  gem 'capybara', '~> 2.9.2'
 end
 
 group :development do
