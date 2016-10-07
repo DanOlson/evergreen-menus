@@ -15,8 +15,10 @@ gem 'devise',                   '~> 4.2.0'
 gem 'cancancan',                '~> 1.15.0'
 
 group :development, :test do
-  gem "rspec-rails", "3.5.0"
-  gem 'pry-rails',   '~> 0.3.2'
+  gem 'rspec-rails',  '~> 3.5.0'
+  gem 'pry-rails',    '~> 0.3.2'
+  gem 'factory_girl', '~> 4.7.0'
+  gem 'faker',        '~> 1.6.6'
 end
 
 group :test do

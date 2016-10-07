@@ -80,6 +80,10 @@ GEM
     domain_name (0.5.20160310)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
+    factory_girl (4.7.0)
+      activesupport (>= 3.0.0)
+    faker (1.6.6)
+      i18n (~> 0.5)
     geocoder (1.1.9)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
@@ -226,6 +230,8 @@ DEPENDENCIES
   capistrano (~> 2.15.5)
   capybara (~> 2.9.2)
   devise (~> 4.2.0)
+  factory_girl (~> 4.7.0)
+  faker (~> 1.6.6)
   geocoder (~> 1.1.8)
   kaminari (~> 0.15.1)
   logvisible
@@ -234,7 +240,7 @@ DEPENDENCIES
   pry-rails (~> 0.3.2)
   rails (>= 5.0.0.rc1, < 5.1)
   responders (~> 2.1.1)
-  rspec-rails (= 3.5.0)
+  rspec-rails (~> 3.5.0)
   rvm-capistrano (~> 1.4.3)
   sdoc
   whenever (~> 0.9.7)

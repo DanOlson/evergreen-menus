@@ -1,9 +1,15 @@
 class ApplicationController < ActionController::Base
+  MESSAGE_UNAUTHORIZED = 'You are not authorized to access this page.'
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
   before_action :configure_permitted_parameters, if: :devise_controller?
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to current_user.account, alert: MESSAGE_UNAUTHORIZED
+  end
 
   private
 

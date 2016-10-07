@@ -11,6 +11,12 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <% if alert = flash[:alert] %>
+    <div class="alert"><%= alert %></div>
+  <% end %>
+  <% if notice = flash[:notice] %>
+    <div class="notice"><%= notice %></div>
+  <% end %>
   <%= yield %>
   <%= render('layouts/google_analytics') if Rails.env.production? %>
 </body>

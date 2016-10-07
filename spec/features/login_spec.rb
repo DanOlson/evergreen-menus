@@ -2,16 +2,11 @@ require 'spec_helper'
 
 feature 'logging in' do
   scenario 'with valid credentials' do
-    account = Account.create!({
-      name: "Dude's account",
-      active: true
-    })
-    user = User.create!({
+    user = create :user, {
       username: 'thedude',
       email: 'dude@lebowski.me',
-      password: 'thedudeabides',
-      account: account
-    })
+      password: 'thedudeabides'
+    }
 
     visit '/users/sign_in'
 
