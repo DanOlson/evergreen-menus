@@ -1,0 +1,8 @@
+<div class="container">
+  <h1><%= @account.name %></h1>
+  <ul>
+    <% @account.establishments.each do |establishment| %>
+      <li><%= establishment.name %></li>
+    <% end %>
+  </ul>
+</div>

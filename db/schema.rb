@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004030847) do
+ActiveRecord::Schema.define(version: 20161008010159) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20161004030847) do
     t.decimal  "longitude",              precision: 9, scale: 6
     t.string   "url",        limit: 255
     t.boolean  "active",                                         default: true
+    t.integer  "account_id"
   end
 
   create_table "list_updates", force: :cascade do |t|
@@ -105,5 +106,6 @@ ActiveRecord::Schema.define(version: 20161004030847) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "establishments", "accounts"
   add_foreign_key "users", "accounts"
 end

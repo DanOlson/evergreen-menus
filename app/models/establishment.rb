@@ -5,6 +5,7 @@ class Establishment < ActiveRecord::Base
 
   validates :name, :address, :url, presence: true
 
+  belongs_to :account
   has_many :beer_establishments, dependent: :destroy
   has_many :beers, through: :beer_establishments
   has_many :list_updates
