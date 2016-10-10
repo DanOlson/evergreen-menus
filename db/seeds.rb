@@ -1,14 +1,71 @@
-# encoding: utf-8
+FactoryGirl.find_definitions
 [BeerEstablishment, Establishment, Beer].each &:destroy_all
 
-bulldog      = Establishment.create name: 'Bulldog Northeast', address: '401 E Hennepin Ave, Minneapolis, MN 55414'
-macs         = Establishment.create name: "Macs Industrial", address: '312 Central Ave SE  Minneapolis, Minnesota 55414'
-muddy_waters = Establishment.create name: 'Muddy Waters', address: '2933 Lyndale Ave S  Minneapolis, MN 55408'
-groveland    = Establishment.create name: 'Groveland Tap', address: '1834 St Clair Ave  St Paul, MN 55105'
-blue_nile    = Establishment.create name: 'Blue Nile', address: '2027 E Franklin Ave  Minneapolis, MN 55404'
-happy_gnome  = Establishment.create name: 'Happy Gnome', address: '498 Selby Ave  St Paul, MN 55102'
-muddy_pig    = Establishment.create name: 'Muddy Pig', address: '162 Dale St N  St Paul, MN 55102'
-stanleys     = Establishment.create name: "Stanleys Bar Room", address: '2500 University Ave NE  Minneapolis, MN 55418'
+account = FactoryGirl.create :account
+user    = FactoryGirl.create :user, username: 'manager', password: 'password', account: account
+
+bulldog = Establishment.create({
+  name: 'Bulldog Northeast',
+  street_address: '401 E Hennepin Ave',
+  city: 'Minneapolis',
+  state: 'MN',
+  postal_code: '55414'
+})
+macs = Establishment.create({
+  name: "Macs Industrial",
+  street_address: '312 Central Ave SE',
+  city: 'Minneapolis',
+  state: 'MN',
+  postal_code: '55414'
+})
+muddy_waters = Establishment.create({
+  name: 'Muddy Waters',
+  street_address: '2933 Lyndale Ave S',
+  city: 'Minneapolis',
+  state: 'MN',
+  postal_code: '55408',
+  account: account
+})
+groveland    = Establishment.create({
+  name: 'Groveland Tap',
+  street_address: '1834 St Clair Ave',
+  city: 'St Paul',
+  state: 'MN',
+  postal_code: '55105',
+  account: account
+})
+blue_nile    = Establishment.create({
+  name: 'Blue Nile',
+  street_address: '2027 E Franklin Ave',
+  city: 'Minneapolis',
+  state: 'MN',
+  postal_code: '55404',
+  account: account
+})
+happy_gnome  = Establishment.create({
+  name: 'Happy Gnome',
+  street_address: '498 Selby Ave',
+  city: 'St Paul',
+  state: 'MN',
+  postal_code: '55102',
+  account: account
+})
+muddy_pig    = Establishment.create({
+  name: 'Muddy Pig',
+  street_address: '162 Dale St N',
+  city: 'St Paul',
+  state: 'MN',
+  postal_code: '55102',
+  account: account
+})
+stanleys     = Establishment.create({
+  name: "Stanleys Bar Room",
+  street_address: '2500 University Ave NE',
+  city: ' Minneapolis',
+  state: 'MN',
+  postal_code: '55418',
+  account: account
+})
 
 beers = [
   "3rd Street Three Way Pale Ale",

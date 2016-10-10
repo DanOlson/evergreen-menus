@@ -25,6 +25,10 @@ class Establishment < ActiveRecord::Base
     end
   end
 
+  def address
+    self[:address] || "#{street_address}, #{city}, #{state} #{postal_code}"
+  end
+
   def include_beers!
     @include_beers = true
   end

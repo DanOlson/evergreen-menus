@@ -5,6 +5,7 @@ class Ability
     user ||= User.new
 
     can :manage, Account, id: user.account_id
+    can :manage, Establishment, account_id: user.account_id
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
