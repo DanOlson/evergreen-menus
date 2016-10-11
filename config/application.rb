@@ -5,7 +5,6 @@ require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "sprockets/railtie"
-# require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -21,6 +20,7 @@ module Beermapper
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     config.time_zone = 'Central Time (US & Canada)'
     config.active_record.default_timezone = :local
+    config.active_record.time_zone_aware_types = [:time]
 
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
