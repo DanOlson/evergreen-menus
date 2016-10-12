@@ -15,6 +15,13 @@ feature 'logging in' do
     click_button 'Log in'
 
     expect(page).to have_current_path "/accounts/#{user.account_id}"
+    expect(page).to have_content 'Signed in successfully.'
+    expect(page).to have_link 'Logout'
+
+    click_link 'Logout'
+
+    expect(page).to have_content 'Signed out successfully.'
+    expect(page).to have_link 'Login'
   end
 
   scenario 'with invalid credentials' do

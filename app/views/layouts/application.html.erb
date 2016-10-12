@@ -17,6 +17,7 @@
   <% if notice = flash[:notice] %>
     <div class="notice"><%= notice %></div>
   <% end %>
+  <%= render 'layouts/header' %>
   <%= yield %>
   <%= render('layouts/google_analytics') if Rails.env.production? %>
 </body>
