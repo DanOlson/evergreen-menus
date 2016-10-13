@@ -27,11 +27,12 @@
 
     <div class="form-group">
       <%= f.label :postal_code, 'Postal Code' %>
-      <%= f.text_field :postal_code %>
+      <%= f.text_field :postal_code, maxlength: 5 %>
     </div>
 
     <div>
       <%= f.submit 'Create' %>
+      <%= link_to 'Cancel', account_path(@account) %>
     </div>
   <% end %>
 <div>
