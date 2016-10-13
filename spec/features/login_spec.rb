@@ -32,5 +32,21 @@ feature 'logging in' do
     click_button 'Log in'
 
     expect(page).to have_current_path '/users/sign_in'
+    expect(page).to have_content 'Invalid Username or password'
+  end
+
+  scenario 'with an inactive account' do
+    account = create :account, active: false
+    user = create :user, {
+      username: 'thedude',
+      email: 'dude@lebowski.me',
+      password: 'thedudeabides',
+      account: account
+    }
+
+    login user
+
+    expect(page).to have_current_path '/users/sign_in'
+    expect(page).to have_content 'Your account is not active'
   end
 end

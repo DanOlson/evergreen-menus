@@ -10,4 +10,12 @@ class User < ActiveRecord::Base
   validates :username,
             :email,
             presence: true
+
+  delegate :active?, to: :account, allow_nil: true
+
+  ###
+  # Devise
+  def active_for_authentication?
+    super && active?
+  end
 end
