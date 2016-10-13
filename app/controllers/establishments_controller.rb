@@ -9,9 +9,9 @@ class EstablishmentsController < ApplicationController
     if @establishment.valid?
       @establishment.account = @account
       @establishment.save
-      redirect_to @account, notice: "Successfully created #{@establishment.name}"
+      redirect_to @account, notice: "Establishment created"
     else
-      logger.debug "ERRORS: #{@establishment.errors.full_messages}"
+      logger.debug "Errors creating establishment: #{@establishment.errors.full_messages}"
       render :new
     end
   end
@@ -23,6 +23,12 @@ class EstablishmentsController < ApplicationController
   end
 
   def update
+    if @establishment.update establishment_params
+      redirect_to @account, notice: 'Establishment updated'
+    else
+      logger.debug "Errors updating establishment: #{@establishment.errors.full_messages}"
+      render :edit
+    end
   end
 
   def destroy
