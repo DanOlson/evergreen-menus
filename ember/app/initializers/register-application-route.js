@@ -1,4 +1,4 @@
-import ApplicationRoute from '../routes/application'
+import ApplicationRoute from '../routes/application';
 
 export default {
   name: 'register-application-route',

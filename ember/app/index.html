@@ -8,16 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnPO26Moo04bQIg7J5q4areGJN3jwGqXw&v=3.exp&sensor=false"></script>
     <script type="text/javascript" src="http://platform.twitter.com/widgets.js" id="twitter-wjs"></script>
+    <script src="http://builds.emberjs.com/tags/v1.13.0/ember-template-compiler.js"></script>
 
     {{content-for 'head'}}
 
     <link rel="stylesheet" href="assets/vendor.css">
     <link rel="stylesheet" href="assets/beermapper.css">
+
+    {{content-for 'head-footer'}}
   </head>
   <body>
     {{content-for 'body'}}
 
     <script src="assets/vendor.js"></script>
     <script src="assets/beermapper.js"></script>
+
+    {{content-for 'body-footer'}}
   </body>
 </html>
