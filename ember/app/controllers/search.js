@@ -3,9 +3,9 @@ import MapUtils from '../mixins/map-utils';
 import flashQueueController from '../controllers/flash-queue';
 
 var SearchController = Ember.ArrayController.extend(MapUtils, {
-  needs: 'application',
+  applicationController: Ember.inject.controller('application'),
+  query: Ember.computed.reads('applicationController.queryField'),
   queryParams: ['query'],
-  query: Ember.computed.alias('controllers.application.queryField'),
   itemController: 'establishment',
   mapWidthMultiplier: 1.0,
   mapHeightMultiplier: 0.9,

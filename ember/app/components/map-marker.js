@@ -1,13 +1,33 @@
 import Ember from 'ember';
 
-var MarkerView = Ember.View.extend({
-  templateName: 'marker',
+export default Ember.Component.extend({
+  init: function() {
+    console.log(`init()`);
+    this._super.apply(this, arguments);
+    console.log(`done with init`);
+  },
+
+  didReceiveAttrs: function() {
+    console.log('didReceiveAttrs()');
+    this._super();
+  },
 
   didInsertElement: function(){
+    console.log("Marker component: didInsertElement()");
     var infoWindow = this.get('infoWindow');
 
     infoWindow.setContent(this.$()[0]);
     infoWindow.open(this.get('map'), this.get('marker'));
+  },
+
+  willRender: function() {
+    console.log(`willRender`);
+    this._super();
+  },
+
+  didRender: function() {
+    console.log(`didRender`);
+    this._super();
   },
 
   name: function(){
@@ -23,5 +43,3 @@ var MarkerView = Ember.View.extend({
     return filtered;
   }.property('establishment')
 });
-
-export default MarkerView;

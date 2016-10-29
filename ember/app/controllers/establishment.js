@@ -1,15 +1,15 @@
 import Ember from 'ember';
 import MapUtils from '../mixins/map-utils';
-import MarkerView from '../views/marker-view';
+import MarkerView from '../components/map-marker';
 import flashQueueController from '../controllers/flash-queue';
 
-var EstablishmentController = Ember.ObjectController.extend(MapUtils, {
-  needs: ['search', 'application'],
-  map: Ember.computed.alias('controllers.search.map'),
-  query: Ember.computed.alias('controllers.search.query'),
-  markerViews: Ember.computed.alias('controllers.search.markerViews'),
-  infoWindow: Ember.computed.alias('controllers.search.infoWindow'),
-  isAuthenticated: Ember.computed.alias('controllers.application.isAuthenticated'),
+var EstablishmentController = Ember.Controller.extend(MapUtils, {
+  searchController: Ember.inject.controller('search'),
+  applicationController: Ember.inject.controller('application'),
+  map: Ember.computed.reads('searchController.map'),
+  query: Ember.computed.reads('searchController.query'),
+  infoWindow: Ember.computed.reads('searchController.infoWindow'),
+  isAuthenticated: Ember.computed.reads('applicationController.isAuthenticated'),
   mapWidthMultiplier: 0.5,
   mapHeightMultiplier: 0.8,
   updating: false,
@@ -52,20 +52,19 @@ var EstablishmentController = Ember.ObjectController.extend(MapUtils, {
   },
 
   addClickHandler: function(marker, mapView){
-    var that = this;
-    var infoWindow = that.get('infoWindow');
-    google.maps.event.addListener(marker, 'click', (function(marker){
-      return function(){
+    var infoWindow = this.get('infoWindow');
+    google.maps.event.addListener(marker, 'click', (marker => {
+      return () => {
         var current = mapView.get('currentView');
         var markerView = MarkerView.create({
           marker:        marker,
           infoWindow:    infoWindow,
-          map:           that.get('map'),
-          establishment: that.get('model'),
-          query:         that.get('query'),
-          controller:    that
+          map:           this.get('map'),
+          establishment: this.get('model'),
+          query:         this.get('query'),
+          controller:    this
         });
-        that.get('markerViews').pushObject(markerView);
+        this.get('markerViews').pushObject(markerView);
 
         if(current){ mapView.removeChild(current); }
 

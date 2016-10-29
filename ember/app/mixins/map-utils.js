@@ -8,7 +8,6 @@ var MapUtils = Ember.Mixin.create({
   markers: Ember.A(),
   markerViews: Ember.A(),
   mapView: null,
-  infoWindow: '',
 
   mapOptions: function(){
     return {
