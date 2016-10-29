@@ -1,14 +1,14 @@
 # encoding: utf-8
 [BeerEstablishment, Establishment, Beer].each &:destroy_all
 
-bulldog      = Establishment.create name: 'Bulldog Northeast', address: '401 E Hennepin Ave, Minneapolis, MN 55414'
-macs         = Establishment.create name: "Macs Industrial", address: '312 Central Ave SE  Minneapolis, Minnesota 55414'
-muddy_waters = Establishment.create name: 'Muddy Waters', address: '2933 Lyndale Ave S  Minneapolis, MN 55408'
-groveland    = Establishment.create name: 'Groveland Tap', address: '1834 St Clair Ave  St Paul, MN 55105'
-blue_nile    = Establishment.create name: 'Blue Nile', address: '2027 E Franklin Ave  Minneapolis, MN 55404'
-happy_gnome  = Establishment.create name: 'Happy Gnome', address: '498 Selby Ave  St Paul, MN 55102'
-muddy_pig    = Establishment.create name: 'Muddy Pig', address: '162 Dale St N  St Paul, MN 55102'
-stanleys     = Establishment.create name: "Stanleys Bar Room", address: '2500 University Ave NE  Minneapolis, MN 55418'
+bulldog      = Establishment.create! name: 'Bulldog Northeast', address: '401 E Hennepin Ave, Minneapolis, MN 55414', url: 'foobar.com'
+macs         = Establishment.create! name: "Macs Industrial", address: '312 Central Ave SE  Minneapolis, Minnesota 55414', url: 'foobar.com'
+muddy_waters = Establishment.create! name: 'Muddy Waters', address: '2933 Lyndale Ave S  Minneapolis, MN 55408', url: 'foobar.com'
+groveland    = Establishment.create! name: 'Groveland Tap', address: '1834 St Clair Ave  St Paul, MN 55105', url: 'foobar.com'
+blue_nile    = Establishment.create! name: 'Blue Nile', address: '2027 E Franklin Ave  Minneapolis, MN 55404', url: 'foobar.com'
+happy_gnome  = Establishment.create! name: 'Happy Gnome', address: '498 Selby Ave  St Paul, MN 55102', url: 'foobar.com'
+muddy_pig    = Establishment.create! name: 'Muddy Pig', address: '162 Dale St N  St Paul, MN 55102', url: 'foobar.com'
+stanleys     = Establishment.create! name: "Stanleys Bar Room", address: '2500 University Ave NE  Minneapolis, MN 55418', url: 'foobar.com'
 
 beers = [
   "3rd Street Three Way Pale Ale",
