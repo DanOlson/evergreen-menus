@@ -5,6 +5,8 @@ export default Ember.Component.extend({
   longitude: -93.266670,
   mapWidthMultiplier: 1.0,
   mapHeightMultiplier: 0.9,
+  markers: [],
+  map: null,
 
   mapOptions() {
     return {
@@ -31,10 +33,25 @@ export default Ember.Component.extend({
 
     const element = this.$()[0];
     const map = new google.maps.Map(element, this.mapOptions());
+    this.set('map', map);
     this.placeMarkers(map, establishments);
   },
 
+  didReceiveAttrs() {
+    this._super(...arguments);
+    const map = this.get('map');
+    const establishments = this.get('establishments');
+
+    this.destroyMarkers();
+    this.placeMarkers(map, establishments);
+  },
+
+  destroyMarkers() {
+    this.get('markers').forEach(marker => marker.setMap(null));
+  },
+
   placeMarkers(map, establishments) {
+    const markers = this.get('markers');
     establishments.forEach(establishment => {
       const marker = new google.maps.Marker({
         position:  this.latLng(establishment),
@@ -43,6 +60,7 @@ export default Ember.Component.extend({
         name:      establishment.get('name'),
         id:        establishment.get('id')
       });
+      markers.push(marker);
     });
   },
 
