@@ -21,6 +21,8 @@ export default Ember.Component.extend({
 
     const { widthMultiplier, heightMultiplier } = this.attrs;
     const establishments = this.get('establishments') || [];
+    const element = this.$()[0];
+    const map = new google.maps.Map(element, this.mapOptions());
 
     this.$().css({
       width() {
@@ -31,8 +33,6 @@ export default Ember.Component.extend({
       }
     });
 
-    const element = this.$()[0];
-    const map = new google.maps.Map(element, this.mapOptions());
     this.set('map', map);
     this.placeMarkers(map, establishments);
   },
@@ -43,7 +43,13 @@ export default Ember.Component.extend({
     const establishments = this.get('establishments');
 
     this.destroyMarkers();
-    this.placeMarkers(map, establishments);
+
+    //////
+    // Map would not exist yet on initial render, since didReceiveAttrs
+    // preceeds didInsertElement in the component lifecycle.
+    if (map) {
+      this.placeMarkers(map, establishments);
+    }
   },
 
   destroyMarkers() {
@@ -52,19 +58,23 @@ export default Ember.Component.extend({
 
   placeMarkers(map, establishments) {
     const markers = this.get('markers');
+    const bounds  = new google.maps.LatLngBounds();
     establishments.forEach(establishment => {
+      const latLng = this.createLatLng(establishment);
       const marker = new google.maps.Marker({
-        position:  this.latLng(establishment),
+        position:  latLng,
         animation: google.maps.Animation.DROP,
         map:       map,
         name:      establishment.get('name'),
         id:        establishment.get('id')
       });
+      bounds.extend(latLng);
       markers.push(marker);
     });
+    map.fitBounds(bounds);
   },
 
-  latLng(establishment) {
+  createLatLng(establishment) {
     const lat = establishment.get('latitude');
     const lng = establishment.get('longitude');
     return new google.maps.LatLng(lat, lng);
