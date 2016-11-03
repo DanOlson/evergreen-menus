@@ -18,6 +18,7 @@ export default Ember.Component.extend({
     this._super(...arguments);
 
     const { widthMultiplier, heightMultiplier } = this.attrs;
+    const establishments = this.get('establishments') || [];
 
     this.$().css({
       width() {
@@ -29,6 +30,25 @@ export default Ember.Component.extend({
     });
 
     const element = this.$()[0];
-    new google.maps.Map(element, this.mapOptions());
-  }
+    const map = new google.maps.Map(element, this.mapOptions());
+    this.placeMarkers(map, establishments);
+  },
+
+  placeMarkers(map, establishments) {
+    establishments.forEach(establishment => {
+      const marker = new google.maps.Marker({
+        position:  this.latLng(establishment),
+        animation: google.maps.Animation.DROP,
+        map:       map,
+        name:      establishment.get('name'),
+        id:        establishment.get('id')
+      });
+    });
+  },
+
+  latLng(establishment) {
+    const lat = establishment.get('latitude');
+    const lng = establishment.get('longitude');
+    return new google.maps.LatLng(lat, lng);
+  },
 });
