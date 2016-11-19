@@ -1,9 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  infoWindow: null,
-  mapContext: null,
-  marker: null,
+  infoWindow: Ember.computed.alias('mapContext.infoWindow'),
 
   didInsertElement() {
     this._super(arguments);
@@ -18,7 +16,9 @@ export default Ember.Component.extend({
   },
 
   setMap(map) {
-    this.get('marker').setMap(map);
+    const marker = this.get('marker');
+    this.applyClickHandler(marker, map);
+    marker.setMap(map);
   },
 
   estName() {
@@ -34,6 +34,16 @@ export default Ember.Component.extend({
       name:      establishment.get('name'),
       id:        establishment.get('id')
     });
+  },
+
+  applyClickHandler(marker, map) {
+    const infoWindow = this.get('infoWindow');
+    google.maps.event.addListener(marker, 'click', () => {
+      return () => {
+        infoWindow.setContent(this.$()[0]);
+        infoWindow.open(map, marker);
+      };
+    }());
   },
 
   latLng() {
