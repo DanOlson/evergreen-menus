@@ -1,43 +1,56 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  init: function() {
-    console.log(`init()`);
-    this._super.apply(this, arguments);
-    console.log(`done with init`);
+  infoWindow: null,
+  mapContext: null,
+  marker: null,
+
+  didInsertElement() {
+    this._super(arguments);
+    this.set('marker', this.createMarker());
+    this.get('mapContext').registerMarker(this);
   },
 
-  didReceiveAttrs: function() {
-    console.log('didReceiveAttrs()');
+  willDestroyElement() {
     this._super();
+    this.setMap(null);
+    this.get('mapContext').unregisterMarker(this);
   },
 
-  didInsertElement: function(){
-    console.log("Marker component: didInsertElement()");
-    var infoWindow = this.get('infoWindow');
-
-    infoWindow.setContent(this.$()[0]);
-    infoWindow.open(this.get('map'), this.get('marker'));
+  setMap(map) {
+    this.get('marker').setMap(map);
   },
 
-  willRender: function() {
-    console.log(`willRender`);
-    this._super();
+  estName() {
+    return this.get('establishment').get('name');
   },
 
-  didRender: function() {
-    console.log(`didRender`);
-    this._super();
+  createMarker() {
+    const establishment = this.get('establishment');
+    const latLng = this.latLng();
+    return new google.maps.Marker({
+      position:  latLng,
+      animation: google.maps.Animation.DROP,
+      name:      establishment.get('name'),
+      id:        establishment.get('id')
+    });
+  },
+
+  latLng() {
+    const establishment = this.get('establishment');
+    const lat = establishment.get('latitude');
+    const lng = establishment.get('longitude');
+    return new google.maps.LatLng(lat, lng);
   },
 
   name: function(){
-    var establishment = this.get('establishment');
+    const establishment = this.get('establishment');
     return establishment.get('name');
   }.property('establishment'),
 
   beers: function(){
-    var query = this.get('query');
-    var filtered = this.get('establishment').get('beers').filter(function(beer){
+    const query = this.get('query');
+    const filtered = this.get('establishment').get('beers').filter(function(beer){
       return beer.get('name').match(new RegExp(query, 'i'));
     });
     return filtered;
