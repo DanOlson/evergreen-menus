@@ -30,7 +30,7 @@ export default Ember.Component.extend({
   didRender() {
     this._super(...arguments);
     // Can this just be done with CSS?
-    const { widthMultiplier, heightMultiplier } = this.attrs;
+    const { widthMultiplier, heightMultiplier, zoom } = this.attrs;
     const map = this.get('map');
     const bounds = this.get('bounds');
     this.$().css({
@@ -43,6 +43,9 @@ export default Ember.Component.extend({
     });
     google.maps.event.trigger(map, 'resize');
     map.fitBounds(bounds);
+    if (zoom) {
+      map.setZoom(zoom);
+    }
   },
 
   registerMarker(marker) {

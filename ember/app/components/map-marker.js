@@ -17,8 +17,14 @@ export default Ember.Component.extend({
 
   setMap(map) {
     const marker = this.get('marker');
-    this.applyClickHandler(marker, map);
+    if (this.shouldApplyClickHandler()) {
+      this.applyClickHandler(marker, map);
+    }
     marker.setMap(map);
+  },
+
+  shouldApplyClickHandler() {
+    return this.attrs.infoWindow !== false;
   },
 
   estName() {
@@ -64,5 +70,12 @@ export default Ember.Component.extend({
       return beer.get('name').match(new RegExp(query, 'i'));
     });
     return filtered;
-  }.property('establishment')
+  }.property('establishment'),
+
+  actions: {
+    transitionToEstablishment(establishment) {
+      establishment.reload();
+      this.container.lookup('router:main').transitionTo('establishment', establishment);
+    }
+  }
 });
