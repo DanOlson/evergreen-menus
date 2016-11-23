@@ -19,12 +19,12 @@ export default Ember.Component.extend({
     this._super();
 
     const element = this.$()[0];
-    const bounds = new google.maps.LatLngBounds();
-    const map = new google.maps.Map(element, this.mapOptions());
+    const bounds  = new google.maps.LatLngBounds();
+    const map     = new google.maps.Map(element, this.mapOptions());
 
     this.set('map', map);
     this.set('bounds', bounds);
-    this.placeMarkers(map, bounds);
+    this.placeMarkers();
   },
 
   didRender() {
@@ -50,17 +50,23 @@ export default Ember.Component.extend({
 
   registerMarker(marker) {
     this.get('markers').addObject(marker);
+    this.placeMarkers();
   },
 
   unregisterMarker(marker) {
     this.get('markers').removeObject(marker);
+    this.placeMarkers();
   },
 
-  placeMarkers(map, bounds) {
-    this.get('markers').forEach(marker => {
-      marker.setMap(map);
-      bounds.extend(marker.latLng());
-    });
-    map.fitBounds(bounds);
+  placeMarkers() {
+    const map    = this.get('map');
+    const bounds = this.get('bounds');
+    if (map && bounds) {
+      this.get('markers').forEach(marker => {
+        marker.setMap(map);
+        bounds.extend(marker.latLng());
+      });
+      map.fitBounds(bounds);
+    }
   }
 });

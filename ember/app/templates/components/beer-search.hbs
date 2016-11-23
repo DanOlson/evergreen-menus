@@ -1,5 +1,7 @@
-{{#google-map widthMultiplier=1 heightMultiplier=0.9 as |mapContext|}}
-  {{#each establishments as |establishment|}}
-    {{map-marker establishment=establishment mapContext=mapContext query=query}}
-  {{/each}}
-{{/google-map}}
+<div>
+  {{#google-map widthMultiplier=1 heightMultiplier=0.9 as |mapContext|}}
+    {{#each establishments as |establishment|}}
+      {{map-marker establishment=establishment mapContext=mapContext query=query}}
+    {{/each}}
+  {{/google-map}}
+</div>

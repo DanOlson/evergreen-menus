@@ -1,8 +1,8 @@
 <div class="establishment-info-window">
-  <a href='#' {{action "transitionToEstablishment" establishment}}>{{name}}</a>
+  <a href='#' {{action "transitionToEstablishment" establishment}}>{{establishment.name}}</a>
   <ul>
-    {{#each beers}}
-    <li>{{name}}</li>
+    {{#each establishment.beers as |beer|}}
+    <li>{{beer.name}}</li>
     {{/each}}
   </ul>
 </div>
