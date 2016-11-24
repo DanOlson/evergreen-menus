@@ -6,7 +6,7 @@
       </div>
       <div class='pull-left action-button'>
         {{#if isAuthenticated}}
-          {{view 'update-list-view'}}
+          {{update-list-button establishment=model onClick=(action 'updateList')}}
         {{/if}}
       </div>
       <div class='pull-right address'>{{model.address}}</div>
