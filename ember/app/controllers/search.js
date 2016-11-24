@@ -3,6 +3,6 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   applicationController: Ember.inject.controller('application'),
-  query: Ember.computed.reads('applicationController.queryField'),
+  query: Ember.computed.alias('applicationController.queryField'),
   queryParams: ['query']
 });
