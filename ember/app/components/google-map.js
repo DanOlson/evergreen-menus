@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const DEFAULT_ZOOM = 11;
+
 export default Ember.Component.extend({
   latitude: 44.983334,
   longitude: -93.266670,
@@ -9,10 +11,14 @@ export default Ember.Component.extend({
 
   mapOptions() {
     return {
-      zoom: 11,
+      zoom: this.getZoom(),
       center: new google.maps.LatLng(this.get('latitude'), this.get('longitude')),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
+  },
+
+  getZoom() {
+    return this.attrs.zoom || DEFAULT_ZOOM;
   },
 
   didInsertElement() {
@@ -30,7 +36,7 @@ export default Ember.Component.extend({
   didRender() {
     this._super(...arguments);
     // Can this just be done with CSS?
-    const { widthMultiplier, heightMultiplier, zoom } = this.attrs;
+    const { widthMultiplier, heightMultiplier } = this.attrs;
     const map = this.get('map');
     const bounds = this.get('bounds');
     this.$().css({
@@ -43,9 +49,6 @@ export default Ember.Component.extend({
     });
     google.maps.event.trigger(map, 'resize');
     map.fitBounds(bounds);
-    if (zoom) {
-      map.setZoom(zoom);
-    }
   },
 
   registerMarker(marker) {
@@ -61,12 +64,25 @@ export default Ember.Component.extend({
   placeMarkers() {
     const map    = this.get('map');
     const bounds = this.get('bounds');
+
     if (map && bounds) {
       this.get('markers').forEach(marker => {
         marker.setMap(map);
         bounds.extend(marker.latLng());
       });
       map.fitBounds(bounds);
+      this.applyBoundsChangedListener(map);
     }
+  },
+
+  applyBoundsChangedListener(map) {
+    const zoom = this.getZoom();
+    const onBoundsChanged = function onBoundsChanged() {
+      // This is _not_ the getZoom() defined above
+      if (this.getZoom()){
+        this.setZoom(zoom);
+      }
+    };
+    google.maps.event.addListenerOnce(map, 'bounds_changed', onBoundsChanged);
   }
 });
