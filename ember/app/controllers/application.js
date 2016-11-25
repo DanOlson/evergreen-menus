@@ -17,12 +17,12 @@ var ApplicationController = Ember.ObjectController.extend({
   }.property('authManager.apiKey'),
 
   actions: {
-    search: function(){
+    search: function(query){
       // close the navbar if it's open
       Ember.$('.navbar-collapse').collapse('hide');
       this.transitionToRoute('search', {
         queryParams: {
-          query: this.get('queryField')
+          query: query
         }
       });
     },
