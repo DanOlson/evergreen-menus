@@ -1,3 +1,12 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({});
+const { isEmpty } = Ember;
+
+export default Ember.Component.extend({
+  didReceiveAttrs() {
+    this._super();
+    if (isEmpty(this.get('establishments'))) {
+      this.attrs.onNoResults();
+    }
+  }
+});
