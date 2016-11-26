@@ -3,8 +3,8 @@ import AuthManager from '../services/auth-manager';
 import flashQueueController from '../controllers/flash-queue';
 
 var ApplicationController = Ember.ObjectController.extend({
-  query: null,
-  queryField: Ember.computed.oneWay('query'),
+  query: Ember.computed.oneWay('queryField'),
+  queryField: null,
   authManager: AuthManager,
   flashQueueController: flashQueueController,
 
