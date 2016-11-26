@@ -1,5 +1,6 @@
 import Ember from 'ember';
 
+const { isEmpty } = Ember;
 const DEFAULT_ZOOM = 11;
 
 export default Ember.Component.extend({
@@ -48,7 +49,9 @@ export default Ember.Component.extend({
       }
     });
     google.maps.event.trigger(map, 'resize');
-    map.fitBounds(bounds);
+    if (!isEmpty(this.get('markers'))) {
+      map.fitBounds(bounds);
+    }
   },
 
   registerMarker(marker) {
@@ -62,11 +65,15 @@ export default Ember.Component.extend({
   },
 
   placeMarkers() {
-    const map    = this.get('map');
-    const bounds = this.get('bounds');
+    const map     = this.get('map');
+    const bounds  = this.get('bounds');
+    const markers = this.get('markers');
+    if (isEmpty(markers)) {
+      return;
+    }
 
     if (map && bounds) {
-      this.get('markers').forEach(marker => {
+      markers.forEach(marker => {
         marker.setMap(map);
         bounds.extend(marker.latLng());
       });
