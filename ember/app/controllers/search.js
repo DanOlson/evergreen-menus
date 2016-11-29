@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
   queryParams: ['query'],
 
   actions: {
-    noResults(message) {
+    noResults() {
       return flashQueueController.flash('alert', 'No results');
     }
   }
