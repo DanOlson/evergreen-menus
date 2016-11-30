@@ -1,25 +1,15 @@
 import Ember from 'ember';
 
-var SearchRoute = Ember.Route.extend({
-  model: function(params){
-    var query = params.query;
-    if (!query) { return []; }
-    return this.store.find('establishment', { beer: query });
-  },
-
-  afterModel: function(){
-    var controller = this.controllerFor('search');
-    var map = controller.get('map');
-    if (map.hasOwnProperty('mapTypeId')) {
-      controller.placeMarkers(controller.get('mapView'));
+export default Ember.Route.extend({
+  queryParams: {
+    query: {
+      refreshModel: true
     }
   },
 
-  actions: {
-    queryParamsDidChange: function(){
-      this.refresh();
-    }
+  model(params) {
+    const query = params.query;
+    if (!query) { return Ember.A(); }
+    return this.store.query('establishment', { beer: query });
   }
 });
-
-export default SearchRoute;

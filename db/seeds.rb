@@ -9,14 +9,16 @@ bulldog = Establishment.create({
   street_address: '401 E Hennepin Ave',
   city: 'Minneapolis',
   state: 'MN',
-  postal_code: '55414'
+  postal_code: '55414',
+  url: 'http://thebulldognortheast.com'
 })
 macs = Establishment.create({
   name: "Macs Industrial",
   street_address: '312 Central Ave SE',
   city: 'Minneapolis',
   state: 'MN',
-  postal_code: '55414'
+  postal_code: '55414',
+  url: 'http://www.macsindustrial.com/'
 })
 muddy_waters = Establishment.create({
   name: 'Muddy Waters',
@@ -24,7 +26,8 @@ muddy_waters = Establishment.create({
   city: 'Minneapolis',
   state: 'MN',
   postal_code: '55408',
-  account: account
+  account: account,
+  url: 'http://www.muddywatersmpls.com'
 })
 groveland    = Establishment.create({
   name: 'Groveland Tap',
@@ -32,7 +35,8 @@ groveland    = Establishment.create({
   city: 'St Paul',
   state: 'MN',
   postal_code: '55105',
-  account: account
+  account: account,
+  url: 'http://www.grovelandtap.com'
 })
 blue_nile    = Establishment.create({
   name: 'Blue Nile',
@@ -40,7 +44,8 @@ blue_nile    = Establishment.create({
   city: 'Minneapolis',
   state: 'MN',
   postal_code: '55404',
-  account: account
+  account: account,
+  url: 'http://bluenilempls.com'
 })
 happy_gnome  = Establishment.create({
   name: 'Happy Gnome',
@@ -48,7 +53,8 @@ happy_gnome  = Establishment.create({
   city: 'St Paul',
   state: 'MN',
   postal_code: '55102',
-  account: account
+  account: account,
+  url: 'http://thehappygnome.com'
 })
 muddy_pig    = Establishment.create({
   name: 'Muddy Pig',
@@ -56,7 +62,8 @@ muddy_pig    = Establishment.create({
   city: 'St Paul',
   state: 'MN',
   postal_code: '55102',
-  account: account
+  account: account,
+  url: 'http://www.themuddypig.com'
 })
 stanleys     = Establishment.create({
   name: "Stanleys Bar Room",
@@ -64,7 +71,8 @@ stanleys     = Establishment.create({
   city: ' Minneapolis',
   state: 'MN',
   postal_code: '55418',
-  account: account
+  account: account,
+  url: 'http://www.stanleysbarroom.com'
 })
 
 beers = [

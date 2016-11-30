@@ -19,7 +19,7 @@
         </div>
       </form>
       <ul class="nav navbar-nav">
-        {{view view.whatIsBeermapperView}}
+        <li><a href="#" {{action "toggleWhatIsBeermapper"}}>What Is Beermapper</a></li>
         <li>{{#link-to 'establishments'}}Establishments{{/link-to}}</li>
         <li>{{#link-to 'establishment-suggestions.new'}}Suggest an Establishment{{/link-to}}</li>
         {{#if isAuthenticated}}

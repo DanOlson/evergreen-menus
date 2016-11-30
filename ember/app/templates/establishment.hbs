@@ -2,23 +2,27 @@
   <div class='row'>
     <div class='page-heading col-md-12'>
       <div class='pull-left'>
-        <h2>{{name}}</h2>
+        <h2>{{model.name}}</h2>
       </div>
       <div class='pull-left action-button'>
         {{#if isAuthenticated}}
-          {{view 'update-list-view'}}
+          {{update-list-button establishment=model onClick=(action 'updateList')}}
         {{/if}}
       </div>
-      <div class='pull-right address'>{{address}}</div>
+      <div class='pull-right address'>{{model.address}}</div>
     </div>
     <div class='col-md-4'>
       <h3>Beer List</h3>
       <ul>
-        {{#each beer in beers}}
+        {{#each model.beers as |beer|}}
           <li>{{beer.name}}</li>
         {{/each}}
       </ul>
     </div>
-    <div class='gmap col-md-8'>{{view 'map-view'}}</div>
+    <div class='gmap col-md-8'>
+      {{#google-map widthMultiplier=0.5 heightMultiplier=0.8 zoom=14 as |mapContext|}}
+        {{map-marker establishment=model mapContext=mapContext infoWindow=false}}
+      {{/google-map}}
+    </div>
   </div>
 </div>

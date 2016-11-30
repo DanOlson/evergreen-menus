@@ -3,8 +3,8 @@ import AuthManager from '../services/auth-manager';
 import flashQueueController from '../controllers/flash-queue';
 
 var ApplicationController = Ember.ObjectController.extend({
-  query: null,
-  queryField: Ember.computed.oneWay('query'),
+  query: Ember.computed.oneWay('queryField'),
+  queryField: null,
   authManager: AuthManager,
   flashQueueController: flashQueueController,
 
@@ -17,12 +17,12 @@ var ApplicationController = Ember.ObjectController.extend({
   }.property('authManager.apiKey'),
 
   actions: {
-    search: function(){
+    search: function(query){
       // close the navbar if it's open
       Ember.$('.navbar-collapse').collapse('hide');
       this.transitionToRoute('search', {
         queryParams: {
-          query: this.get('queryField')
+          query: query
         }
       });
     },
