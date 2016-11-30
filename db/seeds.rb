@@ -10,6 +10,7 @@ bulldog = Establishment.create({
   city: 'Minneapolis',
   state: 'MN',
   postal_code: '55414',
+  account: account,
   url: 'http://thebulldognortheast.com'
 })
 macs = Establishment.create({
@@ -18,6 +19,7 @@ macs = Establishment.create({
   city: 'Minneapolis',
   state: 'MN',
   postal_code: '55414',
+  account: account,
   url: 'http://www.macsindustrial.com/'
 })
 muddy_waters = Establishment.create({
