@@ -16,9 +16,11 @@ Beermapper::Application.routes.draw do
     end
   end
 
-  resources :menus, only: :show
-  resources :accounts do
-    resources :establishments
+  constraints(ManagedMenuFeature) do
+    resources :menus, only: :show
+    resources :accounts do
+      resources :establishments
+    end
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
