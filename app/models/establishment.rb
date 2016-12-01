@@ -5,6 +5,7 @@ class Establishment < ActiveRecord::Base
 
   validates :name, :address, :url, presence: true
 
+  belongs_to :account
   has_many :beer_establishments, dependent: :destroy
   has_many :beers, through: :beer_establishments
   has_many :list_updates
@@ -22,6 +23,10 @@ class Establishment < ActiveRecord::Base
     def with_beer_named_like(name)
       joins(:beers).where Beer.arel_table[:name].matches("%#{name}%")
     end
+  end
+
+  def address
+    self[:address] || "#{street_address}, #{city}, #{state} #{postal_code}"
   end
 
   def include_beers!

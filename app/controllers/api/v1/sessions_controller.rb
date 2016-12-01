@@ -19,7 +19,7 @@ module Api
       end
 
       def authenticated_user
-        user && user.authenticate(params[:password])
+        user && user.valid_password?(params[:password])
       end
 
       def user

@@ -10,7 +10,7 @@ module Api
           let(:api_key){ ApiKey.new access_token: token, user_id: user.id }
 
           before do
-            allow(user).to receive(:authenticate) { true }
+            allow(user).to receive(:valid_password?) { true }
             allow(User).to receive(:find_by_username){ user }
             expect(controller).to receive(:create_api_key){ api_key }
             post :create, params: { username: 'foo', password: 'bar' }, format: :json

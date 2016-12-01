@@ -1,0 +1,11 @@
+<div class="container">
+  <h1><%= @account.name %></h1>
+  <div>
+    <span><%= link_to "Add an establishment", new_account_establishment_path(@account) %></span>
+    <ul>
+      <% @account.establishments.each do |establishment| %>
+        <li><%= link_to establishment.name, edit_account_establishment_path(@account, establishment) %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

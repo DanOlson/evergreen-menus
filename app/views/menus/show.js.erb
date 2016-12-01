@@ -1,0 +1,15 @@
+(function() {
+  var target, list, item;
+  target = document.getElementById('<%= "beermapper-menu-#{params[:id]}" %>');
+  list   = document.createElement('ul');
+  list.className = 'beermapper-menu';
+
+<% @establishment.beers.each do |beer| %>
+  item = document.createElement('li');
+  item.appendChild(document.createTextNode("<%= beer.name.html_safe %>"));
+  item.className = 'beermapper-menu-item';
+  list.appendChild(item);
+<% end %>
+
+  target.appendChild(list);
+})();

@@ -1,4 +1,5 @@
 Beermapper::Application.routes.draw do
+  devise_for :users
   root to: 'home#index'
   
   namespace :api do
@@ -12,6 +13,13 @@ Beermapper::Application.routes.draw do
       resources :users, only: :show
       resources :list_updates, only: [:index, :show, :create]
       resources :scrapers, only: :index
+    end
+  end
+
+  constraints(ManagedMenuFeature) do
+    resources :menus, only: :show
+    resources :accounts do
+      resources :establishments
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
