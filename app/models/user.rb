@@ -14,6 +14,13 @@ class User < ActiveRecord::Base
   delegate :active?, to: :account, allow_nil: true
 
   ###
+  # This removes the method added by ActiveRecord based on the
+  # column name `password_digest`. Ruby will still find Devise's
+  # implementation of `password_digest` when called on a User
+  # instance. Remove this when the column is removed.
+  undef_method :password_digest
+
+  ###
   # Devise
   def active_for_authentication?
     super && active?

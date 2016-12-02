@@ -1,4 +1,4 @@
-development:
+development: &dev
   adapter: postgresql
   database: on_tap_development
   pool: 5
@@ -9,3 +9,6 @@ test:
   database: on_tap_test
   pool: 5
   timeout: 5000
+
+production:
+  <<: *dev
