@@ -23,7 +23,7 @@ describe "updating an establishment's list" do
     })
   end
 
-  context "when the scraper's url will 404" do
+  context "when the scraper's url will 404", :vcr do
     class TestScraper < BeerList::Establishments::Establishment
       def url
         'http://beermapper.com/foobar'

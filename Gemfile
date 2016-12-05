@@ -23,6 +23,8 @@ end
 
 group :test do
   gem 'capybara', '~> 2.9.2'
+  gem 'vcr',      '~> 3.0.3'
+  gem 'webmock',  '~> 2.3.0'
 end
 
 group :development do
