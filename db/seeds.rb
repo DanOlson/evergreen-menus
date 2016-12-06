@@ -13,6 +13,11 @@ bulldog = Establishment.create({
   account: account,
   url: 'http://thebulldognortheast.com'
 })
+Scraper.create!({
+  establishment: bulldog,
+  scraper_class_name: 'BeerList::Establishments::BulldogNortheast'
+})
+
 macs = Establishment.create({
   name: "Macs Industrial",
   street_address: '312 Central Ave SE',
@@ -22,6 +27,11 @@ macs = Establishment.create({
   account: account,
   url: 'http://www.macsindustrial.com/'
 })
+Scraper.create!({
+  establishment: macs,
+  scraper_class_name: 'BeerList::Establishments::MacsIndustrial'
+})
+
 muddy_waters = Establishment.create({
   name: 'Muddy Waters',
   street_address: '2933 Lyndale Ave S',
@@ -31,6 +41,11 @@ muddy_waters = Establishment.create({
   account: account,
   url: 'http://www.muddywatersmpls.com'
 })
+Scraper.create!({
+  establishment: muddy_waters,
+  scraper_class_name: 'BeerList::Establishments::MuddyWaters'
+})
+
 groveland    = Establishment.create({
   name: 'Groveland Tap',
   street_address: '1834 St Clair Ave',
@@ -40,15 +55,25 @@ groveland    = Establishment.create({
   account: account,
   url: 'http://www.grovelandtap.com'
 })
-blue_nile    = Establishment.create({
-  name: 'Blue Nile',
-  street_address: '2027 E Franklin Ave',
-  city: 'Minneapolis',
-  state: 'MN',
-  postal_code: '55404',
-  account: account,
-  url: 'http://bluenilempls.com'
+Scraper.create({
+  establishment: groveland,
+  scraper_class_name: 'BeerList::Establishments::GrovelandTap'
 })
+
+edina_grill    = Establishment.create({
+  name: 'Edina Grill',
+  street_address: '5028 France Ave S',
+  city: 'Edina',
+  state: 'MN',
+  postal_code: '55424',
+  account: account,
+  url: 'http://www.edinagrill.com/current-tap-list'
+})
+Scraper.create({
+  establishment: edina_grill,
+  scraper_class_name: 'BeerList::Establishments::EdinaGrill'
+})
+
 happy_gnome  = Establishment.create({
   name: 'Happy Gnome',
   street_address: '498 Selby Ave',
@@ -58,23 +83,37 @@ happy_gnome  = Establishment.create({
   account: account,
   url: 'http://thehappygnome.com'
 })
-muddy_pig    = Establishment.create({
-  name: 'Muddy Pig',
-  street_address: '162 Dale St N',
-  city: 'St Paul',
-  state: 'MN',
-  postal_code: '55102',
-  account: account,
-  url: 'http://www.themuddypig.com'
+Scraper.create({
+  establishment: happy_gnome,
+  scraper_class_name: 'BeerList::Establishments::HappyGnome'
 })
-stanleys     = Establishment.create({
-  name: "Stanleys Bar Room",
-  street_address: '2500 University Ave NE',
+
+busters    = Establishment.create({
+  name: 'Busters On 28th',
+  street_address: '4204 S 28th Ave',
+  city: 'Minneapolis',
+  state: 'MN',
+  postal_code: '55406',
+  account: account,
+  url: 'http://busterson28th.com/bottles/'
+})
+Scraper.create({
+  establishment: busters,
+  scraper_class_name: 'BeerList::Establishments::BustersOn28th'
+})
+
+ginger_hop     = Establishment.create({
+  name: "Ginger Hop",
+  street_address: '201 E Hennepin Ave',
   city: ' Minneapolis',
   state: 'MN',
-  postal_code: '55418',
+  postal_code: '55414',
   account: account,
-  url: 'http://www.stanleysbarroom.com'
+  url: 'http://www.gingerhop.com/beer'
+})
+Scraper.create({
+  establishment: ginger_hop,
+  scraper_class_name: 'BeerList::Establishments::GingerHop'
 })
 
 beers = [
