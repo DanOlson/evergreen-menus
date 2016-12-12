@@ -22,9 +22,12 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara', '~> 2.9.2'
-  gem 'vcr',      '~> 3.0.3'
-  gem 'webmock',  '~> 2.3.0'
+  gem 'capybara',         '~> 2.7.1'
+  gem 'capybara-webkit',  '~> 1.11.1'
+  gem 'vcr',              '~> 3.0.3'
+  gem 'webmock',          '~> 2.3.0'
+  gem 'launchy',          '~> 2.4.3'
+  gem 'database_cleaner', '~> 1.5.3'
 end
 
 group :development do

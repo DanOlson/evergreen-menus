@@ -1,10 +1,10 @@
-FactoryGirl.find_definitions
+FactoryGirl.find_definitions if FactoryGirl.factories.none?
 [BeerEstablishment, Establishment, Beer].each &:destroy_all
 
 account = FactoryGirl.create :account
 user    = FactoryGirl.create :user, username: 'manager', password: 'password', account: account
 
-bulldog = Establishment.create({
+bulldog = Establishment.create!({
   name: 'Bulldog Northeast',
   street_address: '401 E Hennepin Ave',
   city: 'Minneapolis',
@@ -18,7 +18,7 @@ Scraper.create!({
   scraper_class_name: 'BeerList::Establishments::BulldogNortheast'
 })
 
-macs = Establishment.create({
+macs = Establishment.create!({
   name: "Macs Industrial",
   street_address: '312 Central Ave SE',
   city: 'Minneapolis',
@@ -32,7 +32,7 @@ Scraper.create!({
   scraper_class_name: 'BeerList::Establishments::MacsIndustrial'
 })
 
-muddy_waters = Establishment.create({
+muddy_waters = Establishment.create!({
   name: 'Muddy Waters',
   street_address: '2933 Lyndale Ave S',
   city: 'Minneapolis',
@@ -46,7 +46,7 @@ Scraper.create!({
   scraper_class_name: 'BeerList::Establishments::MuddyWaters'
 })
 
-groveland    = Establishment.create({
+groveland    = Establishment.create!({
   name: 'Groveland Tap',
   street_address: '1834 St Clair Ave',
   city: 'St Paul',
@@ -55,12 +55,12 @@ groveland    = Establishment.create({
   account: account,
   url: 'http://www.grovelandtap.com'
 })
-Scraper.create({
+Scraper.create!({
   establishment: groveland,
   scraper_class_name: 'BeerList::Establishments::GrovelandTap'
 })
 
-edina_grill    = Establishment.create({
+edina_grill    = Establishment.create!({
   name: 'Edina Grill',
   street_address: '5028 France Ave S',
   city: 'Edina',
@@ -69,12 +69,12 @@ edina_grill    = Establishment.create({
   account: account,
   url: 'http://www.edinagrill.com/current-tap-list'
 })
-Scraper.create({
+Scraper.create!({
   establishment: edina_grill,
   scraper_class_name: 'BeerList::Establishments::EdinaGrill'
 })
 
-happy_gnome  = Establishment.create({
+happy_gnome  = Establishment.create!({
   name: 'Happy Gnome',
   street_address: '498 Selby Ave',
   city: 'St Paul',
@@ -83,12 +83,12 @@ happy_gnome  = Establishment.create({
   account: account,
   url: 'http://thehappygnome.com'
 })
-Scraper.create({
+Scraper.create!({
   establishment: happy_gnome,
   scraper_class_name: 'BeerList::Establishments::HappyGnome'
 })
 
-busters    = Establishment.create({
+busters    = Establishment.create!({
   name: 'Busters On 28th',
   street_address: '4204 S 28th Ave',
   city: 'Minneapolis',
@@ -97,12 +97,12 @@ busters    = Establishment.create({
   account: account,
   url: 'http://busterson28th.com/bottles/'
 })
-Scraper.create({
+Scraper.create!({
   establishment: busters,
   scraper_class_name: 'BeerList::Establishments::BustersOn28th'
 })
 
-ginger_hop     = Establishment.create({
+ginger_hop     = Establishment.create!({
   name: "Ginger Hop",
   street_address: '201 E Hennepin Ave',
   city: ' Minneapolis',
@@ -111,7 +111,7 @@ ginger_hop     = Establishment.create({
   account: account,
   url: 'http://www.gingerhop.com/beer'
 })
-Scraper.create({
+Scraper.create!({
   establishment: ginger_hop,
   scraper_class_name: 'BeerList::Establishments::GingerHop'
 })

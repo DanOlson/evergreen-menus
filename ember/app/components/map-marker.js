@@ -38,7 +38,9 @@ export default Ember.Component.extend({
       position:  latLng,
       animation: google.maps.Animation.DROP,
       name:      establishment.get('name'),
-      id:        establishment.get('id')
+      id:        establishment.get('id'),
+      optimized: false,
+      title:     establishment.get('name')
     });
   },
 
