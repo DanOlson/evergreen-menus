@@ -1,6 +1,6 @@
 namespace :establishments do
 
-  desc 'Set establishment_id on beers based on beer_establishment relationship'
+  desc 'Create a set of beers per establishment, based on beer_establishment relationship'
   task assign_beers: :environment do
     sql = <<-SQL
       with establishment_beers as (

@@ -1,11 +1,9 @@
 class Beer < ActiveRecord::Base
-  has_many :beer_establishments
-  has_many :establishments, through: :beer_establishments
+  belongs_to :establishment
 
   class << self
     def at_establishment(establishment_id)
-      joins(:establishments).
-      where(beer_establishments: { establishment_id: establishment_id })
+      where establishment_id: establishment_id
     end
 
     def names_like(name)
