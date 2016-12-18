@@ -38,4 +38,15 @@ feature 'establishment management' do
     expect(page).to have_css "div.notice", text: "Establishment updated"
     expect(page).to have_selector "li", text: "Sobchak Security"
   end
+
+  scenario "editing an establishment's beer list", :js, :admin do
+    establishment = create :establishment, account: user.account
+    login user
+
+    click_link establishment.name
+    expect(all('input[data-test="beer"]').size).to eq 0
+
+    find('[data-test="add-beer"]').click
+    fill_in 'Name', with: 'Bear Republic Racer 5'
+  end
 end

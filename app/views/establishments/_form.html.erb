@@ -30,14 +30,17 @@
       <%= f.text_field :postal_code, maxlength: 5 %>
     </div>
 
-    <div class="form-group establishment-beer-list">
-      <%= f.label :beers, 'Beer List' %>
-      <%= f.fields_for :beers do |beer_form| %>
-        <div class="form-group">
-          <%= beer_form.text_field :name %>
-        </div>
-      <% end %>
-    </div>
+    <% if f.object.persisted? %>
+      <div class="form-group establishment-beer-list">
+        <%= f.label :beers, 'Beer List' %>
+        <%= f.fields_for :beers do |beer_form| %>
+          <div class="form-group">
+            <%= beer_form.text_field :name, data: { test: 'beer' } %>
+          </div>
+        <% end %>
+      </div>
+      <button>Add Beer</button>
+    <% end %>
 
     <div>
       <%= f.submit submit_text %>

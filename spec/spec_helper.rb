@@ -27,6 +27,7 @@ Capybara::Webkit.configure do |config|
   config.allow_url("platform.twitter.com")
   config.allow_url("builds.emberjs.com")
   config.allow_url("test.beermapper.ember")
+  config.allow_url("admin.test.beermapper.dev")
 end
 
 RSpec.configure do |config|
@@ -58,6 +59,13 @@ RSpec.configure do |config|
   config.before { DatabaseCleaner.start }
   config.append_after(:each) do
     DatabaseCleaner.clean
+  end
+
+  config.around(:each, admin: true) do |example|
+    old_app_host = Capybara.app_host
+    Capybara.app_host = 'http://admin.test.beermapper.dev'
+    example.run
+    Capybara.app_host = old_app_host
   end
 
   # If true, the base class of anonymous controllers will be inferred
