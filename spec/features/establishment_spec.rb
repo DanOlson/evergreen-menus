@@ -34,9 +34,9 @@ feature 'establishment management' do
     fill_in "Postal Code", with: "91316"
     click_button "Update"
 
-    expect(page).to have_current_path "/accounts/#{user.account_id}"
+    expect(page).to have_current_path "/accounts/#{user.account_id}/establishments/#{establishment.id}/edit"
     expect(page).to have_css "div.notice", text: "Establishment updated"
-    expect(page).to have_selector "li", text: "Sobchak Security"
+    expect(page).to have_selector "input[value='Sobchak Security']"
   end
 
   scenario "editing an establishment's beer list", :js, :admin do

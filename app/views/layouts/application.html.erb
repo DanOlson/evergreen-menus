@@ -6,8 +6,7 @@
   <meta name='description' content='BeerMapper is a search tool to help you find your favorite craft beer.'>
   <meta name='robots' content='index,follow'>
   <title>Beer Mapper</title>
-<!--   <%= stylesheet_link_tag    :application %>
-  <%= javascript_include_tag :application %> -->
+<!--   <%= stylesheet_link_tag    :application %> -->
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -20,5 +19,6 @@
   <%= render 'layouts/header' %>
   <%= yield %>
   <%= render('layouts/google_analytics') if Rails.env.production? %>
+  <%= javascript_include_tag :bundle %>
 </body>
 </html>

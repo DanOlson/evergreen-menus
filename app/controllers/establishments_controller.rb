@@ -24,7 +24,7 @@ class EstablishmentsController < ApplicationController
 
   def update
     if @establishment.update establishment_params
-      redirect_to @account, notice: 'Establishment updated'
+      redirect_to edit_account_establishment_path(@account, @establishment), notice: 'Establishment updated'
     else
       logger.debug "Errors updating establishment: #{@establishment.errors.full_messages}"
       render :edit
@@ -43,7 +43,8 @@ class EstablishmentsController < ApplicationController
       :street_address,
       :city,
       :state,
-      :postal_code
+      :postal_code,
+      beers_attributes: [:id, :name, :_destroy]
     )
   end
 end

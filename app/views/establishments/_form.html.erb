@@ -1,3 +1,8 @@
+<script>
+  function getBeers() {
+    return <%= raw establishment.beers.to_json %>
+  }
+</script>
 <div class="container">
   <%= form_for [account, establishment] do |f| %>
     <div class="form-group">
@@ -31,14 +36,8 @@
     </div>
 
     <% if f.object.persisted? %>
-      <div class="form-group establishment-beer-list">
-        <%= f.label :beers, 'Beer List' %>
-        <%= f.fields_for :beers do |beer_form| %>
-          <div class="form-group">
-            <%= beer_form.text_field :name, data: { test: 'beer' } %>
-          </div>
-        <% end %>
-      </div>
+      <%= f.label :beers, 'Beer List' %>
+      <div id="react-app-root"></div>
       <button>Add Beer</button>
     <% end %>
 
