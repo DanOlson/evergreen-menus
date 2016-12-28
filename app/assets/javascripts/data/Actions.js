@@ -2,10 +2,9 @@ import ActionTypes from './ActionTypes';
 import Dispatcher from './Dispatcher';
 
 export default {
-  addBeer(name) {
+  addBeer() {
     Dispatcher.dispatch({
-      type: ActionTypes.ADD_BEER,
-      name
+      type: ActionTypes.ADD_BEER
     });
   }
 };

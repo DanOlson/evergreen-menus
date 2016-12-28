@@ -1,6 +1,7 @@
 import createApp from '../App';
 import { Container } from 'flux/utils';
 import Store from '../data/Store';
+import Actions from '../data/Actions';
 import React from 'react';
 
 function getStores() {
@@ -11,7 +12,8 @@ function getStores() {
 
 function getState() {
   return {
-    beers: Store.getState()
+    beers: Store.getState(),
+    onAddBeer: Actions.addBeer
   };
 }
 

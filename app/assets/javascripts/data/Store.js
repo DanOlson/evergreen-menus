@@ -14,7 +14,9 @@ class Store extends ReduceStore {
   reduce(state, action) {
     switch (action.type) {
       case ActionTypes.ADD_BEER:
-        return state;
+        const newBeer = { name: '' };
+
+        return [...state, newBeer];
       default:
         return state;
     }

@@ -47,6 +47,10 @@ feature 'establishment management' do
     expect(all('input[data-test="beer"]').size).to eq 0
 
     find('[data-test="add-beer"]').click
-    fill_in 'Name', with: 'Bear Republic Racer 5'
+    find('input[data-test="beer"]').set('Bear Republic Racer 5')
+
+    click_button 'Update'
+    expect(page).to have_css "div.notice", text: "Establishment updated"
+    expect(all('input[data-test="beer"]').size).to eq 1
   end
 end
