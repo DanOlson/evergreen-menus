@@ -1,7 +1,7 @@
 <script>
-  function getBeers() {
-    return <%= raw establishment.beers.to_json %>
-  }
+  window.BEERMAPPER = window.BEERMAPPER || {
+    beers: <%= raw establishment.beers.to_json %>
+  };
 </script>
 <div class="container">
   <%= form_for [account, establishment] do |f| %>

@@ -6,5 +6,12 @@ export default {
     Dispatcher.dispatch({
       type: ActionTypes.ADD_BEER
     });
+  },
+
+  markForRemoval(id) {
+    Dispatcher.dispatch({
+      type: ActionTypes.MARK_FOR_REMOVAL,
+      id
+    })
   }
 };

@@ -44,13 +44,21 @@ feature 'establishment management' do
     login user
 
     click_link establishment.name
-    expect(all('input[data-test="beer"]').size).to eq 0
+    expect(all('input[data-test="beer-name-input"]').size).to eq 0
 
     find('[data-test="add-beer"]').click
-    find('input[data-test="beer"]').set('Bear Republic Racer 5')
+    find('[data-test="new-beer-input"]').set('Bear Republic Racer 5')
 
     click_button 'Update'
     expect(page).to have_css "div.notice", text: "Establishment updated"
-    expect(all('input[data-test="beer"]').size).to eq 1
+    expect(all('[data-test="beer-name-input"]').size).to eq 1
+
+    beer = establishment.beers.last
+    find("[data-test='remove-beer-#{beer.id}']").click
+    expect(page).to have_css(".remove-beer[data-test='beer-#{beer.id}']")
+
+    click_button 'Update'
+    expect(page).to have_css "div.notice", text: "Establishment updated"
+    expect(all('[data-test="beer-name-input"]').size).to eq 0
   end
 end

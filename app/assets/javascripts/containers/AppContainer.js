@@ -13,7 +13,8 @@ function getStores() {
 function getState() {
   return {
     beers: Store.getState(),
-    onAddBeer: Actions.addBeer
+    onAddBeer: Actions.addBeer,
+    onRemoveBeer: Actions.markForRemoval
   };
 }
 

@@ -1,3 +1,4 @@
 export default {
-  ADD_BEER: 'ADD_BEER'
+  ADD_BEER: 'ADD_BEER',
+  MARK_FOR_REMOVAL: 'MARK_FOR_REMOVAL'
 };
