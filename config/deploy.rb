@@ -33,6 +33,13 @@ after "deploy:restart", "deploy:cleanup"
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
+  namespace :assets do
+    task :precompile do
+      ###
+      # overwrite Sprockets' task to use Webpack instead
+      run "cd #{release_path} && npm install && ./node_modules/.bin/webpack --progress --colors"
+    end
+  end
   task :restart, roles: :app, except: { no_release: true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
