@@ -12,6 +12,14 @@ export default {
     Dispatcher.dispatch({
       type: ActionTypes.MARK_FOR_REMOVAL,
       id
-    })
+    });
+  },
+
+  beerDidChange(id, text) {
+    Dispatcher.dispatch({
+      type: ActionTypes.BEER_DID_CHANGE,
+      id,
+      text
+    });
   }
 };

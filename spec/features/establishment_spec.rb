@@ -46,22 +46,32 @@ feature 'establishment management' do
     click_link establishment.name
     expect(all('input[data-test="beer-name-input"]').size).to eq 0
 
-    find('[data-test="add-beer"]').click
+    add_beer_button = find('[data-test="add-beer"]')
+
+    add_beer_button.click
     find('[data-test="beer-name-input-0"]').set('Bear Republic Racer 5')
+    add_beer_button.click
+    find('[data-test="beer-name-input-1"]').set('Indeed Day Tripper')
+    add_beer_button.click
+    find('[data-test="beer-name-input-2"]').set('Deschutes Fresh Squeezed')
 
     click_button 'Update'
     expect(page).to have_css "div.notice", text: "Establishment updated"
-    expect(all('[data-test="beer-name-input"]').size).to eq 1
+    expect(all('[data-test="beer-name-input"]').size).to eq 3
 
-    beer = establishment.beers.last
-    expect(beer.name).to eq 'Bear Republic Racer 5'
+    beers = establishment.beers.map &:name
+    expect(beers).to match_array [
+      'Bear Republic Racer 5',
+      'Indeed Day Tripper',
+      'Deschutes Fresh Squeezed'
+    ]
 
     find("[data-test='remove-beer-0']").click
     expect(page).to have_css(".remove-beer[data-test='beer-0']")
 
     click_button 'Update'
     expect(page).to have_css "div.notice", text: "Establishment updated"
-    expect(all('[data-test="beer-name-input"]').size).to eq 0
+    expect(all('[data-test="beer-name-input"]').size).to eq 2
   end
 
   scenario 'unsaved beers can be deleted from the UI', :js, :admin do

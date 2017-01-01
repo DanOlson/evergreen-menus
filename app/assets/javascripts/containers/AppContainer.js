@@ -14,7 +14,8 @@ function getState() {
   return {
     beers: Store.getState(),
     onAddBeer: Actions.addBeer,
-    onRemoveBeer: Actions.markForRemoval
+    onRemoveBeer: Actions.markForRemoval,
+    onBeerDidChange: Actions.beerDidChange
   };
 }
 

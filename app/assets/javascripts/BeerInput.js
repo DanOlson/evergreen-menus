@@ -2,7 +2,8 @@ export default React => (props) => {
   const { beer, onRemoveBeer } = props;
   const { appId } = beer;
   const className = beer.markedForRemoval ? 'remove-beer' : '';
-  const onRemove = (event) => {
+  const onBlur    = (event) => props.onBlur(appId, event.target.value);
+  const onRemove  = (event) => {
     event.preventDefault();
     onRemoveBeer(appId);
   }
@@ -14,6 +15,7 @@ export default React => (props) => {
           type="text"
           data-test={`beer-name-input-${appId}`}
           defaultValue={beer.name}
+          onBlur={onBlur}
           name={`establishment[beers_attributes][${appId}][name]`}
           id={`establishment_beers_attributes_${appId}_name`}
         />

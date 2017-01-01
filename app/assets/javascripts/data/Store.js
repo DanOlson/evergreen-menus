@@ -17,11 +17,17 @@ function onMarkForRemoval(state, action) {
 }
 
 function onAddBeer(state, action) {
-  const appIds    = state.map(beer => beer.appId);
-  const nextAppId = appIds.length;
+  const nextAppId = state.length;
   const newBeer   = { name: '', appId: nextAppId };
 
   return [...state, newBeer];
+}
+
+function onBeerChanged(state, action) {
+  const newState = [...state];
+  const beer = newState.find(beer => beer.appId === action.id);
+  beer.name = action.text;
+  return newState;
 }
 
 class Store extends ReduceStore {
@@ -42,6 +48,8 @@ class Store extends ReduceStore {
         return onAddBeer(state, action);
       case ActionTypes.MARK_FOR_REMOVAL:
         return onMarkForRemoval(state, action);
+      case ActionTypes.BEER_DID_CHANGE:
+        return onBeerChanged(state, action);
       default:
         return state;
     }
