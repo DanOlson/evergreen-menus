@@ -60,7 +60,7 @@ bundle
 
 <VirtualHost *:80>
   ServerName test.beermapper-api.dev
-  ServerAlias www.test.beermapper-api.dev
+  ServerAlias www.test.beermapper-api.dev admin.test.beermapper.dev
   DocumentRoot /Users/dan/code/beermapper/public
   RailsEnv test
   <Directory /Users/dan/code/beermapper/public>
