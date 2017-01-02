@@ -12,6 +12,13 @@ brew install qt55
 bundle
 ```
 
+Install Passenger
+
+```
+gem install passenger --no-rdoc --no-ri
+passenger-install-apache2-module
+```
+
 ### Configure Apache
 
 ```
@@ -19,7 +26,7 @@ bundle
 # Beermapper dev
 <VirtualHost *:80>
   ServerName beermapper-api.dev
-  ServerAlias www.beermapper-api.dev
+  ServerAlias www.beermapper-api.dev admin.beermapper.dev
   DocumentRoot /Users/dan/code/beermapper/public
   RailsEnv development
   <Directory /Users/dan/code/beermapper/public>
@@ -70,6 +77,34 @@ bundle
 </VirtualHost>
 ```
 
+### Configure /etc/hosts
+
+```
+127.0.0.1 beermapper-api.dev
+127.0.0.1 admin.beermapper.dev
+127.0.0.1 beermapper.ember
+127.0.0.1 test.beermapper-api.dev
+127.0.0.1 admin.test.beermapper.dev
+127.0.0.1 test.beermapper.ember
+```
+
+### Restart Apache
+
+`sudo apachectl restart`
+
 ### Bundler
 
 `bundle`
+
+### Bootstrap
+
+`rake db:bootstrap --trace`
+
+### Run Tests
+
+`bundle exec rspec spec`
+
+### Go
+
+Navigate to http://beermapper.ember
+Navigate to http://admin.beermapper.dev
