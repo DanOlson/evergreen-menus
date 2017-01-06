@@ -2,14 +2,6 @@ require 'spec_helper'
 
 describe "updating an establishment's list" do
   context "when the scraper's url will 404", :vcr do
-    before do
-      Establishment.skip_callback(:create, :after, :geocode)
-    end
-
-    after do
-      Establishment.set_callback(:create, :after, :geocode)
-    end
-
     let(:establishment) do
       Establishment.create!({
         name: 'Bar1',

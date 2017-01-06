@@ -1,7 +1,6 @@
 class Establishment < ActiveRecord::Base
   geocoded_by :address
-  after_create :geocode
-  after_update :geocode, if: ->(est) { est.address_changed? }
+  before_save :geocode, if: ->(e) { e.address_changed? }
 
   validates :name, :address, :url, presence: true
 
@@ -26,6 +25,13 @@ class Establishment < ActiveRecord::Base
 
   def address
     self[:address] || "#{street_address}, #{city}, #{state} #{postal_code}"
+  end
+
+  def address_changed?
+    street_address_changed? ||
+    city_changed? ||
+    state_changed? ||
+    postal_code_changed?
   end
 
   def include_beers!
