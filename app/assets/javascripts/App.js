@@ -7,12 +7,15 @@ export default React => (props) => {
     event.preventDefault();
     props.onAddBeer();
   };
-  const inputs = props.beers.map((beer, index) => {
+  const inputs = props.beers.map((beer, index, array) => {
+    const isLastElement = index === array.length - 1;
+
     return <BeerInput
              beer={beer}
              index={index}
              onRemoveBeer={onRemoveBeer}
-             onBlur={onBeerDidChange}
+             onChange={onBeerDidChange}
+             shouldFocus={isLastElement}
              key={`${beer}-${index}`}
            />;
   });

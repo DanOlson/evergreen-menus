@@ -1,8 +1,8 @@
 export default React => (props) => {
-  const { beer, onRemoveBeer } = props;
+  const { beer, onRemoveBeer, shouldFocus } = props;
   const { appId } = beer;
   const className = beer.markedForRemoval ? 'remove-beer' : '';
-  const onBlur    = (event) => props.onBlur(appId, event.target.value);
+  const onChange  = (event) => props.onChange(appId, event.target.value);
   const onRemove  = (event) => {
     event.preventDefault();
     onRemoveBeer(appId);
@@ -15,9 +15,10 @@ export default React => (props) => {
           type="text"
           data-test={`beer-name-input-${appId}`}
           defaultValue={beer.name}
-          onBlur={onBlur}
+          onChange={onChange}
           name={`establishment[beers_attributes][${appId}][name]`}
           id={`establishment_beers_attributes_${appId}_name`}
+          autoFocus={shouldFocus}
         />
         <a href='' onClick={onRemove} data-test={`remove-beer-${appId}`}>Remove</a>
       </div>
