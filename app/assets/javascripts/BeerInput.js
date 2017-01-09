@@ -1,11 +1,26 @@
 export default React => (props) => {
-  const { beer, onRemoveBeer, shouldFocus } = props;
+  let actionable;
+  const { beer, onRemoveBeer, onKeepBeer, shouldFocus } = props;
   const { appId } = beer;
   const className = beer.markedForRemoval ? 'remove-beer' : '';
   const onChange  = (event) => props.onChange(appId, event.target.value);
   const onRemove  = (event) => {
     event.preventDefault();
     onRemoveBeer(appId);
+  };
+  const onKeep = (event) => {
+    event.preventDefault();
+    onKeepBeer(appId);
+  };
+
+  if (beer.markedForRemoval) {
+    actionable = (
+      <a href='' onClick={onKeep} data-test={`keep-beer-${appId}`}>Keep</a>
+    )
+  } else {
+    actionable = (
+      <a href='' onClick={onRemove} data-test={`remove-beer-${appId}`}>Remove</a>
+    )
   }
 
   return (
@@ -20,7 +35,7 @@ export default React => (props) => {
           id={`establishment_beers_attributes_${appId}_name`}
           autoFocus={shouldFocus}
         />
-        <a href='' onClick={onRemove} data-test={`remove-beer-${appId}`}>Remove</a>
+        {actionable}
       </div>
       <input
         type="hidden"

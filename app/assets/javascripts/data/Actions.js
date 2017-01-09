@@ -15,6 +15,13 @@ export default {
     });
   },
 
+  keepBeer(id) {
+    Dispatcher.dispatch({
+      type: ActionTypes.KEEP_BEER,
+      id
+    });
+  },
+
   beerDidChange(id, text) {
     Dispatcher.dispatch({
       type: ActionTypes.BEER_DID_CHANGE,

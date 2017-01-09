@@ -74,6 +74,40 @@ feature 'establishment management' do
     expect(all('[data-test="beer-name-input"]').size).to eq 2
   end
 
+  scenario 'beers can be removed and unremoved from the beer list', :js, :admin do
+    establishment = create :establishment, account: user.account
+    login user
+
+    click_link establishment.name
+
+    add_beer_button = find('[data-test="add-beer"]')
+    add_beer_button.click
+    find('[data-test="beer-name-input-0"]').set('Bear Republic Racer 5')
+    add_beer_button.click
+    find('[data-test="beer-name-input-1"]').set('Indeed Day Tripper')
+
+    click_button 'Update'
+    expect(page).to have_css "div.notice", text: "Establishment updated"
+    expect(all('[data-test="beer-name-input"]').size).to eq 2
+
+    find("[data-test='remove-beer-0']").click
+    find("[data-test='remove-beer-1']").click
+
+    expect(page).to have_css(".remove-beer[data-test='beer-0']")
+    expect(page).to have_css(".remove-beer[data-test='beer-1']")
+
+    find("[data-test='keep-beer-1']").click
+
+    expect(page).to_not have_css(".remove-beer[data-test='beer-1']")
+
+    click_button 'Update'
+    expect(page).to have_css "div.notice", text: "Establishment updated"
+    expect(all('[data-test="beer-name-input"]').size).to eq 1
+
+    input = find '[data-test="beer-name-input-0"]'
+    expect(input.value).to eq 'Indeed Day Tripper'
+  end
+
   scenario 'unsaved beers can be deleted from the UI', :js, :admin do
     establishment = create :establishment, account: user.account
     login user

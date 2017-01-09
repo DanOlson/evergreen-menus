@@ -15,6 +15,7 @@ function getState() {
     beers: Store.getState(),
     onAddBeer: Actions.addBeer,
     onRemoveBeer: Actions.markForRemoval,
+    onKeepBeer: Actions.keepBeer,
     onBeerDidChange: Actions.beerDidChange
   };
 }

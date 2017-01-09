@@ -2,22 +2,24 @@ import createInput from './BeerInput';
 
 export default React => (props) => {
   const BeerInput = createInput(React);
-  const { onRemoveBeer, onBeerDidChange } = props;
+  const { onRemoveBeer, onKeepBeer, onBeerDidChange } = props;
   const onAddBeer = (event) => {
     event.preventDefault();
     props.onAddBeer();
   };
   const inputs = props.beers.map((beer, index, array) => {
     const isLastElement = index === array.length - 1;
+    const beerInputProps = {
+      beer,
+      index,
+      onRemoveBeer,
+      onKeepBeer,
+      onChange: onBeerDidChange,
+      shouldFocus: isLastElement,
+      key: `${beer}-${index}`
+    };
 
-    return <BeerInput
-             beer={beer}
-             index={index}
-             onRemoveBeer={onRemoveBeer}
-             onChange={onBeerDidChange}
-             shouldFocus={isLastElement}
-             key={`${beer}-${index}`}
-           />;
+    return <BeerInput {...beerInputProps} />;
   });
 
   return (

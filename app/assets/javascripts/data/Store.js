@@ -16,6 +16,14 @@ function onMarkForRemoval(state, action) {
   }
 }
 
+function onKeepBeer(state, action) {
+  const beer = state.find(beer => beer.appId === action.id);
+  const newState = [...state];
+
+  beer.markedForRemoval = false;
+  return newState;
+}
+
 function onAddBeer(state, action) {
   const nextAppId = state.length;
   const newBeer   = { name: '', appId: nextAppId };
@@ -48,6 +56,8 @@ class Store extends ReduceStore {
         return onAddBeer(state, action);
       case ActionTypes.MARK_FOR_REMOVAL:
         return onMarkForRemoval(state, action);
+      case ActionTypes.KEEP_BEER:
+        return onKeepBeer(state, action);
       case ActionTypes.BEER_DID_CHANGE:
         return onBeerChanged(state, action);
       default:
