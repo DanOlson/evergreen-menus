@@ -1,64 +1,38 @@
-require 'rvm/capistrano'
-require 'bundler/capistrano'
-require 'whenever/capistrano'
+# config valid only for current version of Capistrano
+lock "3.7.1"
 
-set :application, "beermapper" # app directory name
-set :repository,  "git@github.com:DanOlson/beermapper.git"
+set :application, "beermapper"
+set :repo_url, "git@github.com:DanOlson/beermapper.git"
 
-default_run_options[:pty]   = true
-ssh_options[:forward_agent] = true
-
-set :deploy_to, "/var/apps/#{application}"
-set :scm, :git
 set :rvm_ruby_string, 'ruby-2.3.0'
 set :rvm_type,        :system
-set :use_sudo,        false
-set :user,            "deploy"
 
-set :hostname,  "beermapper.com"
-set :domain,    "beermapper.com"
-set :branch,    "master"
-set :rails_env, "production"
-set :keep_releases, 3
+# Default branch is :master
+# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
-set :whenever_command, 'bundle exec whenever'
+set :deploy_to, "/var/apps/beermapper"
 
-role :web, domain
-role :app, domain
-role :db,  domain, primary: true # This is where Rails migrations will run
+# Default value for :format is :airbrussh.
+# set :format, :airbrussh
 
-# if you want to clean up old releases on each deploy uncomment this:
-after "deploy:restart", "deploy:cleanup"
+# You can configure the Airbrussh format using :format_options.
+# These are the defaults.
+# set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
 
-namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
-  namespace :assets do
-    task :precompile do
-      ###
-      # overwrite Sprockets' task to use Webpack instead
-      run "cd #{release_path} && npm install && ./node_modules/.bin/webpack --progress --colors"
-    end
-  end
-  task :restart, roles: :app, except: { no_release: true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-  end
+# Default value for :pty is false
+set :pty, true
 
-  task :symlink_config, roles: :app, except: { no_release: true } do
-    run "rm #{release_path}/config/app_config.yml"
-    run "ln -nfs #{shared_path}/config/app_config.yml #{release_path}/config/"
-  end
+# Default value for :linked_files is []
+append :linked_files, "config/database.yml", "config/app_config.yml"
 
-  task :symlink_database_yml, roles: :app, except: { no_release: true } do
-    run "rm #{release_path}/config/database.yml"
-    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/"
-  end
+# Default value for linked_dirs is []
+# append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
 
-  task :build_dist, roles: :app, except: { no_release: true } do
-    run "cd #{release_path}/ember && npm install && bower install && ember build --environment=production"
-  end
-end
+# Default value for default_env is {}
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
-after 'deploy:finalize_update', 'deploy:symlink_config'
-after 'deploy:finalize_update', 'deploy:symlink_database_yml'
-after 'deploy:finalize_update', 'deploy:build_dist'
+# Default value for keep_releases is 5
+# set :keep_releases, 5
+
+after 'deploy:updated', 'deploy:build_dist'
+after 'deploy:updated', 'deploy:assets:precompile'

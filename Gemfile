@@ -31,8 +31,11 @@ group :test do
 end
 
 group :development do
-  gem 'rvm-capistrano', '~> 1.4.3'
-  gem 'capistrano',     '~> 2.15.5'
+  gem 'capistrano',           '~> 3.7.1'
+  gem 'capistrano-rails',     '~> 1.1', require: false
+  gem 'capistrano-bundler',   '~> 1.1', require: false
+  gem 'capistrano-rvm',       '~> 0.1', require: false
+  gem 'capistrano-passenger', '~> 0.2', require: false
 end
 
 group :doc do
