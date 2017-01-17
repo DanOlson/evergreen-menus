@@ -1,8 +1,20 @@
+require Rails.root.join 'db/seeds/role_seeder'
+
+###
+# Stub Geocoder requests
+load Rails.root.join 'spec/support/geocoder.rb'
+
 FactoryGirl.find_definitions if FactoryGirl.factories.none?
-[BeerEstablishment, Establishment, Beer].each &:destroy_all
+[BeerEstablishment, Establishment, Beer, User].each &:destroy_all
+
+RoleSeeder.call
 
 account = FactoryGirl.create :account
-user    = FactoryGirl.create :user, username: 'manager', password: 'password', account: account
+user    = FactoryGirl.create :user, :admin, {
+  username: 'manager',
+  password: 'password',
+  account: account
+}
 
 bulldog = Establishment.create!({
   name: 'Bulldog Northeast',
