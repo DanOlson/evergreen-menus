@@ -20,6 +20,10 @@ Beermapper::Application.routes.draw do
     resources :menus, only: :show
     resources :accounts do
       resources :establishments
+
+      member do
+        get 'staff'
+      end
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

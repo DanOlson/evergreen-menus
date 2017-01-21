@@ -6,4 +6,8 @@ class AccountsController < ApplicationController
 
   def index
   end
+
+  def staff
+    @staff = @account.users
+  end
 end

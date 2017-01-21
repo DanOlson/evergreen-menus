@@ -26,5 +26,37 @@ feature 'account management' do
       expect(page).to have_current_path "/accounts/#{user.account_id}"
       expect(page).to have_content 'You are not authorized to access this page.'
     end
+
+    describe 'viewing staff' do
+      before do
+        create :user, {
+          first_name: 'Jeffrey',
+          last_name: 'Lebowski',
+          account: account
+        }
+        create :user, {
+          first_name: 'Walter',
+          last_name: 'Sobchak',
+          account: account
+        }
+        visit "/accounts/#{account.id}/staff"
+      end
+
+      context 'with admin role' do
+        let(:user) { create :user, :admin, account: account }
+
+        scenario 'user can view staff' do
+          expect(page).to have_content 'Jeffrey Lebowski'
+          expect(page).to have_content 'Walter Sobchak'
+        end
+      end
+
+      context 'without admin role' do
+        scenario 'user cannot view staff' do
+          expect(page).to have_current_path "/accounts/#{user.account_id}"
+          expect(page).to have_content 'You are not authorized to access this page.'
+        end
+      end
+    end
   end
 end
