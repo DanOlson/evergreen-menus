@@ -24,5 +24,6 @@ class Ability
     staff_abilities user
 
     can :manage, Account, id: user.account_id
+    can :manage, User, account_id: user.account_id
   end
 end

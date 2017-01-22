@@ -21,9 +21,7 @@ Beermapper::Application.routes.draw do
     resources :accounts do
       resources :establishments
 
-      member do
-        get 'staff'
-      end
+      resources :users, path: '/staff'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
