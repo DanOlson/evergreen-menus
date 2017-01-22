@@ -32,8 +32,8 @@ module Api
           expect(json['active']).to eq true
           expect(json['latitude']).to eq '44.978375'
           expect(json['longitude']).to eq '-93.261214'
-          expect(json['created_at']).to eq time
-          expect(json['updated_at']).to eq time
+          expect(Time.parse(json['created_at'])).to eq time
+          expect(Time.parse(json['updated_at'])).to eq time
         end
       end
 
