@@ -5,7 +5,6 @@ module Api
 
       def show
         establishment = find_establishment
-        establishment.include_beers!
         respond_with establishment
       end
 

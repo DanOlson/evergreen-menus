@@ -33,12 +33,4 @@ class Establishment < ActiveRecord::Base
     state_changed? ||
     postal_code_changed?
   end
-
-  def include_beers!
-    @include_beers = true
-  end
-
-  def include_beers?
-    !!@include_beers
-  end
 end
