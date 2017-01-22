@@ -17,21 +17,21 @@ module Queries
       ::ListUpdate.create!({
         establishment: bar1,
         status: 'Success',
-        created_at: '2014-03-15'
+        created_at: Time.zone.parse('2014-03-15')
       })
     end
     let!(:old_successful_update2) do
       ::ListUpdate.create!({
         establishment: bar2,
         status: 'Success',
-        created_at: '2014-03-15'
+        created_at: Time.zone.parse('2014-03-15')
       })
     end
     let!(:old_failed_update) do
       ::ListUpdate.create!({
         establishment: bar3,
         status: 'Failed',
-        created_at: '2014-03-17'
+        created_at: Time.zone.parse('2014-03-17')
       })
     end
 

@@ -14,10 +14,6 @@ module V1
     has_one :scraper
     embed :ids, include: true
 
-    # def include_beers?
-    #   object.include_beers?
-    # end
-
     def include_scraper?
       !!current_user
     end
