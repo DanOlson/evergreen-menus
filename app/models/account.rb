@@ -3,4 +3,5 @@ class Account < ActiveRecord::Base
   validates :active, inclusion: { in: [true, false] }
   has_many :users
   has_many :establishments
+  has_many :user_invitations
 end

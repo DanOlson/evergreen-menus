@@ -1,18 +1,47 @@
 <div class="container">
-  <table>
-    <thead>
-      <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |person| %>
+  <%= button_to 'Invite staff', {
+        controller: 'user_invitations',
+        action: 'new',
+        account_id: @account.id
+      },
+      method: :get %>
+  <div class='staff-member-list'>
+    <h2>Staff</h2>
+    <table>
+      <thead>
         <tr>
-          <td><%= person.first_name %></td>
-          <td><%= person.last_name %></td>
+          <th>First Name</th>
+          <th>Last Name</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @users.each do |person| %>
+          <tr data-test="staff-member">
+            <td><%= person.first_name %></td>
+            <td><%= person.last_name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class='staff-member-list'>
+    <h2>Pending Invitations</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @user_invitations.each do |person| %>
+          <tr data-test="staff-member-invited">
+            <td><%= person.first_name %></td>
+            <td><%= person.last_name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

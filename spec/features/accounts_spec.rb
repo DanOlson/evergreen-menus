@@ -58,5 +58,41 @@ feature 'account management' do
         end
       end
     end
+
+    describe 'adding staff' do
+      let(:user) { create :user, :admin, account: account }
+
+      scenario 'admin can invite staff' do
+        visit "/accounts/#{account.id}/staff"
+
+        invitations = find_all('[data-test="staff-member-invited"]')
+        expect(invitations.size).to eq 0
+
+        click_button 'Invite staff'
+
+        fill_in 'First name', with: 'Donny'
+        fill_in 'Last name', with: 'Kerabatsos'
+        fill_in 'Email', with: 'donny@lebowski.me'
+
+        check 'Invite another'
+
+        click_button 'Invite'
+
+        expect(page).to have_content "Invitation sent to donny@lebowski.me"
+
+        fill_in 'First name', with: 'Walter'
+        fill_in 'Last name', with: 'Sobchak'
+        fill_in 'Email', with: 'walter@lebowski.me'
+
+        uncheck 'Invite another'
+
+        click_button 'Invite'
+
+        expect(page).to have_content "Invitation sent to walter@lebowski.me"
+
+        invitations = find_all('[data-test="staff-member-invited"]')
+        expect(invitations.size).to eq 2
+      end
+    end
   end
 end

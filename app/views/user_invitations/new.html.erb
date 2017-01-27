@@ -1,0 +1,27 @@
+<div class='container'>
+  <%= form_for [@account, @user_invitation] do |f| %>
+    <div class='form-group'>
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name, required: true %>
+    </div>
+
+    <div class='form-group'>
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name %>
+    </div>
+
+    <div class='form-group'>
+      <%= f.label :email %>
+      <%= f.email_field :email, required: true %>
+    </div>
+
+    <div class='form-group'>
+      <%= f.label :invite_another %>
+      <%= f.check_box :invite_another %>
+    </div>
+
+    <div class='form-group'>
+      <%= f.submit 'Invite' %>
+    </div>
+  <% end %>
+</div>

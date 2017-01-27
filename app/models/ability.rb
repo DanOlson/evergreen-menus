@@ -6,9 +6,8 @@ class Ability
     Role::STAFF => :staff_abilities
   }
 
+  # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
   def initialize(user)
-    # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-
     abilities = ABILITY_MAP.fetch(user.role.name) { return }
     send abilities, user
   end
@@ -25,5 +24,6 @@ class Ability
 
     can :manage, Account, id: user.account_id
     can :manage, User, account_id: user.account_id
+    can :manage, UserInvitation, account_id: user.account_id
   end
 end
