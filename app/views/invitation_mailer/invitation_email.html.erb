@@ -1,0 +1,9 @@
+<h1>Hello, <%= @invitation.first_name %>!</h1>
+<p>
+  <%= @inviter %> has invited you to join BeerMapper so that you can help 
+  maintain the awesome beer menu at <%= @invitation.account.name %>.<br>
+</p>
+<p>
+  To register, please follow this link: <%= @registration_url %>.
+</p>
+<p>Thanks, and have a great day!</p>
