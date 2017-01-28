@@ -92,6 +92,12 @@ feature 'account management' do
 
         invitations = find_all('[data-test="staff-member-invited"]')
         expect(invitations.size).to eq 2
+
+        expect(ActionMailer::Base.deliveries.size).to eq 2
+        donny_invite, walter_invite = ActionMailer::Base.deliveries
+
+        expect(donny_invite.to).to eq ['donny@lebowski.me']
+        expect(walter_invite.to).to eq ['walter@lebowski.me']
       end
     end
   end

@@ -28,7 +28,9 @@ class UserInvitationForm
   end
 
   def invite
-    to_model.save
+    invitation = to_model
+    invitation.save
+    send_invitation_email invitation
   end
 
   def to_model
@@ -39,5 +41,11 @@ class UserInvitationForm
       account: account,
       inviting_user: inviting_user
     })
+  end
+
+  private
+
+  def send_invitation_email(invitation)
+    InvitationMailer.invitation_email(invitation).deliver_now
   end
 end
