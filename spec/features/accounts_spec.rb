@@ -43,7 +43,7 @@ feature 'account management' do
       end
 
       context 'with admin role' do
-        let(:user) { create :user, :admin, account: account }
+        let(:user) { create :user, :manager, account: account }
 
         scenario 'user can view staff' do
           expect(page).to have_content 'Jeffrey Lebowski'
@@ -60,7 +60,7 @@ feature 'account management' do
     end
 
     describe 'adding staff' do
-      let(:user) { create :user, :admin, account: account }
+      let(:user) { create :user, :manager, account: account }
 
       scenario 'admin can invite staff' do
         visit "/accounts/#{account.id}/staff"

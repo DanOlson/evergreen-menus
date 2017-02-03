@@ -3,10 +3,15 @@ class Role < ActiveRecord::Base
 
   ADMIN = 'admin'
   STAFF = 'staff'
+  MANAGER = 'manager'
 
   class << self
     def admin
       find_by name: ADMIN
+    end
+
+    def manager
+      find_by name: MANAGER
     end
 
     def staff
