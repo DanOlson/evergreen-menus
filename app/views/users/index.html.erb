@@ -7,41 +7,23 @@
       method: :get %>
   <div class='staff-member-list'>
     <h2>Staff</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @users.each do |person| %>
-          <tr data-test="staff-member">
-            <td><%= person.first_name %></td>
-            <td><%= person.last_name %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <ul>
+      <% @users.each do |person| %>
+        <li data-test="staff-member">
+          <%= person.first_name %> <%= person.last_name %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 
   <div class='staff-member-list'>
     <h2>Pending Invitations</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @user_invitations.each do |person| %>
-          <tr data-test="staff-member-invited">
-            <td><%= person.first_name %></td>
-            <td><%= person.last_name %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <ul>
+      <% @user_invitations.each do |person| %>
+        <li data-test="staff-member-invited">
+          <%= person.first_name %> <%= person.last_name %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>
