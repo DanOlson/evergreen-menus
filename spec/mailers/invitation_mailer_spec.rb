@@ -8,6 +8,7 @@ describe InvitationMailer, type: :mailer do
     end
     let(:invitation) do
       UserInvitation.new({
+        id: 42,
         first_name: 'Walter',
         last_name: 'Sobchak',
         email: 'walter@lebowski.me',
@@ -44,6 +45,8 @@ describe InvitationMailer, type: :mailer do
       expect(email.content_type).to include 'multipart/alternative'
     end
 
-    it 'sends an email that includes a registration url'
+    it 'sends an email that includes a registration url' do
+      expect(email.text_part.decoded).to match(%r{admin.beermapper.dev/register/.+})
+    end
   end
 end

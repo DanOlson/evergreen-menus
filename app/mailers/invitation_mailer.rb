@@ -5,7 +5,8 @@ class InvitationMailer < ApplicationMailer
       user_invitation.inviting_user.first_name,
       user_invitation.inviting_user.last_name
     ].join(' ')
-    @registration_url = 'beermapper.com/register'
+    gid = user_invitation.to_sgid(for: 'registration')
+    @registration_url = new_invited_registration_url(gid)
 
     mail({
       to: user_invitation.email,

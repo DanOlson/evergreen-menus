@@ -99,6 +99,38 @@ feature 'account management' do
         expect(donny_invite.to).to eq ['donny@lebowski.me']
         expect(walter_invite.to).to eq ['walter@lebowski.me']
       end
+
+      scenario 'invited users can register' do
+        visit "/accounts/#{account.id}/staff"
+
+        invitations = find_all('[data-test="staff-member-invited"]')
+        expect(invitations.size).to eq 0
+
+        click_button 'Invite staff'
+
+        fill_in 'First name', with: 'Maude'
+        fill_in 'Last name', with: 'Lebowski'
+        fill_in 'Email', with: 'maude@lebowski.me'
+
+        click_button 'Invite'
+
+        expect(page).to have_content "Invitation sent to maude@lebowski.me"
+
+        click_link 'Logout'
+
+        invitation = ActionMailer::Base.deliveries.last
+        message = invitation.text_part.decoded
+        registration_link = message.match(/link:\s(.*)$/).captures.first
+
+        visit URI(registration_link).path
+
+        fill_in 'Password', with: 'myPassword123'
+        fill_in 'Password confirmation', with: 'myPassword123'
+        click_button 'Register'
+
+        expect(page).to have_content 'Welcome, Maude!'
+        expect(page).to have_current_path "/accounts/#{account.id}"
+      end
     end
   end
 end

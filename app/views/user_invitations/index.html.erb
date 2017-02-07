@@ -1,0 +1,29 @@
+<div class="container">
+  <%= button_to 'Invite staff', {
+        controller: 'user_invitations',
+        action: 'new',
+        account_id: @account.id
+      },
+      method: :get %>
+  <div class='staff-member-list'>
+    <h2>Staff</h2>
+    <ul>
+      <% @users.each do |person| %>
+        <li data-test="staff-member">
+          <%= person.first_name %> <%= person.last_name %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class='staff-member-list'>
+    <h2>Pending Invitations</h2>
+    <ul>
+      <% @user_invitations.each do |person| %>
+        <li data-test="staff-member-invited">
+          <%= person.first_name %> <%= person.last_name %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
