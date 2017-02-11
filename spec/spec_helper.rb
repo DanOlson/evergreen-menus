@@ -21,6 +21,8 @@ VCR.configure do |c|
 end
 
 Capybara::Webkit.configure do |config|
+  ###
+  # Beermapper Frontend
   config.allow_url("maps.googleapis.com")
   config.allow_url("maps.gstatic.com")
   config.allow_url("csi.gstatic.com")
@@ -29,6 +31,10 @@ Capybara::Webkit.configure do |config|
   config.allow_url("builds.emberjs.com")
   config.allow_url("test.beermapper.ember")
   config.allow_url("admin.test.beermapper.dev")
+
+  ###
+  # Beermapper Admin
+  config.allow_url("https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css")
 end
 
 RSpec.configure do |config|

@@ -1,5 +1,4 @@
 import createInput from './BeerInput';
-import debounce from 'lodash/debounce';
 
 export default React => (props) => {
   const BeerInput = createInput(React);
@@ -15,7 +14,7 @@ export default React => (props) => {
       index,
       onRemoveBeer,
       onKeepBeer,
-      onChange: debounce(onBeerDidChange, 1000),
+      onChange: onBeerDidChange,
       shouldFocus: isLastElement,
       key: `${beer}-${index}`
     };

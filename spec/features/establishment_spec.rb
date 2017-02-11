@@ -9,14 +9,14 @@ feature 'establishment management' do
 
     fill_in "Name", with: "The Lanes"
     fill_in "Url", with: "http://thelanes.com/beer-menu"
-    fill_in "Street Address", with: "123 Freemont Ave"
+    fill_in "Street", with: "123 Freemont Ave"
     fill_in "City", with: "Encino"
     select "California", from: "State"
     fill_in "Postal Code", with: "91316"
     click_button "Create"
 
     expect(page).to have_current_path "/accounts/#{user.account_id}"
-    expect(page).to have_css "div.notice", text: "Establishment created"
+    expect(page).to have_css "div.alert-success", text: "Establishment created"
     expect(page).to have_selector "li", text: "The Lanes"
   end
 
@@ -28,14 +28,14 @@ feature 'establishment management' do
 
     fill_in "Name", with: "Sobchak Security"
     fill_in "Url", with: "http://sobsec.com/beer-menu"
-    fill_in "Street Address", with: "15 EmPeeAich Ave"
+    fill_in "Street", with: "15 EmPeeAich Ave"
     fill_in "City", with: "Encino"
     select "California", from: "State"
     fill_in "Postal Code", with: "91316"
     click_button "Update"
 
     expect(page).to have_current_path "/accounts/#{user.account_id}/establishments/#{establishment.id}/edit"
-    expect(page).to have_css "div.notice", text: "Establishment updated"
+    expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(page).to have_selector "input[value='Sobchak Security']"
   end
 
@@ -56,7 +56,7 @@ feature 'establishment management' do
     find('[data-test="beer-name-input-2"]').set('Deschutes Fresh Squeezed')
 
     click_button 'Update'
-    expect(page).to have_css "div.notice", text: "Establishment updated"
+    expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(all('[data-test="beer-name-input"]').size).to eq 3
 
     beers = establishment.beers.map &:name
@@ -70,7 +70,7 @@ feature 'establishment management' do
     expect(page).to have_css(".remove-beer[data-test='beer-0']")
 
     click_button 'Update'
-    expect(page).to have_css "div.notice", text: "Establishment updated"
+    expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(all('[data-test="beer-name-input"]').size).to eq 2
   end
 
@@ -87,7 +87,7 @@ feature 'establishment management' do
     find('[data-test="beer-name-input-1"]').set('Indeed Day Tripper')
 
     click_button 'Update'
-    expect(page).to have_css "div.notice", text: "Establishment updated"
+    expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(all('[data-test="beer-name-input"]').size).to eq 2
 
     find("[data-test='remove-beer-0']").click
@@ -101,7 +101,7 @@ feature 'establishment management' do
     expect(page).to_not have_css(".remove-beer[data-test='beer-1']")
 
     click_button 'Update'
-    expect(page).to have_css "div.notice", text: "Establishment updated"
+    expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(all('[data-test="beer-name-input"]').size).to eq 1
 
     input = find '[data-test="beer-name-input-0"]'
@@ -142,7 +142,7 @@ feature 'establishment management' do
     find('[data-test="beer-name-input-5"]').set('Budweiser')
 
     click_button 'Update'
-    expect(page).to have_css "div.notice", text: "Establishment updated"
+    expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(all('[data-test="beer-name-input"]').size).to eq 6
 
     visit 'http://test.beermapper.ember'
