@@ -15,27 +15,40 @@ export default React => (props) => {
 
   if (beer.markedForRemoval) {
     actionable = (
-      <a href='' onClick={onKeep} data-test={`keep-beer-${appId}`}>Keep</a>
+      <a href=''
+         onClick={onKeep}
+         data-test={`keep-beer-${appId}`}
+         className="btn btn-danger">Keep</a>
     )
   } else {
     actionable = (
-      <a href='' onClick={onRemove} data-test={`remove-beer-${appId}`}>Remove</a>
+      <a href=''
+         onClick={onRemove}
+         data-test={`remove-beer-${appId}`}
+         className="btn btn-default">
+        <span className="glyphicon glyphicon-remove"></span>
+      </a>
     )
   }
 
   return (
-    <div data-test={`beer-${appId}`} className={className}>
-      <div className="form-group" data-test="beer-name-input">
-        <input
-          type="text"
-          data-test={`beer-name-input-${appId}`}
-          defaultValue={beer.name}
-          onChange={onChange}
-          name={`establishment[beers_attributes][${appId}][name]`}
-          id={`establishment_beers_attributes_${appId}_name`}
-          autoFocus={shouldFocus}
-        />
-        {actionable}
+    <div data-test={`beer-${appId}`} className={`${className} row`}>
+      <div data-test="beer-name-input">
+        <div className="col-sm-4">
+          <input
+            type="text"
+            data-test={`beer-name-input-${appId}`}
+            defaultValue={beer.name}
+            onChange={onChange}
+            name={`establishment[beers_attributes][${appId}][name]`}
+            id={`establishment_beers_attributes_${appId}_name`}
+            className={`form-control ${className}`}
+            autoFocus={shouldFocus}
+          />
+        </div>
+        <div className="col-sm-7">
+          {actionable}
+        </div>
       </div>
       <input
         type="hidden"

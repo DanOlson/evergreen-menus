@@ -6,17 +6,18 @@
   <meta name='description' content='BeerMapper is a search tool to help you find your favorite craft beer.'>
   <meta name='robots' content='index,follow'>
   <title>Beer Mapper</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
 <!--   <%= stylesheet_link_tag    :application %> -->
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <%= render 'layouts/header' %>
   <% if alert = flash[:alert] %>
-    <div class="alert"><%= alert %></div>
+    <div class="alert alert-danger"><%= alert %></div>
   <% end %>
   <% if notice = flash[:notice] %>
-    <div class="notice"><%= notice %></div>
+    <div class="alert alert-success"><%= notice %></div>
   <% end %>
-  <%= render 'layouts/header' %>
   <%= yield %>
   <%= render('layouts/google_analytics') if Rails.env.production? %>
   <%= javascript_include_tag :bundle %>

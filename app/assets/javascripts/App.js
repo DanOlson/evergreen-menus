@@ -1,4 +1,5 @@
 import createInput from './BeerInput';
+import debounce from 'lodash/debounce';
 
 export default React => (props) => {
   const BeerInput = createInput(React);
@@ -14,7 +15,7 @@ export default React => (props) => {
       index,
       onRemoveBeer,
       onKeepBeer,
-      onChange: onBeerDidChange,
+      onChange: debounce(onBeerDidChange, 1000),
       shouldFocus: isLastElement,
       key: `${beer}-${index}`
     };
@@ -23,9 +24,18 @@ export default React => (props) => {
   });
 
   return (
-    <div className='establishment-beer-list'>
-      {inputs}
-      <button data-test="add-beer" onClick={onAddBeer}>Add Beer</button>
+    <div className="establishment-beer-list">
+      <div className="form-group">
+        {inputs}
+      </div>
+      <div className="form-group">
+        <button
+          data-test="add-beer"
+          onClick={onAddBeer}
+          className="btn btn-success">
+          <span className="glyphicon glyphicon-plus"></span>
+        </button>
+      </div>
     </div>
   );
 };

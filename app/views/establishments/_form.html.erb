@@ -4,44 +4,70 @@
   };
 </script>
 <div class="container">
-  <%= form_for [account, establishment] do |f| %>
-    <div class="form-group">
-      <%= f.label :name %>
-      <%= f.text_field :name %>
-    </div>
+  <%= form_for [account, establishment], html: { class: 'form-horizontal' } do |f| %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Establishment Info</h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <%= f.label :name, class: 'col-sm-1 control-label' %>
+          <div class="col-sm-11">
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
+        </div>
 
-    <div class="form-group">
-      <%= f.label :url %>
-      <%= f.text_field :url %>
-    </div>
+        <div class="form-group">
+          <%= f.label :url, class: 'col-sm-1 control-label' %>
+          <div class="col-sm-11">
+            <%= f.text_field :url, class: 'form-control' %>
+          </div>
+        </div>
 
-    <div class="form-group">
-      <%= f.label :street_address, 'Street Address' %>
-      <%= f.text_field :street_address %>
-    </div>
+        <div class="form-group">
+          <%= f.label :street_address, 'Street', class: 'col-sm-1 control-label' %>
+          <div class="col-sm-11">
+            <%= f.text_field :street_address, class: 'form-control' %>
+          </div>
+        </div>
 
-    <div class="form-group">
-      <%= f.label :city %>
-      <%= f.text_field :city %>
-    </div>
+        <div class="form-group">
+          <%= f.label :city, class: 'col-sm-1 control-label' %>
+          <div class="col-sm-11">
+            <%= f.text_field :city, class: 'form-control' %>
+          </div>
+        </div>
 
-    <div class="form-group">
-      <%= f.label :state %>
-      <%= f.select :state, options_for_select(state_options, selected: establishment.state), include_blank: true %>
-    </div>
+        <div class="form-group">
+          <%= f.label :state, class: 'col-sm-1 control-label' %>
+          <div class="col-sm-11">
+            <%= f.select :state, options_for_select(state_options, selected: establishment.state), { include_blank: true }, class: 'form-control' %>
+          </div>
+        </div>
 
-    <div class="form-group">
-      <%= f.label :postal_code, 'Postal Code' %>
-      <%= f.text_field :postal_code, maxlength: 5 %>
+        <div class="form-group">
+          <%= f.label :postal_code, 'Postal Code', class: 'col-sm-1 control-label' %>
+          <div class="col-sm-11">
+            <%= f.text_field :postal_code, maxlength: 5, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
     </div>
 
     <% if f.object.persisted? %>
-      <%= f.label :beers, 'Beer List' %>
-      <div id="react-app-root"></div>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">Beer List</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-sm-1"></div>
+          <div id="react-app-root" class="col-sm-11"></div>
+        </div>
+      </div>
     <% end %>
 
     <div>
-      <%= f.submit submit_text %>
+      <%= f.submit submit_text, class: 'btn btn-primary' %>
       <%= link_to 'Cancel', account_path(account) %>
     </div>
   <% end %>
