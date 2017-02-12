@@ -5,7 +5,7 @@ feature 'establishment management' do
 
   scenario 'creating an establishment' do
     login user
-    click_link "Add an establishment"
+    find('[data-test="add-establishment"]').click
 
     fill_in "Name", with: "The Lanes"
     fill_in "Url", with: "http://thelanes.com/beer-menu"
@@ -17,7 +17,7 @@ feature 'establishment management' do
 
     expect(page).to have_current_path "/accounts/#{user.account_id}"
     expect(page).to have_css "div.alert-success", text: "Establishment created"
-    expect(page).to have_selector "li", text: "The Lanes"
+    expect(page).to have_selector "[data-test='establishment']", text: "The Lanes"
   end
 
   scenario 'editing an establishment' do

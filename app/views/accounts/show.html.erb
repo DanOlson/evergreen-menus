@@ -5,11 +5,11 @@
   <div class="panel-body">
     <div class="list-group">
       <% @account.establishments.each do |establishment| %>
-        <%= link_to establishment.name, edit_account_establishment_path(@account, establishment), class: "list-group-item" %>
+        <%= link_to establishment.name, edit_account_establishment_path(@account, establishment), class: "list-group-item", 'data-test' => 'establishment' %>
       <% end %>
     </div>
     <span>
-      <%= link_to new_account_establishment_path(@account), class: 'btn btn-success' do %>
+      <%= link_to new_account_establishment_path(@account), class: 'btn btn-success', 'data-test' => 'add-establishment' do %>
         <span class="glyphicon glyphicon-plus"></span>
       <% end %>
     </span>
