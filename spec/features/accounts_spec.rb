@@ -62,6 +62,10 @@ feature 'account management' do
     describe 'adding staff' do
       let(:user) { create :user, :manager, account: account }
 
+      before do
+        ActionMailer::Base.deliveries.clear
+      end
+
       scenario 'admin can invite staff' do
         visit "/accounts/#{account.id}/staff"
 
