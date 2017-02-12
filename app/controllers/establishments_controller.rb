@@ -11,7 +11,9 @@ class EstablishmentsController < ApplicationController
       @establishment.save
       redirect_to @account, notice: "Establishment created"
     else
-      logger.debug "Errors creating establishment: #{@establishment.errors.full_messages}"
+      errors = @establishment.errors.full_messages
+      logger.debug "Errors creating establishment: #{errors}"
+      flash.now[:alert] = errors.join(', ')
       render :new
     end
   end
@@ -26,7 +28,9 @@ class EstablishmentsController < ApplicationController
     if @establishment.update establishment_params
       redirect_to edit_account_establishment_path(@account, @establishment), notice: 'Establishment updated'
     else
-      logger.debug "Errors updating establishment: #{@establishment.errors.full_messages}"
+      errors = @establishment.errors.full_messages
+      logger.debug "Errors updating establishment: #{errors}"
+      flash.now[:alert] = errors.join(', ')
       render :edit
     end
   end
