@@ -1,7 +1,14 @@
-<div class="header">
-  <% if user_signed_in? %>
-    <%= link_to 'Logout', destroy_user_session_path %>
-  <% else %>
-    <%= link_to 'Login', new_user_session_path %>
-  <% end %>
-</div>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <%= link_to "BeerMapper", root_path, class: "navbar-brand" %>
+    </div>
+    <div class="">
+      <% if user_signed_in? %>
+        <%= link_to 'Logout', destroy_user_session_path, class: "btn btn-default navbar-btn navbar-right" %>
+      <% else %>
+        <%= link_to 'Login', new_user_session_path, class: "btn btn-default navbar-btn navbar-right" %>
+      <% end %>
+    </div>
+  </div>
+</nav>

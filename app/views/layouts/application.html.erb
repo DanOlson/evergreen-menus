@@ -12,13 +12,10 @@
 </head>
 <body>
   <%= render 'layouts/header' %>
-  <% if alert = flash[:alert] %>
-    <div class="alert alert-danger"><%= alert %></div>
-  <% end %>
-  <% if notice = flash[:notice] %>
-    <div class="alert alert-success"><%= notice %></div>
-  <% end %>
-  <%= yield %>
+  <div class="container">
+    <%= render 'layouts/flash_messages' %>
+    <%= yield %>
+  </div>
   <%= render('layouts/google_analytics') if Rails.env.production? %>
   <%= javascript_include_tag :bundle %>
 </body>
