@@ -1,11 +1,17 @@
-<div class="container">
-  <h1><%= @account.name %></h1>
-  <div>
-    <span><%= link_to "Add an establishment", new_account_establishment_path(@account) %></span>
-    <ul>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h1 class="panel-title"><%= @account.name %></h1>
+  </div>
+  <div class="panel-body">
+    <div class="list-group">
       <% @account.establishments.each do |establishment| %>
-        <li><%= link_to establishment.name, edit_account_establishment_path(@account, establishment) %></li>
+        <%= link_to establishment.name, edit_account_establishment_path(@account, establishment), class: "list-group-item" %>
       <% end %>
-    </ul>
+    </div>
+    <span>
+      <%= link_to new_account_establishment_path(@account), class: 'btn btn-success' do %>
+        <span class="glyphicon glyphicon-plus"></span>
+      <% end %>
+    </span>
   </div>
 </div>
