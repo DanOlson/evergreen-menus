@@ -72,7 +72,7 @@ feature 'account management' do
         invitations = find_all('[data-test="staff-member-invited"]')
         expect(invitations.size).to eq 0
 
-        click_button 'Invite staff'
+        click_link 'Invite staff'
 
         fill_in 'First name', with: 'Donny'
         fill_in 'Last name', with: 'Kerabatsos'
@@ -110,7 +110,7 @@ feature 'account management' do
         invitations = find_all('[data-test="staff-member-invited"]')
         expect(invitations.size).to eq 0
 
-        click_button 'Invite staff'
+        click_link 'Invite staff'
 
         fill_in 'First name', with: 'Maude'
         fill_in 'Last name', with: 'Lebowski'

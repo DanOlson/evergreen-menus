@@ -1,23 +1,24 @@
-<div class="container">
-  <%= button_to 'Invite staff', {
-        controller: 'user_invitations',
-        action: 'new',
-        account_id: @account.id
-      },
-      method: :get %>
-  <div class='staff-member-list'>
-    <h2>Staff</h2>
-    <ul>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Staff</h3>
+  </div>
+  <div class="panel-body">
+    <ul class="list-group">
       <% @users.each do |person| %>
-        <li data-test="staff-member">
+        <li class="list-group-item" data-test="staff-member">
           <%= person.first_name %> <%= person.last_name %>
         </li>
       <% end %>
     </ul>
+    <%= link_to 'Invite staff', new_account_user_invitation_path(@account), class: 'btn btn-success' %>
   </div>
+</div>
 
-  <div class='staff-member-list'>
-    <h2>Pending Invitations</h2>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Pending Invitations</h3>
+  </div>
+  <div class="panel-body">
     <ul>
       <% @user_invitations.each do |person| %>
         <li data-test="staff-member-invited">
