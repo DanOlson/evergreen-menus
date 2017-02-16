@@ -55,6 +55,9 @@ feature 'establishment management' do
     add_beer_button.click
     find('[data-test="beer-name-input-2"]').set('Deschutes Fresh Squeezed')
 
+    find('[data-test="beer-name-input-2"]').trigger('blur')
+    sleep 0.5
+
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(all('[data-test="beer-name-input"]').size).to eq 3
@@ -86,6 +89,7 @@ feature 'establishment management' do
     add_beer_button.click
     find('[data-test="beer-name-input-1"]').set('Indeed Day Tripper')
 
+    sleep 0.5
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(all('[data-test="beer-name-input"]').size).to eq 2
@@ -141,6 +145,7 @@ feature 'establishment management' do
     add_beer_button.click
     find('[data-test="beer-name-input-5"]').set('Budweiser')
 
+    sleep 0.5
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(all('[data-test="beer-name-input"]').size).to eq 6

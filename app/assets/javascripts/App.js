@@ -15,7 +15,7 @@ export default React => (props) => {
       onRemoveBeer,
       onKeepBeer,
       onChange: onBeerDidChange,
-      shouldFocus: isLastElement,
+      shouldFocus: (beer.focus || isLastElement && !beer.id),
       key: `${beer}-${index}`
     };
 

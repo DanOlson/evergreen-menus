@@ -1,10 +1,13 @@
+import debounce from 'lodash/debounce'
+
 export default React => (props) => {
   let actionable;
   const { beer, onRemoveBeer, onKeepBeer, shouldFocus } = props;
-  const { appId } = beer;
-  const className = beer.markedForRemoval ? 'remove-beer' : '';
-  const onChange  = (event) => props.onChange(appId, event.target.value);
-  const onRemove  = (event) => {
+  const { appId }   = beer;
+  const className   = beer.markedForRemoval ? 'remove-beer' : '';
+  const onChange    = debounce(props.onChange, 180);
+  const changeProxy = (event) => onChange(appId, event.target.value);
+  const onRemove    = (event) => {
     event.preventDefault();
     onRemoveBeer(appId);
   };
@@ -39,7 +42,7 @@ export default React => (props) => {
             type="text"
             data-test={`beer-name-input-${appId}`}
             defaultValue={beer.name}
-            onChange={onChange}
+            onChange={changeProxy}
             name={`establishment[beers_attributes][${appId}][name]`}
             id={`establishment_beers_attributes_${appId}_name`}
             className={`form-control ${className}`}

@@ -2,25 +2,37 @@ import { ReduceStore } from 'flux/utils';
 import ActionTypes from './ActionTypes';
 import Dispatcher from './Dispatcher';
 import { find as ensureArrayFind } from '../polyfills/array'
+import { assign as ensureAssign } from '../polyfills/object'
 
 ensureArrayFind();
+ensureAssign();
 
 function onMarkForRemoval(state, action) {
   const beer = state.find(beer => beer.appId === action.id);
-  const newState = [...state];
   if (beer.id) {
-    beer.markedForRemoval = true;
-    return newState;
+    const index = state.indexOf(beer);
+    const newBeer = Object.assign({}, beer, { markedForRemoval: true });
+
+    return [
+      ...state.slice(0, index),
+      newBeer,
+      ...state.slice(index + 1, state.length)
+    ];
   } else {
-    return newState.filter(beer => beer.appId !== action.id);
+    return [...state].filter(beer => beer.appId !== action.id);
   }
 }
 
 function onKeepBeer(state, action) {
-  const beer = state.find(beer => beer.appId === action.id);
-  const newState = [...state];
+  const beer     = state.find(beer => beer.appId === action.id);
+  const index    = state.indexOf(beer);
+  const newBeer  = Object.assign({}, beer, { markedForRemoval: false });
+  const newState = [
+    ...state.slice(0, index),
+    newBeer,
+    ...state.slice(index + 1, state.length)
+  ];
 
-  beer.markedForRemoval = false;
   return newState;
 }
 
@@ -32,9 +44,15 @@ function onAddBeer(state, action) {
 }
 
 function onBeerChanged(state, action) {
-  const newState = [...state];
-  const beer = newState.find(beer => beer.appId === action.id);
-  beer.name = action.text;
+  const beer     = state.find(beer => beer.appId === action.id);
+  if (beer.name === action.text) return state;
+  const index    = state.indexOf(beer);
+  const newBeer  = Object.assign({}, beer, { name: action.text, focus: true });
+  const newState = [
+    ...state.slice(0, index),
+    newBeer,
+    ...state.slice(index + 1, state.length)
+  ]
   return newState;
 }
 
@@ -48,6 +66,22 @@ class Store extends ReduceStore {
       beer.appId = index;
       return beer;
     });
+  }
+
+  areEqual(prevState, nextState) {
+    if (super.areEqual(prevState, nextState)) {
+      // Check if the same beers are markedForRemoval
+      const extractAppIdsToDestroy = (state) => {
+        const beersToDestroy = state.filter(b => b.markedForRemoval)
+        return beersToDestroy.map(beer => beer.appId).sort();
+      }
+      const prevToDestroy = extractAppIdsToDestroy(prevState);
+      const nextToDestroy = extractAppIdsToDestroy(nextState);
+
+      return prevToDestroy === nextToDestroy;
+    } else {
+      return false
+    }
   }
 
   reduce(state, action) {
