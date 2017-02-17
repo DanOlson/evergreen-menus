@@ -21,7 +21,7 @@ feature 'logging in' do
     click_link 'Logout'
 
     expect(page).to have_content 'Signed out successfully.'
-    expect(page).to have_link 'Login'
+    expect(page).to have_current_path '/users/sign_in'
   end
 
   scenario 'with invalid credentials' do
