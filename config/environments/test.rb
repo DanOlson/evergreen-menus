@@ -15,6 +15,9 @@ Beermapper::Application.configure do
   # Configure static asset server for tests with Cache-Control for performance.
   config.serve_static_assets  = true
   config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=3600' }
+  config.assets.debug = false
+  config.assets.compile = false
+  config.assets.quiet = true
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true

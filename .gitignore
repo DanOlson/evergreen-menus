@@ -19,3 +19,4 @@ ember/.DS_Store
 node_modules
 public/javascripts/bundle.js
 public/javascripts/bundle.js.map
+public/stylesheets/*
