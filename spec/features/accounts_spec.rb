@@ -39,7 +39,7 @@ feature 'account management' do
           last_name: 'Sobchak',
           account: account
         }
-        visit "/accounts/#{account.id}/staff"
+        click_link 'Staff'
       end
 
       context 'with admin role' do
@@ -67,7 +67,7 @@ feature 'account management' do
       end
 
       scenario 'admin can invite staff' do
-        visit "/accounts/#{account.id}/staff"
+        click_link 'Staff'
 
         invitations = find_all('[data-test="staff-member-invited"]')
         expect(invitations.size).to eq 0
@@ -105,7 +105,7 @@ feature 'account management' do
       end
 
       scenario 'invited users can register' do
-        visit "/accounts/#{account.id}/staff"
+        click_link 'Staff'
 
         invitations = find_all('[data-test="staff-member-invited"]')
         expect(invitations.size).to eq 0

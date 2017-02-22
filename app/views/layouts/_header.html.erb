@@ -5,6 +5,10 @@
     </div>
     <div class="">
       <% if user_signed_in? %>
+        <ul class="nav navbar-nav">
+          <%= tab name: 'Establishments', path: account_path(@account) %>
+          <%= tab name: 'Staff', path: account_users_path(@account) %>
+        </ul>
         <%= link_to 'Logout', destroy_user_session_path, class: "btn btn-default navbar-btn navbar-right" %>
       <% else %>
         <%= link_to 'Login', new_user_session_path, class: "btn btn-default navbar-btn navbar-right" %>

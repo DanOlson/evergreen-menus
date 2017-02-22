@@ -7,11 +7,13 @@ import { assign as ensureAssign } from '../polyfills/object'
 ensureArrayFind();
 ensureAssign();
 
+const assign = Object.assign;
+
 function onMarkForRemoval(state, action) {
   const beer = state.find(beer => beer.appId === action.id);
   if (beer.id) {
     const index = state.indexOf(beer);
-    const newBeer = Object.assign({}, beer, { markedForRemoval: true });
+    const newBeer = assign({}, beer, { markedForRemoval: true });
 
     return [
       ...state.slice(0, index),
@@ -26,7 +28,7 @@ function onMarkForRemoval(state, action) {
 function onKeepBeer(state, action) {
   const beer     = state.find(beer => beer.appId === action.id);
   const index    = state.indexOf(beer);
-  const newBeer  = Object.assign({}, beer, { markedForRemoval: false });
+  const newBeer  = assign({}, beer, { markedForRemoval: false });
   const newState = [
     ...state.slice(0, index),
     newBeer,
@@ -47,7 +49,7 @@ function onBeerChanged(state, action) {
   const beer     = state.find(beer => beer.appId === action.id);
   if (beer.name === action.text) return state;
   const index    = state.indexOf(beer);
-  const newBeer  = Object.assign({}, beer, { name: action.text, focus: true });
+  const newBeer  = assign({}, beer, { name: action.text, focus: true });
   const newState = [
     ...state.slice(0, index),
     newBeer,
