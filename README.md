@@ -22,6 +22,8 @@ passenger-install-apache2-module
 ### Configure Apache
 
 ```
+NameVirtualHost *:80
+
 ###
 # Beermapper dev
 <VirtualHost *:80>
@@ -47,6 +49,16 @@ passenger-install-apache2-module
   <Location /api/v1/>
     ProxyPass http://beermapper-api.dev/api/v1/
   </Location>
+</VirtualHost>
+
+<VirtualHost *:80>
+  ServerName my-bar.dev
+  ServerAlias www.my-bar.dev
+  DocumentRoot /Users/dan/code/beermapper/third-party-site/public
+  <Directory /Users/dan/code/beermapper/third-party-site/public>
+    Require all granted
+    Options -MultiViews
+  </Directory>
 </VirtualHost>
 
 
@@ -75,6 +87,16 @@ passenger-install-apache2-module
     Options -MultiViews
   </Directory>
 </VirtualHost>
+
+<VirtualHost *:80>
+  ServerName test.my-bar.dev
+  ServerAlias www.test.my-bar.dev
+  DocumentRoot /Users/dan/code/beermapper/third-party-site/public-test
+  <Directory /Users/dan/code/beermapper/third-party-site/public-test>
+    Require all granted
+    Options -MultiViews
+  </Directory>
+</VirtualHost>
 ```
 
 ### Configure /etc/hosts
@@ -86,6 +108,7 @@ passenger-install-apache2-module
 127.0.0.1 test.beermapper-api.dev
 127.0.0.1 admin.test.beermapper.dev
 127.0.0.1 test.beermapper.ember
+127.0.0.1 my-bar.dev
 ```
 
 ### Restart Apache
