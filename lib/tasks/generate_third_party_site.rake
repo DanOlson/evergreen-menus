@@ -4,6 +4,7 @@ task generate_third_party_site: :environment do
   require 'fileutils'
 
   @establishment = Establishment.first || abort("NO ESTABLISHMENTS!")
+  @beermapper_host = Rails.env.test? ? 'http://test.beermapper-api.dev' : 'http://beermapper-api.dev'
   public_dir = Rails.env.test? ? 'public-test' : 'public'
   third_party_site_base_path = Rails.root.join 'third-party-site'
   FileUtils.mkdir_p third_party_site_base_path.join public_dir

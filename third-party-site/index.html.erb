@@ -7,7 +7,7 @@
     <div class="beermapper" id="beermapper-menu-<%= @establishment.id %>"></div>
     <script
       type="text/javascript"
-      src="http://beermapper-api.dev/menus/<%= @establishment.id %>.js">
+      src="<%= @beermapper_host %>/menus/<%= @establishment.id %>.js">
     </script>
   </body>
 </html>

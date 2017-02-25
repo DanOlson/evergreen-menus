@@ -170,4 +170,44 @@ feature 'establishment management' do
     expect(page).to have_css 'li', text: 'Surly Stout'
     expect(page).to have_css 'li', text: 'Budweiser'
   end
+
+  scenario "beers added to an establishment's list show up on the establishment's website", :admin, :js do
+    establishment = create :establishment, name: "The Lanes", account: user.account
+
+    Beermapper::Application.load_tasks
+    Rake::Task['generate_third_party_site'].invoke
+
+    login user
+
+    click_link establishment.name
+
+    add_beer_button = find('[data-test="add-beer"]')
+
+    add_beer_button.click
+    find('[data-test="beer-name-input-0"]').set('Deschutes Pinedrops')
+    add_beer_button.click
+    find('[data-test="beer-name-input-1"]').set('Deschutes Mirror Pond')
+    add_beer_button.click
+    find('[data-test="beer-name-input-2"]').set('Deschutes Big Rig')
+    add_beer_button.click
+    find('[data-test="beer-name-input-3"]').set('Indeed Stir Crazy')
+    add_beer_button.click
+    find('[data-test="beer-name-input-4"]').set('Surly Stout')
+    add_beer_button.click
+    find('[data-test="beer-name-input-5"]').set('Budweiser')
+
+    sleep 0.5
+    click_button 'Update'
+    expect(page).to have_css "div.alert-success", text: "Establishment updated"
+    expect(all('[data-test="beer-name-input"]').size).to eq 6
+
+
+    visit 'http://test.my-bar.dev'
+    expect(page).to have_content 'Deschutes Pinedrops'
+    expect(page).to have_content 'Deschutes Mirror Pond'
+    expect(page).to have_content 'Deschutes Big Rig'
+    expect(page).to have_content 'Indeed Stir Crazy'
+    expect(page).to have_content 'Surly Stout'
+    expect(page).to have_content 'Budweiser'
+  end
 end
