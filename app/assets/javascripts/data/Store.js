@@ -64,7 +64,8 @@ class Store extends ReduceStore {
   }
 
   getInitialState() {
-    return [...window.BEERMAPPER.beers].map((beer, index) => {
+    const beers = window.BEERMAPPER ? window.BEERMAPPER.beers : []
+    return [...beers].map((beer, index) => {
       beer.appId = index;
       return beer;
     });

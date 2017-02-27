@@ -121,7 +121,10 @@ NameVirtualHost *:80
 
 ### Bootstrap
 
-`rake db:bootstrap --trace`
+```
+rake db:bootstrap --trace
+webpack --format=progress
+```
 
 ### Run Tests
 

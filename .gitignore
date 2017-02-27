@@ -23,3 +23,5 @@ public/stylesheets/*
 
 third-party-site/public/index.html
 third-party-site/public-test
+
+config/initializers/fingerprint.rb
