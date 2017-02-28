@@ -137,4 +137,24 @@ feature 'account management' do
       end
     end
   end
+
+  context 'unauthenticated' do
+    scenario 'user can reset their password to recover account access' do
+      visit '/users/sign_in'
+      click_link 'Forgot your password?'
+
+      fill_in 'Email', with: user.email
+      find('[data-test="send-reset-password-instructions"]').click
+
+      email = ActionMailer::Base.deliveries.first.body.raw_source
+      reset_password_link = email.match(/href="(.*)"/).captures.first
+      visit reset_password_link
+
+      fill_in 'New password', with: 'password123'
+      fill_in 'Confirm new password', with: 'password123'
+      find('[data-test="reset-password"]').click
+
+      expect(page).to have_css '.alert-success', text: 'Your password has been changed successfully. You are now signed in.'
+    end
+  end
 end
