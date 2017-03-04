@@ -1,4 +1,6 @@
 class UserRegistrationsController < Devise::RegistrationsController
+  before_action :find_account, only: [:edit, :update]
+  before_action :configure_permitted_parameters, only: :update
   def new
     invitation = get_invitation
     @user = UserRegistrationForm.from_invitation(invitation)
@@ -17,6 +19,10 @@ class UserRegistrationsController < Devise::RegistrationsController
 
   private
 
+  def find_account
+    @account = current_user.account
+  end
+
   def get_invitation
     GlobalID::Locator.locate_signed(params[:invitation], for: 'registration')
   end
@@ -31,5 +37,9 @@ class UserRegistrationsController < Devise::RegistrationsController
       :password_confirmation,
       :user_invitation_id
     )
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:account_update, keys: [:email])
   end
 end

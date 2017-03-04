@@ -9,9 +9,14 @@
           <%= tab name: 'Establishments', path: account_path(@account) %>
           <%= tab name: 'Staff', path: account_users_path(@account) %>
         </ul>
-        <%= link_to 'Logout', destroy_user_session_path, class: "btn btn-default navbar-btn navbar-right" %>
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to 'Profile', edit_user_registration_path %></li>
+          <li><%= link_to 'Logout', destroy_user_session_path %></li>
+        </ul>
       <% else %>
-        <%= link_to 'Login', new_user_session_path, class: "btn btn-default navbar-btn navbar-right" %>
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to 'Login', new_user_session_path %></li>
+        </ul>
       <% end %>
     </div>
   </div>
