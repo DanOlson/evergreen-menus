@@ -48,7 +48,7 @@ class EstablishmentsController < ApplicationController
       :city,
       :state,
       :postal_code,
-      beers_attributes: [:id, :name, :_destroy]
+      beers_attributes: [:id, :name, :price, :_destroy]
     )
   end
 end

@@ -44,7 +44,7 @@ feature 'establishment management' do
     login user
 
     click_link establishment.name
-    expect(all('input[data-test="beer-name-input"]').size).to eq 0
+    expect(all('input[data-test="beer-input"]').size).to eq 0
 
     add_beer_button = find('[data-test="add-beer"]')
 
@@ -60,7 +60,7 @@ feature 'establishment management' do
 
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
-    expect(all('[data-test="beer-name-input"]').size).to eq 3
+    expect(all('[data-test="beer-input"]').size).to eq 3
 
     beers = establishment.beers.map &:name
     expect(beers).to match_array [
@@ -74,7 +74,48 @@ feature 'establishment management' do
 
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
-    expect(all('[data-test="beer-name-input"]').size).to eq 2
+    expect(all('[data-test="beer-input"]').size).to eq 2
+  end
+
+  scenario "an establishment's beer list can have prices", :js, :admin do
+    establishment = create :establishment, account: user.account
+    login user
+
+    click_link establishment.name
+    expect(all('input[data-test="beer-input"]').size).to eq 0
+
+    add_beer_button = find('[data-test="add-beer"]')
+
+    add_beer_button.click
+    find('[data-test="beer-name-input-0"]').set('Bear Republic Racer 5')
+    find('[data-test="beer-price-input-0"]').set('5.5')
+    add_beer_button.click
+    find('[data-test="beer-name-input-1"]').set('Indeed Day Tripper')
+    find('[data-test="beer-price-input-1"]').set('5')
+    add_beer_button.click
+    find('[data-test="beer-name-input-2"]').set('Deschutes Fresh Squeezed')
+    find('[data-test="beer-price-input-2"]').set('6')
+
+    find('[data-test="beer-name-input-2"]').trigger('blur')
+    sleep 0.5
+
+    click_button 'Update'
+    expect(page).to have_css "div.alert-success", text: "Establishment updated"
+    expect(all('[data-test="beer-input"]').size).to eq 3
+
+    beers = Hash[establishment.beers.map { |b| [b.name, b.price_in_cents] }]
+    expect(beers).to eq({
+      'Bear Republic Racer 5'    => 550,
+      'Indeed Day Tripper'       => 500,
+      'Deschutes Fresh Squeezed' => 600
+    })
+
+    find("[data-test='remove-beer-0']").click
+    expect(page).to have_css(".remove-beer[data-test='beer-0']")
+
+    click_button 'Update'
+    expect(page).to have_css "div.alert-success", text: "Establishment updated"
+    expect(all('[data-test="beer-input"]').size).to eq 2
   end
 
   scenario 'beers can be removed and unremoved from the beer list', :js, :admin do
@@ -92,7 +133,7 @@ feature 'establishment management' do
     sleep 0.5
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
-    expect(all('[data-test="beer-name-input"]').size).to eq 2
+    expect(all('[data-test="beer-input"]').size).to eq 2
 
     find("[data-test='remove-beer-0']").click
     find("[data-test='remove-beer-1']").click
@@ -106,7 +147,7 @@ feature 'establishment management' do
 
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
-    expect(all('[data-test="beer-name-input"]').size).to eq 1
+    expect(all('[data-test="beer-input"]').size).to eq 1
 
     input = find '[data-test="beer-name-input-0"]'
     expect(input.value).to eq 'Indeed Day Tripper'
@@ -148,7 +189,7 @@ feature 'establishment management' do
     sleep 0.5
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
-    expect(all('[data-test="beer-name-input"]').size).to eq 6
+    expect(all('[data-test="beer-input"]').size).to eq 6
 
     visit 'http://test.beermapper.ember'
     fill_in 'search-field', with: 'Deschutes'
@@ -199,7 +240,7 @@ feature 'establishment management' do
     sleep 0.5
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
-    expect(all('[data-test="beer-name-input"]').size).to eq 6
+    expect(all('[data-test="beer-input"]').size).to eq 6
 
 
     visit 'http://test.my-bar.dev'

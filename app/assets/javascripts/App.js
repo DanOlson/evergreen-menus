@@ -2,7 +2,7 @@ import createInput from './BeerInput';
 
 export default React => (props) => {
   const BeerInput = createInput(React);
-  const { onRemoveBeer, onKeepBeer, onBeerDidChange } = props;
+  const { onRemoveBeer, onKeepBeer, onBeerNameDidChange, onBeerPriceDidChange } = props;
   const onAddBeer = (event) => {
     event.preventDefault();
     props.onAddBeer();
@@ -14,8 +14,10 @@ export default React => (props) => {
       index,
       onRemoveBeer,
       onKeepBeer,
-      onChange: onBeerDidChange,
-      shouldFocus: (beer.focus || isLastElement && !beer.id),
+      onNameChange: onBeerNameDidChange,
+      onPriceChange: onBeerPriceDidChange,
+      shouldFocusName: (beer.focusName || isLastElement && !beer.id),
+      shouldFocusPrice: beer.focusPrice,
       key: `${beer}-${index}`
     };
 

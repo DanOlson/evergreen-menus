@@ -2,12 +2,14 @@ import debounce from 'lodash/debounce'
 
 export default React => (props) => {
   let actionable;
-  const { beer, onRemoveBeer, onKeepBeer, shouldFocus } = props;
-  const { appId }   = beer;
-  const className   = beer.markedForRemoval ? 'remove-beer' : '';
-  const onChange    = debounce(props.onChange, 180);
-  const changeProxy = (event) => onChange(appId, event.target.value);
-  const onRemove    = (event) => {
+  const { beer, onRemoveBeer, onKeepBeer, shouldFocusName, shouldFocusPrice } = props;
+  const { appId }        = beer;
+  const className        = beer.markedForRemoval ? 'remove-beer' : '';
+  const onNameChange     = debounce(props.onNameChange, 180);
+  const onPriceChange    = debounce(props.onPriceChange, 10)
+  const nameChangeProxy  = (event) => onNameChange(appId, event.target.value);
+  const priceChangeProxy = (event) => onPriceChange(appId, event.target.value);
+  const onRemove         = (event) => {
     event.preventDefault();
     onRemoveBeer(appId);
   };
@@ -36,17 +38,29 @@ export default React => (props) => {
 
   return (
     <div data-test={`beer-${appId}`} className={`${className} row`}>
-      <div data-test="beer-name-input">
+      <div data-test="beer-input">
         <div className="col-sm-4">
           <input
             type="text"
             data-test={`beer-name-input-${appId}`}
             defaultValue={beer.name}
-            onChange={changeProxy}
+            onChange={nameChangeProxy}
             name={`establishment[beers_attributes][${appId}][name]`}
             id={`establishment_beers_attributes_${appId}_name`}
             className={`form-control ${className}`}
-            autoFocus={shouldFocus}
+            autoFocus={shouldFocusName}
+          />
+        </div>
+        <div className="col-sm-1">
+          <input
+            type="number"
+            data-test={`beer-price-input-${appId}`}
+            value={beer.price}
+            onChange={priceChangeProxy}
+            name={`establishment[beers_attributes][${appId}][price]`}
+            id={`establishment_beers_attributes_${appId}_price`}
+            className="form-control"
+            autoFocus={shouldFocusPrice}
           />
         </div>
         <div className="col-sm-7">

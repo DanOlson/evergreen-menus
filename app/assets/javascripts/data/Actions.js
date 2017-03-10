@@ -22,11 +22,19 @@ export default {
     });
   },
 
-  beerDidChange(id, text) {
+  beerNameDidChange(id, text) {
     Dispatcher.dispatch({
-      type: ActionTypes.BEER_DID_CHANGE,
+      type: ActionTypes.BEER_NAME_DID_CHANGE,
       id,
       text
     });
-  }
+  },
+
+  beerPriceDidChange(id, price) {
+    Dispatcher.dispatch({
+      type: ActionTypes.BEER_PRICE_DID_CHANGE,
+      id,
+      price
+    });
+  },
 };

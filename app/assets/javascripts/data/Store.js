@@ -45,11 +45,31 @@ function onAddBeer(state, action) {
   return [...state, newBeer];
 }
 
-function onBeerChanged(state, action) {
+function onBeerNameChanged(state, action) {
   const beer     = state.find(beer => beer.appId === action.id);
   if (beer.name === action.text) return state;
   const index    = state.indexOf(beer);
-  const newBeer  = assign({}, beer, { name: action.text, focus: true });
+  const newBeer  = assign({}, beer, {
+    name: action.text,
+    focusName: true,
+    focusPrice: false
+  });
+  const newState = [
+    ...state.slice(0, index),
+    newBeer,
+    ...state.slice(index + 1, state.length)
+  ]
+  return newState;
+}
+
+function onBeerPriceChanged(state, action) {
+  const beer     = state.find(beer => beer.appId === action.id);
+  const index    = state.indexOf(beer);
+  const newBeer  = assign({}, beer, {
+    price: action.price,
+    focusPrice: true,
+    focusName: false
+  });
   const newState = [
     ...state.slice(0, index),
     newBeer,
@@ -95,8 +115,10 @@ class Store extends ReduceStore {
         return onMarkForRemoval(state, action);
       case ActionTypes.KEEP_BEER:
         return onKeepBeer(state, action);
-      case ActionTypes.BEER_DID_CHANGE:
-        return onBeerChanged(state, action);
+      case ActionTypes.BEER_NAME_DID_CHANGE:
+        return onBeerNameChanged(state, action);
+      case ActionTypes.BEER_PRICE_DID_CHANGE:
+        return onBeerPriceChanged(state, action);
       default:
         return state;
     }
