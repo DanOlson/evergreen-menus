@@ -1,83 +1,101 @@
-import debounce from 'lodash/debounce'
+import React from 'react';
 
-export default React => (props) => {
-  let actionable;
-  const { beer, onRemoveBeer, onKeepBeer, shouldFocusName, shouldFocusPrice } = props;
-  const { appId }        = beer;
-  const className        = beer.markedForRemoval ? 'remove-beer' : '';
-  const onNameChange     = debounce(props.onNameChange, 180);
-  const onPriceChange    = debounce(props.onPriceChange, 10)
-  const nameChangeProxy  = (event) => onNameChange(appId, event.target.value);
-  const priceChangeProxy = (event) => onPriceChange(appId, event.target.value);
-  const onRemove         = (event) => {
-    event.preventDefault();
-    onRemoveBeer(appId);
-  };
-  const onKeep = (event) => {
-    event.preventDefault();
-    onKeepBeer(appId);
-  };
-
-  if (beer.markedForRemoval) {
-    actionable = (
-      <a href=''
-         onClick={onKeep}
-         data-test={`keep-beer-${appId}`}
-         className="btn btn-danger">Keep</a>
-    )
-  } else {
-    actionable = (
-      <a href=''
-         onClick={onRemove}
-         data-test={`remove-beer-${appId}`}
-         className="btn btn-default">
-        <span className="glyphicon glyphicon-remove"></span>
-      </a>
-    )
+class BeerInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state        = props.beer;
+    this.onRemoveBeer = this.onRemoveBeer.bind(this);
+    this.onKeepBeer   = this.onKeepBeer.bind(this);
   }
 
-  return (
-    <div data-test={`beer-${appId}`} className={`${className} row`}>
-      <div data-test="beer-input">
-        <div className="col-sm-4">
-          <input
-            type="text"
-            data-test={`beer-name-input-${appId}`}
-            defaultValue={beer.name}
-            onChange={nameChangeProxy}
-            name={`establishment[beers_attributes][${appId}][name]`}
-            id={`establishment_beers_attributes_${appId}_name`}
-            className={`form-control ${className}`}
-            autoFocus={shouldFocusName}
-          />
+  onRemoveBeer(event) {
+    event.preventDefault();
+    if (this.state.id) {
+      this.markForRemoval();
+    } else {
+      this.deleteBeer(this.state.appId)
+    }
+  }
+
+  deleteBeer(appId) {
+    this.props.deleteBeer(appId);
+  }
+
+  markForRemoval() {
+    this.setState({ markedForRemoval: true });
+  }
+
+  onKeepBeer(event) {
+    event.preventDefault();
+    this.setState({ markedForRemoval: false });
+  }
+
+  render() {
+    const { appId, markedForRemoval, name, price } = this.state;
+    const className = markedForRemoval ? 'remove-beer' : '';
+    let actionable;
+
+    if (markedForRemoval) {
+      actionable = (
+        <a href=''
+           onClick={this.onKeepBeer}
+           data-test={`keep-beer-${appId}`}
+           className="btn btn-danger">Keep</a>
+      )
+    } else {
+      actionable = (
+        <a href=''
+           onClick={this.onRemoveBeer}
+           data-test={`remove-beer-${appId}`}
+           className="btn btn-default">
+          <span className="glyphicon glyphicon-remove"></span>
+        </a>
+      )
+    }
+
+    return (
+      <div data-test={`beer-${appId}`} className={`${className} row`}>
+        <div data-test="beer-input">
+          <div className="col-sm-4">
+            <input
+              type="text"
+              data-test={`beer-name-input-${appId}`}
+              defaultValue={name}
+              name={`establishment[beers_attributes][${appId}][name]`}
+              id={`establishment_beers_attributes_${appId}_name`}
+              className={`form-control ${className}`}
+            />
+          </div>
+          <div className="col-sm-1">
+            <input
+              type="number"
+              step="0.01"
+              min="0"
+              data-test={`beer-price-input-${appId}`}
+              defaultValue={price}
+              name={`establishment[beers_attributes][${appId}][price]`}
+              id={`establishment_beers_attributes_${appId}_price`}
+              className="form-control"
+            />
+          </div>
+          <div className="col-sm-7">
+            {actionable}
+          </div>
         </div>
-        <div className="col-sm-1">
-          <input
-            type="number"
-            data-test={`beer-price-input-${appId}`}
-            value={beer.price}
-            onChange={priceChangeProxy}
-            name={`establishment[beers_attributes][${appId}][price]`}
-            id={`establishment_beers_attributes_${appId}_price`}
-            className="form-control"
-            autoFocus={shouldFocusPrice}
-          />
-        </div>
-        <div className="col-sm-7">
-          {actionable}
-        </div>
+        <input
+          type="hidden"
+          defaultValue={this.state.id}
+          name={`establishment[beers_attributes][${appId}][id]`}
+          id={`establishment_beers_attributes_${appId}_id`}
+        />
+        <input
+          type="hidden"
+          defaultValue={markedForRemoval}
+          name={`establishment[beers_attributes][${appId}][_destroy]`}
+        />
       </div>
-      <input
-        type="hidden"
-        defaultValue={beer.id}
-        name={`establishment[beers_attributes][${appId}][id]`}
-        id={`establishment_beers_attributes_${appId}_id`}
-      />
-      <input
-        type="hidden"
-        defaultValue={beer.markedForRemoval}
-        name={`establishment[beers_attributes][${appId}][_destroy]`}
-      />
-    </div>
-  );
+    );
+  }
 };
+
+export default BeerInput;
