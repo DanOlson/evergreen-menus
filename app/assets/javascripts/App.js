@@ -4,24 +4,9 @@ import BeerInput from './BeerInput';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state      = { beers: this.getBeers() };
+    this.state      = { beers: this.props.beers };
     this.deleteBeer = this.deleteBeer.bind(this);
     this.addBeer    = this.addBeer.bind(this);
-  }
-
-  getBeers() {
-    const beers = window.BEERMAPPER ? window.BEERMAPPER.beers : []
-    const sorted = beers.sort((a, b) => {
-      const aName = a.name.toLowerCase();
-      const bName = b.name.toLowerCase();
-      if (aName > bName) return 1;
-      if (aName < bName) return -1;
-      return 0;
-    })
-    return sorted.map((beer, index) => {
-      beer.appId = index;
-      return beer;
-    })
   }
 
   deleteBeer(beerAppId) {
