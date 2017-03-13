@@ -139,6 +139,10 @@ feature 'account management' do
   end
 
   context 'unauthenticated' do
+    before do
+      ActionMailer::Base.deliveries.clear
+    end
+
     scenario 'user can reset their password to recover account access' do
       visit '/users/sign_in'
       click_link 'Forgot your password?'
