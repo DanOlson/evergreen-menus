@@ -75,7 +75,7 @@ class BeerInput extends React.Component {
               defaultValue={price}
               name={`establishment[beers_attributes][${appId}][price]`}
               id={`establishment_beers_attributes_${appId}_price`}
-              className="form-control"
+              className="form-control price-input"
             />
           </div>
           <div className="col-sm-7">
