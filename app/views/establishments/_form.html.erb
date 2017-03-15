@@ -3,7 +3,7 @@
     beers: <%= raw establishment.beers.to_json %>
   };
 </script>
-<%= form_for [account, establishment], html: { class: 'form-horizontal' } do |f| %>
+<%= form_for [account, establishment], html: { class: 'form-horizontal establishment-form' } do |f| %>
   <div class="panel panel-info">
     <div class="panel-heading">
       <h3 class="panel-title">Establishment Info</h3>

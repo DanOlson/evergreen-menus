@@ -1,7 +1,5 @@
 class Beer < ActiveRecord::Base
   belongs_to :establishment
-  has_one :beer_description
-  accepts_nested_attributes_for :beer_description, reject_if: ->(d) { d[:description].blank? }
 
   class << self
     def at_establishment(establishment_id)
@@ -38,7 +36,8 @@ class Beer < ActiveRecord::Base
       created_at: created_at,
       updated_at: updated_at,
       establishment_id: establishment_id,
-      price: price
+      price: price,
+      description: description
     }
   end
 end

@@ -55,9 +55,6 @@ feature 'establishment management' do
     add_beer_button.click
     find('[data-test="beer-name-input-2"]').set('Deschutes Fresh Squeezed')
 
-    find('[data-test="beer-name-input-2"]').trigger('blur')
-    sleep 0.5
-
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(all('[data-test="beer-input"]').size).to eq 3
@@ -77,7 +74,7 @@ feature 'establishment management' do
     expect(all('[data-test="beer-input"]').size).to eq 2
   end
 
-  scenario "an establishment's beer list can have prices", :js, :admin do
+  scenario "an establishment's beer list can have prices and descriptions", :js, :admin do
     establishment = create :establishment, account: user.account
     login user
 
@@ -89,26 +86,26 @@ feature 'establishment management' do
     add_beer_button.click
     find('[data-test="beer-name-input-0"]').set('Bear Republic Racer 5')
     find('[data-test="beer-price-input-0"]').set('5.5')
+    find('[data-test="beer-description-input-0"]').set("A crowd favorite")
     add_beer_button.click
     find('[data-test="beer-name-input-1"]').set('Indeed Day Tripper')
     find('[data-test="beer-price-input-1"]').set('5')
+    find('[data-test="beer-description-input-1"]').set("The gold standard")
     add_beer_button.click
     find('[data-test="beer-name-input-2"]').set('Deschutes Fresh Squeezed')
     find('[data-test="beer-price-input-2"]').set('6')
-
-    find('[data-test="beer-name-input-2"]').trigger('blur')
-    sleep 0.5
+    find('[data-test="beer-description-input-2"]').set("The biggest IPA this side of the Mississippi")
 
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(all('[data-test="beer-input"]').size).to eq 3
 
-    beers = Hash[establishment.beers.map { |b| [b.name, b.price_in_cents] }]
-    expect(beers).to eq({
-      'Bear Republic Racer 5'    => 550,
-      'Indeed Day Tripper'       => 500,
-      'Deschutes Fresh Squeezed' => 600
-    })
+    beers = establishment.beers.map { |b| [b.name, b.price_in_cents, b.description] }
+    expect(beers).to eq([
+      ['Bear Republic Racer 5', 550, 'A crowd favorite'],
+      ['Indeed Day Tripper', 500, 'The gold standard'],
+      ['Deschutes Fresh Squeezed', 600, 'The biggest IPA this side of the Mississippi']
+    ])
 
     find("[data-test='remove-beer-0']").click
     expect(page).to have_css(".remove-beer[data-test='beer-0']")
@@ -130,7 +127,6 @@ feature 'establishment management' do
     add_beer_button.click
     find('[data-test="beer-name-input-1"]').set('Indeed Day Tripper')
 
-    sleep 0.5
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(all('[data-test="beer-input"]').size).to eq 2
@@ -186,7 +182,6 @@ feature 'establishment management' do
     add_beer_button.click
     find('[data-test="beer-name-input-5"]').set('Budweiser')
 
-    sleep 0.5
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(all('[data-test="beer-input"]').size).to eq 6
@@ -237,7 +232,6 @@ feature 'establishment management' do
     add_beer_button.click
     find('[data-test="beer-name-input-5"]').set('Budweiser')
 
-    sleep 0.5
     click_button 'Update'
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(all('[data-test="beer-input"]').size).to eq 6
