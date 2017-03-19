@@ -41,6 +41,7 @@ feature 'establishment management' do
 
   scenario "editing an establishment's beer list", :js, :admin do
     establishment = create :establishment, account: user.account
+    establishment.lists.create!(name: 'Beers')
     login user
 
     click_link establishment.name
@@ -76,6 +77,7 @@ feature 'establishment management' do
 
   scenario "an establishment's beer list can have prices and descriptions", :js, :admin do
     establishment = create :establishment, account: user.account
+    establishment.lists.create!(name: 'Beers')
     login user
 
     click_link establishment.name
@@ -117,6 +119,7 @@ feature 'establishment management' do
 
   scenario 'beers can be removed and unremoved from the beer list', :js, :admin do
     establishment = create :establishment, account: user.account
+    establishment.lists.create!(name: 'Beers')
     login user
 
     click_link establishment.name
@@ -151,6 +154,7 @@ feature 'establishment management' do
 
   scenario 'unsaved beers can be deleted from the UI', :js, :admin do
     establishment = create :establishment, account: user.account
+    establishment.lists.create!(name: 'Beers')
     login user
 
     click_link establishment.name
@@ -163,6 +167,7 @@ feature 'establishment management' do
 
   scenario "beers added to an establishment's list show up in Beermapper", :admin, :js do
     establishment = create :establishment, name: "Lebowski", account: user.account
+    establishment.lists.create!(name: 'Beers')
     login user
 
     click_link establishment.name
@@ -209,6 +214,7 @@ feature 'establishment management' do
 
   scenario "beers added to an establishment's list show up on the establishment's website", :admin, :js do
     establishment = create :establishment, name: "The Lanes", account: user.account
+    establishment.lists.create!(name: 'Beers')
 
     Beermapper::Application.load_tasks
     Rake::Task['generate_third_party_site'].invoke

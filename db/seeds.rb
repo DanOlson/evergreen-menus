@@ -5,7 +5,7 @@ require Rails.root.join 'db/seeds/role_seeder'
 load Rails.root.join 'spec/support/geocoder.rb'
 
 FactoryGirl.find_definitions if FactoryGirl.factories.none?
-[BeerEstablishment, Establishment, Beer, User].each &:destroy_all
+[Establishment, UserInvitation, User].each &:destroy_all
 
 RoleSeeder.call
 
@@ -266,12 +266,13 @@ beers = [
   "la Goudale  Les Brasseurs de Gayant"
 ]
 
-beer_objs = beers.map do |beer_name|
-  Beer.create name: beer_name.encode
-end
-
 Establishment.all.each do |est|
-  beer_objs.shuffle.take(50).each do |beer|
-    est.beers << beer
+  list = est.lists.create!(name: 'Beers')
+  beers.shuffle.take(16).each do |beer_name|
+    list.beers.create!({
+      name: beer_name.encode,
+      price: (3..9).to_a.shuffle.first.to_s,
+      description: "#{Faker::Beer.alcohol} - #{Faker::Beer.style} - #{Faker::Beer.ibu}"
+    })
   end
 end

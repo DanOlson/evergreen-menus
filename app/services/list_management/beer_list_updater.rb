@@ -1,20 +1,19 @@
 module ListManagement
   class BeerListUpdater
     class << self
-      def update!(establishment, scraper, opts={}, &blk)
-        new(establishment, scraper).update! force: !!opts[:force], &blk
+      def update!(list, scraper, opts={}, &blk)
+        new(list, scraper).update! force: !!opts[:force], &blk
       end
     end
 
-    attr_reader :scraper, :list, :establishment
+    attr_reader :scraper, :scraped_beer_list, :list
 
-    def initialize(establishment, scraper)
-      @establishment = establishment
-      @scraper       = scraper
+    def initialize(list, scraper)
+      @list    = list
+      @scraper = scraper
     end
 
     def update!(force: false, &blk)
-      @list = scraper.list
       if !force && there_might_be_a_problem?
         yield Status.failure('list size unacceptable') if block_given?
         return
@@ -28,36 +27,40 @@ module ListManagement
 
     # eliminate names we currently have
     def new_beer_names
-      list.reject { |name| current_beer_names.include? name }
+      scraped_beer_list.reject { |name| current_beer_names.include? name }
     end
 
     # current names that are NOT in @list
     def old_beer_names
-      current_beer_names.select { |name| !list.include? name}
+      current_beer_names.select { |name| !scraped_beer_list.include? name}
     end
 
     private
 
+    def scraped_beer_list
+      @scraped_beer_list ||= scraper.list
+    end
+
     def delete_old_beers
-      establishment.beers.delete Beer.where(name: old_beer_names)
+      list.beers.delete Beer.where(name: old_beer_names)
     end
 
     def create_new_beers
       new_beer_names.each do |name|
-        establishment.beers << Beer.where(name: name).first_or_create
+        list.beers << Beer.where(name: name).first_or_create
       end
     end
 
     def current_beer_names
-      @current_beer_names ||= establishment.beers.pluck :name
+      @current_beer_names ||= list.beers.pluck :name
     end
 
     def there_might_be_a_problem?
-      list.empty? || list_is_less_than_80_percent_of_current?
+      scraped_beer_list.empty? || list_is_less_than_80_percent_of_current?
     end
 
     def list_is_less_than_80_percent_of_current?
-      current_beer_names.size * 0.8 > list.size
+      current_beer_names.size * 0.8 > scraped_beer_list.size
     end
   end
 end

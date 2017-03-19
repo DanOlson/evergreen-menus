@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313020703) do
+ActiveRecord::Schema.define(version: 20170317013248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20170313020703) do
     t.integer  "establishment_id"
     t.integer  "price_in_cents"
     t.text     "description"
+    t.integer  "list_id"
     t.index ["name"], name: "index_beers_on_name", using: :btree
   end
 
@@ -78,6 +79,15 @@ ActiveRecord::Schema.define(version: 20170313020703) do
     t.text     "raw_data"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "lists", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "establishment_id",                null: false
+    t.boolean  "show_price",       default: true, null: false
+    t.boolean  "show_description", default: true, null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   create_table "roles", force: :cascade do |t|
@@ -130,7 +140,9 @@ ActiveRecord::Schema.define(version: 20170313020703) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "beers", "lists"
   add_foreign_key "establishments", "accounts"
+  add_foreign_key "lists", "establishments"
   add_foreign_key "user_invitations", "accounts"
   add_foreign_key "user_invitations", "users", column: "accepting_user_id"
   add_foreign_key "user_invitations", "users", column: "inviting_user_id"

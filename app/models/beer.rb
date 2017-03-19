@@ -1,5 +1,6 @@
 class Beer < ActiveRecord::Base
   belongs_to :establishment
+  belongs_to :list
 
   class << self
     def at_establishment(establishment_id)

@@ -5,13 +5,14 @@ class Establishment < ActiveRecord::Base
   validates :name, :address, :url, presence: true
 
   belongs_to :account
-  has_many :beers, dependent: :destroy
+  has_many :lists, dependent: :destroy
+  has_many :beers, through: :lists
   has_many :list_updates
   has_one :scraper
 
   paginates_per 100
 
-  accepts_nested_attributes_for :beers, allow_destroy: true, reject_if: ->(b) { b[:name].blank? }
+  accepts_nested_attributes_for :lists, allow_destroy: true
 
   class << self
     def active

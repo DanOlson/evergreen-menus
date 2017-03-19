@@ -56,4 +56,10 @@ module EstablishmentsHelper
   def state_options
     STATES.invert.to_a
   end
+
+  def beers_payload(establishment)
+    {
+      beers: Hash[establishment.lists.map { |l| [l.id, l.beers] }]
+    }.to_json
+  end
 end

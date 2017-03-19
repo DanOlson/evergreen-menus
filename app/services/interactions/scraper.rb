@@ -15,7 +15,8 @@ module Interactions
     end
 
     def scrape!(opts={})
-      ListManagement::BeerListUpdater.update!(establishment, scraper_instance, opts) do |status|
+      establishment_list = establishment.lists.first
+      ListManagement::BeerListUpdater.update!(establishment_list, scraper_instance, opts) do |status|
         status.on_success do
           list_update.status = STATUS_SUCCESS
         end

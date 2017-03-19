@@ -26,14 +26,12 @@ module ListManagement
 
     describe '#new_beer_names' do
       it "returns the list of names it doesn't already have" do
-        allow(instance).to receive(:list){ list }
         expect(instance.new_beer_names).to eq(['miller'])
       end
     end
 
     describe '#old_beer_names' do
       it 'returns a list of names that need to be removed' do
-        allow(instance).to receive(:list){ list }
         expect(instance.old_beer_names).to eq(%w(Moylan's McSorley's))
       end
     end
