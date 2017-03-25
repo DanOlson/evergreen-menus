@@ -57,9 +57,23 @@ module EstablishmentsHelper
     STATES.invert.to_a
   end
 
-  def beers_payload(establishment)
+  def list_json(list)
     {
-      beers: Hash[establishment.lists.map { |l| [l.id, l.beers] }]
+      list: list.as_json.merge(beers: list.beers.as_json)
     }.to_json
+  end
+
+  def add_list_button(account, establishment)
+    css_classes = %w(btn btn-primary)
+    if establishment.persisted? 
+      href = new_account_establishment_list_path(account, establishment)
+      link_to 'Add List', href, class: css_classes.join(' ')
+    else
+      css_classes << 'disabled'
+      content_tag :div do
+        'Please create your establishment before adding a list'
+        link_to 'Add List', '', class: css_classes.join(' ')
+      end
+    end
   end
 end

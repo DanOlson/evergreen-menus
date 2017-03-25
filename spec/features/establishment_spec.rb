@@ -41,11 +41,14 @@ feature 'establishment management' do
 
   scenario "editing an establishment's beer list", :js, :admin do
     establishment = create :establishment, account: user.account
-    establishment.lists.create!(name: 'Beers')
     login user
 
     click_link establishment.name
+    click_link 'Add List'
+
     expect(all('input[data-test="beer-input"]').size).to eq 0
+
+    fill_in 'List Name', with: 'Beers'
 
     add_beer_button = find('[data-test="add-beer"]')
 
@@ -56,8 +59,8 @@ feature 'establishment management' do
     add_beer_button.click
     find('[data-test="beer-name-input-2"]').set('Deschutes Fresh Squeezed')
 
-    click_button 'Update'
-    expect(page).to have_css "div.alert-success", text: "Establishment updated"
+    click_button 'Create'
+    expect(page).to have_css 'div.alert-success', text: 'List created'
     expect(all('[data-test="beer-input"]').size).to eq 3
 
     beers = establishment.beers.map &:name
@@ -71,17 +74,20 @@ feature 'establishment management' do
     expect(page).to have_css(".remove-beer[data-test='beer-0']")
 
     click_button 'Update'
-    expect(page).to have_css "div.alert-success", text: "Establishment updated"
+    expect(page).to have_css "div.alert-success", text: "List updated"
     expect(all('[data-test="beer-input"]').size).to eq 2
   end
 
   scenario "an establishment's beer list can have prices and descriptions", :js, :admin do
     establishment = create :establishment, account: user.account
-    establishment.lists.create!(name: 'Beers')
     login user
 
     click_link establishment.name
+    click_link 'Add List'
+
     expect(all('input[data-test="beer-input"]').size).to eq 0
+
+    fill_in 'List Name', with: 'Beers'
 
     add_beer_button = find('[data-test="add-beer"]')
 
@@ -98,8 +104,8 @@ feature 'establishment management' do
     find('[data-test="beer-price-input-2"]').set('6')
     find('[data-test="beer-description-input-2"]').set("The biggest IPA this side of the Mississippi")
 
-    click_button 'Update'
-    expect(page).to have_css "div.alert-success", text: "Establishment updated"
+    click_button 'Create'
+    expect(page).to have_css "div.alert-success", text: "List created"
     expect(all('[data-test="beer-input"]').size).to eq 3
 
     beers = establishment.beers.map { |b| [b.name, b.price_in_cents, b.description] }
@@ -113,16 +119,18 @@ feature 'establishment management' do
     expect(page).to have_css(".remove-beer[data-test='beer-0']")
 
     click_button 'Update'
-    expect(page).to have_css "div.alert-success", text: "Establishment updated"
+    expect(page).to have_css "div.alert-success", text: "List updated"
     expect(all('[data-test="beer-input"]').size).to eq 2
   end
 
   scenario 'beers can be removed and unremoved from the beer list', :js, :admin do
     establishment = create :establishment, account: user.account
-    establishment.lists.create!(name: 'Beers')
     login user
 
     click_link establishment.name
+    click_link 'Add List'
+
+    fill_in 'List Name', with: 'Beers'
 
     add_beer_button = find('[data-test="add-beer"]')
     add_beer_button.click
@@ -130,8 +138,8 @@ feature 'establishment management' do
     add_beer_button.click
     find('[data-test="beer-name-input-1"]').set('Indeed Day Tripper')
 
-    click_button 'Update'
-    expect(page).to have_css "div.alert-success", text: "Establishment updated"
+    click_button 'Create'
+    expect(page).to have_css "div.alert-success", text: "List created"
     expect(all('[data-test="beer-input"]').size).to eq 2
 
     find("[data-test='remove-beer-0']").click
@@ -145,7 +153,7 @@ feature 'establishment management' do
     expect(page).to_not have_css(".remove-beer[data-test='beer-1']")
 
     click_button 'Update'
-    expect(page).to have_css "div.alert-success", text: "Establishment updated"
+    expect(page).to have_css "div.alert-success", text: "List updated"
     expect(all('[data-test="beer-input"]').size).to eq 1
 
     input = find '[data-test="beer-name-input-0"]'
@@ -154,10 +162,11 @@ feature 'establishment management' do
 
   scenario 'unsaved beers can be deleted from the UI', :js, :admin do
     establishment = create :establishment, account: user.account
-    establishment.lists.create!(name: 'Beers')
     login user
 
     click_link establishment.name
+
+    click_link 'Add List'
     find('[data-test="add-beer"]').click
 
     expect(all('[data-test="beer-name-input-0"]').size).to eq 1
@@ -167,10 +176,12 @@ feature 'establishment management' do
 
   scenario "beers added to an establishment's list show up in Beermapper", :admin, :js do
     establishment = create :establishment, name: "Lebowski", account: user.account
-    establishment.lists.create!(name: 'Beers')
     login user
 
     click_link establishment.name
+    click_link 'Add List'
+
+    fill_in 'List Name', with: 'Beers'
 
     add_beer_button = find('[data-test="add-beer"]')
 
@@ -187,8 +198,8 @@ feature 'establishment management' do
     add_beer_button.click
     find('[data-test="beer-name-input-5"]').set('Budweiser')
 
-    click_button 'Update'
-    expect(page).to have_css "div.alert-success", text: "Establishment updated"
+    click_button 'Create'
+    expect(page).to have_css "div.alert-success", text: "List created"
     expect(all('[data-test="beer-input"]').size).to eq 6
 
     visit 'http://test.beermapper.ember'
@@ -212,16 +223,14 @@ feature 'establishment management' do
     expect(page).to have_css 'li', text: 'Budweiser'
   end
 
-  scenario "beers added to an establishment's list show up on the establishment's website", :admin, :js do
-    establishment = create :establishment, name: "The Lanes", account: user.account
-    establishment.lists.create!(name: 'Beers')
-
-    Beermapper::Application.load_tasks
-    Rake::Task['generate_third_party_site'].invoke
-
+  scenario "an establishment's beers from multiple lists show up in Beermapper", :admin, :js do
+    establishment = create :establishment, name: "Lebowski", account: user.account
     login user
 
     click_link establishment.name
+    click_link 'Add List'
+
+    fill_in 'List Name', with: 'Taps'
 
     add_beer_button = find('[data-test="add-beer"]')
 
@@ -238,8 +247,86 @@ feature 'establishment management' do
     add_beer_button.click
     find('[data-test="beer-name-input-5"]').set('Budweiser')
 
-    click_button 'Update'
-    expect(page).to have_css "div.alert-success", text: "Establishment updated"
+    click_button 'Create'
+    expect(page).to have_css "div.alert-success", text: "List created"
+    expect(all('[data-test="beer-input"]').size).to eq 6
+
+    click_link 'Cancel'
+    click_link 'Add List'
+
+    fill_in 'List Name', with: 'Bottles'
+
+    add_beer_button = find('[data-test="add-beer"]')
+
+    add_beer_button.click
+    find('[data-test="beer-name-input-0"]').set('Summit EPA')
+    add_beer_button.click
+    find('[data-test="beer-name-input-1"]').set('Deschutes Fresh Squeezed')
+    add_beer_button.click
+    find('[data-test="beer-name-input-2"]').set('Indeed Double Day Tripper')
+    add_beer_button.click
+    find('[data-test="beer-name-input-3"]').set('Fulton War & Peace')
+
+    click_button 'Create'
+    expect(page).to have_css "div.alert-success", text: "List created"
+    expect(all('[data-test="beer-input"]').size).to eq 4
+
+    visit 'http://test.beermapper.ember'
+    fill_in 'search-field', with: 'Deschutes'
+    click_button 'Search'
+
+    find('div[title="Lebowski"]').trigger('click')
+    within('.map-marker') do
+      expect(page).to have_link 'Lebowski'
+      expect(page).to have_css 'li', text: 'Deschutes Pinedrops'
+      expect(page).to have_css 'li', text: 'Deschutes Mirror Pond'
+      expect(page).to have_css 'li', text: 'Deschutes Big Rig'
+      expect(page).to have_css 'li', text: 'Deschutes Fresh Squeezed'
+    end
+
+    click_link 'Lebowski'
+    expect(page).to have_css 'li', text: 'Deschutes Pinedrops'
+    expect(page).to have_css 'li', text: 'Deschutes Mirror Pond'
+    expect(page).to have_css 'li', text: 'Deschutes Big Rig'
+    expect(page).to have_css 'li', text: 'Deschutes Fresh Squeezed'
+    expect(page).to have_css 'li', text: 'Indeed Stir Crazy'
+    expect(page).to have_css 'li', text: 'Indeed Double Day Tripper'
+    expect(page).to have_css 'li', text: 'Surly Stout'
+    expect(page).to have_css 'li', text: 'Budweiser'
+    expect(page).to have_css 'li', text: 'Fulton War & Peace'
+    expect(page).to have_css 'li', text: 'Summit EPA'
+  end
+
+  scenario "beers added to an establishment's list show up on the establishment's website", :admin, :js do
+    establishment = create :establishment, name: "The Lanes", account: user.account
+
+    Beermapper::Application.load_tasks
+    Rake::Task['generate_third_party_site'].invoke
+
+    login user
+
+    click_link establishment.name
+    click_link 'Add List'
+
+    fill_in 'List Name', with: 'Beers'
+
+    add_beer_button = find('[data-test="add-beer"]')
+
+    add_beer_button.click
+    find('[data-test="beer-name-input-0"]').set('Deschutes Pinedrops')
+    add_beer_button.click
+    find('[data-test="beer-name-input-1"]').set('Deschutes Mirror Pond')
+    add_beer_button.click
+    find('[data-test="beer-name-input-2"]').set('Deschutes Big Rig')
+    add_beer_button.click
+    find('[data-test="beer-name-input-3"]').set('Indeed Stir Crazy')
+    add_beer_button.click
+    find('[data-test="beer-name-input-4"]').set('Surly Stout')
+    add_beer_button.click
+    find('[data-test="beer-name-input-5"]').set('Budweiser')
+
+    click_button 'Create'
+    expect(page).to have_css "div.alert-success", text: "List created"
     expect(all('[data-test="beer-input"]').size).to eq 6
 
 

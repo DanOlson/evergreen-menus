@@ -18,9 +18,6 @@ class EstablishmentsController < ApplicationController
     end
   end
 
-  def show
-  end
-
   def edit
   end
 
@@ -47,15 +44,7 @@ class EstablishmentsController < ApplicationController
       :street_address,
       :city,
       :state,
-      :postal_code,
-      lists_attributes: [
-        :id,
-        :name,
-        :show_price,
-        :show_description,
-        :_destroy,
-        { beers_attributes: [:id, :name, :price, :description, :_destroy] }
-      ]
+      :postal_code
     )
   end
 end

@@ -6,6 +6,10 @@ class BeerInput extends React.Component {
     this.state        = props.beer;
     this.onRemoveBeer = this.onRemoveBeer.bind(this);
     this.onKeepBeer   = this.onKeepBeer.bind(this);
+    this.renderAction = this.renderAction.bind(this);
+    this.renderPriceInput       = this.renderPriceInput.bind(this);
+    this.renderDescriptionInput = this.renderDescriptionInput.bind(this);
+    this.renderNameInput        = this.renderNameInput.bind(this);
   }
 
   onRemoveBeer(event) {
@@ -30,22 +34,19 @@ class BeerInput extends React.Component {
     this.setState({ markedForRemoval: false });
   }
 
-  render() {
-    const { appId, markedForRemoval, name, price, description } = this.state;
-    const { listId } = this.props;
-    const className = markedForRemoval ? 'remove-beer' : '';
-    let actionable;
-
+  renderAction() {
+    const { markedForRemoval, appId } = this.state;
     if (markedForRemoval) {
-      actionable = (
-        <a href=''
+      return (
+        <a href=""
            onClick={this.onKeepBeer}
            data-test={`keep-beer-${appId}`}
            className="btn btn-danger">Keep</a>
       )
     } else {
-      actionable = (
-        <a href=''
+      return (
+        <a href=""
+           title="Remove"
            onClick={this.onRemoveBeer}
            data-test={`remove-beer-${appId}`}
            className="btn btn-default">
@@ -53,51 +54,93 @@ class BeerInput extends React.Component {
         </a>
       )
     }
+  }
+
+  renderNameInput(className) {
+    const { appId, name } = this.state;
+    return (
+      <div className="col-sm-4">
+        <label htmlFor={`list_beers_attributes_${appId}_name`} className="sr-only">
+          Name
+        </label>
+        <input
+          type="text"
+          placeholder="Name"
+          data-test={`beer-name-input-${appId}`}
+          defaultValue={name}
+          name={`list[beers_attributes][${appId}][name]`}
+          id={`list_beers_attributes_${appId}_name`}
+          className={`form-control ${className}`}
+        />
+      </div>
+    );
+  }
+
+  renderPriceInput() {
+    const { showPrice } = this.props;
+    if (showPrice) {
+      const { appId, price } = this.state;
+      return (
+        <div className="col-sm-1">
+          <label htmlFor={`list_beers_attributes_${appId}_price`} className="sr-only">
+            Price
+          </label>
+          <input
+            type="number"
+            step="0.01"
+            min="0"
+            data-test={`beer-price-input-${appId}`}
+            defaultValue={price}
+            name={`list[beers_attributes][${appId}][price]`}
+            id={`list_beers_attributes_${appId}_price`}
+            className="form-control price-input"
+          />
+        </div>
+      );
+    } else {
+      return <div></div>
+    }
+  }
+
+  renderDescriptionInput() {
+    const { showDescription } = this.props;
+    if (showDescription) {
+      const { appId, description } = this.state;
+      return (
+        <div className="col-sm-5">
+          <label htmlFor={`list_beers_attributes_${appId}_description`} className="sr-only">
+            Description
+          </label>
+          <input
+            data-test={`beer-description-input-${appId}`}
+            placeholder="Description"
+            defaultValue={description}
+            name={`list[beers_attributes][${appId}][description]`}
+            id={`list_beers_attributes_${appId}_description`}
+            className="form-control"
+          />
+        </div>
+      );
+    } else {
+      return <div></div>
+    }
+  }
+
+  render() {
+    const { appId, markedForRemoval } = this.state;
+    const className        = markedForRemoval ? 'remove-beer' : '';
+    const actionable       = this.renderAction();
+    const nameInput        = this.renderNameInput(className);
+    const priceInput       = this.renderPriceInput();
+    const descriptionInput = this.renderDescriptionInput();
 
     return (
       <div data-test={`beer-${appId}`} className={`${className} row`}>
         <div data-test="beer-input">
           <div className="row">
-            <div className="col-sm-4">
-              <label htmlFor={`establishment_lists_attributes_${listId}_beers_attributes_${appId}_name`}>
-                Name
-              </label>
-              <input
-                type="text"
-                data-test={`beer-name-input-${appId}`}
-                defaultValue={name}
-                name={`establishment[lists_attributes][${listId}][beers_attributes][${appId}][name]`}
-                id={`establishment_lists_attributes_${listId}_beers_attributes_${appId}_name`}
-                className={`form-control ${className}`}
-              />
-            </div>
-            <div className="col-sm-1">
-              <label htmlFor={`establishment_lists_attributes_${listId}_beers_attributes_${appId}_price`}>
-                Price
-              </label>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                data-test={`beer-price-input-${appId}`}
-                defaultValue={price}
-                name={`establishment[lists_attributes][${listId}][beers_attributes][${appId}][price]`}
-                id={`establishment_lists_attributes_${listId}_beers_attributes_${appId}_price`}
-                className="form-control price-input"
-              />
-            </div>
-            <div className="col-sm-5">
-              <label htmlFor={`establishment_lists_attributes_${listId}_beers_attributes_${appId}_description`}>
-                Description
-              </label>
-              <input
-                data-test={`beer-description-input-${appId}`}
-                defaultValue={description}
-                name={`establishment[lists_attributes][${listId}][beers_attributes][${appId}][description]`}
-                id={`establishment_lists_attributes_${listId}_beers_attributes_${appId}_description`}
-                className="form-control"
-              />
-            </div>
+            {nameInput}
+            {priceInput}
+            {descriptionInput}
             <div className="col-sm-1 remove">
               {actionable}
             </div>
@@ -109,13 +152,13 @@ class BeerInput extends React.Component {
         <input
           type="hidden"
           defaultValue={this.state.id}
-          name={`establishment[lists_attributes][${listId}][beers_attributes][${appId}][id]`}
-          id={`establishment_lists_attributes_${listId}_beers_attributes_${appId}_id`}
+          name={`list[beers_attributes][${appId}][id]`}
+          id={`list_beers_attributes_${appId}_id`}
         />
         <input
           type="hidden"
           defaultValue={markedForRemoval}
-          name={`establishment[lists_attributes][${listId}][beers_attributes][${appId}][_destroy]`}
+          name={`list[beers_attributes][${appId}][_destroy]`}
         />
       </div>
     );

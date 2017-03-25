@@ -23,7 +23,9 @@ Beermapper::Application.routes.draw do
   constraints(ManagedMenuFeature) do
     resources :menus, only: :show
     resources :accounts do
-      resources :establishments
+      resources :establishments do
+        resources :lists
+      end
 
       resources :users, path: '/staff'
       resources :user_invitations

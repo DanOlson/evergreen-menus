@@ -2,17 +2,14 @@ import React from 'react';
 import { render } from 'react-dom';
 import App from './App';
 
-function getLists() {
-  return window.BEERMAPPER ? window.BEERMAPPER.beers : {}
+function getList() {
+  return window.BEERMAPPER ? window.BEERMAPPER.list : {}
 }
 
-function bootstrap() {
-  const appRoot = document.getElementById('react-app-root');
+(function bootstrap() {
+  const appRoot = document.getElementById('app-root');
 
   if (appRoot) {
-    const lists = getLists();
-    render(<App lists={lists} />, appRoot);
+    render(<App list={getList()} />, appRoot);
   }
-};
-
-bootstrap();
+})();

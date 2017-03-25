@@ -10,8 +10,14 @@ FactoryGirl.find_definitions if FactoryGirl.factories.none?
 RoleSeeder.call
 
 account = FactoryGirl.create :account
-user    = FactoryGirl.create :user, :admin, {
+user    = FactoryGirl.create :user, :manager, {
   username: 'manager',
+  password: 'password',
+  account: account
+}
+
+staff   = FactoryGirl.create :user, {
+  username: 'staff',
   password: 'password',
   account: account
 }
