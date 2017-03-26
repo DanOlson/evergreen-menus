@@ -7,13 +7,16 @@ feature 'establishment management' do
     login user
     find('[data-test="add-establishment"]').click
 
-    fill_in "Name", with: "The Lanes"
-    fill_in "Url", with: "http://thelanes.com/beer-menu"
-    fill_in "Street", with: "123 Freemont Ave"
-    fill_in "City", with: "Encino"
-    select "California", from: "State"
-    fill_in "Postal Code", with: "91316"
-    click_button "Create"
+    form = PageObjects::Admin::EstablishmentForm.new
+
+    form.set_name 'The Lanes'
+    form.set_url 'http://thelanes.com/beer-menu'
+    form.set_street '123 Freemont Ave'
+    form.set_city 'Encino'
+    form.set_state 'California'
+    form.set_postal_code '91316'
+
+    form.submit
 
     expect(page).to have_current_path "/accounts/#{user.account_id}"
     expect(page).to have_css "div.alert-success", text: "Establishment created"
@@ -26,13 +29,16 @@ feature 'establishment management' do
 
     click_link establishment.name
 
-    fill_in "Name", with: "Sobchak Security"
-    fill_in "Url", with: "http://sobsec.com/beer-menu"
-    fill_in "Street", with: "15 EmPeeAich Ave"
-    fill_in "City", with: "Encino"
-    select "California", from: "State"
-    fill_in "Postal Code", with: "91316"
-    click_button "Update"
+    form = PageObjects::Admin::EstablishmentForm.new
+
+    form.set_name 'Sobchak Security'
+    form.set_url 'http://sobsec.com/beer-menu'
+    form.set_street '15 EmPeeAich Ave'
+    form.set_city 'Encino'
+    form.set_state 'California'
+    form.set_postal_code '91316'
+
+    form.submit
 
     expect(page).to have_current_path "/accounts/#{user.account_id}/establishments/#{establishment.id}/edit"
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
@@ -44,7 +50,8 @@ feature 'establishment management' do
     login user
 
     click_link establishment.name
-    click_link 'Add List'
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    establishment_form.add_list
 
     form = PageObjects::Admin::ListForm.new
 
@@ -81,7 +88,8 @@ feature 'establishment management' do
     login user
 
     click_link establishment.name
-    click_link 'Add List'
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    establishment_form.add_list
 
     form = PageObjects::Admin::ListForm.new
 
@@ -126,7 +134,8 @@ feature 'establishment management' do
     login user
 
     click_link establishment.name
-    click_link 'Add List'
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    establishment_form.add_list
 
     form = PageObjects::Admin::ListForm.new
 
@@ -163,7 +172,9 @@ feature 'establishment management' do
 
     click_link establishment.name
 
-    click_link 'Add List'
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    establishment_form.add_list
+
     form = PageObjects::Admin::ListForm.new
     form.add_beer_button.click
 
@@ -177,7 +188,8 @@ feature 'establishment management' do
     login user
 
     click_link establishment.name
-    click_link 'Add List'
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    establishment_form.add_list
 
     form = PageObjects::Admin::ListForm.new
     form.set_name 'Beers'
@@ -219,7 +231,8 @@ feature 'establishment management' do
     login user
 
     click_link establishment.name
-    click_link 'Add List'
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    establishment_form.add_list
 
     taps_form = PageObjects::Admin::ListForm.new
     taps_form.set_name 'Taps'
@@ -249,6 +262,13 @@ feature 'establishment management' do
     bottles_form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
     expect(bottles_form.beers.size).to eq 4
+
+    bottles_form.cancel
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    expect(establishment_form.lists.size).to eq 2
+
+    expect(establishment_form).to have_list_named 'Taps'
+    expect(establishment_form).to have_list_named 'Bottles'
 
     visit 'http://test.beermapper.ember'
     fill_in 'search-field', with: 'Deschutes'
@@ -285,7 +305,8 @@ feature 'establishment management' do
     login user
 
     click_link establishment.name
-    click_link 'Add List'
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    establishment_form.add_list
 
     form = PageObjects::Admin::ListForm.new
     form.set_name 'Beers'

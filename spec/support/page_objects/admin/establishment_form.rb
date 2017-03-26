@@ -1,0 +1,75 @@
+module PageObjects
+  module Admin
+    class EstablishmentForm < SitePrism::Page
+      class ListsPanel < SitePrism::Section
+        class List < SitePrism::Section
+          def name
+            text
+          end
+        end
+
+        element :add_list_button, '[data-test="add-list"]'
+        sections :lists, List, '[data-test="establishment-list"]'
+
+        def add_list
+          add_list_button.click
+        end
+      end
+
+      element :name_input,        '[data-test="establishment-name"]'
+      element :url_input,         '[data-test="establishment-url"]'
+      element :street_input,      '[data-test="establishment-street-address"]'
+      element :city_input,        '[data-test="establishment-city"]'
+      element :state_input,       '[data-test="establishment-state"]'
+      element :postal_code_input, '[data-test="establishment-postal-code"]'
+      element :submit_button,     '[data-test="establishment-form-submit"]'
+      element :cancel_link,       '[data-test="establishment-form-cancel"]'
+
+      section :lists_panel, ListsPanel, '[data-test="lists"]'
+
+      def submit
+        submit_button.click
+      end
+
+      def cancel
+        cancel_link.click
+      end
+
+      def add_list
+        lists_panel.add_list
+      end
+
+      def set_name(name)
+        name_input.set name
+      end
+
+      def set_url(url)
+        url_input.set url
+      end
+
+      def set_street(street)
+        street_input.set street
+      end
+
+      def set_city(city)
+        city_input.set city
+      end
+
+      def set_state(state)
+        state_input.select state
+      end
+
+      def set_postal_code(postal_code)
+        postal_code_input.set postal_code
+      end
+
+      def lists
+        lists_panel.lists
+      end
+
+      def has_list_named?(list_name)
+        lists.find { |l| l.name == list_name }
+      end
+    end
+  end
+end

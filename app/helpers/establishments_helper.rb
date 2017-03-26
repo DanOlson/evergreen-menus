@@ -71,6 +71,11 @@ module EstablishmentsHelper
       css_classes << 'disabled'
       href = ''
     end
-    link_to 'Add List', href, class: css_classes.join(' ')
+    link_to('Add List', href, {
+      class: css_classes.join(' '),
+      data: {
+        test: 'add-list'
+      }
+    })
   end
 end

@@ -9,55 +9,55 @@
           <div class="form-group">
             <%= f.label :name, class: 'col-sm-1 control-label' %>
             <div class="col-sm-11">
-              <%= f.text_field :name, class: 'form-control' %>
+              <%= f.text_field :name, class: 'form-control', data: { test: 'establishment-name' } %>
             </div>
           </div>
 
           <div class="form-group">
             <%= f.label :url, class: 'col-sm-1 control-label' %>
             <div class="col-sm-11">
-              <%= f.text_field :url, class: 'form-control' %>
+              <%= f.text_field :url, class: 'form-control', data: { test: 'establishment-url' } %>
             </div>
           </div>
 
           <div class="form-group">
             <%= f.label :street_address, 'Street', class: 'col-sm-1 control-label' %>
             <div class="col-sm-11">
-              <%= f.text_field :street_address, class: 'form-control' %>
+              <%= f.text_field :street_address, class: 'form-control', data: { test: 'establishment-street-address' } %>
             </div>
           </div>
 
           <div class="form-group">
             <%= f.label :city, class: 'col-sm-1 control-label' %>
             <div class="col-sm-11">
-              <%= f.text_field :city, class: 'form-control' %>
+              <%= f.text_field :city, class: 'form-control', data: { test: 'establishment-city' } %>
             </div>
           </div>
 
           <div class="form-group">
             <%= f.label :state, class: 'col-sm-1 control-label' %>
             <div class="col-sm-11">
-              <%= f.select :state, options_for_select(state_options, selected: establishment.state), { include_blank: true }, class: 'form-control' %>
+              <%= f.select :state, options_for_select(state_options, selected: establishment.state), { include_blank: true }, class: 'form-control', data: { test: 'establishment-state' } %>
             </div>
           </div>
 
           <div class="form-group">
             <%= f.label :postal_code, 'Postal Code', class: 'col-sm-1 control-label' %>
             <div class="col-sm-11">
-              <%= f.text_field :postal_code, maxlength: 5, class: 'form-control' %>
+              <%= f.text_field :postal_code, maxlength: 5, class: 'form-control', data: { test: 'establishment-postal-code' } %>
             </div>
           </div>
 
           <div class="form-group">
-            <%= f.submit submit_text, class: 'btn btn-primary col-sm-offset-1' %>
-            <%= link_to 'Cancel', account_path(account) %>
+            <%= f.submit submit_text, class: 'btn btn-primary col-sm-offset-1', data: { test: 'establishment-form-submit' } %>
+            <%= link_to 'Cancel', account_path(account), data: { test: 'establishment-form-cancel' } %>
           </div>
         </div>
       </div>
     <% end %>
   </div>
 
-  <div class="lists-wrapper col-sm-6">
+  <div class="lists-wrapper col-sm-6" data-test="lists">
     <div class="panel panel-info">
       <div class="panel-heading">
         <h3 class="panel-title">Lists</h3>
@@ -66,7 +66,8 @@
         <div class="list-group">
           <% establishment.lists.each do |list| %>
             <%= link_to list.name, edit_account_establishment_list_path(account, establishment, list), {
-              class: "list-group-item"
+              class: "list-group-item",
+              data: { test: 'establishment-list' }
             }
             %>
           <% end %>
