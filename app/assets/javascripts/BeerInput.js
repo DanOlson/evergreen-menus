@@ -148,18 +148,19 @@ class BeerInput extends React.Component {
           <div className="row">
             <hr className="col-sm-10" />
           </div>
+          <input
+            type="hidden"
+            defaultValue={this.state.id}
+            name={`list[beers_attributes][${appId}][id]`}
+            id={`list_beers_attributes_${appId}_id`}
+          />
+          <input
+            type="hidden"
+            data-test="marked-for-removal"
+            defaultValue={markedForRemoval}
+            name={`list[beers_attributes][${appId}][_destroy]`}
+          />
         </div>
-        <input
-          type="hidden"
-          defaultValue={this.state.id}
-          name={`list[beers_attributes][${appId}][id]`}
-          id={`list_beers_attributes_${appId}_id`}
-        />
-        <input
-          type="hidden"
-          defaultValue={markedForRemoval}
-          name={`list[beers_attributes][${appId}][_destroy]`}
-        />
       </div>
     );
   }

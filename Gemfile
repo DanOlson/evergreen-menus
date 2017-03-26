@@ -28,6 +28,7 @@ group :test do
   gem 'webmock',          '~> 2.3.0'
   gem 'launchy',          '~> 2.4.3'
   gem 'database_cleaner', '~> 1.5.3'
+  gem 'site_prism',       '~> 2.9'
 end
 
 group :development do

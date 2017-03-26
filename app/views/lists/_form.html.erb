@@ -1,12 +1,12 @@
 <script>
   window.BEERMAPPER = window.BEERMAPPER || <%= raw list_json list %>;
 </script>
-<%= form_for [account, establishment, list], html: { class: 'form-horizontal establishment-form' } do |f| %>
+<%= form_for [account, establishment, list], html: { class: 'form-horizontal establishment-list-form' } do |f| %>
 
   <div id="app-root"></div>
 
   <div>
-    <%= f.submit submit_text, class: 'btn btn-primary' %>
-    <%= link_to 'Cancel', edit_account_establishment_path(account, establishment) %>
+    <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'list-form-submit' } %>
+    <%= link_to 'Cancel', edit_account_establishment_path(account, establishment), data: { test: 'list-form-cancel' } %>
   </div>
 <% end %>

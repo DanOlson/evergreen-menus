@@ -67,13 +67,10 @@ module EstablishmentsHelper
     css_classes = %w(btn btn-primary)
     if establishment.persisted? 
       href = new_account_establishment_list_path(account, establishment)
-      link_to 'Add List', href, class: css_classes.join(' ')
     else
       css_classes << 'disabled'
-      content_tag :div do
-        'Please create your establishment before adding a list'
-        link_to 'Add List', '', class: css_classes.join(' ')
-      end
+      href = ''
     end
+    link_to 'Add List', href, class: css_classes.join(' ')
   end
 end

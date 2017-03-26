@@ -138,6 +138,7 @@ class List extends React.Component {
             <div className="form-group">
               <button
                 data-test="add-beer"
+                id="add-beer-button"
                 title="Add item"
                 onClick={this.addBeer}
                 className="btn btn-success">

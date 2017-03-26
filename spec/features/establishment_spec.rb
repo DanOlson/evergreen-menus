@@ -46,22 +46,20 @@ feature 'establishment management' do
     click_link establishment.name
     click_link 'Add List'
 
-    expect(all('input[data-test="beer-input"]').size).to eq 0
+    form = PageObjects::Admin::ListForm.new
 
-    fill_in 'List Name', with: 'Beers'
+    expect(form).to be_empty
 
-    add_beer_button = find('[data-test="add-beer"]')
+    form.set_name 'Beers'
 
-    add_beer_button.click
-    find('[data-test="beer-name-input-0"]').set('Bear Republic Racer 5')
-    add_beer_button.click
-    find('[data-test="beer-name-input-1"]').set('Indeed Day Tripper')
-    add_beer_button.click
-    find('[data-test="beer-name-input-2"]').set('Deschutes Fresh Squeezed')
+    form.add_beer 'Bear Republic Racer 5'
+    form.add_beer 'Indeed Day Tripper'
+    form.add_beer 'Deschutes Fresh Squeezed'
 
-    click_button 'Create'
+    form.submit
+
     expect(page).to have_css 'div.alert-success', text: 'List created'
-    expect(all('[data-test="beer-input"]').size).to eq 3
+    expect(form.beers.size).to eq 3
 
     beers = establishment.beers.map &:name
     expect(beers).to match_array [
@@ -70,12 +68,12 @@ feature 'establishment management' do
       'Deschutes Fresh Squeezed'
     ]
 
-    find("[data-test='remove-beer-0']").click
-    expect(page).to have_css(".remove-beer[data-test='beer-0']")
+    form.remove_beer 'Bear Republic Racer 5'
+    expect(form.beer_named('Bear Republic Racer 5')).to be_marked_for_removal
 
-    click_button 'Update'
+    form.submit
     expect(page).to have_css "div.alert-success", text: "List updated"
-    expect(all('[data-test="beer-input"]').size).to eq 2
+    expect(form.beers.size).to eq 2
   end
 
   scenario "an establishment's beer list can have prices and descriptions", :js, :admin do
@@ -85,28 +83,28 @@ feature 'establishment management' do
     click_link establishment.name
     click_link 'Add List'
 
-    expect(all('input[data-test="beer-input"]').size).to eq 0
+    form = PageObjects::Admin::ListForm.new
 
-    fill_in 'List Name', with: 'Beers'
+    expect(form).to be_empty
 
-    add_beer_button = find('[data-test="add-beer"]')
+    form.set_name 'Beers'
 
-    add_beer_button.click
-    find('[data-test="beer-name-input-0"]').set('Bear Republic Racer 5')
-    find('[data-test="beer-price-input-0"]').set('5.5')
-    find('[data-test="beer-description-input-0"]').set("A crowd favorite")
-    add_beer_button.click
-    find('[data-test="beer-name-input-1"]').set('Indeed Day Tripper')
-    find('[data-test="beer-price-input-1"]').set('5')
-    find('[data-test="beer-description-input-1"]').set("The gold standard")
-    add_beer_button.click
-    find('[data-test="beer-name-input-2"]').set('Deschutes Fresh Squeezed')
-    find('[data-test="beer-price-input-2"]').set('6')
-    find('[data-test="beer-description-input-2"]').set("The biggest IPA this side of the Mississippi")
+    form.add_beer('Bear Republic Racer 5', {
+      price: '5.5',
+      description: 'A crowd favorite'
+    })
+    form.add_beer('Indeed Day Tripper', {
+      price: '5',
+      description: 'The gold standard'
+    })
+    form.add_beer('Deschutes Fresh Squeezed', {
+      price: '6',
+      description: 'The biggest IPA this side of the Mississippi'
+    })
 
-    click_button 'Create'
+    form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
-    expect(all('[data-test="beer-input"]').size).to eq 3
+    expect(form.beers.size).to eq 3
 
     beers = establishment.beers.map { |b| [b.name, b.price_in_cents, b.description] }
     expect(beers).to eq([
@@ -115,10 +113,10 @@ feature 'establishment management' do
       ['Deschutes Fresh Squeezed', 600, 'The biggest IPA this side of the Mississippi']
     ])
 
-    find("[data-test='remove-beer-0']").click
-    expect(page).to have_css(".remove-beer[data-test='beer-0']")
+    form.remove_beer 'Bear Republic Racer 5'
+    expect(form.beer_named('Bear Republic Racer 5')).to be_marked_for_removal
 
-    click_button 'Update'
+    form.submit
     expect(page).to have_css "div.alert-success", text: "List updated"
     expect(all('[data-test="beer-input"]').size).to eq 2
   end
@@ -130,34 +128,33 @@ feature 'establishment management' do
     click_link establishment.name
     click_link 'Add List'
 
-    fill_in 'List Name', with: 'Beers'
+    form = PageObjects::Admin::ListForm.new
 
-    add_beer_button = find('[data-test="add-beer"]')
-    add_beer_button.click
-    find('[data-test="beer-name-input-0"]').set('Bear Republic Racer 5')
-    add_beer_button.click
-    find('[data-test="beer-name-input-1"]').set('Indeed Day Tripper')
+    form.add_beer 'Bear Republic Racer 5'
+    form.add_beer 'Indeed Day Tripper'
 
-    click_button 'Create'
+    form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
-    expect(all('[data-test="beer-input"]').size).to eq 2
+    expect(form.beers.size).to eq 2
 
-    find("[data-test='remove-beer-0']").click
-    find("[data-test='remove-beer-1']").click
+    form.remove_beer 'Bear Republic Racer 5'
+    form.remove_beer 'Indeed Day Tripper'
 
-    expect(page).to have_css(".remove-beer[data-test='beer-0']")
-    expect(page).to have_css(".remove-beer[data-test='beer-1']")
+    racer_5 = form.beer_named('Bear Republic Racer 5')
+    day_tripper = form.beer_named('Indeed Day Tripper')
 
-    find("[data-test='keep-beer-1']").click
+    expect(racer_5).to be_marked_for_removal
+    expect(day_tripper).to be_marked_for_removal
 
-    expect(page).to_not have_css(".remove-beer[data-test='beer-1']")
+    form.keep_beer 'Indeed Day Tripper'
 
-    click_button 'Update'
+    expect(day_tripper).to_not be_marked_for_removal
+
+    form.submit
     expect(page).to have_css "div.alert-success", text: "List updated"
-    expect(all('[data-test="beer-input"]').size).to eq 1
+    expect(form.beers.size).to eq 1
 
-    input = find '[data-test="beer-name-input-0"]'
-    expect(input.value).to eq 'Indeed Day Tripper'
+    expect(form).to have_beer_named 'Indeed Day Tripper'
   end
 
   scenario 'unsaved beers can be deleted from the UI', :js, :admin do
@@ -167,11 +164,12 @@ feature 'establishment management' do
     click_link establishment.name
 
     click_link 'Add List'
-    find('[data-test="add-beer"]').click
+    form = PageObjects::Admin::ListForm.new
+    form.add_beer_button.click
 
-    expect(all('[data-test="beer-name-input-0"]').size).to eq 1
-    find("[data-test='remove-beer-0']").click
-    expect(all('[data-test="beer-name-input-0"]').size).to eq 0
+    expect(form.beers.size).to eq 1
+    form.beers.first.remove
+    expect(form.beers.size).to eq 0
   end
 
   scenario "beers added to an establishment's list show up in Beermapper", :admin, :js do
@@ -181,26 +179,19 @@ feature 'establishment management' do
     click_link establishment.name
     click_link 'Add List'
 
-    fill_in 'List Name', with: 'Beers'
+    form = PageObjects::Admin::ListForm.new
+    form.set_name 'Beers'
 
-    add_beer_button = find('[data-test="add-beer"]')
+    form.add_beer 'Deschutes Pinedrops'
+    form.add_beer 'Deschutes Mirror Pond'
+    form.add_beer 'Deschutes Big Rig'
+    form.add_beer 'Indeed Stir Crazy'
+    form.add_beer 'Surly Stout'
+    form.add_beer 'Budweiser'
 
-    add_beer_button.click
-    find('[data-test="beer-name-input-0"]').set('Deschutes Pinedrops')
-    add_beer_button.click
-    find('[data-test="beer-name-input-1"]').set('Deschutes Mirror Pond')
-    add_beer_button.click
-    find('[data-test="beer-name-input-2"]').set('Deschutes Big Rig')
-    add_beer_button.click
-    find('[data-test="beer-name-input-3"]').set('Indeed Stir Crazy')
-    add_beer_button.click
-    find('[data-test="beer-name-input-4"]').set('Surly Stout')
-    add_beer_button.click
-    find('[data-test="beer-name-input-5"]').set('Budweiser')
-
-    click_button 'Create'
+    form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
-    expect(all('[data-test="beer-input"]').size).to eq 6
+    expect(form.beers.size).to eq 6
 
     visit 'http://test.beermapper.ember'
     fill_in 'search-field', with: 'Deschutes'
@@ -230,46 +221,34 @@ feature 'establishment management' do
     click_link establishment.name
     click_link 'Add List'
 
-    fill_in 'List Name', with: 'Taps'
+    taps_form = PageObjects::Admin::ListForm.new
+    taps_form.set_name 'Taps'
 
-    add_beer_button = find('[data-test="add-beer"]')
+    taps_form.add_beer 'Deschutes Pinedrops'
+    taps_form.add_beer 'Deschutes Mirror Pond'
+    taps_form.add_beer 'Deschutes Big Rig'
+    taps_form.add_beer 'Indeed Stir Crazy'
+    taps_form.add_beer 'Surly Stout'
+    taps_form.add_beer 'Budweiser'
 
-    add_beer_button.click
-    find('[data-test="beer-name-input-0"]').set('Deschutes Pinedrops')
-    add_beer_button.click
-    find('[data-test="beer-name-input-1"]').set('Deschutes Mirror Pond')
-    add_beer_button.click
-    find('[data-test="beer-name-input-2"]').set('Deschutes Big Rig')
-    add_beer_button.click
-    find('[data-test="beer-name-input-3"]').set('Indeed Stir Crazy')
-    add_beer_button.click
-    find('[data-test="beer-name-input-4"]').set('Surly Stout')
-    add_beer_button.click
-    find('[data-test="beer-name-input-5"]').set('Budweiser')
-
-    click_button 'Create'
+    taps_form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
-    expect(all('[data-test="beer-input"]').size).to eq 6
+    expect(taps_form.beers.size).to eq 6
 
-    click_link 'Cancel'
+    taps_form.cancel
     click_link 'Add List'
 
-    fill_in 'List Name', with: 'Bottles'
+    bottles_form = PageObjects::Admin::ListForm.new
+    bottles_form.set_name 'Bottles'
 
-    add_beer_button = find('[data-test="add-beer"]')
+    bottles_form.add_beer 'Summit EPA'
+    bottles_form.add_beer 'Deschutes Fresh Squeezed'
+    bottles_form.add_beer 'Indeed Double Day Tripper'
+    bottles_form.add_beer 'Fulton War & Peace'
 
-    add_beer_button.click
-    find('[data-test="beer-name-input-0"]').set('Summit EPA')
-    add_beer_button.click
-    find('[data-test="beer-name-input-1"]').set('Deschutes Fresh Squeezed')
-    add_beer_button.click
-    find('[data-test="beer-name-input-2"]').set('Indeed Double Day Tripper')
-    add_beer_button.click
-    find('[data-test="beer-name-input-3"]').set('Fulton War & Peace')
-
-    click_button 'Create'
+    bottles_form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
-    expect(all('[data-test="beer-input"]').size).to eq 4
+    expect(bottles_form.beers.size).to eq 4
 
     visit 'http://test.beermapper.ember'
     fill_in 'search-field', with: 'Deschutes'
@@ -308,26 +287,19 @@ feature 'establishment management' do
     click_link establishment.name
     click_link 'Add List'
 
-    fill_in 'List Name', with: 'Beers'
+    form = PageObjects::Admin::ListForm.new
+    form.set_name 'Beers'
+    
+    form.add_beer 'Deschutes Pinedrops'
+    form.add_beer 'Deschutes Mirror Pond'
+    form.add_beer 'Deschutes Big Rig'
+    form.add_beer 'Indeed Stir Crazy'
+    form.add_beer 'Surly Stout'
+    form.add_beer 'Budweiser'
 
-    add_beer_button = find('[data-test="add-beer"]')
-
-    add_beer_button.click
-    find('[data-test="beer-name-input-0"]').set('Deschutes Pinedrops')
-    add_beer_button.click
-    find('[data-test="beer-name-input-1"]').set('Deschutes Mirror Pond')
-    add_beer_button.click
-    find('[data-test="beer-name-input-2"]').set('Deschutes Big Rig')
-    add_beer_button.click
-    find('[data-test="beer-name-input-3"]').set('Indeed Stir Crazy')
-    add_beer_button.click
-    find('[data-test="beer-name-input-4"]').set('Surly Stout')
-    add_beer_button.click
-    find('[data-test="beer-name-input-5"]').set('Budweiser')
-
-    click_button 'Create'
+    form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
-    expect(all('[data-test="beer-input"]').size).to eq 6
+    expect(form.beers.size).to eq 6
 
 
     visit 'http://test.my-bar.dev'
