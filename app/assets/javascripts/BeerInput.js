@@ -78,52 +78,48 @@ class BeerInput extends React.Component {
 
   renderPriceInput() {
     const { showPrice } = this.props;
-    if (showPrice) {
-      const { appId, price } = this.state;
-      return (
-        <div className="col-sm-1">
-          <label htmlFor={`list_beers_attributes_${appId}_price`} className="sr-only">
-            Price
-          </label>
-          <input
-            type="number"
-            step="0.01"
-            min="0"
-            data-test={`beer-price-input-${appId}`}
-            defaultValue={price}
-            name={`list[beers_attributes][${appId}][price]`}
-            id={`list_beers_attributes_${appId}_price`}
-            className="form-control price-input"
-          />
-        </div>
-      );
-    } else {
-      return <div></div>
-    }
+    const { appId, price } = this.state;
+    const classNames = ['col-sm-1'];
+    if (!showPrice) classNames.push('hidden');
+    return (
+      <div className={classNames.join(' ')}>
+        <label htmlFor={`list_beers_attributes_${appId}_price`} className="sr-only">
+          Price
+        </label>
+        <input
+          type="number"
+          step="0.01"
+          min="0"
+          data-test={`beer-price-input-${appId}`}
+          defaultValue={price}
+          name={`list[beers_attributes][${appId}][price]`}
+          id={`list_beers_attributes_${appId}_price`}
+          className="form-control price-input"
+        />
+      </div>
+    );
   }
 
   renderDescriptionInput() {
     const { showDescription } = this.props;
-    if (showDescription) {
-      const { appId, description } = this.state;
-      return (
-        <div className="col-sm-5">
-          <label htmlFor={`list_beers_attributes_${appId}_description`} className="sr-only">
-            Description
-          </label>
-          <input
-            data-test={`beer-description-input-${appId}`}
-            placeholder="Description"
-            defaultValue={description}
-            name={`list[beers_attributes][${appId}][description]`}
-            id={`list_beers_attributes_${appId}_description`}
-            className="form-control"
-          />
-        </div>
-      );
-    } else {
-      return <div></div>
-    }
+    const { appId, description } = this.state;
+    const classNames = ['col-sm-5'];
+    if (!showDescription) classNames.push('hidden');
+    return (
+      <div className={classNames.join(' ')}>
+        <label htmlFor={`list_beers_attributes_${appId}_description`} className="sr-only">
+          Description
+        </label>
+        <input
+          data-test={`beer-description-input-${appId}`}
+          placeholder="Description"
+          defaultValue={description}
+          name={`list[beers_attributes][${appId}][description]`}
+          id={`list_beers_attributes_${appId}_description`}
+          className="form-control"
+        />
+      </div>
+    );
   }
 
   render() {
