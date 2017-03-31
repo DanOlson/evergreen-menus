@@ -19,11 +19,14 @@ class Ability
     can :manage, List, establishment_id: user.account.establishment_ids
     can :manage, Establishment, account_id: user.account_id
     can :show, Account, id: user.account_id
+
+    cannot :view_snippet, List
   end
 
   def manager_abilities(user)
     staff_abilities user
 
+    can :view_snippet, List
     can :manage, Account, id: user.account_id
     can :manage, User, account_id: user.account_id
     can :manage, UserInvitation, account_id: user.account_id

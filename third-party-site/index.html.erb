@@ -169,13 +169,7 @@
       </div>
     </header>
     <div id="canvas">
-      <div id="wrapper">
-        <div class="beermapper" id="beermapper-menu-<%= @establishment.id %>"></div>
-        <script
-          type="text/javascript"
-          src="<%= @beermapper_host %>/menus/<%= @establishment.id %>.js">
-        </script>
-      </div>
+  <%= @list_html %>
       <footer id="footer">
       </footer>        
     </div>

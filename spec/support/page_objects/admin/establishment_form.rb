@@ -3,13 +3,25 @@ module PageObjects
     class EstablishmentForm < SitePrism::Page
       class ListsPanel < SitePrism::Section
         class List < SitePrism::Section
+          element :toggle_snippet_button, '[data-test="get-snippet"]'
+          element :html_snippet, '[data-test="list-html-snippet"]'
+          element :link, '[data-test="establishment-list"]'
+
           def name
-            text
+            link.text
+          end
+
+          def show_snippet
+            toggle_snippet_button.click unless has_html_snippet?
+          end
+
+          def hide_snippet
+            toggle_snippet_button.click if has_html_snippet?
           end
         end
 
         element :add_list_button, '[data-test="add-list"]'
-        sections :lists, List, '[data-test="establishment-list"]'
+        sections :lists, List, '[data-test="establishment-list-item"]'
 
         def add_list
           add_list_button.click
@@ -68,7 +80,17 @@ module PageObjects
       end
 
       def has_list_named?(list_name)
+        !!list_named(list_name)
+      end
+
+      def list_named(list_name)
         lists.find { |l| l.name == list_name }
+      end
+
+      def get_snippet_for(list_name)
+        list = list_named list_name
+        list.show_snippet
+        list.html_snippet.text
       end
     end
   end

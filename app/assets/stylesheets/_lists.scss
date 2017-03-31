@@ -1,0 +1,20 @@
+.list-form {
+  .price-input {
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  hr {
+    margin-bottom: 5px;
+    margin-top: 10px;
+  }
+
+  padding-bottom: 20px;
+}

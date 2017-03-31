@@ -1,4 +1,8 @@
-<div class="row">
+<script>
+  window.BEERMAPPER = window.BEERMAPPER || {};
+  window.BEERMAPPER.lists = <%= raw lists_json establishment %>;
+</script>
+<div class="row edit-establishment">
   <div class="establishment-form-wrapper col-sm-6">
     <%= form_for [account, establishment], html: { class: 'form-horizontal establishment-form' } do |f| %>
       <div class="panel panel-info">
@@ -63,17 +67,10 @@
         <h3 class="panel-title">Lists</h3>
       </div>
       <div class="panel-body">
-        <div class="list-group">
-          <% establishment.lists.each do |list| %>
-            <%= link_to list.name, edit_account_establishment_list_path(account, establishment, list), {
-              class: "list-group-item",
-              data: { test: 'establishment-list' }
-            }
-            %>
-          <% end %>
-        </div>
         <% if !establishment.persisted? %>
           <div class="well">Please create your establishment before adding a list</div>
+        <% else %>
+          <div id="lists-app"></div>
         <% end %>
         <%= add_list_button(account, establishment) %>
       </div>

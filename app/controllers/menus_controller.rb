@@ -3,6 +3,6 @@ class MenusController < ApplicationController
   respond_to :js
 
   def show
-    @establishment = Establishment.find params[:id]
+    @list = List.find params[:id]
   end
 end

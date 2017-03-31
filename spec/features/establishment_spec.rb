@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'establishment management' do
-  let(:user) { create :user }
+  let(:user) { create :user, :manager }
 
   scenario 'creating an establishment' do
     login user
@@ -299,9 +299,6 @@ feature 'establishment management' do
   scenario "beers added to an establishment's list show up on the establishment's website", :admin, :js do
     establishment = create :establishment, name: "The Lanes", account: user.account
 
-    Beermapper::Application.load_tasks
-    Rake::Task['generate_third_party_site'].invoke
-
     login user
 
     click_link establishment.name
@@ -322,6 +319,15 @@ feature 'establishment management' do
     expect(page).to have_css "div.alert-success", text: "List created"
     expect(form.beers.size).to eq 6
 
+    form.cancel
+
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    list_html = establishment_form.get_snippet_for 'Beers'
+
+    ThirdPartySiteGenerator.call({
+      establishment: establishment,
+      list_html: list_html
+    })
 
     visit 'http://test.my-bar.dev'
     expect(page).to have_content 'Deschutes Pinedrops'
@@ -330,5 +336,43 @@ feature 'establishment management' do
     expect(page).to have_content 'Indeed Stir Crazy'
     expect(page).to have_content 'Surly Stout'
     expect(page).to have_content 'Budweiser'
+  end
+
+  scenario 'list html snippets are visible by managers, but not staff', :admin, :js do
+    establishment = create :establishment, name: "The Lanes", account: user.account
+    staff_member = create :user, account: user.account
+
+    login user
+
+    click_link establishment.name
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    establishment_form.add_list
+
+    form = PageObjects::Admin::ListForm.new
+    form.set_name 'Taps'
+
+    form.add_beer 'Deschutes Pinedrops'
+    form.add_beer 'Deschutes Mirror Pond'
+    form.add_beer 'Deschutes Big Rig'
+
+    form.submit
+    form.cancel
+
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    list = establishment_form.list_named 'Taps'
+
+    expect(list).to have_toggle_snippet_button
+    list.show_snippet
+    expect(list).to have_html_snippet
+
+    logout
+
+    login staff_member
+
+    click_link establishment.name
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    list = establishment_form.list_named 'Taps'
+    expect(list).to_not have_toggle_snippet_button
+    expect(list).to_not have_html_snippet
   end
 end

@@ -1,7 +1,8 @@
 <script>
-  window.BEERMAPPER = window.BEERMAPPER || <%= raw list_json list %>;
+  window.BEERMAPPER = window.BEERMAPPER || {};
+  window.BEERMAPPER.list = <%= raw list_json list %>;
 </script>
-<%= form_for [account, establishment, list], html: { class: 'form-horizontal establishment-list-form' } do |f| %>
+<%= form_for [account, establishment, list], html: { class: 'form-horizontal list-form' } do |f| %>
 
   <div id="app-root"></div>
 

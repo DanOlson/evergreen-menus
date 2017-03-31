@@ -58,9 +58,36 @@ module EstablishmentsHelper
   end
 
   def list_json(list)
-    {
-      list: list.as_json.merge(beers: list.beers.as_json)
-    }.to_json
+    list.as_json.merge(beers: list.beers.as_json).to_json
+  end
+
+  def lists_json(establishment)
+    account = establishment.account
+    establishment.lists.map do |list|
+      {
+        id: list.id,
+        name: list.name,
+        edit_path: edit_account_establishment_list_path(account, establishment, list),
+        html_snippet: make_snippet(list)
+      }
+    end.to_json
+  end
+
+  def make_snippet(list)
+    if can?(:view_snippet, List)
+      snippet = ListHtmlSnippet.new({
+        list: list,
+        menu_url: menu_url(list.id)
+      })
+
+      <<~HTML.html_safe
+        <pre>
+          <code>
+  #{snippet.generate_encoded}
+          </code>
+        </pre>
+      HTML
+    end
   end
 
   def add_list_button(account, establishment)
