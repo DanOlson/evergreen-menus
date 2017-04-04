@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ListItem from './EstablishmentListItem';
 
 class ListsApp extends React.Component {
@@ -21,6 +21,10 @@ class ListsApp extends React.Component {
       </div>
     );
   }
+}
+
+ListsApp.propTypes = {
+  lists: PropTypes.array.isRequired
 }
 
 export default ListsApp;

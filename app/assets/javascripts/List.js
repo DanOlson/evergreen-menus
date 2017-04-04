@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import BeerInput from './BeerInput';
 
 class List extends React.Component {
@@ -150,6 +150,14 @@ class List extends React.Component {
       </div>
     );
   }
+}
+
+List.propTypes = {
+  beers: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
+  showPrice: PropTypes.bool.isRequired,
+  showDescription: PropTypes.bool.isRequired,
+  listId: PropTypes.number.isRequired
 }
 
 export default List;

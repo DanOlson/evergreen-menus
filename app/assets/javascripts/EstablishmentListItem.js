@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 class EstablishmentListItem extends React.Component {
   constructor(props) {
@@ -64,6 +64,13 @@ class EstablishmentListItem extends React.Component {
       </div>
     );
   }
+}
+
+EstablishmentListItem.propTypes = {
+  name: PropTypes.string.isRequired,
+  editPath: PropTypes.string.isRequired,
+  canShowSnippet: PropTypes.bool.isRequired,
+  htmlSnippet: PropTypes.string
 }
 
 export default EstablishmentListItem;

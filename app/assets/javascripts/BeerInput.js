@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 class BeerInput extends React.Component {
   constructor(props) {
@@ -161,5 +161,12 @@ class BeerInput extends React.Component {
     );
   }
 };
+
+BeerInput.propTypes = {
+  beer: PropTypes.object.isRequired,
+  deleteBeer: PropTypes.func.isRequired,
+  showPrice: PropTypes.bool.isRequired,
+  showDescription: PropTypes.bool.isRequired
+}
 
 export default BeerInput;
