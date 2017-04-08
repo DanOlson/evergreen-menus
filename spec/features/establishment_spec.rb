@@ -308,16 +308,17 @@ feature 'establishment management' do
     form = PageObjects::Admin::ListForm.new
     form.set_name 'Beers'
     
-    form.add_beer 'Deschutes Pinedrops'
-    form.add_beer 'Deschutes Mirror Pond'
-    form.add_beer 'Deschutes Big Rig'
-    form.add_beer 'Indeed Stir Crazy'
-    form.add_beer 'Surly Stout'
-    form.add_beer 'Budweiser'
+    form.add_beer 'Deschutes Pinedrops', price: '6', description: 'IPA'
+    form.add_beer 'Deschutes Mirror Pond', price: '6', description: 'APA'
+    form.add_beer 'Deschutes Big Rig', price: '6', description: '???'
+    form.add_beer 'Indeed Stir Crazy', price: '7', description: 'Winter Seasonal'
+    form.add_beer 'Surly Stout', price: '6.5', description: 'Stout'
+    form.add_beer 'Budweiser', price: '4.5', description: 'Meh'
 
     form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
     expect(form.beers.size).to eq 6
+    list_url = page.current_url
 
     form.cancel
 
@@ -329,13 +330,66 @@ feature 'establishment management' do
       list_html: list_html
     })
 
-    visit 'http://test.my-bar.dev'
-    expect(page).to have_content 'Deschutes Pinedrops'
-    expect(page).to have_content 'Deschutes Mirror Pond'
-    expect(page).to have_content 'Deschutes Big Rig'
-    expect(page).to have_content 'Indeed Stir Crazy'
-    expect(page).to have_content 'Surly Stout'
-    expect(page).to have_content 'Budweiser'
+    menu = PageObjects::ThirdPartySite::Menu.new
+    menu.load
+
+    expect(menu.list).to have_item_named 'Deschutes Pinedrops'
+    pinedrops = menu.list.item_named 'Deschutes Pinedrops'
+    expect(pinedrops.price.text).to eq '$6'
+    expect(pinedrops.description.text).to eq 'IPA'
+
+    expect(menu.list).to have_item_named 'Deschutes Mirror Pond'
+    mirror_pond = menu.list.item_named 'Deschutes Mirror Pond'
+    expect(mirror_pond.price.text).to eq '$6'
+    expect(mirror_pond.description.text).to eq 'APA'
+
+    expect(menu.list).to have_item_named 'Deschutes Big Rig'
+    big_rig = menu.list.item_named 'Deschutes Big Rig'
+    expect(big_rig.price.text).to eq '$6'
+    expect(big_rig.description.text).to eq '???'
+
+    expect(menu.list).to have_item_named 'Indeed Stir Crazy'
+    stir_crazy = menu.list.item_named 'Indeed Stir Crazy'
+    expect(stir_crazy.price.text).to eq '$7'
+    expect(stir_crazy.description.text).to eq 'Winter Seasonal'
+
+    expect(menu.list).to have_item_named 'Surly Stout'
+    surly_stout = menu.list.item_named 'Surly Stout'
+    expect(surly_stout.price.text).to eq '$6.50'
+    expect(surly_stout.description.text).to eq 'Stout'
+
+    expect(menu.list).to have_item_named 'Budweiser'
+    bud = menu.list.item_named 'Budweiser'
+    expect(bud.price.text).to eq '$4.50'
+    expect(bud.description.text).to eq 'Meh'
+
+    visit list_url
+    list_form = PageObjects::Admin::ListForm.new
+    list_form.hide_prices
+    list_form.submit
+
+    menu.load
+    expect(menu.list).to_not have_prices
+    expect(menu.list).to have_descriptions
+
+    visit list_url
+    list_form = PageObjects::Admin::ListForm.new
+    list_form.hide_descriptions
+    list_form.submit
+
+    menu.load
+    expect(menu.list).to_not have_prices
+    expect(menu.list).to_not have_descriptions
+
+    visit list_url
+    list_form = PageObjects::Admin::ListForm.new
+    list_form.show_prices
+    list_form.show_descriptions
+    list_form.submit
+
+    menu.load
+    expect(menu.list).to have_prices
+    expect(menu.list).to have_descriptions
   end
 
   scenario 'list html snippets are visible by managers, but not staff', :admin, :js do

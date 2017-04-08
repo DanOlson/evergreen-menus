@@ -1,15 +1,5 @@
 (function() {
-  var target, list, item;
-  target = document.getElementById('<%= "beermapper-menu-#{params[:id]}" %>');
-  list   = document.createElement('ul');
-  list.className = 'beermapper-menu';
+  var target = document.getElementById('<%= "beermapper-menu-#{params[:id]}" %>');
 
-<% @list.beers.each do |beer| %>
-  item = document.createElement('li');
-  item.appendChild(document.createTextNode("<%= beer.name.html_safe %>"));
-  item.className = 'beermapper-menu-item';
-  list.appendChild(item);
-<% end %>
-
-  target.appendChild(list);
+  target.innerHTML = '<%=j render partial: "list", locals: { beers: @list.beers, show_description: @list.show_description?, show_price: @list.show_price? } %>';
 })();

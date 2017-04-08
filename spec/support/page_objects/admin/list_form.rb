@@ -48,6 +48,30 @@ module PageObjects
         !has_beers?
       end
 
+      def hide_prices
+        if show_price_checkbox.checked?
+          show_price_checkbox.click
+        end
+      end
+
+      def show_prices
+        if !show_price_checkbox.checked?
+          show_price_checkbox.click
+        end
+      end
+
+      def hide_descriptions
+        if show_description_checkbox.checked?
+          show_description_checkbox.click
+        end
+      end
+
+      def show_descriptions
+        if !show_description_checkbox.checked?
+          show_description_checkbox.click
+        end
+      end
+
       def set_name(list_name)
         list_name_input.set list_name
       end

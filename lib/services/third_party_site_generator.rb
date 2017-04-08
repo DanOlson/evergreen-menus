@@ -16,8 +16,11 @@ class ThirdPartySiteGenerator
   def call
     public_dir = Rails.env.test? ? 'public-test' : 'public'
     third_party_site_base_path = Rails.root.join 'third-party-site'
+    target_path = third_party_site_base_path.join public_dir
 
-    FileUtils.mkdir_p third_party_site_base_path.join public_dir
+    FileUtils.mkdir_p target_path
+    FileUtils.cp third_party_site_base_path.join('bg-img.jpg'), target_path
+    FileUtils.cp third_party_site_base_path.join('my-bar.css'), target_path
 
     template_filepath = third_party_site_base_path.join 'index.html.erb'
     output_filepath   = third_party_site_base_path.join public_dir, 'index.html'

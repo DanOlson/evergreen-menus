@@ -21,7 +21,7 @@ public/javascripts/bundle.js
 public/javascripts/bundle.js.map
 public/stylesheets/*
 
-third-party-site/public/index.html
+third-party-site/public
 third-party-site/public-test
 
 config/initializers/fingerprint.rb
