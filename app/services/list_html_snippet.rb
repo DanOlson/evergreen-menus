@@ -2,7 +2,7 @@ require 'cgi'
 
 class ListHtmlSnippet
   TEMPLATE = <<~HTML
-    <div id="wrapper">
+    <div class="beermapper-wrapper">
       <div class="beermapper" id="beermapper-menu-%<list_id>s">
       </div>
       <script

@@ -13,6 +13,6 @@ task generate_third_party_site: :environment do
 
   ThirdPartySiteGenerator.call({
     establishment: establishment,
-    list_html: list_html
+    list_snippets: [list_html]
   })
 end

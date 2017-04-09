@@ -59,7 +59,7 @@ class BeerInput extends React.Component {
   renderNameInput(className) {
     const { appId, name } = this.state;
     return (
-      <div className="col-sm-4">
+      <div className="col-sm-3">
         <label htmlFor={`list_beers_attributes_${appId}_name`} className="sr-only">
           Name
         </label>
@@ -79,23 +79,26 @@ class BeerInput extends React.Component {
   renderPriceInput() {
     const { showPrice } = this.props;
     const { appId, price } = this.state;
-    const classNames = ['col-sm-1'];
+    const classNames = ['col-sm-2'];
     if (!showPrice) classNames.push('hidden');
     return (
       <div className={classNames.join(' ')}>
-        <label htmlFor={`list_beers_attributes_${appId}_price`} className="sr-only">
-          Price
-        </label>
-        <input
-          type="number"
-          step="0.01"
-          min="0"
-          data-test={`beer-price-input-${appId}`}
-          defaultValue={price}
-          name={`list[beers_attributes][${appId}][price]`}
-          id={`list_beers_attributes_${appId}_price`}
-          className="form-control price-input"
-        />
+        <div className="input-group">
+          <label htmlFor={`list_beers_attributes_${appId}_price`} className="sr-only">
+            Price
+          </label>
+          <span className="beer-input-price-currency input-group-addon">$</span>
+          <input
+            type="number"
+            step="0.01"
+            min="0"
+            data-test={`beer-price-input-${appId}`}
+            defaultValue={price}
+            name={`list[beers_attributes][${appId}][price]`}
+            id={`list_beers_attributes_${appId}_price`}
+            className="form-control price-input"
+          />
+        </div>
       </div>
     );
   }

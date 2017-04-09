@@ -169,7 +169,11 @@
       </div>
     </header>
     <div id="canvas">
-  <%= @list_html %>
+      <div id="wrapper">
+  <% @list_snippets.each do |snippet| %>
+    <div class="beer-list"><%= snippet %></div>
+  <% end %>
+      </div>
       <footer id="footer">
       </footer>        
     </div>

@@ -1,6 +1,8 @@
 module PageObjects
   module Admin
     class EstablishmentForm < SitePrism::Page
+      set_url '/accounts{/account_id}/establishments{/establishment_id}/edit'
+
       class ListsPanel < SitePrism::Section
         class List < SitePrism::Section
           element :toggle_snippet_button, '[data-test="get-snippet"]'

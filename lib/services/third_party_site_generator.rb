@@ -3,14 +3,14 @@ require 'fileutils'
 
 class ThirdPartySiteGenerator
   class << self
-    def call(establishment:, list_html:)
-      new(establishment: establishment, list_html: list_html).call
+    def call(establishment:, list_snippets:)
+      new(establishment: establishment, list_snippets: list_snippets).call
     end
   end
 
-  def initialize(establishment:, list_html:)
+  def initialize(establishment:, list_snippets:)
     @establishment = establishment
-    @list_html = list_html
+    @list_snippets = list_snippets
   end
 
   def call

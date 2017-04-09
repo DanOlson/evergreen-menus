@@ -11,13 +11,14 @@ module PageObjects
 
       class List < SitePrism::Section
         sections :menu_items, MenuItem, '.beermapper-menu-item'
+        element :title, '.beermapper-menu-title'
 
         def has_prices?
-          menu_items.any? { |item| item.has_price? }
+          menu_items.any? &:has_price?
         end
 
         def has_descriptions?
-          menu_items.any? { |item| item.has_description? }
+          menu_items.any? &:has_description?
         end
 
         def has_item_named?(name)
@@ -29,7 +30,15 @@ module PageObjects
         end
       end
 
-      section :list, List, '.beermapper-menu'
+      sections :lists, List, '.beermapper-menu'
+
+      def list_named(name)
+        lists.find { |l| l.title.text == name }
+      end
+
+      def has_list_named?(name)
+        !!list_named(name)
+      end
     end
   end
 end

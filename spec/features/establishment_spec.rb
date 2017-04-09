@@ -327,39 +327,40 @@ feature 'establishment management' do
 
     ThirdPartySiteGenerator.call({
       establishment: establishment,
-      list_html: list_html
+      list_snippets: [list_html]
     })
 
     menu = PageObjects::ThirdPartySite::Menu.new
     menu.load
 
-    expect(menu.list).to have_item_named 'Deschutes Pinedrops'
-    pinedrops = menu.list.item_named 'Deschutes Pinedrops'
+    list = menu.lists.first
+    expect(list).to have_item_named 'Deschutes Pinedrops'
+    pinedrops = list.item_named 'Deschutes Pinedrops'
     expect(pinedrops.price.text).to eq '$6'
     expect(pinedrops.description.text).to eq 'IPA'
 
-    expect(menu.list).to have_item_named 'Deschutes Mirror Pond'
-    mirror_pond = menu.list.item_named 'Deschutes Mirror Pond'
+    expect(list).to have_item_named 'Deschutes Mirror Pond'
+    mirror_pond = list.item_named 'Deschutes Mirror Pond'
     expect(mirror_pond.price.text).to eq '$6'
     expect(mirror_pond.description.text).to eq 'APA'
 
-    expect(menu.list).to have_item_named 'Deschutes Big Rig'
-    big_rig = menu.list.item_named 'Deschutes Big Rig'
+    expect(list).to have_item_named 'Deschutes Big Rig'
+    big_rig = list.item_named 'Deschutes Big Rig'
     expect(big_rig.price.text).to eq '$6'
     expect(big_rig.description.text).to eq '???'
 
-    expect(menu.list).to have_item_named 'Indeed Stir Crazy'
-    stir_crazy = menu.list.item_named 'Indeed Stir Crazy'
+    expect(list).to have_item_named 'Indeed Stir Crazy'
+    stir_crazy = list.item_named 'Indeed Stir Crazy'
     expect(stir_crazy.price.text).to eq '$7'
     expect(stir_crazy.description.text).to eq 'Winter Seasonal'
 
-    expect(menu.list).to have_item_named 'Surly Stout'
-    surly_stout = menu.list.item_named 'Surly Stout'
+    expect(list).to have_item_named 'Surly Stout'
+    surly_stout = list.item_named 'Surly Stout'
     expect(surly_stout.price.text).to eq '$6.50'
     expect(surly_stout.description.text).to eq 'Stout'
 
-    expect(menu.list).to have_item_named 'Budweiser'
-    bud = menu.list.item_named 'Budweiser'
+    expect(list).to have_item_named 'Budweiser'
+    bud = list.item_named 'Budweiser'
     expect(bud.price.text).to eq '$4.50'
     expect(bud.description.text).to eq 'Meh'
 
@@ -369,8 +370,8 @@ feature 'establishment management' do
     list_form.submit
 
     menu.load
-    expect(menu.list).to_not have_prices
-    expect(menu.list).to have_descriptions
+    expect(menu.list_named('Beers')).to_not have_prices
+    expect(menu.list_named('Beers')).to have_descriptions
 
     visit list_url
     list_form = PageObjects::Admin::ListForm.new
@@ -378,8 +379,8 @@ feature 'establishment management' do
     list_form.submit
 
     menu.load
-    expect(menu.list).to_not have_prices
-    expect(menu.list).to_not have_descriptions
+    expect(menu.list_named('Beers')).to_not have_prices
+    expect(menu.list_named('Beers')).to_not have_descriptions
 
     visit list_url
     list_form = PageObjects::Admin::ListForm.new
@@ -388,8 +389,8 @@ feature 'establishment management' do
     list_form.submit
 
     menu.load
-    expect(menu.list).to have_prices
-    expect(menu.list).to have_descriptions
+    expect(menu.list_named('Beers')).to have_prices
+    expect(menu.list_named('Beers')).to have_descriptions
   end
 
   scenario 'list html snippets are visible by managers, but not staff', :admin, :js do
