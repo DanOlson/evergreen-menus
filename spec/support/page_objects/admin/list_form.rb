@@ -34,6 +34,8 @@ module PageObjects
     end
 
     class ListForm < SitePrism::Page
+      set_url '/accounts{/account_id}/establishments{/establishment_id}/lists{/list_id}/edit'
+
       element :list_name_input,           '[data-test="list-name"]'
       element :show_price_checkbox,       '[data-test="list-show-price"]'
       element :show_description_checkbox, '[data-test="list-show-description"]'
@@ -41,6 +43,7 @@ module PageObjects
       element :add_beer_button, '[data-test="add-beer"]'
       element :submit_button,   '[data-test="list-form-submit"]'
       element :cancel_link,     '[data-test="list-form-cancel"]'
+      element :delete_link,     '[data-test="list-form-delete"]'
 
       sections :beers, BeerInput, '[data-test="beer-input"]'
 
@@ -108,6 +111,12 @@ module PageObjects
 
       def cancel
         cancel_link.click
+      end
+
+      def delete
+        accept_confirm do
+          delete_link.click
+        end
       end
     end
   end

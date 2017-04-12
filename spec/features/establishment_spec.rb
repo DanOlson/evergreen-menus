@@ -430,4 +430,25 @@ feature 'establishment management' do
     expect(list).to_not have_toggle_snippet_button
     expect(list).to_not have_html_snippet
   end
+
+  scenario 'lists can be deleted', :admin, :js do
+    establishment = create :establishment, name: "The Lanes", account: user.account
+    list = establishment.lists.create!(name: 'Weekly Specials')
+
+    login user
+
+    list_form = PageObjects::Admin::ListForm.new
+    list_form.load({
+      account_id: establishment.account_id,
+      establishment_id: establishment.id,
+      list_id: list.id
+    })
+
+    expect(list_form).to be_displayed
+    list_form.delete
+
+    expect(page.current_path).to eq "/accounts/#{establishment.account_id}/establishments/#{establishment.id}/edit"
+
+    expect(page).to have_css "div.alert-success", text: "List deleted"
+  end
 end

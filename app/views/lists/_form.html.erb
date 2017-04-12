@@ -8,6 +8,32 @@
 
   <div>
     <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'list-form-submit' } %>
-    <%= link_to 'Cancel', edit_account_establishment_path(account, establishment), data: { test: 'list-form-cancel' } %>
+    <%= link_to 'Cancel', edit_account_establishment_path(account, establishment), class: 'btn btn-default', data: { test: 'list-form-cancel' } %>
+    <% if list.persisted? %>
+      <label for="list-form-delete" data-test="list-form-delete" class="btn btn-danger">Delete</label>
+    <% end %>
   </div>
 <% end %>
+
+<% if list.persisted? %>
+  <%= button_to 'Delete', account_establishment_list_path(account, establishment, list), method: :delete, class: 'hidden', id: 'list-form-delete', data: { confirm: 'Are you sure you want to delete this list?' } %>
+<% end %>
+
+<script>
+  function applyConfirm(element) {
+    var message = element.getAttribute('data-confirm');
+    if (message) {
+      element.form.addEventListener('submit', function submitHandler(event) {
+        if (!confirm(message)) {
+          event.preventDefault();
+        }
+      });
+    }
+  }
+
+  var nodes = document.querySelectorAll('[data-confirm]');
+
+  for (i = 0; i < nodes.length; i++) {
+    applyConfirm(nodes[i]);
+  }
+</script>

@@ -39,6 +39,8 @@ class ListsController < ApplicationController
   end
 
   def destroy
+    @list.destroy
+    redirect_to edit_account_establishment_path(@account, @establishment), notice: 'List deleted'
   end
 
   private

@@ -157,7 +157,7 @@ List.propTypes = {
   name: PropTypes.string.isRequired,
   showPrice: PropTypes.bool.isRequired,
   showDescription: PropTypes.bool.isRequired,
-  listId: PropTypes.number.isRequired
+  listId: PropTypes.number
 }
 
 export default List;
