@@ -33,6 +33,8 @@ class EstablishmentsController < ApplicationController
   end
 
   def destroy
+    @establishment.destroy
+    redirect_to @account, notice: 'Establishment deleted'
   end
 
   private

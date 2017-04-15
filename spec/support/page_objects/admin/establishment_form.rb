@@ -38,6 +38,7 @@ module PageObjects
       element :postal_code_input, '[data-test="establishment-postal-code"]'
       element :submit_button,     '[data-test="establishment-form-submit"]'
       element :cancel_link,       '[data-test="establishment-form-cancel"]'
+      element :delete_button,     '[data-test="establishment-form-delete"]'
 
       section :lists_panel, ListsPanel, '[data-test="lists"]'
 
@@ -47,6 +48,12 @@ module PageObjects
 
       def cancel
         cancel_link.click
+      end
+
+      def delete
+        accept_confirm do
+          delete_button.click
+        end
       end
 
       def add_list

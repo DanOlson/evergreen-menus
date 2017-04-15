@@ -45,6 +45,35 @@ feature 'establishment management' do
     expect(page).to have_selector "input[value='Sobchak Security']"
   end
 
+  scenario 'deleting an establishment', :js, :admin do
+    establishment_1 = create :establishment, account: user.account
+    establishment_2 = create :establishment, account: user.account
+    staff_member = create :user, account: user.account
+
+    login user
+
+    form = PageObjects::Admin::EstablishmentForm.new
+    form.load({
+      account_id: establishment_1.account_id,
+      establishment_id: establishment_1.id
+    })
+
+    form.delete
+
+    expect(page).to have_current_path "/accounts/#{user.account_id}"
+    expect(page).to have_css 'div.alert-success', text: 'Establishment deleted'
+
+    logout
+    login staff_member
+
+    form = PageObjects::Admin::EstablishmentForm.new
+    form.load({
+      account_id: establishment_2.account_id,
+      establishment_id: establishment_2.id
+    })
+    expect(form).to_not have_delete_button
+  end
+
   scenario "editing an establishment's beer list", :js, :admin do
     establishment = create :establishment, account: user.account
     login user

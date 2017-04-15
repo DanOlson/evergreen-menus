@@ -11,9 +11,21 @@ function getLists() {
   return window.BEERMAPPER ? window.BEERMAPPER.lists : [];
 }
 
+function applyConfirm(element) {
+  var message = element.getAttribute('data-confirm');
+  if (message) {
+    element.form.addEventListener('submit', function submitHandler(event) {
+      if (!confirm(message)) {
+        event.preventDefault();
+      }
+    });
+  }
+}
+
 (function bootstrap() {
-  const appRoot = document.getElementById('app-root');
-  const listsRoot = document.getElementById('lists-app');
+  const appRoot      = document.getElementById('app-root');
+  const listsRoot    = document.getElementById('lists-app');
+  const confirmNodes = document.querySelectorAll('[data-confirm]');
 
   if (appRoot) {
     render(<App list={getList()} />, appRoot);
@@ -21,5 +33,9 @@ function getLists() {
 
   if (listsRoot) {
     render(<ListsApp lists={getLists()} />, listsRoot);
+  }
+
+  for (let i = 0; i < confirmNodes.length; i++) {
+    applyConfirm(confirmNodes[i]);
   }
 })();

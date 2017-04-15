@@ -18,22 +18,3 @@
 <% if list.persisted? %>
   <%= button_to 'Delete', account_establishment_list_path(account, establishment, list), method: :delete, class: 'hidden', id: 'list-form-delete', data: { confirm: 'Are you sure you want to delete this list?' } %>
 <% end %>
-
-<script>
-  function applyConfirm(element) {
-    var message = element.getAttribute('data-confirm');
-    if (message) {
-      element.form.addEventListener('submit', function submitHandler(event) {
-        if (!confirm(message)) {
-          event.preventDefault();
-        }
-      });
-    }
-  }
-
-  var nodes = document.querySelectorAll('[data-confirm]');
-
-  for (i = 0; i < nodes.length; i++) {
-    applyConfirm(nodes[i]);
-  }
-</script>
