@@ -33,6 +33,7 @@ class Ability
     can :manage, Account, id: user.account_id
     can :manage, User, account_id: user.account_id
     can :manage, UserInvitation, account_id: user.account_id
+    can :read, Role, id: [Role.manager.id, Role.staff.id]
   end
 
   def admin_abilities(user)

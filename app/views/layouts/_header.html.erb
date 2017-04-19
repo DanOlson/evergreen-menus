@@ -7,7 +7,9 @@
       <% if user_signed_in? %>
         <ul class="nav navbar-nav">
           <%= tab name: 'Establishments', path: account_path(@account) %>
-          <%= tab name: 'Staff', path: account_users_path(@account) %>
+          <% if can?(:view, User) %>
+            <%= tab name: 'Staff', path: account_users_path(@account) %>
+          <% end %>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><%= link_to 'Profile', edit_user_registration_path %></li>

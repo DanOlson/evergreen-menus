@@ -12,4 +12,8 @@ module ApplicationHelper
       link_to name, path
     end
   end
+
+  def role_options
+    Role.accessible_by(current_ability).map { |r| [r.name, r.id] }
+  end
 end
