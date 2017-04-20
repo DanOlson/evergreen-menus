@@ -15,12 +15,12 @@ feature 'logging in' do
     click_button 'Log in'
 
     expect(page).to have_current_path "/accounts/#{user.account_id}"
-    expect(page).to have_content 'Signed in successfully.'
+    expect(page).to have_css '[data-test="flash-success"]', text: 'Signed in successfully.'
     expect(page).to have_link 'Logout'
 
     click_link 'Logout'
 
-    expect(page).to have_content 'Signed out successfully.'
+    expect(page).to have_css '[data-test="flash-success"]', text: 'Signed out successfully.'
     expect(page).to have_current_path '/users/sign_in'
   end
 
@@ -32,7 +32,7 @@ feature 'logging in' do
     click_button 'Log in'
 
     expect(page).to have_current_path '/users/sign_in'
-    expect(page).to have_content 'Invalid Username or password'
+    expect(page).to have_css '[data-test="flash-alert"]', text: 'Invalid Username or password'
   end
 
   scenario 'with an inactive account' do
@@ -47,6 +47,28 @@ feature 'logging in' do
     login user
 
     expect(page).to have_current_path '/users/sign_in'
-    expect(page).to have_content 'Your account is not active'
+    expect(page).to have_css '[data-test="flash-alert"]', text: 'Your account is not active'
+  end
+
+  scenario 'as admin' do
+    admin = create :user, :admin, {
+      username: 'thedude',
+      email: 'dude@lebowski.me',
+      password: 'thedudeabides'
+    }
+
+    visit '/users/sign_in'
+
+    fill_in 'Username', with: 'thedude'
+    fill_in 'Password', with: 'thedudeabides'
+    click_button 'Log in'
+
+    expect(page).to have_css '[data-test="flash-success"]', text: 'Signed in successfully.'
+    expect(page).to have_link 'Logout'
+
+    click_link 'Logout'
+
+    expect(page).to have_css '[data-test="flash-success"]', text: 'Signed out successfully.'
+    expect(page).to have_current_path '/users/sign_in'
   end
 end

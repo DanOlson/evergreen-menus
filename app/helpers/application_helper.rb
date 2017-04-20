@@ -16,4 +16,8 @@ module ApplicationHelper
   def role_options
     Role.accessible_by(current_ability).map { |r| [r.name, r.id] }
   end
+
+  def admin_user?
+    user_signed_in? && current_user.role == Role.admin
+  end
 end

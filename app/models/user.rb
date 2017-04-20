@@ -17,6 +17,6 @@ class User < ActiveRecord::Base
   ###
   # Devise
   def active_for_authentication?
-    super && active?
+    super && (!account || active?)
   end
 end

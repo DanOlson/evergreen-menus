@@ -1,0 +1,12 @@
+<div class="panel panel-info" data-test="staff-panel">
+  <div class="panel-heading">
+    <h3 class="panel-title">Accounts</h3>
+  </div>
+  <div class="panel-body">
+    <div class="list-group">
+      <% @accounts.each do |account| %>
+        <%= link_to "#{account.name}", account_path(account), class: "list-group-item", data: { test: "account-link" } %>
+      <% end %>
+    </div>
+  </div>
+</div>

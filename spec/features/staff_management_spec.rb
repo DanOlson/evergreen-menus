@@ -12,6 +12,28 @@ describe 'staff management' do
     }
   end
 
+  scenario "admin can change the role of an account's users" do
+    admin = create :user, :admin
+    login admin
+    visit "/accounts/#{account.id}/staff"
+
+    list = PageObjects::Admin::StaffList.new
+    list.member_named('Walter Sobchak').click
+
+    form = PageObjects::Admin::StaffForm.new
+
+    expect(form).to be_displayed
+
+    form.select_role 'manager'
+    form.submit
+
+    expect(page).to have_css '[data-test="flash-success"]', text: 'Updated Walter Sobchak'
+    expect(list).to be_displayed
+
+    staff_member.reload
+    expect(staff_member.role).to eq Role.manager
+  end
+
   scenario 'manager can change role of other staff members' do
     manager = create :user, :manager, account: account
     login manager

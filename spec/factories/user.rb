@@ -11,6 +11,7 @@ FactoryGirl.define do
 
   trait :admin do
     role { Role.admin }
+    account nil
   end
 
   trait :manager do
