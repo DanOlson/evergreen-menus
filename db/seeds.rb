@@ -5,7 +5,7 @@ require Rails.root.join 'db/seeds/role_seeder'
 load Rails.root.join 'spec/support/geocoder.rb'
 
 FactoryGirl.find_definitions if FactoryGirl.factories.none?
-[Establishment, UserInvitation, User].each &:destroy_all
+[EstablishmentStaffAssignment, Establishment, UserInvitation, User].each &:destroy_all
 
 RoleSeeder.call
 
@@ -286,4 +286,8 @@ Establishment.all.each do |est|
       description: "#{Faker::Beer.alcohol} - #{Faker::Beer.style} - #{Faker::Beer.ibu}"
     })
   end
+end
+
+[bulldog, macs, muddy_waters, groveland].each do |est|
+  staff.establishments << est
 end

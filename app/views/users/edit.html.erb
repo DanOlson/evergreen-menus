@@ -12,6 +12,20 @@
       </div>
 
       <div class="form-group">
+        <div class="col-sm-4 col-sm-offset-1">
+          <% @account.establishments.each_with_index do |establishment, index| %>
+            <div class="checkbox">
+              <label>
+                <%= check_box_tag 'user[establishment_ids][]', establishment.id, @user.establishments.include?(establishment), data: { test: 'establishment-access' } %>
+
+                <%= establishment.name %>
+              </label>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-group">
         <div class="col-sm-offset-1 col-sm-3">
           <%= f.submit 'Update', class: 'btn btn-primary', data: { test: 'staff-form-submit' } %>
           <%= link_to 'Cancel', account_users_path(@account), class: 'btn btn-default', data: { test: 'staff-form-cancel' } %>

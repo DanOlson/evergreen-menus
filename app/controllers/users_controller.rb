@@ -9,9 +9,15 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user = @account.users
+                    .accessible_by(current_ability)
+                    .where(id: params[:id])
+                    .includes(:establishments)
+                    .first
   end
 
   def update
+    params[:user][:establishment_ids] ||= []
     if @user.update(user_params)
       redirect_to account_users_path(@account), notice: "Updated #{@user.first_name} #{@user.last_name}"
     else
@@ -22,6 +28,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params[:user].permit :role_id
+    params[:user].permit(:role_id, { establishment_ids: [] })
   end
 end

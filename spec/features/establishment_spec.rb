@@ -425,6 +425,7 @@ feature 'establishment management' do
   scenario 'list html snippets are visible by managers, but not staff', :admin, :js do
     establishment = create :establishment, name: "The Lanes", account: user.account
     staff_member = create :user, account: user.account
+    staff_member.establishments << establishment
 
     login user
 

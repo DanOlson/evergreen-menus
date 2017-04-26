@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'creating establishments' do
   let(:account) { create :account }
-  let(:user) { create :user, account: account }
+  let(:user) { create :user, :manager, account: account }
 
   before do
     sign_in user

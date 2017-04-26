@@ -66,6 +66,62 @@ describe 'staff management' do
     expect(staff_member.role).to eq Role.staff
   end
 
+  scenario 'manager can grant and revoke staff members access to establishments' do
+    manager = create :user, :manager, account: account
+    establishment_1 = create :establishment, account: account
+    establishment_2 = create :establishment, account: account
+    ##
+    # Assert staff has no visibility
+    login staff_member
+    account_page = PageObjects::Admin::AccountDetails.new
+    expect(account_page.establishments.size).to eq 0
+    logout
+
+    login manager
+    click_link 'Staff'
+
+    list = PageObjects::Admin::StaffList.new
+    list.member_named('Walter Sobchak').click
+
+    form = PageObjects::Admin::StaffForm.new
+
+    expect(form).to be_displayed
+
+    form.grant_establishment_access establishment_1
+    form.grant_establishment_access establishment_2
+    form.submit
+
+    logout
+
+    login staff_member
+    account_page = PageObjects::Admin::AccountDetails.new
+    expect(account_page.establishments.size).to eq 2
+    expect(account_page).to have_establishment establishment_1.name
+    expect(account_page).to have_establishment establishment_2.name
+
+    logout
+
+    login manager
+    click_link 'Staff'
+
+    list = PageObjects::Admin::StaffList.new
+    list.member_named('Walter Sobchak').click
+
+    form = PageObjects::Admin::StaffForm.new
+
+    expect(form).to be_displayed
+
+    form.revoke_establishment_access establishment_1
+    form.submit
+
+    logout
+
+    login staff_member
+    account_page = PageObjects::Admin::AccountDetails.new
+    expect(account_page.establishments.size).to eq 1
+    expect(account_page).to have_establishment establishment_2.name
+  end
+
   scenario 'staff members cannot view staff list' do
     login staff_member
     expect(page).to_not have_link 'Staff'

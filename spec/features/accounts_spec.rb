@@ -6,8 +6,10 @@ feature 'account management' do
 
   context 'authenticated' do
     before do
-      create :establishment, name: "Bar 1", account: account
-      create :establishment, name: "Bar 2", account: account
+      e1 = create :establishment, name: "Bar 1", account: account
+      e2 = create :establishment, name: "Bar 2", account: account
+      user.establishments << e1
+      user.establishments << e2
 
       login user
     end

@@ -16,11 +16,11 @@ class Ability
   private
 
   def staff_abilities(user)
-    can :manage, List, establishment_id: user.account.establishment_ids
-    can :read, Establishment, account_id: user.account_id
-    can :create, Establishment, account_id: user.account_id
-    can :update, Establishment, account_id: user.account_id
-    can :show, Account, id: user.account_id
+    can :manage, List, establishment_id: user.establishment_ids
+    can :read,   Establishment, establishment_staff_assignments: { user_id: user.id }
+    can :create, Establishment, establishment_staff_assignments: { user_id: user.id }
+    can :update, Establishment, establishment_staff_assignments: { user_id: user.id }
+    can :show,   Account, id: user.account_id
 
     cannot :view_snippet, List
   end
@@ -30,6 +30,7 @@ class Ability
 
     can :view_snippet, List
     can :manage, Establishment, account_id: user.account_id
+    can :manage, List, establishment_id: user.account.establishment_ids
     can :manage, Account, id: user.account_id
     can :manage, User, account_id: user.account_id
     can :manage, UserInvitation, account_id: user.account_id
