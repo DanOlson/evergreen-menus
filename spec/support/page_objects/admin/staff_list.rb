@@ -29,6 +29,10 @@ module PageObjects
         staff_panel.staff_members.find { |m| m.name == name }
       end
 
+      def has_member_named?(name)
+        !!member_named(name)
+      end
+
       def invitations
         pending_invitations_panel.invitations
       end

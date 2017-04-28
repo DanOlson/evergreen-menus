@@ -47,6 +47,7 @@ class UserRegistrationForm
     ActiveRecord::Base.transaction do
       model.save
       user_invitation.accepting_user = model
+      user_invitation.accepted = true
       user_invitation.save
     end
   end

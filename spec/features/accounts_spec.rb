@@ -91,7 +91,7 @@ feature 'account management' do
 
         expect(page).to have_content "Invitation sent to maude@lebowski.me"
 
-        click_link 'Logout'
+        logout
 
         invitation = ActionMailer::Base.deliveries.last
         message = invitation.text_part.decoded
@@ -110,6 +110,14 @@ feature 'account management' do
         expect(account_details).to have_establishment 'Bar 1'
         expect(account_details).to_not have_establishment 'Bar 2'
         expect(account_details.establishments.size).to eq 1
+
+        logout
+
+        login user
+
+        click_link 'Staff'
+        expect(staff_list.invitations.size).to eq 0
+        expect(staff_list).to have_member_named 'Maude Lebowski'
       end
     end
   end
