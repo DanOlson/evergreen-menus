@@ -6,6 +6,7 @@ class UserInvitationForm
     last_name
     email
     account
+    establishment_ids
     inviting_user
     invite_another
   )
@@ -39,6 +40,7 @@ class UserInvitationForm
       last_name: last_name,
       email: email,
       account: account,
+      establishment_ids: establishment_ids,
       inviting_user: inviting_user
     })
   end

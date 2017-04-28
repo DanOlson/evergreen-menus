@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170424235719) do
+ActiveRecord::Schema.define(version: 20170428014319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,13 @@ ActiveRecord::Schema.define(version: 20170424235719) do
     t.string   "city"
     t.string   "state"
     t.string   "postal_code"
+  end
+
+  create_table "invitation_establishment_assignments", force: :cascade do |t|
+    t.integer  "user_invitation_id", null: false
+    t.integer  "establishment_id",   null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "list_updates", force: :cascade do |t|
@@ -151,6 +158,8 @@ ActiveRecord::Schema.define(version: 20170424235719) do
   add_foreign_key "establishment_staff_assignments", "establishments"
   add_foreign_key "establishment_staff_assignments", "users"
   add_foreign_key "establishments", "accounts"
+  add_foreign_key "invitation_establishment_assignments", "establishments"
+  add_foreign_key "invitation_establishment_assignments", "user_invitations"
   add_foreign_key "lists", "establishments"
   add_foreign_key "user_invitations", "accounts"
   add_foreign_key "user_invitations", "users", column: "accepting_user_id"

@@ -3,13 +3,13 @@ require 'spec_helper'
 feature 'account management' do
   let(:account) { create :account, name: 'Green Plate, LLC' }
   let(:user) { create :user, account: account }
+  let(:bar_1) { create :establishment, name: "Bar 1", account: account }
+  let(:bar_2) { create :establishment, name: "Bar 2", account: account }
 
   context 'authenticated' do
     before do
-      e1 = create :establishment, name: "Bar 1", account: account
-      e2 = create :establishment, name: "Bar 2", account: account
-      user.establishments << e1
-      user.establishments << e2
+      user.establishments << bar_1
+      user.establishments << bar_2
 
       login user
     end
@@ -39,33 +39,32 @@ feature 'account management' do
       scenario 'admin can invite staff' do
         click_link 'Staff'
 
-        invitations = find_all('[data-test="staff-member-invited"]')
-        expect(invitations.size).to eq 0
+        staff_list = PageObjects::Admin::StaffList.new
+        expect(staff_list.invitations.size).to eq 0
 
-        click_link 'Invite staff'
+        staff_list.invite_staff_button.click
 
-        fill_in 'First name', with: 'Donny'
-        fill_in 'Last name', with: 'Kerabatsos'
-        fill_in 'Email', with: 'donny@lebowski.me'
+        invitation_form = PageObjects::Admin::StaffInvitationForm.new
 
-        check 'Invite another'
-
-        click_button 'Invite'
+        invitation_form.first_name = 'Donny'
+        invitation_form.last_name  = 'Kerabatsos'
+        invitation_form.email      = 'donny@lebowski.me'
+        invitation_form.grant_establishment_access bar_1
+        invitation_form.invite_another
+        invitation_form.submit
 
         expect(page).to have_content "Invitation sent to donny@lebowski.me"
 
-        fill_in 'First name', with: 'Walter'
-        fill_in 'Last name', with: 'Sobchak'
-        fill_in 'Email', with: 'walter@lebowski.me'
-
-        uncheck 'Invite another'
-
-        click_button 'Invite'
+        invitation_form.first_name = 'Walter'
+        invitation_form.last_name  = 'Sobchak'
+        invitation_form.email      = 'walter@lebowski.me'
+        invitation_form.dont_invite_another
+        invitation_form.submit
 
         expect(page).to have_content "Invitation sent to walter@lebowski.me"
 
-        invitations = find_all('[data-test="staff-member-invited"]')
-        expect(invitations.size).to eq 2
+        staff_list = PageObjects::Admin::StaffList.new
+        expect(staff_list.invitations.size).to eq 2
 
         expect(ActionMailer::Base.deliveries.size).to eq 2
         donny_invite, walter_invite = ActionMailer::Base.deliveries
@@ -77,16 +76,18 @@ feature 'account management' do
       scenario 'invited users can register' do
         click_link 'Staff'
 
-        invitations = find_all('[data-test="staff-member-invited"]')
-        expect(invitations.size).to eq 0
+        staff_list = PageObjects::Admin::StaffList.new
+        expect(staff_list.invitations.size).to eq 0
 
-        click_link 'Invite staff'
+        staff_list.invite_staff_button.click
 
-        fill_in 'First name', with: 'Maude'
-        fill_in 'Last name', with: 'Lebowski'
-        fill_in 'Email', with: 'maude@lebowski.me'
+        invitation_form = PageObjects::Admin::StaffInvitationForm.new
 
-        click_button 'Invite'
+        invitation_form.first_name = 'Maude'
+        invitation_form.last_name  = 'Lebowski'
+        invitation_form.email      = 'maude@lebowski.me'
+        invitation_form.grant_establishment_access bar_1
+        invitation_form.submit
 
         expect(page).to have_content "Invitation sent to maude@lebowski.me"
 
@@ -104,6 +105,11 @@ feature 'account management' do
 
         expect(page).to have_content 'Welcome, Maude!'
         expect(page).to have_current_path "/accounts/#{account.id}"
+
+        account_details = PageObjects::Admin::AccountDetails.new
+        expect(account_details).to have_establishment 'Bar 1'
+        expect(account_details).to_not have_establishment 'Bar 2'
+        expect(account_details.establishments.size).to eq 1
       end
     end
   end

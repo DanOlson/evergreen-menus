@@ -36,7 +36,8 @@ class UserInvitationsController < ApplicationController
       :first_name,
       :last_name,
       :email,
-      :invite_another
+      :invite_another,
+      { establishment_ids: [] }
     ).merge(account: @account, inviting_user: current_user)
   end
 end

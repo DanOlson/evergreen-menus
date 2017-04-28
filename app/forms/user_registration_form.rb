@@ -80,7 +80,8 @@ class UserRegistrationForm
       password: password,
       password_confirmation: password_confirmation,
       account: account,
-      role: Role.staff
+      role: Role.staff,
+      establishment_ids: user_invitation.establishment_ids
     })
   end
 end

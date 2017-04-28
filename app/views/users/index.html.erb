@@ -9,7 +9,7 @@
         <%= link_to "#{person.first_name} #{person.last_name}", href, class: "list-group-item", data: { test: "staff-member" } %>
       <% end %>
     </div>
-    <%= link_to 'Invite staff', new_account_user_invitation_path(@account), class: 'btn btn-success' %>
+    <%= link_to 'Invite staff', new_account_user_invitation_path(@account), class: 'btn btn-success', data: { test: 'invite-staff-button' } %>
   </div>
 </div>
 
