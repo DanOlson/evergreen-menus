@@ -36,7 +36,7 @@ feature 'account management' do
         ActionMailer::Base.deliveries.clear
       end
 
-      scenario 'admin can invite staff' do
+      scenario 'manager can invite staff' do
         click_link 'Staff'
 
         staff_list = PageObjects::Admin::StaffList.new
@@ -71,6 +71,37 @@ feature 'account management' do
 
         expect(donny_invite.to).to eq ['donny@lebowski.me']
         expect(walter_invite.to).to eq ['walter@lebowski.me']
+      end
+
+      scenario 'manager can edit staff invitations' do
+        click_link 'Staff'
+
+        staff_list = PageObjects::Admin::StaffList.new
+        expect(staff_list.invitations.size).to eq 0
+
+        staff_list.invite_staff_button.click
+
+        invitation_form = PageObjects::Admin::StaffInvitationForm.new
+
+        invitation_form.first_name = 'Donny'
+        invitation_form.last_name  = 'Kerabatsos'
+        invitation_form.email      = 'donny@lebowski.me'
+        invitation_form.grant_establishment_access bar_1
+        invitation_form.submit
+
+        staff_list = PageObjects::Admin::StaffList.new
+        staff_list.invitation_to('Donny Kerabatsos').click
+
+        expect(invitation_form.email_input).to be_disabled
+        expect(invitation_form).to be_granted_access_to(bar_1)
+        expect(invitation_form).to_not be_granted_access_to(bar_2)
+
+        invitation_form.grant_establishment_access bar_2
+        invitation_form.submit
+
+        staff_list.invitation_to('Donny Kerabatsos').click
+        expect(invitation_form).to be_granted_access_to(bar_1)
+        expect(invitation_form).to be_granted_access_to(bar_2)
       end
 
       scenario 'invited users can register' do

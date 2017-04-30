@@ -1,51 +1,9 @@
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h3 class="panel-title">Invitation</h3>
+<%= render 'user_invitations/form', submit_text: 'Invite' do |f| %>
+  <div class="form-group">
+    <div class='checkbox'>
+      <label>
+        <%= f.check_box :invite_another %> Invite another
+      </label>
+    </div>
   </div>
-  <div class="panel-body">
-    <%= form_for [@account, @user_invitation] do |f| %>
-      <div class='form-group'>
-        <%= f.label :first_name %>
-        <%= f.text_field :first_name, required: true, class: "form-control", data: { test: 'invitation-first-name' } %>
-      </div>
-
-      <div class='form-group'>
-        <%= f.label :last_name %>
-        <%= f.text_field :last_name, class: "form-control", data: { test: 'invitation-last-name' } %>
-      </div>
-
-      <div class='form-group'>
-        <%= f.label :email %>
-        <%= f.email_field :email, required: true, class: "form-control", data: { test: 'invitation-email' } %>
-      </div>
-
-      <div class="form-group">
-        <label>Establishments</label>
-        <div class="">
-          <% @account.establishments.each_with_index do |establishment, index| %>
-            <div class="checkbox">
-              <label>
-                <%= check_box_tag 'user_invitation[establishment_ids][]', establishment.id, false, data: { test: 'invitation-establishment-access' } %>
-
-                <%= establishment.name %>
-              </label>
-            </div>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class='checkbox'>
-          <label>
-            <%= f.check_box :invite_another %> Invite another
-          </label>
-        </div>
-      </div>
-
-      <div class='form-group'>
-        <%= f.submit 'Invite', class: 'btn btn-primary', data: { test: 'invitation-submit-button' } %>
-        <%= link_to 'Cancel', account_users_path(@account), data: { test: 'invitation-cancel-link' } %>
-      </div>
-    <% end %>
-  </div>
-</div>
+<% end %>

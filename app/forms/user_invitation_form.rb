@@ -45,6 +45,10 @@ class UserInvitationForm
     })
   end
 
+  def establishment_ids
+    @establishment_ids || []
+  end
+
   private
 
   def send_invitation_email(invitation)

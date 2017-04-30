@@ -2,11 +2,11 @@ module PageObjects
   module Admin
     class StaffInvitationForm < SitePrism::Page
       element :first_name_input, '[data-test="invitation-first-name"]'
-      element :last_name_input, '[data-test="invitation-last-name"]'
-      element :email_input, '[data-test="invitation-email"]'
-      elements :establishment_checkboxes, '[data-test="invitation-establishment-access"]'
-      element :submit_button, '[data-test="invitation-submit-button"]'
-      element :cancel_link, '[data-test="invitation-cancel-link"]'
+      element :last_name_input,  '[data-test="invitation-last-name"]'
+      element :email_input,      '[data-test="invitation-email"]'
+      elements :establishments,  '[data-test="invitation-establishment-access"]'
+      element :submit_button,    '[data-test="invitation-submit-button"]'
+      element :cancel_link,      '[data-test="invitation-cancel-link"]'
 
       def first_name=(name)
         first_name_input.set name
@@ -22,6 +22,13 @@ module PageObjects
 
       def grant_establishment_access(establishment)
         check establishment.name
+      end
+
+      def granted_access_to?(establishment)
+        establishment_label = establishments.find do |cb|
+          cb.text == establishment.name
+        end
+        establishment_label.find('input').checked?
       end
 
       def invite_another

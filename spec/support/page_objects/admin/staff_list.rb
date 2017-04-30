@@ -37,6 +37,10 @@ module PageObjects
         pending_invitations_panel.invitations
       end
 
+      def invitation_to(name)
+        invitations.find { |i| i.text == name }
+      end
+
       def invite_staff_button
         staff_panel.invite_staff_button
       end

@@ -1,5 +1,6 @@
 class UserInvitationsController < ApplicationController
   load_and_authorize_resource :account
+  load_and_authorize_resource :user_invitation, through: :account, only: [:edit, :update, :destroy]
 
   def new
     @user_invitation = UserInvitationForm.new(account: @account)
@@ -21,6 +22,20 @@ class UserInvitationsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def edit
+  end
+
+  def update
+    if @user_invitation.update(invitation_params)
+      redirect_to account_users_path(@account), notice: 'Invitation updated'
+    else
+      render :edit, alert: 'There was a problem updating the invitation'
+    end
+  end
+
+  def destroy
   end
 
   private

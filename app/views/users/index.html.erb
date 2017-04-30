@@ -18,12 +18,10 @@
     <h3 class="panel-title">Pending Invitations</h3>
   </div>
   <div class="panel-body">
-    <ul>
+    <div class="list-group">
       <% @user_invitations.each do |person| %>
-        <li data-test="staff-member-invited">
-          <%= person.first_name %> <%= person.last_name %>
-        </li>
+        <%= link_to "#{person.first_name} #{person.last_name}", edit_account_user_invitation_path(@account, person), class: 'list-group-item', data: { test: 'staff-member-invited' } %>
       <% end %>
-    </ul>
+    </div>
   </div>
 </div>
