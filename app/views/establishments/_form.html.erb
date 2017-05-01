@@ -5,62 +5,57 @@
 <div class="row edit-establishment">
   <div class="establishment-form-wrapper col-sm-6">
     <%= form_for [account, establishment], html: { class: 'form-horizontal establishment-form' } do |f| %>
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <h3 class="panel-title">Establishment Info</h3>
-        </div>
-        <div class="panel-body">
-          <div class="form-group">
-            <%= f.label :name, class: 'col-sm-1 control-label' %>
-            <div class="col-sm-11">
-              <%= f.text_field :name, class: 'form-control', data: { test: 'establishment-name' } %>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :url, class: 'col-sm-1 control-label' %>
-            <div class="col-sm-11">
-              <%= f.text_field :url, class: 'form-control', data: { test: 'establishment-url' } %>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :street_address, 'Street', class: 'col-sm-1 control-label' %>
-            <div class="col-sm-11">
-              <%= f.text_field :street_address, class: 'form-control', data: { test: 'establishment-street-address' } %>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :city, class: 'col-sm-1 control-label' %>
-            <div class="col-sm-11">
-              <%= f.text_field :city, class: 'form-control', data: { test: 'establishment-city' } %>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :state, class: 'col-sm-1 control-label' %>
-            <div class="col-sm-11">
-              <%= f.select :state, options_for_select(state_options, selected: establishment.state), { include_blank: true }, class: 'form-control', data: { test: 'establishment-state' } %>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :postal_code, 'Postal Code', class: 'col-sm-1 control-label' %>
-            <div class="col-sm-11">
-              <%= f.text_field :postal_code, maxlength: 5, class: 'form-control', data: { test: 'establishment-postal-code' } %>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <%= f.submit submit_text, class: 'btn btn-primary col-sm-offset-1', data: { test: 'establishment-form-submit' } %>
-            <%= link_to 'Cancel', account_path(account), class: 'btn btn-default', data: { test: 'establishment-form-cancel' } %>
-            <% if establishment.persisted? && can?(:destroy, establishment) %>
-              <label for="establishment-form-delete" class="btn btn-danger" data-test="establishment-form-delete">Delete</label>
-            <% end %>
+      <%= render 'shared/panel', title: 'Establishment Info' do %>
+        <div class="form-group">
+          <%= f.label :name, class: 'col-sm-1 control-label' %>
+          <div class="col-sm-11">
+            <%= f.text_field :name, class: 'form-control', data: { test: 'establishment-name' } %>
           </div>
         </div>
-      </div>
+
+        <div class="form-group">
+          <%= f.label :url, class: 'col-sm-1 control-label' %>
+          <div class="col-sm-11">
+            <%= f.text_field :url, class: 'form-control', data: { test: 'establishment-url' } %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :street_address, 'Street', class: 'col-sm-1 control-label' %>
+          <div class="col-sm-11">
+            <%= f.text_field :street_address, class: 'form-control', data: { test: 'establishment-street-address' } %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :city, class: 'col-sm-1 control-label' %>
+          <div class="col-sm-11">
+            <%= f.text_field :city, class: 'form-control', data: { test: 'establishment-city' } %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :state, class: 'col-sm-1 control-label' %>
+          <div class="col-sm-11">
+            <%= f.select :state, options_for_select(state_options, selected: establishment.state), { include_blank: true }, class: 'form-control', data: { test: 'establishment-state' } %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :postal_code, 'Postal Code', class: 'col-sm-1 control-label' %>
+          <div class="col-sm-11">
+            <%= f.text_field :postal_code, maxlength: 5, class: 'form-control', data: { test: 'establishment-postal-code' } %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.submit submit_text, class: 'btn btn-primary col-sm-offset-1', data: { test: 'establishment-form-submit' } %>
+          <%= link_to 'Cancel', account_path(account), class: 'btn btn-default', data: { test: 'establishment-form-cancel' } %>
+          <% if establishment.persisted? && can?(:destroy, establishment) %>
+            <label for="establishment-form-delete" class="btn btn-danger" data-test="establishment-form-delete">Delete</label>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
     <% if establishment.persisted? && can?(:destroy, establishment) %>
       <%= button_to 'Delete', account_establishment_path(account, establishment), method: :delete, class: 'hidden', id: 'establishment-form-delete', data: { confirm: 'Are you sure you want to delete this establishment?' } %>
@@ -68,19 +63,13 @@
   </div>
 
   <div class="lists-wrapper col-sm-6" data-test="lists">
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <h3 class="panel-title">Lists</h3>
-      </div>
-      <div class="panel-body">
-        <% if !establishment.persisted? %>
-          <div class="well">Please create your establishment before adding a list</div>
-        <% else %>
-          <div id="lists-app"></div>
-        <% end %>
-        <%= add_list_button(account, establishment) %>
-      </div>
-    </div>
+    <%= render 'shared/panel', title: 'Lists' do %>
+      <% if !establishment.persisted? %>
+        <div class="well">Please create your establishment before adding a list</div>
+      <% else %>
+        <div id="lists-app"></div>
+      <% end %>
+      <%= add_list_button(account, establishment) %>
+    <% end %>
   </div>
 </div>
-

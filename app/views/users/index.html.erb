@@ -1,27 +1,17 @@
-<div class="panel panel-info" data-test="staff-panel">
-  <div class="panel-heading">
-    <h3 class="panel-title">Staff</h3>
+<%= render 'shared/panel', title: 'Staff', data_test: 'staff-panel' do %>
+  <div class="list-group">
+    <% @users.each do |person| %>
+      <% href = person == current_user ? edit_user_registration_path : edit_account_user_path(@account, person) %>
+      <%= link_to "#{person.first_name} #{person.last_name}", href, class: "list-group-item", data: { test: "staff-member" } %>
+    <% end %>
   </div>
-  <div class="panel-body">
-    <div class="list-group">
-      <% @users.each do |person| %>
-        <% href = person == current_user ? edit_user_registration_path : edit_account_user_path(@account, person) %>
-        <%= link_to "#{person.first_name} #{person.last_name}", href, class: "list-group-item", data: { test: "staff-member" } %>
-      <% end %>
-    </div>
-    <%= link_to 'Invite staff', new_account_user_invitation_path(@account), class: 'btn btn-success', data: { test: 'invite-staff-button' } %>
-  </div>
-</div>
+  <%= link_to 'Invite staff', new_account_user_invitation_path(@account), class: 'btn btn-success', data: { test: 'invite-staff-button' } %>
+<% end %>
 
-<div class="panel panel-info" data-test="pending-invitations-panel">
-  <div class="panel-heading">
-    <h3 class="panel-title">Pending Invitations</h3>
+<%= render 'shared/panel', title: 'Pending Invitations', data_test: 'pending-invitations-panel' do %>
+  <div class="list-group">
+    <% @user_invitations.each do |person| %>
+      <%= link_to "#{person.first_name} #{person.last_name}", edit_account_user_invitation_path(@account, person), class: 'list-group-item', data: { test: 'staff-member-invited' } %>
+    <% end %>
   </div>
-  <div class="panel-body">
-    <div class="list-group">
-      <% @user_invitations.each do |person| %>
-        <%= link_to "#{person.first_name} #{person.last_name}", edit_account_user_invitation_path(@account, person), class: 'list-group-item', data: { test: 'staff-member-invited' } %>
-      <% end %>
-    </div>
-  </div>
-</div>
+<% end %>

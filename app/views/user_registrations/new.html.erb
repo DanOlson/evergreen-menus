@@ -1,44 +1,39 @@
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h3 class="panel-title">Invitation</h3>
-  </div>
-  <div class="panel-body">
-    <%= form_for @user, url: user_registration_path do |f| %>
-      <div class='form-group'>
-        <%= f.label :first_name %>
-        <%= f.text_field :first_name, required: true, class: "form-control" %>
-      </div>
+<%= render 'shared/panel', title: 'Accept Invitation' do %>
+  <%= form_for @user, url: user_registration_path do |f| %>
+    <div class='form-group'>
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name, required: true, class: "form-control" %>
+    </div>
 
-      <div class='form-group'>
-        <%= f.label :last_name %>
-        <%= f.text_field :last_name, required: true, class: "form-control" %>
-      </div>
+    <div class='form-group'>
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name, required: true, class: "form-control" %>
+    </div>
 
-      <div class='form-group'>
-        <%= f.label :username %>
-        <%= f.text_field :username, required: true, class: "form-control" %>
-      </div>
+    <div class='form-group'>
+      <%= f.label :username %>
+      <%= f.text_field :username, required: true, class: "form-control" %>
+    </div>
 
-      <div class='form-group'>
-        <%= f.label :email %>
-        <%= f.email_field :email, required: true, class: "form-control" %>
-      </div>
+    <div class='form-group'>
+      <%= f.label :email %>
+      <%= f.email_field :email, required: true, class: "form-control" %>
+    </div>
 
-      <div class='form-group'>
-        <%= f.label :password %>
-        <%= f.password_field :password, required: true, class: "form-control" %>
-      </div>
+    <div class='form-group'>
+      <%= f.label :password %>
+      <%= f.password_field :password, required: true, class: "form-control" %>
+    </div>
 
-      <div class='form-group'>
-        <%= f.label :password_confirmation %>
-        <%= f.password_field :password_confirmation, required: true, class: "form-control" %>
-      </div>
+    <div class='form-group'>
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, required: true, class: "form-control" %>
+    </div>
 
-      <%= f.hidden_field :user_invitation_id %>
+    <%= f.hidden_field :user_invitation_id %>
 
-      <div class='form-group'>
-        <%= f.submit 'Register', class: 'btn btn-primary' %>
-      </div>
-    <% end %>
-  </div>
-</div>
+    <div class='form-group'>
+      <%= f.submit 'Register', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+<% end %>

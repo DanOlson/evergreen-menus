@@ -1,36 +1,31 @@
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h3 class="panel-title"><%= @user.first_name %> <%= @user.last_name %></h3>
-  </div>
-  <div class="panel-body">
-    <%= form_for [@account, @user], html: { class: 'form-horizontal' } do |f| %>
-      <div class="form-group">
-        <%= f.label :role, class: 'col-sm-1 control-label' %>
-        <div class="col-sm-3">
-          <%= f.select :role_id, options_for_select(role_options, selected: @user.role_id), {}, class: 'form-control', data: { test: 'staff-role-select' } %>
-        </div>
+<%= render 'shared/panel', title: "#{@user.first_name} #{@user.last_name}" do %>
+  <%= form_for [@account, @user], html: { class: 'form-horizontal' } do |f| %>
+    <div class="form-group">
+      <%= f.label :role, class: 'col-sm-1 control-label' %>
+      <div class="col-sm-3">
+        <%= f.select :role_id, options_for_select(role_options, selected: @user.role_id), {}, class: 'form-control', data: { test: 'staff-role-select' } %>
       </div>
+    </div>
 
-      <div class="form-group">
-        <div class="col-sm-4 col-sm-offset-1">
-          <% @account.establishments.each_with_index do |establishment, index| %>
-            <div class="checkbox">
-              <label>
-                <%= check_box_tag 'user[establishment_ids][]', establishment.id, @user.establishments.include?(establishment), data: { test: 'establishment-access' } %>
+    <div class="form-group">
+      <div class="col-sm-4 col-sm-offset-1">
+        <% @account.establishments.each_with_index do |establishment, index| %>
+          <div class="checkbox">
+            <label>
+              <%= check_box_tag 'user[establishment_ids][]', establishment.id, @user.establishments.include?(establishment), data: { test: 'establishment-access' } %>
 
-                <%= establishment.name %>
-              </label>
-            </div>
-          <% end %>
-        </div>
+              <%= establishment.name %>
+            </label>
+          </div>
+        <% end %>
       </div>
+    </div>
 
-      <div class="form-group">
-        <div class="col-sm-offset-1 col-sm-3">
-          <%= f.submit 'Update', class: 'btn btn-primary', data: { test: 'staff-form-submit' } %>
-          <%= link_to 'Cancel', account_users_path(@account), class: 'btn btn-default', data: { test: 'staff-form-cancel' } %>
-        </div>
+    <div class="form-group">
+      <div class="col-sm-offset-1 col-sm-3">
+        <%= f.submit 'Update', class: 'btn btn-primary', data: { test: 'staff-form-submit' } %>
+        <%= link_to 'Cancel', account_users_path(@account), class: 'btn btn-default', data: { test: 'staff-form-cancel' } %>
       </div>
-    <% end %>
-  </div>
-</div>
+    </div>
+  <% end %>
+<% end %>

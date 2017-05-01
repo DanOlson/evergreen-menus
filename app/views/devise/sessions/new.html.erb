@@ -1,30 +1,24 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Log in</h2>
-  </div>
-  <div class="panel-body">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="form-group">
-        <%= f.label :username %><br />
-        <%= f.text_field :username, autofocus: true, class: "form-control" %>
+<%= render 'shared/panel', panel_class: 'panel-default', title: 'Log in' do %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="form-group">
+      <%= f.label :username %><br />
+      <%= f.text_field :username, autofocus: true, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password %><br />
+      <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+    </div>
+
+    <% if devise_mapping.rememberable? -%>
+      <div class="checkbox">
+        <label><%= f.check_box :remember_me %>Remember me</label>
       </div>
+    <% end -%>
 
-      <div class="form-group">
-        <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
-      </div>
-
-      <% if devise_mapping.rememberable? -%>
-        <div class="checkbox">
-          <label><%= f.check_box :remember_me %>Remember me</label>
-        </div>
-      <% end -%>
-
-      <div class="form-group">
-        <%= f.submit "Log in", class: "btn btn-primary" %>
-        <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
-      </div>
-    <% end %>
-  </div>
-
-</div>
+    <div class="form-group">
+      <%= f.submit "Log in", class: "btn btn-primary" %>
+      <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+    </div>
+  <% end %>
+<% end %>
