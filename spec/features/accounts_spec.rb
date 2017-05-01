@@ -120,7 +120,6 @@ feature 'account management' do
         invitation_form.grant_establishment_access bar_1
         invitation_form.submit
 
-        staff_list = PageObjects::Admin::StaffList.new
         staff_list.invitation_to('Donny Kerabatsos').click
 
         invitation_form.delete
@@ -174,8 +173,6 @@ feature 'account management' do
         expect(staff_list.invitations.size).to eq 0
         expect(staff_list).to have_member_named 'Maude Lebowski'
       end
-
-      scenario 'deleted invitations cannot be accepted'
     end
   end
 
