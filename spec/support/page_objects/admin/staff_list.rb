@@ -41,6 +41,10 @@ module PageObjects
         invitations.find { |i| i.text == name }
       end
 
+      def has_invitation_to?(name)
+        !!invitation_to(name)
+      end
+
       def invite_staff_button
         staff_panel.invite_staff_button
       end

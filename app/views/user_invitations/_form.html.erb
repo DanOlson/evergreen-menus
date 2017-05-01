@@ -38,8 +38,14 @@
 
       <div class='form-group'>
         <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'invitation-submit-button' } %>
-        <%= link_to 'Cancel', account_users_path(@account), data: { test: 'invitation-cancel-link' } %>
+        <%= link_to 'Cancel', account_users_path(@account), class: 'btn btn-default', data: { test: 'invitation-cancel-link' } %>
+        <% if f.object.persisted? && can?(:destroy, @user_invitation) %>
+          <label for="invitation-form-delete" class="btn btn-danger" data-test="invitation-delete-button">Delete</label>
+        <% end %>
       </div>
+    <% end %>
+    <% if @user_invitation.persisted? && can?(:destroy, @user_invitation) %>
+      <%= button_to 'Delete', account_user_invitation_path(@account, @user_invitation), method: :delete, class: 'hidden', id: 'invitation-form-delete', data: { confirm: 'Are you sure you want to delete this invitation?' } %>
     <% end %>
   </div>
 </div>

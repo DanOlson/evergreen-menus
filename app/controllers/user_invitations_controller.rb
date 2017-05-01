@@ -36,6 +36,8 @@ class UserInvitationsController < ApplicationController
   end
 
   def destroy
+    @user_invitation.destroy
+    redirect_to account_users_path(@account), notice: 'Invitation deleted'
   end
 
   private

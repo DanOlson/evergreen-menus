@@ -6,6 +6,7 @@ module PageObjects
       element :email_input,      '[data-test="invitation-email"]'
       elements :establishments,  '[data-test="invitation-establishment-access"]'
       element :submit_button,    '[data-test="invitation-submit-button"]'
+      element :delete_button,    '[data-test="invitation-delete-button"]'
       element :cancel_link,      '[data-test="invitation-cancel-link"]'
 
       def first_name=(name)
@@ -45,6 +46,12 @@ module PageObjects
 
       def cancel
         cancel_link.click
+      end
+
+      def delete
+        accept_confirm do
+          delete_button.click
+        end
       end
     end
   end
