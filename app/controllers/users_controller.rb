@@ -25,6 +25,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user.destroy
+    redirect_to account_users_path(@account), notice: "#{@user.first_name} #{@user.last_name} has been deleted"
+  end
+
   private
 
   def user_params

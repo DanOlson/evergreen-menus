@@ -3,9 +3,10 @@ module PageObjects
     class StaffForm < SitePrism::Page
       set_url "/accounts{/account_id}/staff{/staff_id}/edit"
 
-      element :role_input, '[data-test="staff-role-select"]'
+      element :role_input,    '[data-test="staff-role-select"]'
       element :submit_button, '[data-test="staff-form-submit"]'
-      element :cancel_link, '[data-test="staff-form-cancel"]'
+      element :delete_button, '[data-test="staff-form-delete"]'
+      element :cancel_link,   '[data-test="staff-form-cancel"]'
       elements :establishment_access_checkboxes, '[data-test="establishment-access"]'
 
       def select_role(role_name)
@@ -18,6 +19,12 @@ module PageObjects
 
       def cancel
         cancel_link.click
+      end
+
+      def delete
+        accept_confirm do
+          delete_button.click
+        end
       end
 
       def grant_establishment_access(establishment)

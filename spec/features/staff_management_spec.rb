@@ -122,7 +122,30 @@ describe 'staff management' do
     expect(account_page).to have_establishment establishment_2.name
   end
 
-  scenario 'staff members cannot view staff list' do
+  scenario 'manager can revoke staff account access (delete user)', :js, :admin do
+    manager = create :user, :manager, account: account
+
+    login manager
+
+    click_link 'Staff'
+    staff_list = PageObjects::Admin::StaffList.new
+
+    staff_list.member_named('Walter Sobchak').click
+
+    form = PageObjects::Admin::StaffForm.new
+
+    expect(form).to be_displayed
+    form.delete
+
+    expect(staff_list).to be_displayed
+    expect(staff_list).to_not have_member_named('Walter Sobchak')
+
+    expect(page).to have_css '[data-test="flash-success"]', text: 'Walter Sobchak has been deleted'
+  end
+
+  scenario 'staff members cannot view staff list or edit other staff members' do
+    other_user = create :user, account: account
+
     login staff_member
     expect(page).to_not have_link 'Staff'
 
@@ -130,6 +153,11 @@ describe 'staff management' do
     list.load(account_id: staff_member.account_id)
 
     expect(list).to_not be_displayed
+    expect(page).to have_css '[data-test="flash-alert"]', text: 'You are not authorized to access this page'
+
+    form = PageObjects::Admin::StaffForm.new
+    form.load(account_id: account.id, staff_id: other_user.id)
+    expect(form).to_not be_displayed
     expect(page).to have_css '[data-test="flash-alert"]', text: 'You are not authorized to access this page'
   end
 end

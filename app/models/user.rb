@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :api_keys
-  has_many :establishment_staff_assignments
+  has_many :establishment_staff_assignments, dependent: :destroy
   has_many :establishments, through: :establishment_staff_assignments
   belongs_to :account
   belongs_to :role
