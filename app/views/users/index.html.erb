@@ -2,7 +2,10 @@
   <div class="list-group">
     <% @users.each do |person| %>
       <% href = person == current_user ? edit_user_registration_path : edit_account_user_path(@account, person) %>
-      <%= link_to "#{person.first_name} #{person.last_name}", href, class: "list-group-item", data: { test: "staff-member" } %>
+      <%= link_to href, class: "list-group-item", data: { test: "staff-member" } do %>
+        <%= "#{person.first_name} #{person.last_name}" %>
+        <%= role_icon person %>
+      <% end %>
     <% end %>
   </div>
   <%= link_to 'Invite staff', new_account_user_invitation_path(@account), class: 'btn btn-success', data: { test: 'invite-staff-button' } %>
