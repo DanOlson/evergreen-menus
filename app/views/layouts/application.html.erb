@@ -18,5 +18,6 @@
   </div>
   <%= render('layouts/google_analytics') if Rails.env.production? %>
   <%= javascript_include_tag fingerprinted_asset(:bundle) %>
+  <%= content_for :javascripts %>
 </body>
 </html>
