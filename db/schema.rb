@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170428014319) do
+ActiveRecord::Schema.define(version: 20170509015809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,21 @@ ActiveRecord::Schema.define(version: 20170428014319) do
     t.datetime "updated_at",                      null: false
   end
 
+  create_table "menu_lists", force: :cascade do |t|
+    t.integer  "menu_id",    null: false
+    t.integer  "list_id",    null: false
+    t.integer  "position",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "menus", force: :cascade do |t|
+    t.string   "name",             null: false
+    t.integer  "establishment_id", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
@@ -161,6 +176,9 @@ ActiveRecord::Schema.define(version: 20170428014319) do
   add_foreign_key "invitation_establishment_assignments", "establishments"
   add_foreign_key "invitation_establishment_assignments", "user_invitations"
   add_foreign_key "lists", "establishments"
+  add_foreign_key "menu_lists", "lists"
+  add_foreign_key "menu_lists", "menus"
+  add_foreign_key "menus", "establishments"
   add_foreign_key "user_invitations", "accounts"
   add_foreign_key "user_invitations", "users", column: "accepting_user_id"
   add_foreign_key "user_invitations", "users", column: "inviting_user_id"

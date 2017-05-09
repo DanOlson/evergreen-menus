@@ -10,6 +10,7 @@ class Establishment < ActiveRecord::Base
   has_many :lists, dependent: :destroy
   has_many :beers, through: :lists
   has_many :list_updates
+  has_many :menus, dependent: :destroy
   has_one :scraper
 
   paginates_per 100
