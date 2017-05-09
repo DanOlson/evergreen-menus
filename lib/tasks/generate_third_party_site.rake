@@ -8,7 +8,7 @@ task generate_third_party_site: :environment do
   host = Rails.env.test? ? 'http://test.beermapper-api.dev' : 'http://beermapper-api.dev'
   list_html = ListHtmlSnippet.new({
     list: list,
-    menu_url: menu_url(list, host: host)
+    menu_url: menu_list_url(list, host: host)
   }).generate
 
   ThirdPartySiteGenerator.call({

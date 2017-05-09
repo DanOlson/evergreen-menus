@@ -77,7 +77,7 @@ module EstablishmentsHelper
     if can?(:view_snippet, List)
       snippet = ListHtmlSnippet.new({
         list: list,
-        menu_url: menu_url(list.id)
+        menu_url: menu_list_url(list.id)
       })
 
       <<~HTML.html_safe

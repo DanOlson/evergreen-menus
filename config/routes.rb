@@ -21,7 +21,7 @@ Beermapper::Application.routes.draw do
   end
 
   constraints(ManagedMenuFeature) do
-    resources :menus, only: :show
+    resources :menu_lists, only: :show
     resources :accounts do
       resources :establishments do
         resources :lists
