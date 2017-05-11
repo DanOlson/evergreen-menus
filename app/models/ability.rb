@@ -17,6 +17,7 @@ class Ability
 
   def staff_abilities(user)
     can :manage, List, establishment_id: user.establishment_ids
+    can :manage, Menu, establishment_id: user.establishment_ids
     can :read,   Establishment, establishment_staff_assignments: { user_id: user.id }
     can :create, Establishment, establishment_staff_assignments: { user_id: user.id }
     can :update, Establishment, establishment_staff_assignments: { user_id: user.id }
@@ -31,6 +32,7 @@ class Ability
     can :view_snippet, List
     can :manage, Establishment, account_id: user.account_id
     can :manage, List, establishment_id: user.account.establishment_ids
+    can :manage, Menu, establishment_id: user.account.establishment_ids
     can :manage, Account, id: user.account_id
     can :manage, User, account_id: user.account_id
     can :manage, UserInvitation, account_id: user.account_id

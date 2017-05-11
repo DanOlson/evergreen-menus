@@ -30,6 +30,24 @@ module PageObjects
         end
       end
 
+      class MenusPanel < SitePrism::Section
+        class Menu < SitePrism::Section
+          element :print_button, '[data-test="print-menu"]'
+          element :link, '[data-test="establishment-menu"]'
+
+          def name
+            link.text
+          end
+        end
+
+        element :add_menu_button, '[data-test="add-menu"]'
+        sections :menus, Menu, '[data-test="menu-list-item"]'
+
+        def add_menu
+          add_menu_button.click
+        end
+      end
+
       element :name_input,        '[data-test="establishment-name"]'
       element :url_input,         '[data-test="establishment-url"]'
       element :street_input,      '[data-test="establishment-street-address"]'
@@ -41,6 +59,7 @@ module PageObjects
       element :delete_button,     '[data-test="establishment-form-delete"]'
 
       section :lists_panel, ListsPanel, '[data-test="lists"]'
+      section :menus_panel, MenusPanel, '[data-test="menus"]'
 
       def submit
         submit_button.click
@@ -58,6 +77,10 @@ module PageObjects
 
       def add_list
         lists_panel.add_list
+      end
+
+      def add_menu
+        menus_panel.add_menu
       end
 
       def set_name(name)
@@ -94,6 +117,18 @@ module PageObjects
 
       def list_named(list_name)
         lists.find { |l| l.name == list_name }
+      end
+
+      def menus
+        menus_panel.menus
+      end
+
+      def has_menu_named?(menu_name)
+        !!menu_named(menu_name)
+      end
+
+      def menu_named(menu_name)
+        menus.find { |m| m.name == menu_name }
       end
 
       def get_snippet_for(list_name)

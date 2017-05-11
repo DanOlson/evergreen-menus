@@ -72,4 +72,21 @@
       <%= add_list_button(account, establishment) %>
     <% end %>
   </div>
+
+  <div class="col-sm-6" data-test="menus">
+    <%= render 'shared/panel', title: 'Menus' do %>
+      <% if !establishment.persisted? %>
+        <div class="well">Please create your establishment before adding a menu</div>
+      <% else %>
+        <div class="list-group">
+          <% establishment.menus.each do |menu| %>
+            <div class="list-group-item" data-test="menu-list-item">
+              <%= link_to menu.name, edit_account_establishment_menu_path(account, establishment, menu), data: { test: 'establishment-menu' } %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <%= add_menu_button(account, establishment) %>
+    <% end %>
+  </div>
 </div>

@@ -1,0 +1,19 @@
+<%= render 'shared/panel', title: menu.name || 'New Menu' do %>
+  <%= form_for [account, establishment, menu], html: { class: 'menu-form' } do |f| %>
+    <div class='form-group'>
+      <%= f.label :name %>
+      <%= f.text_field :name, required: true, class: "form-control", data: { test: 'menu-name' } %>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'menu-form-submit' } %>
+      <%= link_to 'Cancel', edit_account_establishment_path(account, establishment), class: 'btn btn-default', data: { test: 'menu-form-cancel' } %>
+      <% if menu.persisted? && can?(:destroy, menu) %>
+        <label for="menu-form-delete" class="btn btn-danger" data-test="menu-form-delete">Delete</label>
+      <% end %>
+    </div>
+  <% end %>
+  <% if menu.persisted? && can?(:destroy, menu) %>
+    <%= button_to 'Delete', account_establishment_menu_path(account, establishment, menu), method: :delete, class: 'hidden', id: 'menu-form-delete', data: { confirm: 'Are you sure you want to delete this menu?' } %>
+  <% end %>
+<% end %>

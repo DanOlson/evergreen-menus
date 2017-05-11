@@ -25,6 +25,7 @@ Beermapper::Application.routes.draw do
     resources :accounts do
       resources :establishments do
         resources :lists
+        resources :menus
       end
 
       resources :users, path: '/staff'

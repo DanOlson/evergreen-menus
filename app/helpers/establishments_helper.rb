@@ -92,7 +92,7 @@ module EstablishmentsHelper
 
   def add_list_button(account, establishment)
     css_classes = %w(btn btn-primary)
-    if establishment.persisted? 
+    if establishment.persisted?
       href = new_account_establishment_list_path(account, establishment)
     else
       css_classes << 'disabled'
@@ -102,6 +102,22 @@ module EstablishmentsHelper
       class: css_classes.join(' '),
       data: {
         test: 'add-list'
+      }
+    })
+  end
+
+  def add_menu_button(account, establishment)
+    css_classes = %w(btn btn-primary)
+    if establishment.persisted?
+      href = new_account_establishment_menu_path(account, establishment)
+    else
+      css_classes << 'disabled'
+      href = ''
+    end
+    link_to('Add Menu', href, {
+      class: css_classes.join(' '),
+      data: {
+        test: 'add-menu'
       }
     })
   end
