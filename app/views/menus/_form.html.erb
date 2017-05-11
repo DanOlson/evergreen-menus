@@ -1,9 +1,11 @@
+<script>
+  window.BEERMAPPER = window.BEERMAPPER || {};
+  window.BEERMAPPER.menu = <%= raw menu.to_json %>;
+</script>
 <%= render 'shared/panel', title: menu.name || 'New Menu' do %>
   <%= form_for [account, establishment, menu], html: { class: 'menu-form' } do |f| %>
-    <div class='form-group'>
-      <%= f.label :name %>
-      <%= f.text_field :name, required: true, class: "form-control", data: { test: 'menu-name' } %>
-    </div>
+
+    <div id="menu-app-root"></div>
 
     <div class="form-group">
       <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'menu-form-submit' } %>

@@ -4,7 +4,7 @@ feature 'menu management' do
   let(:account) { create :account }
   let!(:establishment) { create :establishment, account: account }
 
-  scenario 'manager can create a menu' do
+  scenario 'manager can create a menu', :js, :admin do
     manager = create :user, :manager, account: account
 
     login manager
