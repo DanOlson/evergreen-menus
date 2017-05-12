@@ -38,6 +38,10 @@ module PageObjects
           def name
             link.text
           end
+
+          def visit
+            link.click
+          end
         end
 
         element :add_menu_button, '[data-test="add-menu"]'
@@ -121,6 +125,10 @@ module PageObjects
 
       def menus
         menus_panel.menus
+      end
+
+      def menu_count
+        menus.size
       end
 
       def has_menu_named?(menu_name)

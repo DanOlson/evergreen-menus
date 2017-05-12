@@ -22,6 +22,11 @@ class MenusController < ApplicationController
   end
 
   def update
+    if @menu.update(menu_params)
+      redirect_to edit_account_establishment_path(@account, @establishment), notice: 'Menu updated'
+    else
+      render :edit
+    end
   end
 
   def destroy

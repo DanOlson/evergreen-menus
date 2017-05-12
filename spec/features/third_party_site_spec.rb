@@ -34,7 +34,7 @@ feature 'establishment website', :admin, :js do
     })
   end
 
-  scenario 'can display multiple menus' do
+  scenario 'can display multiple lists' do
     expect(establishment_form).to be_displayed
 
     taps_snippet    = establishment_form.get_snippet_for 'Taps'
