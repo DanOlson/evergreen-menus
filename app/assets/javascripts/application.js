@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import App from './App';
 import ListsApp from './ListsApp';
-import MenuForm from './MenuForm';
+import MenuForm from './menu/MenuForm';
 
 function getList() {
   return window.BEERMAPPER ? window.BEERMAPPER.list : {};
