@@ -3,24 +3,22 @@ import React, { PropTypes } from 'react';
 class ChosenListGroup extends React.Component {
   constructor(props) {
     super(props);
-    this.handleRemove = this.handleRemove.bind(this);
     this.ifEmptyText = "Choose at least one list"
   }
 
-  handleRemove(listId) {
-    return this.props.onRemove(listId);
-  }
-
   renderRemoveButton(listId) {
-    const handleRemove = this.handleRemove.bind(null, listId);
+    const onClick = (event) => {
+      event.preventDefault();
+      return this.props.onRemove(listId);
+    }
     return (
       <a
-        href="#"
+        href=""
         role="button"
         data-test="remove-list"
         title="remove list"
-        onClick={handleRemove}
-        className={`btn btn-default btn-sm`}>
+        onClick={onClick}
+        className={`btn btn-default btn-sm remove-list-button`}>
         <span className="glyphicon glyphicon-remove"></span>
       </a>
     );
@@ -44,7 +42,7 @@ class ChosenListGroup extends React.Component {
   render() {
     const { lists } = this.props;
     const listGroupItems = lists.map((list, index) => {
-      const removeButton = this.renderRemoveButton(list.id)
+      const removeButton = this.renderRemoveButton(list.id);
       return (
         <li className="list-group-item" key={list.id}>
           {removeButton}
@@ -70,7 +68,7 @@ class ChosenListGroup extends React.Component {
 
     return (
       <div className="panel panel-default">
-        <div className="panel-heading">Lists Chosen</div>
+        <div className="panel-heading list-group-heading">Lists Chosen</div>
         {this.renderList(listGroupItems)}
       </div>
     )
@@ -79,7 +77,7 @@ class ChosenListGroup extends React.Component {
 
 ChosenListGroup.propTypes = {
   lists: PropTypes.array.isRequired,
-  onRemove: PropTypes.func
+  onRemove: PropTypes.func.isRequired
 };
 
 export default ChosenListGroup;

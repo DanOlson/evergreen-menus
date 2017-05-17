@@ -28,18 +28,37 @@ class AvailableListGroup extends React.Component {
 
   render() {
     const { lists } = this.props;
-    const listGroupItems = lists.map(list => {
+    const listGroupItems = lists.map((list, index) => {
       const onClick = this.clickHandler.bind(null, list.id)
+      let menuListIdInput, menuListDestroyInput
+      if (list.menu_list_id) {
+        menuListIdInput = (
+          <input
+            type="hidden"
+            name={`menu[menu_lists_attributes][${index}][id]`}
+            value={list.menu_list_id}
+          />
+        )
+        menuListDestroyInput = (
+          <input
+            type="hidden"
+            name={`menu[menu_lists_attributes][${index}][_destroy]`}
+            value="true"
+          />
+        )
+      }
       return (
         <li className="list-group-item" onClick={onClick} key={list.id}>
           {list.name}
+          {menuListIdInput}
+          {menuListDestroyInput}
         </li>
       )
     });
 
     return (
       <div className="panel panel-default">
-        <div className="panel-heading">Lists Available</div>
+        <div className="panel-heading list-group-heading">Lists Available</div>
         {this.renderList(listGroupItems)}
       </div>
     )
