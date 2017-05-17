@@ -73,6 +73,17 @@ module EstablishmentsHelper
     end.to_json
   end
 
+  def menu_json(menu)
+    available_lists = menu.establishment.lists - menu.lists
+    lists = menu.menu_lists.includes(:list).map do |ml|
+      { menu_list_id: ml.id }.merge(ml.list.attributes)
+    end
+    menu.as_json.merge({
+      lists: lists.as_json,
+      listsAvailable: available_lists.as_json
+    }).to_json
+  end
+
   def make_snippet(list)
     if can?(:view_snippet, List)
       snippet = ListHtmlSnippet.new({

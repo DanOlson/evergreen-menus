@@ -3,6 +3,8 @@ class Menu < ActiveRecord::Base
   has_many :lists, through: :menu_lists
   belongs_to :establishment
 
+  accepts_nested_attributes_for :menu_lists
+
   def add_list(list, position: nil)
     position ||= (menu_lists.maximum(:position) || 0)
 

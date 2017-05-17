@@ -42,7 +42,7 @@ function applyConfirm(element) {
   }
 
   if (menuRoot) {
-    render(<MenuForm menu={getMenu()} />, menuRoot);
+    render(<MenuForm menu={getMenu()} lists={getLists()} />, menuRoot);
   }
 
   for (let i = 0; i < confirmNodes.length; i++) {

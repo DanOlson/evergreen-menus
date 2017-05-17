@@ -1,6 +1,6 @@
 <script>
   window.BEERMAPPER = window.BEERMAPPER || {};
-  window.BEERMAPPER.menu = <%= raw menu.to_json %>;
+  window.BEERMAPPER.menu = <%= raw menu_json menu %>;
 </script>
 <%= render 'shared/panel', title: menu.name || 'New Menu' do %>
   <%= form_for [account, establishment, menu], html: { class: 'menu-form' } do |f| %>
