@@ -2,7 +2,15 @@ require 'spec_helper'
 
 feature 'menu management' do
   let(:account) { create :account }
-  let!(:establishment) { create :establishment, account: account }
+  let(:establishment) { create :establishment, account: account }
+
+  before do
+    %w(Taps Bottles Specials).each do |name|
+      establishment.lists.create!({
+        name: name
+      })
+    end
+  end
 
   scenario 'manager can manage a menu for their account', :js, :admin do
     manager = create :user, :manager, account: account
@@ -17,7 +25,16 @@ feature 'menu management' do
     menu_form = PageObjects::Admin::MenuForm.new
     expect(menu_form).to be_displayed
 
+    expect(menu_form).to have_available_list('Taps')
+    expect(menu_form).to have_available_list('Bottles')
+    expect(menu_form).to have_available_list('Specials')
+
     menu_form.name = 'Taps - Mini Insert'
+    menu_form.select_list('Taps')
+
+    expect(menu_form).to have_selected_list('Taps')
+    expect(menu_form).to have_available_list('Bottles')
+    expect(menu_form).to have_available_list('Specials')
 
     menu_form.submit
 
@@ -28,8 +45,16 @@ feature 'menu management' do
     establishment_form.menu_named('Taps - Mini Insert').visit
 
     expect(menu_form).to be_displayed
+    expect(menu_form).to have_selected_list('Taps')
 
     menu_form.name = 'Bottles Large Insert'
+    menu_form.remove_list('Taps')
+    menu_form.select_list('Bottles')
+
+    expect(menu_form).to have_selected_list('Bottles')
+    expect(menu_form).to have_available_list('Taps')
+    expect(menu_form).to have_available_list('Specials')
+
     menu_form.submit
 
     expect(establishment_form).to be_displayed
@@ -52,25 +77,55 @@ feature 'menu management' do
     menu_form = PageObjects::Admin::MenuForm.new
     expect(menu_form).to be_displayed
 
-    menu_form.name = 'Taps - Mini Insert'
+    expect(menu_form).to have_available_list('Taps')
+    expect(menu_form).to have_available_list('Bottles')
+    expect(menu_form).to have_available_list('Specials')
+
+    menu_form.name = 'Beer'
+
+    menu_form.select_list('Taps')
+    menu_form.select_list('Bottles')
+    menu_form.select_list('Specials')
+
+    expect(menu_form.lists_available).to be_empty
+    expect(menu_form).to have_selected_list('Taps')
+    expect(menu_form).to have_selected_list('Bottles')
+    expect(menu_form).to have_selected_list('Specials')
 
     menu_form.submit
 
     expect(establishment_form).to be_displayed
     expect(page).to have_css '[data-test="flash-success"]', text: "Menu created"
-    expect(establishment_form).to have_menu_named 'Taps - Mini Insert'
+    expect(establishment_form).to have_menu_named 'Beer'
 
-    establishment_form.menu_named('Taps - Mini Insert').visit
+    establishment_form.menu_named('Beer').visit
 
     expect(menu_form).to be_displayed
+    expect(menu_form.lists_available).to be_empty
+    expect(menu_form).to have_selected_list('Taps')
+    expect(menu_form).to have_selected_list('Bottles')
+    expect(menu_form).to have_selected_list('Specials')
 
     menu_form.name = 'Bottles Large Insert'
+    menu_form.remove_list('Taps')
+    menu_form.remove_list('Specials')
+
+    expect(menu_form).to have_available_list('Taps')
+    expect(menu_form).to have_available_list('Specials')
+    expect(menu_form.lists_selected.lists.size).to eq 1
+
     menu_form.submit
 
     expect(establishment_form).to be_displayed
     expect(page).to have_css '[data-test="flash-success"]', text: "Menu updated"
     expect(establishment_form.menu_count).to eq 1
     expect(establishment_form).to have_menu_named 'Bottles Large Insert'
+
+    establishment_form.menu_named('Bottles Large Insert').visit
+    expect(menu_form).to be_displayed
+    expect(menu_form).to have_selected_list('Bottles')
+    expect(menu_form).to have_available_list('Taps')
+    expect(menu_form).to have_available_list('Specials')
   end
 
   scenario 'staff without access cannot create a menu' do

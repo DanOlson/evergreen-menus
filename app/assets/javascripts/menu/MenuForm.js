@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react';
 import AvailableListGroup from './AvailableListGroup';
 import ChosenListGroup from './ChosenListGroup';
+import { applyFind } from '../polyfills/Array';
+
+applyFind();
 
 class MenuForm extends React.Component {
   constructor(props) {
@@ -37,6 +40,7 @@ class MenuForm extends React.Component {
   render() {
     const { name } = this.props.menu;
     const { lists, listsAvailable } = this.state;
+    const totalListCount = lists.length + listsAvailable.length;
     return (
       <div>
         <div className="form-group">
@@ -51,7 +55,7 @@ class MenuForm extends React.Component {
           />
         </div>
 
-        <AvailableListGroup lists={listsAvailable} onClick={this.addListToMenu} />
+        <AvailableListGroup totalListCount={totalListCount} lists={listsAvailable} onClick={this.addListToMenu} />
         <ChosenListGroup lists={lists} onRemove={this.removeListFromMenu} />
       </div>
     );

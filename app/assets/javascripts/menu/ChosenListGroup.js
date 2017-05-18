@@ -16,9 +16,9 @@ class ChosenListGroup extends React.Component {
         href=""
         role="button"
         data-test="remove-list"
-        title="remove list"
+        title="Remove list"
         onClick={onClick}
-        className={`btn btn-default btn-sm remove-list-button`}>
+        className={`btn btn-default btn-sm move-list-button`}>
         <span className="glyphicon glyphicon-remove"></span>
       </a>
     );
@@ -44,7 +44,7 @@ class ChosenListGroup extends React.Component {
     const listGroupItems = lists.map((list, index) => {
       const removeButton = this.renderRemoveButton(list.id);
       return (
-        <li className="list-group-item" key={list.id}>
+        <li className="list-group-item" key={list.id} data-test="menu-list">
           {removeButton}
           {list.name}
           <input
@@ -67,8 +67,8 @@ class ChosenListGroup extends React.Component {
     });
 
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading list-group-heading">Lists Chosen</div>
+      <div className="panel panel-default" data-test="menu-lists-selected">
+        <div className="panel-heading list-group-heading">Lists Selected</div>
         {this.renderList(listGroupItems)}
       </div>
     )

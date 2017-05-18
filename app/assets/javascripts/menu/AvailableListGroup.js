@@ -3,12 +3,25 @@ import React, { PropTypes } from 'react';
 class AvailableListGroup extends React.Component {
   constructor(props) {
     super(props);
-    this.clickHandler = this.clickHandler.bind(this);
     this.ifEmptyText = "No lists available"
   }
 
-  clickHandler(listId) {
-    return this.props.onClick(listId) || (() => {});
+  renderAddButton(listId) {
+    const onClick = (event) => {
+      event.preventDefault();
+      return this.props.onClick(listId);
+    }
+    return (
+      <a
+        href=""
+        role="button"
+        data-test="add-list"
+        title="Add list"
+        onClick={onClick}
+        className={`btn btn-default btn-sm move-list-button`}>
+        <span className="glyphicon glyphicon-plus"></span>
+      </a>
+    );
   }
 
   renderList(listGroupItems) {
@@ -29,26 +42,29 @@ class AvailableListGroup extends React.Component {
   render() {
     const { lists } = this.props;
     const listGroupItems = lists.map((list, index) => {
-      const onClick = this.clickHandler.bind(null, list.id)
-      let menuListIdInput, menuListDestroyInput
+      const addListButton = this.renderAddButton(list.id);
+      let menuListIdInput, menuListDestroyInput;
       if (list.menu_list_id) {
+        // Avoid collisions with menu_lists_attributes in ChosenListGroup
+        const attrIndex = this.props.totalListCount + index
         menuListIdInput = (
           <input
             type="hidden"
-            name={`menu[menu_lists_attributes][${index}][id]`}
+            name={`menu[menu_lists_attributes][${attrIndex}][id]`}
             value={list.menu_list_id}
           />
         )
         menuListDestroyInput = (
           <input
             type="hidden"
-            name={`menu[menu_lists_attributes][${index}][_destroy]`}
+            name={`menu[menu_lists_attributes][${attrIndex}][_destroy]`}
             value="true"
           />
         )
       }
       return (
-        <li className="list-group-item" onClick={onClick} key={list.id}>
+        <li className="list-group-item" key={list.id} data-test="menu-list">
+          {addListButton}
           {list.name}
           {menuListIdInput}
           {menuListDestroyInput}
@@ -57,7 +73,7 @@ class AvailableListGroup extends React.Component {
     });
 
     return (
-      <div className="panel panel-default">
+      <div className="panel panel-default" data-test="menu-lists-available">
         <div className="panel-heading list-group-heading">Lists Available</div>
         {this.renderList(listGroupItems)}
       </div>
@@ -67,7 +83,8 @@ class AvailableListGroup extends React.Component {
 
 AvailableListGroup.propTypes = {
   lists: PropTypes.array.isRequired,
-  onClick: PropTypes.func
+  onClick: PropTypes.func.isRequired,
+  totalListCount: PropTypes.number.isRequired
 };
 
 export default AvailableListGroup;
