@@ -13,6 +13,9 @@
       <% if menu.persisted? && can?(:destroy, menu) %>
         <label for="menu-form-delete" class="btn btn-danger" data-test="menu-form-delete">Delete</label>
       <% end %>
+      <% if menu.persisted? %>
+        <%= link_to 'Download', account_establishment_menu_path(account, establishment, menu, format: :pdf, download: '1'), class: 'btn btn-success pull-right', data: { test: 'menu-download-button' } %>
+      <% end %>
     </div>
   <% end %>
   <% if menu.persisted? && can?(:destroy, menu) %>

@@ -7,6 +7,17 @@ class MenusController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html
+      format.pdf {
+        pdf = MenuBasicPdf.new @menu
+        send_data pdf.render, {
+          filename: pdf.filename,
+          type: 'application/pdf',
+          disposition: params.key?(:download) ? 'attachment' : 'inline'
+        }
+      }
+    end
   end
 
   def edit
@@ -15,7 +26,7 @@ class MenusController < ApplicationController
   def create
     if @menu.valid?
       @menu.save
-      redirect_to edit_account_establishment_path(@account, @establishment), notice: 'Menu created'
+      redirect_to edit_account_establishment_menu_path(@account, @establishment, @menu), notice: 'Menu created'
     else
       render :new
     end
@@ -23,13 +34,15 @@ class MenusController < ApplicationController
 
   def update
     if @menu.update(menu_params)
-      redirect_to edit_account_establishment_path(@account, @establishment), notice: 'Menu updated'
+      redirect_to edit_account_establishment_menu_path(@account, @establishment, @menu), notice: 'Menu updated'
     else
       render :edit
     end
   end
 
   def destroy
+    @menu.destroy
+    redirect_to edit_account_establishment_path(@account, @establishment), notice: 'Menu deleted'
   end
 
   private

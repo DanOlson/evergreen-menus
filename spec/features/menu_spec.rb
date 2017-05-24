@@ -24,6 +24,8 @@ feature 'menu management' do
 
     menu_form = PageObjects::Admin::MenuForm.new
     expect(menu_form).to be_displayed
+    expect(menu_form).to have_no_download_button
+    expect(menu_form).to have_no_menu_preview
 
     expect(menu_form).to have_available_list('Taps')
     expect(menu_form).to have_available_list('Bottles')
@@ -37,9 +39,11 @@ feature 'menu management' do
     expect(menu_form).to have_available_list('Specials')
 
     menu_form.submit
-
-    expect(establishment_form).to be_displayed
     expect(page).to have_css '[data-test="flash-success"]', text: "Menu created"
+    expect(menu_form).to have_download_button
+    expect(menu_form).to have_menu_preview
+
+    establishment_form.load(account_id: account.id, establishment_id: establishment.id)
     expect(establishment_form).to have_menu_named 'Taps - Mini Insert'
 
     establishment_form.menu_named('Taps - Mini Insert').visit
@@ -56,9 +60,9 @@ feature 'menu management' do
     expect(menu_form).to have_available_list('Specials')
 
     menu_form.submit
-
-    expect(establishment_form).to be_displayed
     expect(page).to have_css '[data-test="flash-success"]', text: "Menu updated"
+
+    establishment_form.load(account_id: account.id, establishment_id: establishment.id)
     expect(establishment_form.menu_count).to eq 1
     expect(establishment_form).to have_menu_named 'Bottles Large Insert'
   end
@@ -76,6 +80,8 @@ feature 'menu management' do
 
     menu_form = PageObjects::Admin::MenuForm.new
     expect(menu_form).to be_displayed
+    expect(menu_form).to have_no_download_button
+    expect(menu_form).to have_no_menu_preview
 
     expect(menu_form).to have_available_list('Taps')
     expect(menu_form).to have_available_list('Bottles')
@@ -93,9 +99,11 @@ feature 'menu management' do
     expect(menu_form).to have_selected_list('Specials')
 
     menu_form.submit
-
-    expect(establishment_form).to be_displayed
     expect(page).to have_css '[data-test="flash-success"]', text: "Menu created"
+    expect(menu_form).to have_download_button
+    expect(menu_form).to have_menu_preview
+
+    establishment_form.load(account_id: account.id, establishment_id: establishment.id)
     expect(establishment_form).to have_menu_named 'Beer'
 
     establishment_form.menu_named('Beer').visit
@@ -115,9 +123,9 @@ feature 'menu management' do
     expect(menu_form.lists_selected.lists.size).to eq 1
 
     menu_form.submit
-
-    expect(establishment_form).to be_displayed
     expect(page).to have_css '[data-test="flash-success"]', text: "Menu updated"
+
+    establishment_form.load(account_id: account.id, establishment_id: establishment.id)
     expect(establishment_form.menu_count).to eq 1
     expect(establishment_form).to have_menu_named 'Bottles Large Insert'
 
@@ -126,6 +134,11 @@ feature 'menu management' do
     expect(menu_form).to have_selected_list('Bottles')
     expect(menu_form).to have_available_list('Taps')
     expect(menu_form).to have_available_list('Specials')
+    expect(menu_form).to have_download_button
+    expect(menu_form).to have_menu_preview
+
+    menu_form.delete
+    expect(page).to have_css '[data-test="flash-success"]', text: "Menu deleted"
   end
 
   scenario 'staff without access cannot create a menu' do

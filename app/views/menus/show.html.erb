@@ -1,0 +1,5 @@
+<embed
+  src=<%= account_establishment_menu_path(@account, @establishment, @menu, format: :pdf) %>
+  width="100%"
+  height=<%= params.fetch(:height) { "1100" } %>
+>
