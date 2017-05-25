@@ -6,9 +6,24 @@ module PageObjects
       class ListsSelected < SitePrism::Section
         class List < SitePrism::Section
           element :remove_button, '[data-test="remove-list"]'
+          element :show_price_input, '[data-test="show-price"]'
+          element :show_price_input_label, '[data-test="show-price-label"]'
+          element :name_wrapper, '[data-test="list-name"]'
 
           def name
-            text
+            name_wrapper.text
+          end
+
+          def has_price_shown?
+            show_price_input.checked?
+          end
+
+          def hide_prices
+            uncheck(show_price_input_label.text) if has_price_shown?
+          end
+
+          def show_prices
+            check(show_price_input_label.text) unless has_price_shown?
           end
         end
 
@@ -22,9 +37,10 @@ module PageObjects
       class ListsAvailable < SitePrism::Section
         class List < SitePrism::Section
           element :add_button, '[data-test="add-list"]'
+          element :name_wrapper, '[data-test="list-name"]'
 
           def name
-            text
+            name_wrapper.text
           end
         end
 
@@ -86,6 +102,14 @@ module PageObjects
 
       def remove_list(name)
         selected_list_named(name).remove_button.click
+      end
+
+      def hide_prices(list:)
+        selected_list_named(list).hide_prices
+      end
+
+      def show_prices(list:)
+        selected_list_named(list).show_prices
       end
     end
   end

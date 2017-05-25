@@ -65,7 +65,7 @@ class AvailableListGroup extends React.Component {
       return (
         <li className="list-group-item" key={list.id} data-test="menu-list">
           {addListButton}
-          {list.name}
+          <span className="list-name" data-test="list-name">{list.name}</span>
           {menuListIdInput}
           {menuListDestroyInput}
         </li>

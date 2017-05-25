@@ -76,7 +76,10 @@ module EstablishmentsHelper
   def menu_json(menu)
     available_lists = menu.establishment.lists - menu.lists
     lists = menu.menu_lists.includes(:list).map do |ml|
-      { menu_list_id: ml.id }.merge(ml.list.attributes)
+      {
+        menu_list_id: ml.id,
+        show_price_on_menu: ml.show_price_on_menu
+      }.merge(ml.list.attributes)
     end
     menu.as_json.merge({
       lists: lists.as_json,

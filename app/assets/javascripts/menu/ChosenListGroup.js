@@ -19,7 +19,7 @@ class ChosenListGroup extends React.Component {
         title="Remove list"
         onClick={onClick}
         className={`btn btn-default btn-sm move-list-button`}>
-        <span className="glyphicon glyphicon-remove"></span>
+        <span className="glyphicon glyphicon-minus"></span>
       </a>
     );
   }
@@ -43,10 +43,33 @@ class ChosenListGroup extends React.Component {
     const { lists } = this.props;
     const listGroupItems = lists.map((list, index) => {
       const removeButton = this.renderRemoveButton(list.id);
+      const showPriceInputId = `menu_menu_lists_attributes_${index}_show_price_on_menu`
+      const showPrice = {
+        type: 'checkbox',
+        name: `menu[menu_lists_attributes][${index}][show_price_on_menu]`,
+        id: showPriceInputId,
+        'data-test': 'show-price',
+        value: '1'
+      }
+      // New records are always checked
+      if (list.show_price_on_menu || !list.menu_list_id) {
+        showPrice.defaultChecked = 'checked'
+      }
       return (
         <li className="list-group-item" key={list.id} data-test="menu-list">
           {removeButton}
-          {list.name}
+          <span className="list-name" data-test="list-name">{list.name}</span>
+          <input
+            type="hidden"
+            name={`menu[menu_lists_attributes][${index}][show_price_on_menu]`}
+            value="0"
+          />
+          <label
+            htmlFor={showPriceInputId}
+            className="menu-list-show-price"
+            data-test="show-price-label">Display Price
+            <input {...showPrice} />
+          </label>
           <input
             type="hidden"
             name={`menu[menu_lists_attributes][${index}][id]`}

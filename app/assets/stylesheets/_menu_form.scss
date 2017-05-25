@@ -6,4 +6,13 @@
   .list-group-heading {
     font-weight: 700;
   }
+
+  .menu-list-show-price {
+    line-height: 30px;
+    vertical-align: middle;
+    float: right;
+    input {
+      margin-left: 10px;
+    }
+  }
 }

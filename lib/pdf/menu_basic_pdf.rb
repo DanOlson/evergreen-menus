@@ -1,10 +1,11 @@
 class MenuBasicPdf
   include ActionView::Helpers::NumberHelper
 
-  attr_reader :menu
+  attr_reader :menu, :lists
 
   def initialize(menu)
     @menu = menu
+    @lists = menu.menu_lists.joins(:list).select('lists.*, menu_lists.show_price_on_menu')
   end
 
   def filename
@@ -45,7 +46,7 @@ class MenuBasicPdf
   end
 
   def body(pdf)
-    menu.lists.each do |list|
+    lists.each do |list|
       render_list list: list, pdf: pdf
     end
   end
@@ -53,8 +54,10 @@ class MenuBasicPdf
   def render_list(list:, pdf:)
     list_heading list: list, pdf: pdf
 
-    list.beers.each do |beer|
-      menu_item beer, pdf: pdf
+    beers = Beer.where(list: list)
+
+    beers.each do |beer|
+      menu_item beer, pdf: pdf, show_price: list.show_price_on_menu?
     end
   end
 
@@ -62,13 +65,15 @@ class MenuBasicPdf
     pdf.pad(20) { pdf.text "<u>#{list.name}</u>", size: 14, inline_format: true }
   end
 
-  def menu_item(beer, pdf:)
+  def menu_item(beer, pdf:, show_price:)
     pdf.float do
       pdf.text beer.name
     end
 
-    pdf.float do
-      pdf.text number_to_currency(beer.price), align: :right
+    if show_price
+      pdf.float do
+        pdf.text number_to_currency(beer.price), align: :right
+      end
     end
 
     pdf.move_down 13

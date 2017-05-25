@@ -50,7 +50,15 @@ class MenusController < ApplicationController
   def menu_params
     params.require(:menu).permit(
       :name,
-      { menu_lists_attributes: [:id, :list_id, :position, :_destroy] }
+      {
+        menu_lists_attributes: [
+          :id,
+          :list_id,
+          :position,
+          :show_price_on_menu,
+          :_destroy
+        ]
+      }
     )
   end
 end

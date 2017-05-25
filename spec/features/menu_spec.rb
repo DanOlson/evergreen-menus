@@ -38,6 +38,8 @@ feature 'menu management' do
     expect(menu_form).to have_available_list('Bottles')
     expect(menu_form).to have_available_list('Specials')
 
+    expect(menu_form.selected_list_named('Taps')).to have_price_shown
+
     menu_form.submit
     expect(page).to have_css '[data-test="flash-success"]', text: "Menu created"
     expect(menu_form).to have_download_button
@@ -51,9 +53,14 @@ feature 'menu management' do
     expect(menu_form).to be_displayed
     expect(menu_form).to have_selected_list('Taps')
 
+    expect(menu_form.selected_list_named('Taps')).to have_price_shown
+
     menu_form.name = 'Bottles Large Insert'
     menu_form.remove_list('Taps')
     menu_form.select_list('Bottles')
+
+    expect(menu_form.selected_list_named('Bottles')).to have_price_shown
+    menu_form.hide_prices(list: 'Bottles')
 
     expect(menu_form).to have_selected_list('Bottles')
     expect(menu_form).to have_available_list('Taps')
@@ -65,6 +72,14 @@ feature 'menu management' do
     establishment_form.load(account_id: account.id, establishment_id: establishment.id)
     expect(establishment_form.menu_count).to eq 1
     expect(establishment_form).to have_menu_named 'Bottles Large Insert'
+
+    establishment_form.menu_named('Bottles Large Insert').visit
+    expect(menu_form.selected_list_named('Bottles')).to_not have_price_shown
+
+    menu_form.show_prices(list: 'Bottles')
+    menu_form.submit
+
+    expect(menu_form.selected_list_named('Bottles')).to have_price_shown
   end
 
   scenario 'staff with establishment access can manage a menu', :js, :admin do
