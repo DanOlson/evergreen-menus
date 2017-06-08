@@ -35,4 +35,8 @@ module ApplicationHelper
   def admin_user?
     user_signed_in? && current_user.role == Role.admin
   end
+
+  def account_establishments(account)
+    account.establishments.accessible_by(current_ability)
+  end
 end
