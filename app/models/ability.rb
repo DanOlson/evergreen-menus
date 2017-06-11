@@ -33,7 +33,7 @@ class Ability
     can :manage, Establishment, account_id: user.account_id
     can :manage, List, establishment_id: user.account.establishment_ids
     can :manage, Menu, establishment_id: user.account.establishment_ids
-    can :manage, Account, id: user.account_id
+    can :update, Account, id: user.account_id
     can :manage, User, account_id: user.account_id
     can :manage, UserInvitation, account_id: user.account_id
     can :read, Role, id: [Role.manager.id, Role.staff.id]

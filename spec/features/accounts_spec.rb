@@ -6,6 +6,47 @@ feature 'account management' do
   let(:bar_1) { create :establishment, name: "Bar 1", account: account }
   let(:bar_2) { create :establishment, name: "Bar 2", account: account }
 
+  describe 'creating an account' do
+    scenario 'admin can create an account' do
+      admin = create :user, :admin
+      login admin
+
+      account_list = PageObjects::Admin::AccountsList.new
+      account_list.load
+
+      expect(account_list).to have_new_account_button
+      account_list.new_account_button.click
+
+      form = PageObjects::Admin::AccountForm.new
+      form.name = 'Lebowski, Inc.'
+
+      form.submit
+      expect(page).to have_css '[data-test="flash-success"]', text: 'Account created'
+      expect(page).to have_css 'h3', text: 'Lebowski, Inc.'
+    end
+
+    scenario 'manager cannot access accounts index' do
+      manager = create :user, :manager, account: account
+      login manager
+
+      account_list = PageObjects::Admin::AccountsList.new
+      account_list.load
+
+      expect(account_list).to_not be_displayed
+      expect(page).to have_css '[data-test="flash-alert"]', text: 'You are not authorized to access this page'
+    end
+
+    scenario 'staff cannot access accounts index' do
+      login user
+
+      account_list = PageObjects::Admin::AccountsList.new
+      account_list.load
+
+      expect(account_list).to_not be_displayed
+      expect(page).to have_css '[data-test="flash-alert"]', text: 'You are not authorized to access this page'
+    end
+  end
+
   context 'authenticated' do
     before do
       user.establishments << bar_1

@@ -8,7 +8,7 @@
         <% if admin_user? %>
           <%= render 'layouts/admin_header' %>
         <% else %>
-          <%= render partial: 'layouts/customer_header', locals: { account: @account } %>
+          <%= render partial: 'layouts/customer_header', locals: { account: current_user.account } %>
         <% end %>
       <% else %>
         <ul class="nav navbar-nav navbar-right">
