@@ -13,6 +13,10 @@ module PageObjects
         name_input.set string
       end
 
+      def activate
+        check 'Active'
+      end
+
       def submit
         submit_button.click
       end

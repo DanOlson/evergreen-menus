@@ -8,25 +8,27 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <div class="checkbox">
-          <label>
-            <%= f.check_box :active, data: { test: 'account-active' } %>
-            Active
-          </label>
+      <% if can? :activate, @account %>
+        <div class="form-group">
+          <div class="checkbox">
+            <label>
+              <%= f.check_box :active, data: { test: 'account-active' } %>
+              Active
+            </label>
+          </div>
         </div>
-      </div>
+      <% end %>
 
       <div class="form-group">
-        <%= f.submit "Create Account", class: 'btn btn-primary', data: { test: 'account-form-submit' } %>
+        <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'account-form-submit' } %>
         <%= link_to 'Cancel', accounts_path, class: 'btn btn-default', data: { test: 'account-form-cancel' } %>
-        <% if @account.persisted? %>
+        <% if @account.persisted? && can?(:delete, @account) %>
           <label for="account-form-delete" class="btn btn-danger" data-test="account-form-delete">Delete</label>
         <% end %>
       </div>
     </div>
   <% end %>
-  <% if @account.persisted? %>
+  <% if @account.persisted? && can?(:delete, @account) %>
     <%= button_to 'Delete', account_path(@account), method: :delete, class: 'hidden', id: 'account-form-delete', data: { confirm: 'Are you sure you want to delete this account?' } %>
   <% end %>
 <% end %>

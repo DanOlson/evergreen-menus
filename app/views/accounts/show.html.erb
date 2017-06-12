@@ -8,5 +8,8 @@
       <div class="well">Add an establishment to get started</div>
     <% end %>
   </div>
-  <%= link_to "Add Establishment", new_account_establishment_path(@account), class: 'btn btn-primary', data: { test: 'add-establishment' } %>
+  <%= link_to "Add Establishment", new_account_establishment_path(@account), class: 'btn btn-success', data: { test: 'add-establishment' } %>
+  <% if can? :edit, @account %>
+    <%= link_to 'Edit Account', edit_account_path(@account), class: 'btn btn-primary', data: { test: 'edit-account' } %>
+  <% end %>
 <% end %>

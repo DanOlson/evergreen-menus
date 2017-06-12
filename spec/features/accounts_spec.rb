@@ -6,26 +6,59 @@ feature 'account management' do
   let(:bar_1) { create :establishment, name: "Bar 1", account: account }
   let(:bar_2) { create :establishment, name: "Bar 2", account: account }
 
-  describe 'creating an account' do
-    scenario 'admin can create an account' do
-      admin = create :user, :admin
-      login admin
+  scenario 'admin can create, edit, and delete an account', :js, :admin do
+    admin = create :user, :admin
+    login admin
 
-      account_list = PageObjects::Admin::AccountsList.new
-      account_list.load
+    account_list = PageObjects::Admin::AccountsList.new
+    account_list.load
 
-      expect(account_list).to have_new_account_button
-      account_list.new_account_button.click
+    expect(account_list).to have_new_account_button
+    account_list.new_account_button.click
 
-      form = PageObjects::Admin::AccountForm.new
-      form.name = 'Lebowski, Inc.'
+    form = PageObjects::Admin::AccountForm.new
+    expect(form).to have_active_input
+    form.name = 'Lebowski, Inc.'
+    form.activate
 
-      form.submit
-      expect(page).to have_css '[data-test="flash-success"]', text: 'Account created'
-      expect(page).to have_css 'h3', text: 'Lebowski, Inc.'
-    end
+    form.submit
+    expect(page).to have_css '[data-test="flash-success"]', text: 'Account created'
+    expect(page).to have_css 'h3', text: 'Lebowski, Inc.'
 
-    scenario 'manager cannot access accounts index' do
+    account_details = PageObjects::Admin::AccountDetails.new
+    account_details.edit_button.click
+
+    expect(form).to be_displayed
+    form.name = 'Lebowski, Incorporated'
+    form.submit
+
+    expect(account_details).to be_displayed
+    expect(page).to have_css '[data-test="flash-success"]', text: 'Account updated'
+    expect(page).to have_css 'h3', text: 'Lebowski, Incorporated'
+
+    account_details.edit_button.click
+    form.delete
+
+    expect(account_list).to be_displayed
+    expect(page).to have_css '[data-test="flash-success"]', text: 'Account deleted'
+    expect(account_list).to_not have_account_named 'Lebowski, Incorporated'
+  end
+
+  scenario 'manager can edit their account, but cannot activate, deactivate or delete it' do
+    manager = create :user, :manager, account: account
+    login manager
+
+    account_details = PageObjects::Admin::AccountDetails.new
+    account_details.edit_button.click
+
+    form = PageObjects::Admin::AccountForm.new
+    expect(form).to be_displayed
+    expect(form).to have_no_active_input
+    expect(form).to have_no_delete_button
+  end
+
+  describe 'access to accounts index' do
+    scenario 'manager does not have access' do
       manager = create :user, :manager, account: account
       login manager
 
@@ -36,7 +69,7 @@ feature 'account management' do
       expect(page).to have_css '[data-test="flash-alert"]', text: 'You are not authorized to access this page'
     end
 
-    scenario 'staff cannot access accounts index' do
+    scenario 'staff does not have access' do
       login user
 
       account_list = PageObjects::Admin::AccountsList.new
@@ -55,11 +88,18 @@ feature 'account management' do
       login user
     end
 
-    scenario 'user can access their account' do
-      expect(page).to have_current_path "/accounts/#{user.account_id}"
-      expect(page).to have_content account.name
-      expect(page).to have_content "Bar 1"
-      expect(page).to have_content "Bar 2"
+    scenario 'staff can access their account, but not edit it' do
+      account_details = PageObjects::Admin::AccountDetails.new
+      expect(account_details).to be_displayed
+      expect(account_details).to have_current_path "/accounts/#{user.account_id}"
+      expect(account_details.name).to eq account.name
+      expect(account_details).to have_establishment 'Bar 1'
+      expect(account_details).to have_establishment 'Bar 2'
+      expect(account_details).to have_no_edit_button
+      visit "/accounts/#{user.account_id}/edit"
+
+      expect(account_details).to be_displayed
+      expect(page).to have_css '[data-test=flash-alert]', text: 'You are not authorized to access this page.'
     end
 
     scenario 'user cannot access other accounts' do
@@ -67,7 +107,7 @@ feature 'account management' do
 
       visit "/accounts/#{other_user.account_id}"
       expect(page).to have_current_path "/accounts/#{user.account_id}"
-      expect(page).to have_content 'You are not authorized to access this page.'
+      expect(page).to have_css '[data-test=flash-alert]', text: 'You are not authorized to access this page.'
     end
 
     describe 'adding staff' do
