@@ -9,7 +9,7 @@ class EstablishmentsController < ApplicationController
     if @establishment.valid?
       @establishment.account = @account
       @establishment.save
-      redirect_to @account, notice: "Establishment created"
+      redirect_to edit_account_establishment_path(@account, @establishment), notice: "Establishment created"
     else
       errors = @establishment.errors.full_messages
       logger.debug "Errors creating establishment: #{errors}"
@@ -19,6 +19,10 @@ class EstablishmentsController < ApplicationController
   end
 
   def edit
+  end
+
+  def show
+    redirect_to edit_account_establishment_path(@account, @establishment)
   end
 
   def update

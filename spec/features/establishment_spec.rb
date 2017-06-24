@@ -18,9 +18,8 @@ feature 'establishment management' do
 
     form.submit
 
-    expect(page).to have_current_path "/accounts/#{user.account_id}"
+    expect(form).to be_displayed
     expect(page).to have_css "div.alert-success", text: "Establishment created"
-    expect(page).to have_selector "[data-test='establishment']", text: "The Lanes"
   end
 
   scenario 'editing an establishment' do
@@ -40,7 +39,7 @@ feature 'establishment management' do
 
     form.submit
 
-    expect(page).to have_current_path "/accounts/#{user.account_id}/establishments/#{establishment.id}/edit"
+    expect(form).to be_displayed
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(page).to have_selector "input[value='Sobchak Security']"
   end
