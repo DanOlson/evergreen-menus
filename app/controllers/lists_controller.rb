@@ -18,7 +18,7 @@ class ListsController < ApplicationController
   def create
     if @list.valid?
       @list.save
-      redirect_to edit_list, notice: 'List created'
+      redirect_to edit_account_establishment_path(@account, @establishment), notice: 'List created'
     else
       errors = @list.errors.full_messages
       logger.debug "Errors creating list: #{errors}"
@@ -29,7 +29,7 @@ class ListsController < ApplicationController
 
   def update
     if @list.update list_params
-      redirect_to edit_list, notice: 'List updated'
+      redirect_to edit_account_establishment_path(@account, @establishment), notice: 'List updated'
     else
       errors = @list.errors.full_messages
       logger.debug "Errors updating list: #{errors}"
@@ -44,10 +44,6 @@ class ListsController < ApplicationController
   end
 
   private
-
-  def edit_list
-    edit_account_establishment_list_path @account, @establishment, @list
-  end
 
   def list_params
     params.require(:list).permit(

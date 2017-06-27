@@ -123,6 +123,10 @@ module PageObjects
         lists.find { |l| l.name == list_name }
       end
 
+      def click_list_named(list_name)
+        list_named(list_name).link.click
+      end
+
       def menus
         menus_panel.menus
       end

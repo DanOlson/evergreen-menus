@@ -94,6 +94,9 @@ feature 'establishment management' do
     form.submit
 
     expect(page).to have_css 'div.alert-success', text: 'List created'
+    expect(establishment_form).to be_displayed
+    establishment_form.click_list_named('Beers')
+    expect(form).to be_displayed
     expect(form.beers.size).to eq 3
 
     beers = establishment.beers.map &:name
@@ -108,6 +111,9 @@ feature 'establishment management' do
 
     form.submit
     expect(page).to have_css "div.alert-success", text: "List updated"
+    expect(establishment_form).to be_displayed
+    establishment_form.click_list_named('Beers')
+    expect(form).to be_displayed
     expect(form.beers.size).to eq 2
   end
 
@@ -140,6 +146,7 @@ feature 'establishment management' do
 
     form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
+    establishment_form.click_list_named 'Beers'
     expect(form.beers.size).to eq 3
 
     beers = establishment.beers.map { |b| [b.name, b.price_in_cents, b.description] }
@@ -154,6 +161,7 @@ feature 'establishment management' do
 
     form.submit
     expect(page).to have_css "div.alert-success", text: "List updated"
+    establishment_form.click_list_named 'Beers'
     expect(all('[data-test="beer-input"]').size).to eq 2
   end
 
@@ -166,12 +174,16 @@ feature 'establishment management' do
     establishment_form.add_list
 
     form = PageObjects::Admin::ListForm.new
+    form.set_name 'Beers'
 
     form.add_beer 'Bear Republic Racer 5'
     form.add_beer 'Indeed Day Tripper'
 
     form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
+    expect(establishment_form).to be_displayed
+    establishment_form.click_list_named('Beers')
+    expect(form).to be_displayed
     expect(form.beers.size).to eq 2
 
     form.remove_beer 'Bear Republic Racer 5'
@@ -189,7 +201,9 @@ feature 'establishment management' do
 
     form.submit
     expect(page).to have_css "div.alert-success", text: "List updated"
-    expect(form.beers.size).to eq 1
+    expect(establishment_form).to be_displayed
+    establishment_form.click_list_named('Beers')
+    expect(form).to be_displayed
 
     expect(form).to have_beer_named 'Indeed Day Tripper'
   end
@@ -231,7 +245,6 @@ feature 'establishment management' do
 
     form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
-    expect(form.beers.size).to eq 6
 
     visit 'http://test.beermapper.ember'
     fill_in 'search-field', with: 'Deschutes'
@@ -274,9 +287,7 @@ feature 'establishment management' do
 
     taps_form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
-    expect(taps_form.beers.size).to eq 6
 
-    taps_form.cancel
     click_link 'Add List'
 
     bottles_form = PageObjects::Admin::ListForm.new
@@ -289,9 +300,7 @@ feature 'establishment management' do
 
     bottles_form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
-    expect(bottles_form.beers.size).to eq 4
 
-    bottles_form.cancel
     establishment_form = PageObjects::Admin::EstablishmentForm.new
     expect(establishment_form.lists.size).to eq 2
 
@@ -345,6 +354,7 @@ feature 'establishment management' do
 
     form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
+    establishment_form.click_list_named 'Beers'
     expect(form.beers.size).to eq 6
     list_url = page.current_url
 
@@ -440,9 +450,8 @@ feature 'establishment management' do
     form.add_beer 'Deschutes Big Rig'
 
     form.submit
-    form.cancel
 
-    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    expect(establishment_form).to be_displayed
     list = establishment_form.list_named 'Taps'
 
     expect(list).to have_toggle_snippet_button
