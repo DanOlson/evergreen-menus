@@ -15,7 +15,7 @@ describe 'user profile management' do
   end
 
   scenario 'logged in user can edit their profile' do
-    click_link 'Profile'
+    find('[data-test="profile-link"]').click
     fill_in 'Email', with: 'walteristhebest@lebowski.me'
     fill_in 'Current password', with: 'password'
     find('[data-test="edit-user-submit"]').click
@@ -24,7 +24,7 @@ describe 'user profile management' do
     user.reload
     expect(user.email).to eq 'walteristhebest@lebowski.me'
 
-    click_link 'Profile'
+    find('[data-test="profile-link"]').click
     fill_in 'user[password]', with: 'drowssap'
     fill_in 'user[password_confirmation]', with: 'drowssap'
     fill_in 'user[current_password]', with: 'password'
