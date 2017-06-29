@@ -122,6 +122,8 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    mailgun-ruby (1.1.6)
+      rest-client (~> 2.0)
     mechanize (2.7.4)
       domain_name (~> 0.5, >= 0.5.1)
       http-cookie (~> 1.0)
@@ -140,6 +142,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.0.1)
+    netrc (0.11.0)
     newrelic_rpm (3.15.2.317)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
@@ -188,6 +191,10 @@ GEM
       json (~> 1.4)
     responders (2.1.2)
       railties (>= 4.2.0, < 5.1)
+    rest-client (2.0.2)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     rspec-core (3.5.4)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -270,6 +277,7 @@ DEPENDENCIES
   kaminari (~> 0.15.1)
   launchy (~> 2.4.3)
   logvisible
+  mailgun-ruby (~> 1.1.6)
   newrelic_rpm
   pg (~> 0.18.0)
   prawn (~> 2.2)
@@ -284,4 +292,4 @@ DEPENDENCIES
   whenever (~> 0.9.7)
 
 BUNDLED WITH
-   1.12.5
+   1.15.1

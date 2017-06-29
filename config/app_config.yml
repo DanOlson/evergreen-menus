@@ -3,14 +3,6 @@ defaults: &defaults
   secret_token: caf9c51fd668b03d9aa29c7dcbdbd169cc3b07f04394449745e03acda11bf25899dcc806804596c6e4ac716f8929a08334ce1b29358db860236d18bd5ae41b56
   features:
     managed_menus: true
-  mail_config:
-    address: smtp.gmail.com
-    port:  587
-    domain: gmail.com
-    user_name: beermapperservice@gmail.com
-    password: 'not-a-real-password'
-    authentication: plain
-    enable_starttls_auto: true
 
 development:
   <<: *defaults

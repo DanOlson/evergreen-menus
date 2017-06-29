@@ -68,6 +68,16 @@ Beermapper::Application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = { host: 'admin.beermapper.com' }
+  config.action_mailer.delivery_method = :mailgun
+
+  ###
+  # Satisfy Mailgun's need to have api_key and domain keys in config hash
+  # while simultaneously allowing for lazy loading of these keys with
+  # values from APP_CONFIG. APP_CONFIG is undefined at the time this
+  # file is parsed :(
+  config.action_mailer.mailgun_settings = Class.new(Hash) do
+    def has_key?(*); true; end
+  end.new { |h, key| h[key] = APP_CONFIG[:mailgun][key] }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found).

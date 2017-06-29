@@ -18,6 +18,14 @@ Beermapper::Application.configure do
 
   config.action_mailer.default_url_options = { host: 'admin.beermapper.dev' }
 
+  ###
+  # Uncomment for local testing. Must add Mailgun api_key
+  # and domain to app_config.yml as well.
+  # config.action_mailer.delivery_method = :mailgun
+  # config.action_mailer.mailgun_settings = Class.new(Hash) do
+  #   def has_key?(*); true; end
+  # end.new { |h, key| h[key] = APP_CONFIG[:mailgun][key] }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
