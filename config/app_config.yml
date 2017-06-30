@@ -1,8 +1,6 @@
 defaults: &defaults
   api_key: ISMZZ2M9HOCBJlL35bgc3ukl14uVCY_SHDVxhLxGQB4
   secret_token: caf9c51fd668b03d9aa29c7dcbdbd169cc3b07f04394449745e03acda11bf25899dcc806804596c6e4ac716f8929a08334ce1b29358db860236d18bd5ae41b56
-  features:
-    managed_menus: true
 
 development:
   <<: *defaults
