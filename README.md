@@ -119,6 +119,14 @@ NameVirtualHost *:80
 
 `bundle`
 
+### Node
+
+```
+brew install nvm
+nvm install 6.3.1
+npm i
+```
+
 ### Bootstrap
 
 ```
