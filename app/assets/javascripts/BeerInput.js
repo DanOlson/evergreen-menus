@@ -59,7 +59,7 @@ class BeerInput extends React.Component {
   renderNameInput(className) {
     const { appId, name } = this.state;
     return (
-      <div className="col-sm-3">
+      <div className="col-sm-3 col-xs-8">
         <label htmlFor={`list_beers_attributes_${appId}_name`} className="sr-only">
           Name
         </label>
@@ -79,7 +79,7 @@ class BeerInput extends React.Component {
   renderPriceInput() {
     const { showPrice } = this.props;
     const { appId, price } = this.state;
-    const classNames = ['col-sm-2'];
+    const classNames = ['col-sm-2', 'col-xs-4'];
     if (!showPrice) classNames.push('hidden');
     return (
       <div className={classNames.join(' ')}>
@@ -106,7 +106,7 @@ class BeerInput extends React.Component {
   renderDescriptionInput() {
     const { showDescription } = this.props;
     const { appId, description } = this.state;
-    const classNames = ['col-sm-5'];
+    const classNames = ['col-sm-5 col-xs-8'];
     if (!showDescription) classNames.push('hidden');
     return (
       <div className={classNames.join(' ')}>
@@ -140,12 +140,12 @@ class BeerInput extends React.Component {
             {nameInput}
             {priceInput}
             {descriptionInput}
-            <div className="col-sm-1 remove">
+            <div className="col-sm-1 col-xs-4 remove">
               {actionable}
             </div>
           </div>
           <div className="row">
-            <hr className="col-sm-10" />
+            <div className="col-sm-10 col-xs-12 beer-separator"></div>
           </div>
           <input
             type="hidden"

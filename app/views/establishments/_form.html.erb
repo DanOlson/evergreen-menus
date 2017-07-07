@@ -48,13 +48,11 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <%= f.submit submit_text, class: 'btn btn-primary col-sm-offset-1', data: { test: 'establishment-form-submit' } %>
-          <%= link_to 'Cancel', account_path(account), class: 'btn btn-default', data: { test: 'establishment-form-cancel' } %>
-          <% if establishment.persisted? && can?(:destroy, establishment) %>
-            <label for="establishment-form-delete" class="btn btn-danger" data-test="establishment-form-delete">Delete</label>
-          <% end %>
-        </div>
+        <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'establishment-form-submit' } %>
+        <%= link_to 'Cancel', account_path(account), class: 'btn btn-default', data: { test: 'establishment-form-cancel' } %>
+        <% if establishment.persisted? && can?(:destroy, establishment) %>
+          <label for="establishment-form-delete" class="btn btn-danger" data-test="establishment-form-delete">Delete</label>
+        <% end %>
       <% end %>
     <% end %>
     <% if establishment.persisted? && can?(:destroy, establishment) %>

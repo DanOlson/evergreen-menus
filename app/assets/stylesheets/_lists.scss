@@ -11,10 +11,22 @@
     }
   }
 
-  hr {
-    margin-bottom: 5px;
-    margin-top: 10px;
+  .beer-separator {
+    margin: 8px 8px;
   }
 
   padding-bottom: 20px;
+
+  @media (max-width: 768px) {
+    .panel {
+      border: none;
+    }
+    .panel-heading {
+      display: none;
+    }
+
+    .beer-separator {
+      margin: 12px 12px;
+    }
+  }
 }

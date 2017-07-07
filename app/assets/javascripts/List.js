@@ -73,7 +73,7 @@ class List extends React.Component {
         <div className="panel-heading">
           <h3 className="panel-title">{name}</h3>
         </div>
-        <div className="panel-body row">
+        <div className="panel-body">
           <div className="establishment-beer-list col-sm-offset-1">
             <div className="form-group">
               <div className="row">
