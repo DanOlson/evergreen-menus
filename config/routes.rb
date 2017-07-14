@@ -25,6 +25,7 @@ Beermapper::Application.routes.draw do
     resources :establishments do
       resources :lists
       resources :menus
+      get 'menu_preview' => 'menus#preview'
     end
 
     resources :users, path: '/staff'

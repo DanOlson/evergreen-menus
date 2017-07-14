@@ -10,7 +10,30 @@ class MenusController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf {
-        pdf = MenuBasicPdf.new @menu
+        pdf = MenuBasicPdf.new menu: @menu
+        send_data pdf.render, {
+          filename: pdf.filename,
+          type: 'application/pdf',
+          disposition: params.key?(:download) ? 'attachment' : 'inline'
+        }
+      }
+    end
+  end
+
+  def preview
+    @menu = Menu.new menu_params
+    menu_list_attrs = params[:menu][:menu_lists_attributes].values
+    menu_list_ids = menu_list_attrs.map { |attrs| attrs[:id] }
+    lists = MenuList.where(id: menu_list_ids).joins(:list).select('lists.*, menu_lists.show_price_on_menu')
+    ordered_lists = menu_list_attrs.inject([]) do |memo, menu_list_attr|
+      list = lists.find { |l| menu_list_attr[:list_id].to_i == l.id }
+      list.show_price_on_menu = menu_list_attr[:show_price_on_menu] == '1'
+      memo << list
+    end
+    @menu.updated_at = Time.now
+    respond_to do |format|
+      format.pdf {
+        pdf = MenuBasicPdf.new menu: @menu, lists: ordered_lists
         send_data pdf.render, {
           filename: pdf.filename,
           type: 'application/pdf',
@@ -49,6 +72,7 @@ class MenusController < ApplicationController
 
   def menu_params
     params.require(:menu).permit(
+      :id,
       :name,
       {
         menu_lists_attributes: [

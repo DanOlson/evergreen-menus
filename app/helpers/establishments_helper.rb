@@ -74,7 +74,10 @@ module EstablishmentsHelper
   end
 
   def menu_json(menu)
-    available_lists = menu.establishment.lists - menu.lists
+    establishment   = menu.establishment
+    account         = establishment.account
+    preview_path    = account_establishment_menu_preview_path(account, establishment, format: :pdf)
+    available_lists = establishment.lists - menu.lists
     lists = menu.menu_lists.includes(:list).map do |ml|
       {
         menu_list_id: ml.id,
@@ -83,7 +86,8 @@ module EstablishmentsHelper
     end
     menu.as_json.merge({
       lists: lists.as_json,
-      listsAvailable: available_lists.as_json
+      listsAvailable: available_lists.as_json,
+      previewPath: preview_path
     }).to_json
   end
 

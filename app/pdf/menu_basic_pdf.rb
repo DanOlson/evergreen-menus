@@ -3,9 +3,9 @@ class MenuBasicPdf
 
   attr_reader :menu, :lists
 
-  def initialize(menu)
+  def initialize(menu:, lists: default_lists)
     @menu = menu
-    @lists = menu.menu_lists.joins(:list).select('lists.*, menu_lists.show_price_on_menu')
+    @lists = lists
   end
 
   def filename
@@ -29,6 +29,10 @@ class MenuBasicPdf
   end
 
   private
+
+  def default_lists
+    menu.menu_lists.joins(:list).select('lists.*, menu_lists.show_price_on_menu')
+  end
 
   def header(pdf)
     pdf.text menu.name, align: :center, size: 18
