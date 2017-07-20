@@ -1,4 +1,4 @@
-import React, { propTypes } from 'react';
+import React, { PropTypes } from 'react';
 
 class MenuPreview extends React.Component {
   constructor(props) {
@@ -12,13 +12,16 @@ class MenuPreview extends React.Component {
         <object
           data={this.props.previewPath}
           type="application/pdf"
-          height="1200"
+          height="800"
           style={{width: "100%"}}>
-          <param name="foo" value="bar" />
         </object>
       </div>
-    )
+    );
   }
+}
+
+MenuPreview.propTypes = {
+  previewPath: PropTypes.string.isRequired
 }
 
 export default MenuPreview;

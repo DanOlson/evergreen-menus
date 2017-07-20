@@ -4,6 +4,7 @@ class MenusController < ApplicationController
   load_and_authorize_resource :menu, through: :establishment
 
   def new
+    @menu.name = 'New Menu'
   end
 
   def show
@@ -21,19 +22,9 @@ class MenusController < ApplicationController
   end
 
   def preview
-    @menu = Menu.new menu_params
-    menu_list_attrs = params[:menu][:menu_lists_attributes].values
-    menu_list_ids = menu_list_attrs.map { |attrs| attrs[:id] }
-    lists = MenuList.where(id: menu_list_ids).joins(:list).select('lists.*, menu_lists.show_price_on_menu')
-    ordered_lists = menu_list_attrs.inject([]) do |memo, menu_list_attr|
-      list = lists.find { |l| menu_list_attr[:list_id].to_i == l.id }
-      list.show_price_on_menu = menu_list_attr[:show_price_on_menu] == '1'
-      memo << list
-    end
-    @menu.updated_at = Time.now
     respond_to do |format|
       format.pdf {
-        pdf = MenuBasicPdf.new menu: @menu, lists: ordered_lists
+        pdf = MenuPreviewGenerator.generate menu_params, current_ability
         send_data pdf.render, {
           filename: pdf.filename,
           type: 'application/pdf',

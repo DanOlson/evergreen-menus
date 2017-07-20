@@ -40,20 +40,22 @@ class ChosenListGroup extends React.Component {
   }
 
   render() {
-    const { lists } = this.props;
+    const { lists, onShowPriceChange } = this.props;
     const listGroupItems = lists.map((list, index) => {
-      const removeButton = this.renderRemoveButton(list.id);
+      const onChange = event => onShowPriceChange(list.id, event.target.checked);
+      const removeButton     = this.renderRemoveButton(list.id);
       const showPriceInputId = `menu_menu_lists_attributes_${index}_show_price_on_menu`
       const showPrice = {
         type: 'checkbox',
         name: `menu[menu_lists_attributes][${index}][show_price_on_menu]`,
         id: showPriceInputId,
         'data-test': 'show-price',
-        value: '1'
+        value: '1',
+        onChange
       }
       // New records are always checked
-      if (list.show_price_on_menu || !list.menu_list_id) {
-        showPrice.defaultChecked = 'checked'
+      if (list.show_price_on_menu === undefined || list.show_price_on_menu) {
+        showPrice.defaultChecked = 'checked';
       }
       return (
         <li className="list-group-item" key={list.id} data-test="menu-list">
@@ -100,7 +102,8 @@ class ChosenListGroup extends React.Component {
 
 ChosenListGroup.propTypes = {
   lists: PropTypes.array.isRequired,
-  onRemove: PropTypes.func.isRequired
+  onRemove: PropTypes.func.isRequired,
+  onShowPriceChange: PropTypes.func.isRequired
 };
 
 export default ChosenListGroup;

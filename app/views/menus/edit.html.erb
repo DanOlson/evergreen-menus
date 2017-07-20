@@ -4,11 +4,3 @@
   menu: @menu,
   submit_text: 'Update'
 } %>
-
-<%= render 'shared/panel', title: 'Preview', data_test: 'menu-preview' do %>
-  <object
-    data=<%= account_establishment_menu_path(@account, @establishment, @menu, format: :pdf) %>
-    type="application/pdf"
-    height="1200"
-    style="width:100%">
-<% end %>

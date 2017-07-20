@@ -25,7 +25,7 @@ feature 'menu management' do
     menu_form = PageObjects::Admin::MenuForm.new
     expect(menu_form).to be_displayed
     expect(menu_form).to have_no_download_button
-    expect(menu_form).to have_no_menu_preview
+    expect(menu_form).to have_menu_preview
 
     expect(menu_form).to have_available_list('Taps')
     expect(menu_form).to have_available_list('Bottles')
@@ -96,7 +96,7 @@ feature 'menu management' do
     menu_form = PageObjects::Admin::MenuForm.new
     expect(menu_form).to be_displayed
     expect(menu_form).to have_no_download_button
-    expect(menu_form).to have_no_menu_preview
+    expect(menu_form).to have_menu_preview
 
     expect(menu_form).to have_available_list('Taps')
     expect(menu_form).to have_available_list('Bottles')
