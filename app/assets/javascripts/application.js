@@ -42,7 +42,23 @@ function applyConfirm(element) {
   }
 
   if (menuRoot) {
-    render(<MenuForm menu={getMenu()} lists={getLists()} />, menuRoot);
+    const {
+      cancelEditMenuPath,
+      downloadMenuPath,
+      menuFormSubmitText,
+      canDestroyMenu
+    } = window.BEERMAPPER;
+    render(
+      <MenuForm
+        menu={getMenu()}
+        lists={getLists()}
+        cancelEditMenuPath={cancelEditMenuPath}
+        downloadMenuPath={downloadMenuPath}
+        menuFormSubmitText={menuFormSubmitText}
+        canDestroyMenu={canDestroyMenu}
+      />,
+      menuRoot
+    );
   }
 
   for (let i = 0; i < confirmNodes.length; i++) {

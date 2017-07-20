@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import AvailableListGroup from './AvailableListGroup';
 import ChosenListGroup from './ChosenListGroup';
 import Preview from './MenuPreview';
+import Panel from '../Panel';
 import { applyFind } from '../polyfills/Array';
 
 applyFind();
@@ -16,6 +17,7 @@ class MenuForm extends React.Component {
     this.generatePreviewPath  = this.generatePreviewPath.bind(this);
     this.handleMenuNameChange = this.handleMenuNameChange.bind(this);
     this.onShowPriceChange    = this.onShowPriceChange.bind(this);
+    this.renderButtons        = this.renderButtons.bind(this);
 
     this.state = {
       lists,
@@ -92,31 +94,76 @@ class MenuForm extends React.Component {
     }
   }
 
+  renderButtons() {
+    let deleteButton, downloadButton;
+    if (!!this.props.canDestroyMenu) {
+      deleteButton = (
+        <label
+          htmlFor="menu-form-delete"
+          className="btn btn-danger menu-form-action"
+          data-test="menu-form-delete">
+          Delete
+        </label>
+      );
+    }
+    if (!!this.props.downloadMenuPath) {
+      downloadButton = (
+        <a href={this.props.downloadMenuPath}
+           className="btn btn-success pull-right"
+           data-test="menu-download-button">Download</a>
+      );
+    }
+    return (
+      <div className="form-group">
+        <input
+          type="submit"
+          name="commit"
+          value={this.props.menuFormSubmitText}
+          className="btn btn-primary menu-form-action"
+          data-test="menu-form-submit"
+          data-disable-with="Create"
+        />
+        <a href={this.props.cancelEditMenuPath}
+           className="btn btn-default menu-form-action"
+           data-test="menu-form-cancel">Cancel</a>
+        {deleteButton}
+        {downloadButton}
+      </div>
+    );
+  }
+
   render() {
     const { name } = this.props.menu;
     const { lists, listsAvailable, previewPath } = this.state;
     const totalListCount = lists.length + listsAvailable.length;
+    const buttons = this.renderButtons();
     return (
       <div className="row">
         <div className="col-sm-6">
-          <div className="form-group">
-            <label htmlFor="menu_name">Name</label>
-            <input
-              id="menu_name"
-              name="menu[name]"
-              className="form-control"
-              data-test="menu-name"
-              type="text"
-              defaultValue={name}
-              onChange={this.handleMenuNameChange}
-            />
-          </div>
+          <Panel title={name}>
+            <div className="form-group">
+              <label htmlFor="menu_name">Name</label>
+              <input
+                id="menu_name"
+                name="menu[name]"
+                className="form-control"
+                data-test="menu-name"
+                type="text"
+                defaultValue={name}
+                onChange={this.handleMenuNameChange}
+              />
+            </div>
 
-          <AvailableListGroup totalListCount={totalListCount} lists={listsAvailable} onClick={this.addListToMenu} />
-          <ChosenListGroup lists={lists} onRemove={this.removeListFromMenu} onShowPriceChange={this.onShowPriceChange} />
+            <AvailableListGroup totalListCount={totalListCount} lists={listsAvailable} onClick={this.addListToMenu} />
+            <ChosenListGroup lists={lists} onRemove={this.removeListFromMenu} onShowPriceChange={this.onShowPriceChange} />
+
+            {buttons}
+          </Panel>
         </div>
         <div className="col-sm-6">
-          <Preview previewPath={previewPath} />
+          <Panel title='Preview' dataTest="menu-preview">
+            <Preview previewPath={previewPath} />
+          </Panel>
         </div>
       </div>
     );
@@ -124,7 +171,11 @@ class MenuForm extends React.Component {
 }
 
 MenuForm.propTypes = {
-  menu: PropTypes.object.isRequired
-}
+  menu: PropTypes.object.isRequired,
+  cancelEditMenuPath: PropTypes.string.isRequired,
+  downloadMenuPath: PropTypes.string,
+  menuFormSubmitText: PropTypes.string.isRequired,
+  canDestroyMenu: PropTypes.bool
+};
 
 export default MenuForm;

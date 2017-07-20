@@ -1,24 +1,16 @@
 <script>
   window.BEERMAPPER = window.BEERMAPPER || {};
   window.BEERMAPPER.menu = <%= raw menu_json menu %>;
+  window.BEERMAPPER.cancelEditMenuPath = "<%= edit_account_establishment_path(account, establishment) %>";
+  window.BEERMAPPER.menuFormSubmitText = "<%= submit_text %>";
+  <% if menu.persisted? %>
+    window.BEERMAPPER.downloadMenuPath = "<%= account_establishment_menu_path(account, establishment, menu, format: :pdf, download: '1') %>";
+    window.BEERMAPPER.canDestroyMenu = <%= can?(:destroy, menu) %>;
+  <% end %>
 </script>
-<%= render 'shared/panel', title: menu.name || 'New Menu' do %>
-  <%= form_for [account, establishment, menu], html: { class: 'menu-form' } do |f| %>
-
-    <div id="menu-app-root"></div>
-
-    <div class="form-group">
-      <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'menu-form-submit' } %>
-      <%= link_to 'Cancel', edit_account_establishment_path(account, establishment), class: 'btn btn-default', data: { test: 'menu-form-cancel' } %>
-      <% if menu.persisted? && can?(:destroy, menu) %>
-        <label for="menu-form-delete" class="btn btn-danger" data-test="menu-form-delete">Delete</label>
-      <% end %>
-      <% if menu.persisted? %>
-        <%= link_to 'Download', account_establishment_menu_path(account, establishment, menu, format: :pdf, download: '1'), class: 'btn btn-success pull-right', data: { test: 'menu-download-button' } %>
-      <% end %>
-    </div>
-  <% end %>
-  <% if menu.persisted? && can?(:destroy, menu) %>
-    <%= button_to 'Delete', account_establishment_menu_path(account, establishment, menu), method: :delete, class: 'hidden', id: 'menu-form-delete', data: { confirm: 'Are you sure you want to delete this menu?' } %>
-  <% end %>
+<%= form_for [account, establishment, menu], html: { class: 'menu-form' } do |f| %>
+  <div id="menu-app-root"></div>
+<% end %>
+<% if menu.persisted? && can?(:destroy, menu) %>
+  <%= button_to 'Delete', account_establishment_menu_path(account, establishment, menu), method: :delete, class: 'hidden', id: 'menu-form-delete', data: { confirm: 'Are you sure you want to delete this menu?' } %>
 <% end %>
