@@ -10,7 +10,7 @@ class MenuPreview extends React.Component {
       <object
         data={this.props.previewPath}
         type="application/pdf"
-        height="800"
+        height="730"
         style={{width: "100%"}}>
       </object>
     );
