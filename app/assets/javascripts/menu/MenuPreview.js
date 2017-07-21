@@ -7,12 +7,14 @@ class MenuPreview extends React.Component {
 
   render() {
     return (
-      <object
-        data={this.props.previewPath}
-        type="application/pdf"
-        height="730"
-        style={{width: "100%"}}>
-      </object>
+      <div className="menu-preview-wrapper">
+        <object
+          data={this.props.previewPath}
+          type="application/pdf"
+          height="730"
+          style={{width: "100%"}}>
+        </object>
+      </div>
     );
   }
 }

@@ -4,6 +4,7 @@ const isProd = process.argv.indexOf('-p') !== -1;
 const fs     = require('fs');
 const path   = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const jsOutputFile  = isProd ? 'javascripts/bundle-[hash].js' : 'javascripts/bundle.js';
 const cssOutputFile = isProd ? 'stylesheets/[name]-[hash].css' : 'stylesheets/[name].css';
@@ -33,6 +34,12 @@ module.exports = {
   },
 
   plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: path.join(__dirname, 'app', 'assets', 'images'),
+        to: 'images/'
+      }
+    ]),
     new ExtractTextPlugin(cssOutputFile),
 
     function() {
