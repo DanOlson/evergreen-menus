@@ -7,7 +7,7 @@ import { applyFind } from '../polyfills/Array';
 
 applyFind();
 
-class MenuForm extends React.Component {
+class MenuApp extends React.Component {
   constructor(props) {
     super(props);
     const { lists, listsAvailable, name } = this.props.menu;
@@ -170,7 +170,7 @@ class MenuForm extends React.Component {
   }
 }
 
-MenuForm.propTypes = {
+MenuApp.propTypes = {
   menu: PropTypes.object.isRequired,
   cancelEditMenuPath: PropTypes.string.isRequired,
   downloadMenuPath: PropTypes.string,
@@ -178,4 +178,4 @@ MenuForm.propTypes = {
   canDestroyMenu: PropTypes.bool
 };
 
-export default MenuForm;
+export default MenuApp;

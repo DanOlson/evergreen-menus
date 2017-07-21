@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import App from './App';
 import ListsApp from './ListsApp';
-import MenuForm from './menu/MenuForm';
+import MenuApp from './menu/MenuApp';
 
 function getList() {
   return window.BEERMAPPER ? window.BEERMAPPER.list : {};
@@ -49,7 +49,7 @@ function applyConfirm(element) {
       canDestroyMenu
     } = window.BEERMAPPER;
     render(
-      <MenuForm
+      <MenuApp
         menu={getMenu()}
         lists={getLists()}
         cancelEditMenuPath={cancelEditMenuPath}
