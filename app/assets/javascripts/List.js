@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import BeerInput from './BeerInput';
+import Panel from './Panel';
 
 class List extends React.Component {
   constructor(props) {
@@ -69,85 +70,80 @@ class List extends React.Component {
     });
 
     return (
-      <div className="panel panel-info">
-        <div className="panel-heading">
-          <h3 className="panel-title">{name}</h3>
-        </div>
-        <div className="panel-body">
-          <div className="establishment-beer-list col-sm-offset-1">
-            <div className="form-group">
+      <Panel title={name}>
+        <div className="establishment-beer-list col-sm-offset-1">
+          <div className="form-group">
+            <div className="row">
               <div className="row">
-                <div className="row">
-                  <div className="col-sm-4">
-                    <label htmlFor="list_name">List Name</label>
-                    <input
-                      type="text"
-                      name="list[name]"
-                      id="list_name"
-                      className="form-control"
-                      data-test="list-name"
-                      defaultValue={name}
-                    />
-                  </div>
-                </div>
-
-                <div className="checkbox">
-                  <label htmlFor="list_show_price">
-                    <input
-                      type="checkbox"
-                      id="list_show_price"
-                      data-test="list-show-price"
-                      checked={showPrice}
-                      value={showPrice}
-                      onChange={this.handleShowPriceChange}
-                    />
-                    <input
-                      type="hidden"
-                      name="list[show_price]"
-                      id="list_show_price"
-                      value={showPrice}
-                    />
-                    Show Price
-                  </label>
-                </div>
-
-                <div className="checkbox">
-                  <label htmlFor="list_show_description">
-                    <input
-                      type="checkbox"
-                      id="list_show_description"
-                      data-test="list-show-description"
-                      checked={showDescription}
-                      value={showDescription}
-                      onChange={this.handleShowDescriptionChange}
-                    />
-                    <input
-                      type="hidden"
-                      name="list[show_description]"
-                      id="list_show_description"
-                      value={showDescription}
-                    />
-                    Show Description
-                  </label>
+                <div className="col-sm-4">
+                  <label htmlFor="list_name">List Name</label>
+                  <input
+                    type="text"
+                    name="list[name]"
+                    id="list_name"
+                    className="form-control"
+                    data-test="list-name"
+                    defaultValue={name}
+                  />
                 </div>
               </div>
-            </div>
-            <div className="form-group">
-              {inputs}
-            </div>
-            <div className="form-group">
-              <button
-                data-test="add-beer"
-                id="add-beer-button"
-                title="Add item"
-                onClick={this.addBeer}
-                className="btn btn-success">
-                <span className="glyphicon glyphicon-plus"></span>
-              </button>
+
+              <div className="checkbox">
+                <label htmlFor="list_show_price">
+                  <input
+                    type="checkbox"
+                    id="list_show_price"
+                    data-test="list-show-price"
+                    checked={showPrice}
+                    value={showPrice}
+                    onChange={this.handleShowPriceChange}
+                  />
+                  <input
+                    type="hidden"
+                    name="list[show_price]"
+                    id="list_show_price"
+                    value={showPrice}
+                  />
+                  Show Price
+                </label>
+              </div>
+
+              <div className="checkbox">
+                <label htmlFor="list_show_description">
+                  <input
+                    type="checkbox"
+                    id="list_show_description"
+                    data-test="list-show-description"
+                    checked={showDescription}
+                    value={showDescription}
+                    onChange={this.handleShowDescriptionChange}
+                  />
+                  <input
+                    type="hidden"
+                    name="list[show_description]"
+                    id="list_show_description"
+                    value={showDescription}
+                  />
+                  Show Description
+                </label>
+              </div>
             </div>
           </div>
+          <div className="form-group">
+            {inputs}
+          </div>
+          <div className="form-group">
+            <button
+              data-test="add-beer"
+              id="add-beer-button"
+              title="Add item"
+              onClick={this.addBeer}
+              className="btn btn-success">
+              <span className="glyphicon glyphicon-plus"></span>
+            </button>
+          </div>
         </div>
-      </div>
+      </Panel>
     );
   }
 }
