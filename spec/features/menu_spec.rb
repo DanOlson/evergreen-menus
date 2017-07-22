@@ -5,11 +5,27 @@ feature 'menu management' do
   let(:establishment) { create :establishment, account: account }
 
   before do
-    %w(Taps Bottles Specials).each do |name|
-      establishment.lists.create!({
-        name: name
-      })
-    end
+    taps_list = establishment.lists.create!({
+      name: 'Taps'
+    })
+    taps_list.beers.create!(
+      name: 'Fulton Sweet Child of Vine',
+      price: '5'
+    )
+    bottles_list = establishment.lists.create!({
+      name: 'Bottles'
+    })
+    bottles_list.beers.create!(
+      name: 'Arrogant Bastard',
+      price: '7.50'
+    )
+    specials_list = establishment.lists.create!({
+      name: 'Specials'
+    })
+    specials_list.beers.create!(
+      name: 'Nitro Milk Stout',
+      price: '6.50'
+    )
   end
 
   scenario 'manager can manage a menu for their account', :js, :admin do
@@ -38,6 +54,12 @@ feature 'menu management' do
     expect(menu_form).to have_available_list('Bottles')
     expect(menu_form).to have_available_list('Specials')
 
+    expect(menu_form).to have_preview_content 'Taps - Mini Insert'
+    expect(menu_form).to have_preview_content 'Fulton Sweet Child of Vine'
+    expect(menu_form).to have_preview_content '$5'
+    expect(menu_form).to_not have_preview_content 'Bottles'
+    expect(menu_form).to_not have_preview_content 'Specials'
+
     expect(menu_form.selected_list_named('Taps')).to have_price_shown
 
     menu_form.submit
@@ -59,8 +81,17 @@ feature 'menu management' do
     menu_form.remove_list('Taps')
     menu_form.select_list('Bottles')
 
+    expect(menu_form).to_not have_preview_content 'Taps - Mini Insert'
+    expect(menu_form).to_not have_preview_content 'Taps'
+    expect(menu_form).to_not have_preview_content 'Fulton Sweet Child of Vine'
+    expect(menu_form).to have_preview_content 'Bottles Large Insert'
+    expect(menu_form).to have_preview_content 'Arrogant Bastard'
+    expect(menu_form).to have_preview_content '$7.50'
     expect(menu_form.selected_list_named('Bottles')).to have_price_shown
+
     menu_form.hide_prices(list: 'Bottles')
+
+    expect(menu_form).to_not have_preview_content '$7.50'
 
     expect(menu_form).to have_selected_list('Bottles')
     expect(menu_form).to have_available_list('Taps')
@@ -74,12 +105,15 @@ feature 'menu management' do
     expect(establishment_form).to have_menu_named 'Bottles Large Insert'
 
     establishment_form.menu_named('Bottles Large Insert').visit
+    expect(menu_form).to have_preview_content 'Arrogant Bastard'
     expect(menu_form.selected_list_named('Bottles')).to_not have_price_shown
+    expect(menu_form).to_not have_preview_content '$7.50'
 
     menu_form.show_prices(list: 'Bottles')
     menu_form.submit
 
     expect(menu_form.selected_list_named('Bottles')).to have_price_shown
+    expect(menu_form).to have_preview_content '$7.50'
   end
 
   scenario 'staff with establishment access can manage a menu', :js, :admin do
@@ -112,11 +146,17 @@ feature 'menu management' do
     expect(menu_form).to have_selected_list('Taps')
     expect(menu_form).to have_selected_list('Bottles')
     expect(menu_form).to have_selected_list('Specials')
+    expect(menu_form).to have_preview_content 'Taps'
+    expect(menu_form).to have_preview_content 'Bottles'
+    expect(menu_form).to have_preview_content 'Specials'
 
     menu_form.submit
     expect(page).to have_css '[data-test="flash-success"]', text: "Menu created"
     expect(menu_form).to have_download_button
     expect(menu_form).to have_menu_preview
+    expect(menu_form).to have_preview_content 'Taps'
+    expect(menu_form).to have_preview_content 'Bottles'
+    expect(menu_form).to have_preview_content 'Specials'
 
     establishment_form.load(account_id: account.id, establishment_id: establishment.id)
     expect(establishment_form).to have_menu_named 'Beer'

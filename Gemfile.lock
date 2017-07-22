@@ -10,6 +10,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    Ascii85 (1.0.2)
     actioncable (5.0.0.1)
       actionpack (= 5.0.0.1)
       nio4r (~> 1.2)
@@ -50,6 +51,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     addressable (2.4.0)
+    afm (0.2.2)
     airbrussh (1.1.2)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (7.1.4)
@@ -108,6 +110,7 @@ GEM
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     hashdiff (0.3.1)
+    hashery (2.1.2)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
@@ -150,6 +153,12 @@ GEM
     ntlm-http (0.1.1)
     orm_adapter (0.5.0)
     pdf-core (0.7.0)
+    pdf-reader (2.0.0)
+      Ascii85 (~> 1.0.0)
+      afm (~> 0.2.1)
+      hashery (~> 2.0)
+      ruby-rc4
+      ttfunk
     pg (0.18.4)
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
@@ -212,6 +221,7 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    ruby-rc4 (0.1.5)
     safe_yaml (1.0.4)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
@@ -279,6 +289,7 @@ DEPENDENCIES
   logvisible
   mailgun-ruby (~> 1.1.6)
   newrelic_rpm
+  pdf-reader (~> 2.0)
   pg (~> 0.18.0)
   prawn (~> 2.2)
   pry-rails (~> 0.3.2)

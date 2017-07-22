@@ -18,6 +18,11 @@ VCR.configure do |c|
   c.hook_into :webmock
   c.configure_rspec_metadata!
   c.ignore_localhost = true
+  c.ignore_request do |req|
+    ###
+    # Requests for testing PDF content
+    req.uri['menu_preview.pdf']
+  end
 end
 
 Capybara::Webkit.configure do |config|

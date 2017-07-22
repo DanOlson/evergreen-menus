@@ -31,6 +31,7 @@ group :test do
   gem 'launchy',          '~> 2.4.3'
   gem 'database_cleaner', '~> 1.5.3'
   gem 'site_prism',       '~> 2.9'
+  gem 'pdf-reader',       '~> 2.0'
 end
 
 group :development do

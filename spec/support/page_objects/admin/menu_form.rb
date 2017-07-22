@@ -1,3 +1,5 @@
+require 'open-uri'
+
 module PageObjects
   module Admin
     class MenuForm < SitePrism::Page
@@ -51,16 +53,42 @@ module PageObjects
         end
       end
 
+      class MenuPreview < SitePrism::Section
+        element :pdf, '[data-test="menu-pdf"]'
+
+        def url
+          pdf['data']
+        end
+
+        def pdf_content
+          cookie = "_beermapper_session=#{page.driver.cookies['_beermapper_session']}"
+          io = open(Capybara.app_host + url, 'Cookie' => cookie)
+          reader = PDF::Reader.new io
+          reader.pages.map(&:text).join("\n")
+        end
+      end
+
       element :name_input,      '[data-test="menu-name"]'
       element :submit_button,   '[data-test="menu-form-submit"]'
       element :cancel_link,     '[data-test="menu-form-cancel"]'
       element :delete_button,   '[data-test="menu-form-delete"]'
       element :download_button, '[data-test="menu-download-button"]'
 
-      element :menu_preview, '[data-test="menu-preview"]'
-
+      section :menu_preview, MenuPreview, '[data-test="menu-preview"]'
       section :lists_available, ListsAvailable, '[data-test="menu-lists-available"]'
       section :lists_selected, ListsSelected, '[data-test="menu-lists-selected"]'
+
+      def preview_url
+        menu_preview.url
+      end
+
+      def preview_content
+        menu_preview.pdf_content
+      end
+
+      def has_preview_content?(content)
+        preview_content.include? content
+      end
 
       def name=(string)
         name_input.set string
