@@ -61,14 +61,28 @@ module PageObjects
         end
 
         def pdf_content
-          cookie = "_beermapper_session=#{page.driver.cookies['_beermapper_session']}"
-          io = open(Capybara.app_host + url, 'Cookie' => cookie)
-          reader = PDF::Reader.new io
-          reader.pages.map(&:text).join("\n")
+          pdf_reader.pages.map(&:text).join("\n")
+        end
+
+        def has_font?(font)
+          expected_font = font.capitalize.to_sym
+          actual_font = pdf_reader.page(1).fonts[:"F1.0"][:BaseFont]
+          actual_font == expected_font
+        end
+
+        private
+
+        def pdf_reader
+          @pdf_reader ||= begin
+            cookie = "_beermapper_session=#{page.driver.cookies['_beermapper_session']}"
+            io = open(Capybara.app_host + url, 'Cookie' => cookie)
+            PDF::Reader.new io
+          end
         end
       end
 
       element :name_input,      '[data-test="menu-name"]'
+      element :font_input,      '[data-test="menu-font"]'
       element :submit_button,   '[data-test="menu-form-submit"]'
       element :cancel_link,     '[data-test="menu-form-cancel"]'
       element :delete_button,   '[data-test="menu-form-delete"]'
@@ -138,6 +152,10 @@ module PageObjects
 
       def show_prices(list:)
         selected_list_named(list).show_prices
+      end
+
+      def choose_font(font)
+        select font, from: 'Font'
       end
     end
   end

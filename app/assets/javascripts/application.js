@@ -46,7 +46,8 @@ function applyConfirm(element) {
       cancelEditMenuPath,
       downloadMenuPath,
       menuFormSubmitText,
-      canDestroyMenu
+      canDestroyMenu,
+      fontOptions
     } = window.BEERMAPPER;
     render(
       <MenuApp
@@ -56,6 +57,7 @@ function applyConfirm(element) {
         downloadMenuPath={downloadMenuPath}
         menuFormSubmitText={menuFormSubmitText}
         canDestroyMenu={canDestroyMenu}
+        fontOptions={fontOptions}
       />,
       menuRoot
     );

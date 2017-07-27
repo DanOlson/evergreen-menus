@@ -3,9 +3,9 @@ class MenuBasicPdf
 
   attr_reader :menu, :lists
 
-  def initialize(menu:, lists: default_lists)
-    @menu = menu
-    @lists = lists
+  def initialize(menu:, lists: nil)
+    @menu  = menu
+    @lists = lists || default_lists
   end
 
   def filename
@@ -14,6 +14,8 @@ class MenuBasicPdf
 
   def generate
     pdf = Prawn::Document.new
+
+    pdf.font menu.font
 
     header pdf
     body pdf

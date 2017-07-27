@@ -42,6 +42,7 @@ class MenusController < ApplicationController
       @menu.save
       redirect_to edit_account_establishment_menu_path(@account, @establishment, @menu), notice: 'Menu created'
     else
+      logger.debug("\n\nMenu invalid! #{@menu.errors.full_messages}\n\n")
       render :new
     end
   end
@@ -65,6 +66,7 @@ class MenusController < ApplicationController
     params.require(:menu).permit(
       :id,
       :name,
+      :font,
       {
         menu_lists_attributes: [
           :id,

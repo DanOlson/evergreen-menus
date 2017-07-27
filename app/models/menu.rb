@@ -5,6 +5,21 @@ class Menu < ActiveRecord::Base
 
   accepts_nested_attributes_for :menu_lists, allow_destroy: true
 
+  module Fonts
+    TIMES     = 'Times-Roman'
+    HELVETICA = 'Helvetica'
+    COURIER   = 'Courier'
+  end
+
+  FONTS = [
+    Fonts::TIMES,
+    Fonts::HELVETICA,
+    Fonts::COURIER
+  ]
+
+  validates :font, inclusion: { in: FONTS }
+  # validates :font_size, numericality: true
+
   def add_list(list, position: nil)
     position ||= (menu_lists.maximum(:position) || 0)
 
@@ -12,5 +27,9 @@ class Menu < ActiveRecord::Base
       position: position,
       list: list
     })
+  end
+
+  def font
+    self[:font] || Fonts::HELVETICA
   end
 end

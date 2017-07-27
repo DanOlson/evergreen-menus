@@ -10,45 +10,45 @@ applyFind();
 class MenuApp extends React.Component {
   constructor(props) {
     super(props);
-    const { lists, listsAvailable, name } = this.props.menu;
+    const { lists, listsAvailable, name, font } = this.props.menu;
 
+    this.handleMenuNameChange = this.handleMenuNameChange.bind(this);
+    this.handleFontChange     = this.handleFontChange.bind(this);
     this.addListToMenu        = this.addListToMenu.bind(this);
     this.removeListFromMenu   = this.removeListFromMenu.bind(this);
-    this.generatePreviewPath  = this.generatePreviewPath.bind(this);
-    this.handleMenuNameChange = this.handleMenuNameChange.bind(this);
     this.onShowPriceChange    = this.onShowPriceChange.bind(this);
-    this.renderButtons        = this.renderButtons.bind(this);
 
     this.state = {
       lists,
       listsAvailable,
       name,
-      previewPath: this.generatePreviewPath(lists, name)
+      font,
+      previewPath: this.generatePreviewPath(lists, name, font)
     };
   }
 
   addListToMenu(listId) {
     this.setState(prevState => {
-      const { lists, listsAvailable, name } = prevState;
+      const { lists, listsAvailable, name, font } = prevState;
       const listToAdd = listsAvailable.find(list => list.id === listId);
       const newLists = [...lists, listToAdd];
       return {
         listsAvailable: listsAvailable.filter(list => list.id !== listId),
         lists: newLists,
-        previewPath: this.generatePreviewPath(newLists, name)
+        previewPath: this.generatePreviewPath(newLists, name, font)
       }
     });
   }
 
   removeListFromMenu(listId) {
     this.setState(prevState => {
-      const { lists, listsAvailable, name } = prevState;
+      const { lists, listsAvailable, name, font } = prevState;
       const listToRemove = lists.find(list => list.id === listId);
       const newLists = lists.filter(list => list.id !== listId);
       return {
         listsAvailable: [...listsAvailable, listToRemove],
         lists: newLists,
-        previewPath: this.generatePreviewPath(newLists, name)
+        previewPath: this.generatePreviewPath(newLists, name, font)
       };
     });
   }
@@ -56,9 +56,20 @@ class MenuApp extends React.Component {
   handleMenuNameChange(event) {
     const newName = event.target.value;
     this.setState(prevState => {
+      const { lists, font } = prevState;
       return {
         name: newName,
-        previewPath: this.generatePreviewPath(prevState.lists, newName)
+        previewPath: this.generatePreviewPath(lists, newName, font)
+      };
+    });
+  }
+
+  handleFontChange(event) {
+    const newFont = event.target.value;
+    this.setState(prevState => {
+      return {
+        font: newFont,
+        previewPath: this.generatePreviewPath(prevState.lists, prevState.name, newFont)
       };
     });
   }
@@ -66,18 +77,19 @@ class MenuApp extends React.Component {
   onShowPriceChange(listId, showPrice) {
     this.setState(prevState => {
       const prevLists = prevState.lists;
-      const lists = [...prevLists];
+      const { lists, name, font } = prevState;
       const list = lists.find(list => list.id === listId);
       list.show_price_on_menu = showPrice;
       return {
         lists,
-        previewPath: this.generatePreviewPath(prevState.lists, prevState.name)
+        previewPath: this.generatePreviewPath(lists, name, font)
       };
     });
   }
 
-  generatePreviewPath(lists, name) {
+  generatePreviewPath(lists, name, font) {
     const { previewPath, id } = this.props.menu;
+    const seed = `?menu[name]=${name}&menu[font]=${font}`
     const queryString = lists.reduce((acc, list, idx) => {
       const listRep = `menu[menu_lists_attributes][${idx}]`;
       const showPrice = list.show_price_on_menu === undefined ? true : list.show_price_on_menu;
@@ -86,12 +98,18 @@ class MenuApp extends React.Component {
         qs = qs + `&${listRep}[id]=${list.menu_list_id}`;
       }
       return acc + qs;
-    }, `?menu[name]=${name}`);
+    }, seed);
     if (id) {
       return previewPath + queryString + `&menu[id]=${id}`;
     } else {
       return previewPath + queryString;
     }
+  }
+
+  renderFontOptions() {
+    return this.props.fontOptions.map((option, index) => {
+      return <option value={option} key={index}>{option}</option>
+    });
   }
 
   renderButtons() {
@@ -133,8 +151,9 @@ class MenuApp extends React.Component {
   }
 
   render() {
-    const { name } = this.props.menu;
-    const { lists, listsAvailable, previewPath } = this.state;
+    const { name, } = this.props.menu;
+    const { lists, listsAvailable, previewPath, font } = this.state;
+    const fontOptions = this.renderFontOptions();
     const totalListCount = lists.length + listsAvailable.length;
     const buttons = this.renderButtons();
     return (
@@ -152,6 +171,19 @@ class MenuApp extends React.Component {
                 defaultValue={name}
                 onChange={this.handleMenuNameChange}
               />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="menu_font">Font</label>
+              <select
+                id="menu_font"
+                data-test="menu-font"
+                name="menu[font]"
+                className="form-control"
+                defaultValue={font}
+                onChange={this.handleFontChange}>
+                {fontOptions}
+              </select>
             </div>
 
             <AvailableListGroup totalListCount={totalListCount} lists={listsAvailable} onClick={this.addListToMenu} />

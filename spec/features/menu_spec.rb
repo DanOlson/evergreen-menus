@@ -42,12 +42,14 @@ feature 'menu management' do
     expect(menu_form).to be_displayed
     expect(menu_form).to have_no_download_button
     expect(menu_form).to have_menu_preview
+    expect(menu_form.menu_preview).to have_font('Helvetica')
 
     expect(menu_form).to have_available_list('Taps')
     expect(menu_form).to have_available_list('Bottles')
     expect(menu_form).to have_available_list('Specials')
 
     menu_form.name = 'Taps - Mini Insert'
+    menu_form.choose_font('Courier')
     menu_form.select_list('Taps')
 
     expect(menu_form).to have_selected_list('Taps')
@@ -59,6 +61,8 @@ feature 'menu management' do
     expect(menu_form).to have_preview_content '$5'
     expect(menu_form).to_not have_preview_content 'Bottles'
     expect(menu_form).to_not have_preview_content 'Specials'
+
+    expect(menu_form.menu_preview).to have_font('Courier')
 
     expect(menu_form.selected_list_named('Taps')).to have_price_shown
 
