@@ -3,6 +3,7 @@ import AvailableListGroup from './AvailableListGroup';
 import ChosenListGroup from './ChosenListGroup';
 import Preview from './MenuPreview';
 import Panel from '../Panel';
+import generatePreviewPath from './previewPath';
 import { applyFind } from '../polyfills/Array';
 
 applyFind();
@@ -22,55 +23,45 @@ class MenuApp extends React.Component {
       lists,
       listsAvailable,
       name,
-      font,
-      previewPath: this.generatePreviewPath(lists, name, font)
+      font
     };
   }
 
   addListToMenu(listId) {
     this.setState(prevState => {
-      const { lists, listsAvailable, name, font } = prevState;
+      const { lists, listsAvailable } = prevState;
       const listToAdd = listsAvailable.find(list => list.id === listId);
       const newLists = [...lists, listToAdd];
       return {
         listsAvailable: listsAvailable.filter(list => list.id !== listId),
-        lists: newLists,
-        previewPath: this.generatePreviewPath(newLists, name, font)
+        lists: newLists
       }
     });
   }
 
   removeListFromMenu(listId) {
     this.setState(prevState => {
-      const { lists, listsAvailable, name, font } = prevState;
+      const { lists, listsAvailable } = prevState;
       const listToRemove = lists.find(list => list.id === listId);
       const newLists = lists.filter(list => list.id !== listId);
       return {
         listsAvailable: [...listsAvailable, listToRemove],
-        lists: newLists,
-        previewPath: this.generatePreviewPath(newLists, name, font)
+        lists: newLists
       };
     });
   }
 
   handleMenuNameChange(event) {
-    const newName = event.target.value;
+    const name = event.target.value;
     this.setState(prevState => {
-      const { lists, font } = prevState;
-      return {
-        name: newName,
-        previewPath: this.generatePreviewPath(lists, newName, font)
-      };
+      return { name };
     });
   }
 
   handleFontChange(event) {
-    const newFont = event.target.value;
+    const font = event.target.value;
     this.setState(prevState => {
-      return {
-        font: newFont,
-        previewPath: this.generatePreviewPath(prevState.lists, prevState.name, newFont)
-      };
+      return { font };
     });
   }
 
@@ -80,30 +71,8 @@ class MenuApp extends React.Component {
       const { lists, name, font } = prevState;
       const list = lists.find(list => list.id === listId);
       list.show_price_on_menu = showPrice;
-      return {
-        lists,
-        previewPath: this.generatePreviewPath(lists, name, font)
-      };
+      return { lists };
     });
-  }
-
-  generatePreviewPath(lists, name, font) {
-    const { previewPath, id } = this.props.menu;
-    const seed = `?menu[name]=${name}&menu[font]=${font}`
-    const queryString = lists.reduce((acc, list, idx) => {
-      const listRep = `menu[menu_lists_attributes][${idx}]`;
-      const showPrice = list.show_price_on_menu === undefined ? true : list.show_price_on_menu;
-      let qs = `&${listRep}[list_id]=${list.id}&${listRep}[position]=${idx}&${listRep}[show_price_on_menu]=${showPrice}`;
-      if (list.menu_list_id) {
-        qs = qs + `&${listRep}[id]=${list.menu_list_id}`;
-      }
-      return acc + qs;
-    }, seed);
-    if (id) {
-      return previewPath + queryString + `&menu[id]=${id}`;
-    } else {
-      return previewPath + queryString;
-    }
   }
 
   renderFontOptions() {
@@ -151,11 +120,11 @@ class MenuApp extends React.Component {
   }
 
   render() {
-    const { name, } = this.props.menu;
-    const { lists, listsAvailable, previewPath, font } = this.state;
-    const fontOptions = this.renderFontOptions();
+    const { lists, listsAvailable, font, name } = this.state;
+    const fontOptions    = this.renderFontOptions();
     const totalListCount = lists.length + listsAvailable.length;
-    const buttons = this.renderButtons();
+    const buttons        = this.renderButtons();
+    const previewPath    = generatePreviewPath(this.props.menu, this.state);
     return (
       <div className="row">
         <div className="col-sm-6">
@@ -186,8 +155,16 @@ class MenuApp extends React.Component {
               </select>
             </div>
 
-            <AvailableListGroup totalListCount={totalListCount} lists={listsAvailable} onClick={this.addListToMenu} />
-            <ChosenListGroup lists={lists} onRemove={this.removeListFromMenu} onShowPriceChange={this.onShowPriceChange} />
+            <AvailableListGroup
+              totalListCount={totalListCount}
+              lists={listsAvailable}
+              onClick={this.addListToMenu}
+            />
+            <ChosenListGroup
+              lists={lists}
+              onRemove={this.removeListFromMenu}
+              onShowPriceChange={this.onShowPriceChange}
+            />
 
             {buttons}
           </Panel>
