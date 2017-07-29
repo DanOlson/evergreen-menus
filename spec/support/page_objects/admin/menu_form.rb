@@ -65,7 +65,7 @@ module PageObjects
         end
 
         def has_font?(font)
-          expected_font = font.capitalize.to_sym
+          expected_font = font.to_sym
           actual_font = pdf_reader.page(1).fonts[:"F1.0"][:BaseFont]
           actual_font == expected_font
         end
@@ -83,6 +83,7 @@ module PageObjects
 
       element :name_input,      '[data-test="menu-name"]'
       element :font_input,      '[data-test="menu-font"]'
+      element :font_size_input, '[data-test="menu-font-size"]'
       element :submit_button,   '[data-test="menu-form-submit"]'
       element :cancel_link,     '[data-test="menu-form-cancel"]'
       element :delete_button,   '[data-test="menu-form-delete"]'
@@ -106,6 +107,18 @@ module PageObjects
 
       def name=(string)
         name_input.set string
+      end
+
+      def font=(font)
+        select font, from: 'Font'
+      end
+
+      def font_size=(font_size)
+        font_size_input.set font_size
+      end
+
+      def has_font_size?(font_size)
+        font_size_input.value == String(font_size)
       end
 
       def submit
@@ -152,10 +165,6 @@ module PageObjects
 
       def show_prices(list:)
         selected_list_named(list).show_prices
-      end
-
-      def choose_font(font)
-        select font, from: 'Font'
       end
     end
   end

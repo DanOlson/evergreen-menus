@@ -11,10 +11,13 @@ applyFind();
 class MenuApp extends React.Component {
   constructor(props) {
     super(props);
-    const { lists, listsAvailable, name, font } = this.props.menu;
+    const { menu } = this.props;
+    const { lists, listsAvailable, name, font } = menu;
+    const fontSize = menu.font_size;
 
     this.handleMenuNameChange = this.handleMenuNameChange.bind(this);
     this.handleFontChange     = this.handleFontChange.bind(this);
+    this.handleFontSizeChange = this.handleFontSizeChange.bind(this);
     this.addListToMenu        = this.addListToMenu.bind(this);
     this.removeListFromMenu   = this.removeListFromMenu.bind(this);
     this.onShowPriceChange    = this.onShowPriceChange.bind(this);
@@ -23,7 +26,8 @@ class MenuApp extends React.Component {
       lists,
       listsAvailable,
       name,
-      font
+      font,
+      fontSize
     };
   }
 
@@ -62,6 +66,18 @@ class MenuApp extends React.Component {
     const font = event.target.value;
     this.setState(prevState => {
       return { font };
+    });
+  }
+
+  handleFontSizeChange(event) {
+    let fontSize = event.target.value;
+    if (parseInt(fontSize, 10) > 20) {
+      fontSize = 20;
+    } else if (parseInt(fontSize, 10) < 4) {
+      fontSize = 4;
+    }
+    this.setState(prevState => {
+      return { fontSize };
     });
   }
 
@@ -120,7 +136,7 @@ class MenuApp extends React.Component {
   }
 
   render() {
-    const { lists, listsAvailable, font, name } = this.state;
+    const { lists, listsAvailable, font, fontSize, name } = this.state;
     const fontOptions    = this.renderFontOptions();
     const totalListCount = lists.length + listsAvailable.length;
     const buttons        = this.renderButtons();
@@ -143,16 +159,35 @@ class MenuApp extends React.Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="menu_font">Font</label>
-              <select
-                id="menu_font"
-                data-test="menu-font"
-                name="menu[font]"
-                className="form-control"
-                defaultValue={font}
-                onChange={this.handleFontChange}>
-                {fontOptions}
-              </select>
+              <div className="row">
+                <div className="col-sm-6">
+                  <label htmlFor="menu_font">Font</label>
+                  <select
+                    id="menu_font"
+                    data-test="menu-font"
+                    name="menu[font]"
+                    className="form-control"
+                    defaultValue={font}
+                    onChange={this.handleFontChange}>
+                    {fontOptions}
+                  </select>
+                </div>
+
+                <div className="col-sm-6">
+                  <label htmlFor="menu_font_size">Font Size</label>
+                  <input
+                    id="menu_font_size"
+                    data-test="menu-font-size"
+                    name="menu[font_size]"
+                    className="form-control"
+                    type="number"
+                    min="4"
+                    max="20"
+                    defaultValue={fontSize}
+                    onChange={this.handleFontSizeChange}
+                  />
+                </div>
+              </div>
             </div>
 
             <AvailableListGroup

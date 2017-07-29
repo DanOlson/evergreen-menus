@@ -51,6 +51,7 @@ class MenusController < ApplicationController
     if @menu.update(menu_params)
       redirect_to edit_account_establishment_menu_path(@account, @establishment, @menu), notice: 'Menu updated'
     else
+      logger.debug("\n\nMenu invalid! #{@menu.errors.full_messages}\n\n")
       render :edit
     end
   end
@@ -67,6 +68,7 @@ class MenusController < ApplicationController
       :id,
       :name,
       :font,
+      :font_size,
       {
         menu_lists_attributes: [
           :id,

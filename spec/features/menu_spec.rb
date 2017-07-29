@@ -43,13 +43,15 @@ feature 'menu management' do
     expect(menu_form).to have_no_download_button
     expect(menu_form).to have_menu_preview
     expect(menu_form.menu_preview).to have_font('Helvetica')
+    expect(menu_form).to have_font_size(10)
 
     expect(menu_form).to have_available_list('Taps')
     expect(menu_form).to have_available_list('Bottles')
     expect(menu_form).to have_available_list('Specials')
 
     menu_form.name = 'Taps - Mini Insert'
-    menu_form.choose_font('Courier')
+    menu_form.font = 'Courier'
+    menu_form.font_size = 8
     menu_form.select_list('Taps')
 
     expect(menu_form).to have_selected_list('Taps')
@@ -67,9 +69,12 @@ feature 'menu management' do
     expect(menu_form.selected_list_named('Taps')).to have_price_shown
 
     menu_form.submit
+
     expect(page).to have_css '[data-test="flash-success"]', text: "Menu created"
     expect(menu_form).to have_download_button
     expect(menu_form).to have_menu_preview
+    expect(menu_form.menu_preview).to have_font('Courier')
+    expect(menu_form).to have_font_size 8
 
     establishment_form.load(account_id: account.id, establishment_id: establishment.id)
     expect(establishment_form).to have_menu_named 'Taps - Mini Insert'
@@ -141,6 +146,8 @@ feature 'menu management' do
     expect(menu_form).to have_available_list('Specials')
 
     menu_form.name = 'Beer'
+    menu_form.font = 'Times-Roman'
+    menu_form.font_size = 7
 
     menu_form.select_list('Taps')
     menu_form.select_list('Bottles')
@@ -161,6 +168,8 @@ feature 'menu management' do
     expect(menu_form).to have_preview_content 'Taps'
     expect(menu_form).to have_preview_content 'Bottles'
     expect(menu_form).to have_preview_content 'Specials'
+    expect(menu_form.menu_preview).to have_font('Times-Roman')
+    expect(menu_form).to have_font_size 7
 
     establishment_form.load(account_id: account.id, establishment_id: establishment.id)
     expect(establishment_form).to have_menu_named 'Beer'

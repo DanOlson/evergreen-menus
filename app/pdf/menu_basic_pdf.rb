@@ -37,7 +37,7 @@ class MenuBasicPdf
   end
 
   def header(pdf)
-    pdf.text menu.name, align: :center, size: 18
+    pdf.text menu.name, align: :center, size: menu.font_size + 2
   end
 
   def footer(pdf)
@@ -45,7 +45,7 @@ class MenuBasicPdf
     pdf.bounding_box(bottom_left, width: pdf.bounds.width, height: 10) do
       text = "Page <page> - Updated #{@menu.updated_at.strftime('%m/%d')}"
       pdf.number_pages text, {
-        size: 10,
+        size: [menu.font_size, 10].min,
         align: :center
       }
     end
@@ -68,17 +68,19 @@ class MenuBasicPdf
   end
 
   def list_heading(list:, pdf:)
-    pdf.pad(20) { pdf.text "<u>#{list.name}</u>", size: 14, inline_format: true }
+    font_size = menu.font_size + 2
+    pdf.pad(20) { pdf.text "<u>#{list.name}</u>", size: font_size, inline_format: true }
   end
 
   def menu_item(beer, pdf:, show_price:)
+    font_size = menu.font_size
     pdf.float do
-      pdf.text beer.name
+      pdf.text beer.name, size: font_size
     end
 
     if show_price
       pdf.float do
-        pdf.text number_to_currency(beer.price), align: :right
+        pdf.text number_to_currency(beer.price), size: font_size, align: :right
       end
     end
 
