@@ -69,6 +69,7 @@ class MenusController < ApplicationController
       :name,
       :font,
       :font_size,
+      :number_of_columns,
       {
         menu_lists_attributes: [
           :id,

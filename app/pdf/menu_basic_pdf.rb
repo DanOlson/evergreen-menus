@@ -37,7 +37,9 @@ class MenuBasicPdf
   end
 
   def header(pdf)
-    pdf.text menu.name, align: :center, size: menu.font_size + 2
+    pdf.bounding_box([0, pdf.cursor], width: pdf.bounds.width) do
+      pdf.text menu.name, align: :center, size: menu.font_size + 2
+    end
   end
 
   def footer(pdf)
@@ -52,8 +54,18 @@ class MenuBasicPdf
   end
 
   def body(pdf)
-    lists.each do |list|
-      render_list list: list, pdf: pdf
+    column_opts = {
+      columns: menu.number_of_columns,
+      width: pdf.bounds.width,
+      spacer: 12,
+      reflow_margins: false
+    }
+    pdf.bounding_box([0, pdf.cursor], width: pdf.bounds.width) do
+      pdf.column_box([0, pdf.cursor], column_opts) do
+        lists.each do |list|
+          render_list list: list, pdf: pdf
+        end
+      end
     end
   end
 
@@ -74,16 +86,16 @@ class MenuBasicPdf
 
   def menu_item(beer, pdf:, show_price:)
     font_size = menu.font_size
-    pdf.float do
-      pdf.text beer.name, size: font_size
-    end
 
     if show_price
       pdf.float do
         pdf.text number_to_currency(beer.price), size: font_size, align: :right
       end
     end
+    pdf.float do
+      pdf.text beer.name, size: font_size
+    end
 
-    pdf.move_down 13
+    pdf.text "\n"
   end
 end

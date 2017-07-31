@@ -14,10 +14,12 @@ class MenuApp extends React.Component {
     const { menu } = this.props;
     const { lists, listsAvailable, name, font } = menu;
     const fontSize = menu.font_size;
+    const columns = menu.number_of_columns;
 
     this.handleMenuNameChange = this.handleMenuNameChange.bind(this);
     this.handleFontChange     = this.handleFontChange.bind(this);
     this.handleFontSizeChange = this.handleFontSizeChange.bind(this);
+    this.handleColumnsChange  = this.handleColumnsChange.bind(this);
     this.addListToMenu        = this.addListToMenu.bind(this);
     this.removeListFromMenu   = this.removeListFromMenu.bind(this);
     this.onShowPriceChange    = this.onShowPriceChange.bind(this);
@@ -27,7 +29,8 @@ class MenuApp extends React.Component {
       listsAvailable,
       name,
       font,
-      fontSize
+      fontSize,
+      columns
     };
   }
 
@@ -78,6 +81,13 @@ class MenuApp extends React.Component {
     }
     this.setState(prevState => {
       return { fontSize };
+    });
+  }
+
+  handleColumnsChange(event) {
+    let columns = event.target.value;
+    this.setState(prevState => {
+      return { columns };
     });
   }
 
@@ -136,7 +146,7 @@ class MenuApp extends React.Component {
   }
 
   render() {
-    const { lists, listsAvailable, font, fontSize, name } = this.state;
+    const { lists, listsAvailable, font, fontSize, columns, name } = this.state;
     const fontOptions    = this.renderFontOptions();
     const totalListCount = lists.length + listsAvailable.length;
     const buttons        = this.renderButtons();
@@ -160,7 +170,7 @@ class MenuApp extends React.Component {
 
             <div className="form-group">
               <div className="row">
-                <div className="col-sm-6">
+                <div className="col-sm-4">
                   <label htmlFor="menu_font">Font</label>
                   <select
                     id="menu_font"
@@ -173,7 +183,7 @@ class MenuApp extends React.Component {
                   </select>
                 </div>
 
-                <div className="col-sm-6">
+                <div className="col-sm-4">
                   <label htmlFor="menu_font_size">Font Size</label>
                   <input
                     id="menu_font_size"
@@ -186,6 +196,43 @@ class MenuApp extends React.Component {
                     defaultValue={fontSize}
                     onChange={this.handleFontSizeChange}
                   />
+                </div>
+
+                <div className="col-sm-4">
+                  <label htmlFor="menu_number_of_columns">Columns</label>
+
+                  <div>
+                    <label className="radio-inline">
+                      <input
+                        type="radio"
+                        name="menu[number_of_columns]"
+                        data-test="menu-columns-1"
+                        value="1"
+                        defaultChecked={columns === 1}
+                        onChange={this.handleColumnsChange}/>
+                      1
+                    </label>
+                    <label className="radio-inline">
+                      <input
+                        type="radio"
+                        name="menu[number_of_columns]"
+                        data-test="menu-columns-2"
+                        value="2"
+                        defaultChecked={columns === 2}
+                        onChange={this.handleColumnsChange}/>
+                      2
+                    </label>
+                    <label className="radio-inline">
+                      <input
+                        type="radio"
+                        name="menu[number_of_columns]"
+                        data-test="menu-columns-3"
+                        value="3"
+                        defaultChecked={columns === 3}
+                        onChange={this.handleColumnsChange}/>
+                      3
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>

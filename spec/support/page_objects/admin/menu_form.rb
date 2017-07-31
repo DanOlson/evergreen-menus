@@ -84,6 +84,7 @@ module PageObjects
       element :name_input,      '[data-test="menu-name"]'
       element :font_input,      '[data-test="menu-font"]'
       element :font_size_input, '[data-test="menu-font-size"]'
+      elements :columns_inputs, '[data-test^="menu-columns"]'
       element :submit_button,   '[data-test="menu-form-submit"]'
       element :cancel_link,     '[data-test="menu-form-cancel"]'
       element :delete_button,   '[data-test="menu-form-delete"]'
@@ -115,6 +116,16 @@ module PageObjects
 
       def font_size=(font_size)
         font_size_input.set font_size
+      end
+
+      def columns=(n)
+        input = columns_inputs.find { |i| i.value == n.to_s }
+        input.set true
+      end
+
+      def columns
+        input = columns_inputs.find &:checked?
+        Integer(input.value)
       end
 
       def has_font_size?(font_size)

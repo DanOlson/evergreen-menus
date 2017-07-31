@@ -52,6 +52,7 @@ feature 'menu management' do
     menu_form.name = 'Taps - Mini Insert'
     menu_form.font = 'Courier'
     menu_form.font_size = 8
+    menu_form.columns = 2
     menu_form.select_list('Taps')
 
     expect(menu_form).to have_selected_list('Taps')
@@ -75,6 +76,7 @@ feature 'menu management' do
     expect(menu_form).to have_menu_preview
     expect(menu_form.menu_preview).to have_font('Courier')
     expect(menu_form).to have_font_size 8
+    expect(menu_form.columns).to eq 2
 
     establishment_form.load(account_id: account.id, establishment_id: establishment.id)
     expect(establishment_form).to have_menu_named 'Taps - Mini Insert'
@@ -145,9 +147,12 @@ feature 'menu management' do
     expect(menu_form).to have_available_list('Bottles')
     expect(menu_form).to have_available_list('Specials')
 
+    expect(menu_form.columns).to eq 1
+
     menu_form.name = 'Beer'
     menu_form.font = 'Times-Roman'
     menu_form.font_size = 7
+    menu_form.columns = 3
 
     menu_form.select_list('Taps')
     menu_form.select_list('Bottles')
@@ -170,6 +175,7 @@ feature 'menu management' do
     expect(menu_form).to have_preview_content 'Specials'
     expect(menu_form.menu_preview).to have_font('Times-Roman')
     expect(menu_form).to have_font_size 7
+    expect(menu_form.columns).to eq 3
 
     establishment_form.load(account_id: account.id, establishment_id: establishment.id)
     expect(establishment_form).to have_menu_named 'Beer'
@@ -183,6 +189,7 @@ feature 'menu management' do
     expect(menu_form).to have_selected_list('Specials')
 
     menu_form.name = 'Bottles Large Insert'
+    menu_form.columns = 2
     menu_form.remove_list('Taps')
     menu_form.remove_list('Specials')
 
@@ -199,6 +206,7 @@ feature 'menu management' do
 
     establishment_form.menu_named('Bottles Large Insert').visit
     expect(menu_form).to be_displayed
+    expect(menu_form.columns).to eq 2
     expect(menu_form).to have_selected_list('Bottles')
     expect(menu_form).to have_available_list('Taps')
     expect(menu_form).to have_available_list('Specials')
