@@ -10,7 +10,10 @@ class MenuBasicPdf
   end
 
   def filename
-    @filename ||= "tmp/menu-basic-#{Time.now.to_i}.pdf"
+    @filename ||= begin
+      menu_name = @menu.name.split(/[[:space:]]/).map(&:downcase).join('-')
+      "#{menu_name}-#{Time.now.to_i}.pdf"
+    end
   end
 
   def generate
