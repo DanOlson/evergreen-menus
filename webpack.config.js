@@ -6,13 +6,16 @@ const path   = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const jsOutputFile  = isProd ? 'javascripts/bundle-[hash].js' : 'javascripts/bundle.js';
+const jsOutputFile  = isProd ? 'javascripts/[name]-[hash].js' : 'javascripts/[name].js';
 const cssOutputFile = isProd ? 'stylesheets/[name]-[hash].css' : 'stylesheets/[name].css';
 
 module.exports = {
   context: __dirname + '/app/assets',
   entry: {
-    application: ['./javascripts/application.js', './stylesheets/application.scss']
+    application: ['./javascripts/application.js', './stylesheets/application.scss'],
+    digitalDisplay: [
+      './stylesheets/digital_display.scss'
+    ]
   },
   output: {
     path: __dirname + '/public',

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import AvailableListGroup from './AvailableListGroup';
 import ChosenListGroup from './ChosenListGroup';
 import Preview from './MenuPreview';
@@ -8,7 +8,7 @@ import { applyFind } from '../polyfills/Array';
 
 applyFind();
 
-class MenuApp extends React.Component {
+class MenuApp extends Component {
   constructor(props) {
     super(props);
     const { menu } = this.props;
@@ -240,10 +240,12 @@ class MenuApp extends React.Component {
             <AvailableListGroup
               totalListCount={totalListCount}
               lists={listsAvailable}
+              menuType="pdf"
               onClick={this.addListToMenu}
             />
             <ChosenListGroup
               lists={lists}
+              menuType="pdf"
               onRemove={this.removeListFromMenu}
               onShowPriceChange={this.onShowPriceChange}
             />

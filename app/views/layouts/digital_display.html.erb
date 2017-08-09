@@ -3,17 +3,13 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
-  <meta name='description' content='BeerMapper is a search tool to help you find your favorite craft beer.'>
-  <meta name='robots' content='index,follow'>
+  <meta name='robots' content='noindex,nofollow'>
   <title>Beer Mapper</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
-  <%= stylesheet_link_tag fingerprinted_asset(:application) %>
-  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag fingerprinted_asset(:digitalDisplay) %>
 </head>
 <body>
-  <%= render 'layouts/header' %>
   <div class="container">
-    <%= render 'layouts/flash_messages' %>
     <%= yield %>
   </div>
   <%= render('layouts/google_analytics') if Rails.env.production? %>

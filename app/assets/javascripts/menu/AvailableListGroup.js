@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
+import attributeNameResolver from './attributeNameResolver';
 
-class AvailableListGroup extends React.Component {
+class AvailableListGroup extends Component {
   constructor(props) {
     super(props);
     this.ifEmptyText = "No lists available"
@@ -40,24 +41,27 @@ class AvailableListGroup extends React.Component {
   }
 
   render() {
-    const { lists } = this.props;
-    const listGroupItems = lists.map((list, index) => {
+    const { lists, menuType } = this.props;
+    const nestedAttrsName     = attributeNameResolver.resolveNestedAttrName(menuType);
+    const entityName          = attributeNameResolver.resolveEntityName(menuType);
+    const nestedEntityIdName  = attributeNameResolver.resolveNestedEntityIdName(menuType);
+    const listGroupItems      = lists.map((list, index) => {
       const addListButton = this.renderAddButton(list.id);
       let menuListIdInput, menuListDestroyInput;
-      if (list.menu_list_id) {
-        // Avoid collisions with menu_lists_attributes in ChosenListGroup
+      if (list[nestedEntityIdName]) {
+        // Avoid collisions with nestedAttrsName in ChosenListGroup
         const attrIndex = this.props.totalListCount + index
         menuListIdInput = (
           <input
             type="hidden"
-            name={`menu[menu_lists_attributes][${attrIndex}][id]`}
-            value={list.menu_list_id}
+            name={`${entityName}[${nestedAttrsName}][${attrIndex}][id]`}
+            value={list[nestedEntityIdName]}
           />
         )
         menuListDestroyInput = (
           <input
             type="hidden"
-            name={`menu[menu_lists_attributes][${attrIndex}][_destroy]`}
+            name={`${entityName}[${nestedAttrsName}][${attrIndex}][_destroy]`}
             value="true"
           />
         )
@@ -84,6 +88,7 @@ class AvailableListGroup extends React.Component {
 AvailableListGroup.propTypes = {
   lists: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
+  menuType: PropTypes.string.isRequired,
   totalListCount: PropTypes.number.isRequired
 };
 

@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import App from './App';
 import ListsApp from './ListsApp';
 import MenuApp from './menu/MenuApp';
+import DigitalDisplayApp from './digital-display/DigitalDisplayApp';
 
 function getList() {
   return window.BEERMAPPER ? window.BEERMAPPER.list : {};
@@ -28,10 +29,11 @@ function applyConfirm(element) {
 }
 
 (function bootstrap() {
-  const appRoot      = document.getElementById('app-root');
-  const listsRoot    = document.getElementById('lists-app');
-  const menuRoot     = document.getElementById('menu-app-root');
-  const confirmNodes = document.querySelectorAll('[data-confirm]');
+  const appRoot            = document.getElementById('app-root');
+  const listsRoot          = document.getElementById('lists-app');
+  const menuRoot           = document.getElementById('menu-app-root');
+  const digitalDisplayRoot = document.getElementById('digital-display-app-root');
+  const confirmNodes       = document.querySelectorAll('[data-confirm]');
 
   if (appRoot) {
     render(<App list={getList()} />, appRoot);
@@ -52,7 +54,6 @@ function applyConfirm(element) {
     render(
       <MenuApp
         menu={getMenu()}
-        lists={getLists()}
         cancelEditMenuPath={cancelEditMenuPath}
         downloadMenuPath={downloadMenuPath}
         menuFormSubmitText={menuFormSubmitText}
@@ -60,6 +61,24 @@ function applyConfirm(element) {
         fontOptions={fontOptions}
       />,
       menuRoot
+    );
+  }
+
+  if (digitalDisplayRoot) {
+    const {
+      digitalDisplayMenu,
+      cancelEditPath,
+      submitButtonText,
+      canDestroy
+    } = window.BEERMAPPER;
+    render(
+      <DigitalDisplayApp
+        digitalDisplayMenu={digitalDisplayMenu}
+        cancelEditPath={cancelEditPath}
+        submitButtonText={submitButtonText}
+        canDestroy={canDestroy}
+      />,
+      digitalDisplayRoot
     );
   }
 

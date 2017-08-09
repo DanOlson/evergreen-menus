@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import attributeNameResolver from './attributeNameResolver';
 
 class ChosenListGroup extends React.Component {
   constructor(props) {
@@ -40,14 +41,17 @@ class ChosenListGroup extends React.Component {
   }
 
   render() {
-    const { lists, onShowPriceChange } = this.props;
+    const { lists, onShowPriceChange, menuType } = this.props;
+    const nestedAttrsName    = attributeNameResolver.resolveNestedAttrName(menuType);
+    const entityName         = attributeNameResolver.resolveEntityName(menuType);
+    const nestedEntityIdName = attributeNameResolver.resolveNestedEntityIdName(menuType);
     const listGroupItems = lists.map((list, index) => {
       const onChange = event => onShowPriceChange(list.id, event.target.checked);
       const removeButton     = this.renderRemoveButton(list.id);
-      const showPriceInputId = `menu_menu_lists_attributes_${index}_show_price_on_menu`
+      const showPriceInputId = `menu_${nestedAttrsName}_${index}_show_price_on_menu`
       const showPrice = {
         type: 'checkbox',
-        name: `menu[menu_lists_attributes][${index}][show_price_on_menu]`,
+        name: `${entityName}[${nestedAttrsName}][${index}][show_price_on_menu]`,
         id: showPriceInputId,
         'data-test': 'show-price',
         value: '1',
@@ -63,7 +67,7 @@ class ChosenListGroup extends React.Component {
           <span className="list-name" data-test="list-name">{list.name}</span>
           <input
             type="hidden"
-            name={`menu[menu_lists_attributes][${index}][show_price_on_menu]`}
+            name={`${entityName}[${nestedAttrsName}][${index}][show_price_on_menu]`}
             value="0"
           />
           <label
@@ -74,17 +78,17 @@ class ChosenListGroup extends React.Component {
           </label>
           <input
             type="hidden"
-            name={`menu[menu_lists_attributes][${index}][id]`}
-            value={list.menu_list_id}
+            name={`${entityName}[${nestedAttrsName}][${index}][id]`}
+            value={list[nestedEntityIdName]}
           />
           <input
             type="hidden"
-            name={`menu[menu_lists_attributes][${index}][list_id]`}
+            name={`${entityName}[${nestedAttrsName}][${index}][list_id]`}
             value={list.id}
           />
           <input
             type="hidden"
-            name={`menu[menu_lists_attributes][${index}][position]`}
+            name={`${entityName}[${nestedAttrsName}][${index}][position]`}
             value={index}
           />
         </li>
@@ -102,6 +106,7 @@ class ChosenListGroup extends React.Component {
 
 ChosenListGroup.propTypes = {
   lists: PropTypes.array.isRequired,
+  menuType: PropTypes.string.isRequired,
   onRemove: PropTypes.func.isRequired,
   onShowPriceChange: PropTypes.func.isRequired
 };

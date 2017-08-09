@@ -1,0 +1,15 @@
+<script>
+  window.BEERMAPPER = window.BEERMAPPER || {};
+  window.BEERMAPPER.digitalDisplayMenu = <%= raw digital_display_menu_json digital_display_menu %>;
+  window.BEERMAPPER.cancelEditPath = "<%= edit_account_establishment_path(account, establishment) %>";
+  window.BEERMAPPER.submitButtonText = "<%= submit_text %>";
+  <% if digital_display_menu.persisted? %>
+    window.BEERMAPPER.canDestroy = <%= can?(:destroy, digital_display_menu) %>;
+  <% end %>
+</script>
+<%= form_for [account, establishment, digital_display_menu], html: { class: 'digital-display-menu-form' } do |f| %>
+  <div id="digital-display-app-root"></div>
+<% end %>
+<% if digital_display_menu.persisted? && can?(:destroy, digital_display_menu) %>
+  <%= button_to 'Delete', account_establishment_digital_display_menu_path(account, establishment, digital_display_menu), method: :delete, class: 'hidden', id: 'digital-display-menu-form-delete', data: { confirm: 'Are you sure you want to delete this menu?' } %>
+<% end %>

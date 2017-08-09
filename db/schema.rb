@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170730014515) do
+ActiveRecord::Schema.define(version: 20170804021346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,22 @@ ActiveRecord::Schema.define(version: 20170730014515) do
     t.text     "description"
     t.integer  "list_id"
     t.index ["name"], name: "index_beers_on_name", using: :btree
+  end
+
+  create_table "digital_display_menu_lists", force: :cascade do |t|
+    t.integer  "digital_display_menu_id",                null: false
+    t.integer  "list_id",                                null: false
+    t.integer  "position",                               null: false
+    t.boolean  "show_price_on_menu",      default: true, null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  create_table "digital_display_menus", force: :cascade do |t|
+    t.string   "name",             null: false
+    t.integer  "establishment_id", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "establishment_staff_assignments", force: :cascade do |t|
@@ -174,6 +190,9 @@ ActiveRecord::Schema.define(version: 20170730014515) do
   end
 
   add_foreign_key "beers", "lists"
+  add_foreign_key "digital_display_menu_lists", "digital_display_menus"
+  add_foreign_key "digital_display_menu_lists", "lists"
+  add_foreign_key "digital_display_menus", "establishments"
   add_foreign_key "establishment_staff_assignments", "establishments"
   add_foreign_key "establishment_staff_assignments", "users"
   add_foreign_key "establishments", "accounts"

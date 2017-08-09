@@ -1,0 +1,22 @@
+body {
+  background-color: black;
+  color: white;
+
+  .digital-display-menu-container {
+    width: 100%;
+  }
+
+  .digital-display-menu-list {
+    display: none;
+    padding-top: 2em;
+    width: 50%;
+
+    .list-title {
+      text-align: center;
+    }
+    
+    li {
+      list-style: none;
+    }
+  }
+}
