@@ -73,24 +73,6 @@ module EstablishmentsHelper
     end.to_json
   end
 
-  def digital_display_menu_json(digital_display_menu)
-    establishment   = digital_display_menu.establishment
-    account         = establishment.account
-    available_lists = establishment.lists - digital_display_menu.lists
-    preview_path    = account_establishment_digital_display_menu_preview_path(account, establishment)
-    lists = digital_display_menu.digital_display_menu_lists.includes(:list).map do |ml|
-      {
-        digital_display_menu_list_id: ml.id,
-        show_price_on_menu: ml.show_price_on_menu
-      }.merge(ml.list.attributes)
-    end
-    digital_display_menu.as_json.merge({
-      lists: lists.as_json,
-      listsAvailable: available_lists.as_json,
-      previewPath: preview_path
-    }).to_json
-  end
-
   def make_snippet(list)
     if can?(:view_snippet, List)
       snippet = ListHtmlSnippet.new({
@@ -108,19 +90,31 @@ module EstablishmentsHelper
     end
   end
 
-  def add_list_button(account, establishment)
+  def add_new_button(account, establishment, type)
     css_classes = %w(btn btn-primary)
     if establishment.persisted?
-      href = new_account_establishment_list_path(account, establishment)
+      href = public_send("new_account_establishment_#{type}_path", account, establishment)
     else
       css_classes << 'disabled'
       href = ''
     end
-    link_to('Add List', href, {
+    link_to('Add New', href, {
       class: css_classes.join(' '),
       data: {
-        test: 'add-list'
+        test: "add-#{type}".dasherize
       }
     })
+  end
+
+  def add_list_button(account, establishment)
+    add_new_button account, establishment, :list
+  end
+
+  def add_menu_button(account, establishment)
+    add_new_button account, establishment, :menu
+  end
+
+  def add_digital_display_menu_button(account, establishment)
+    add_new_button account, establishment, :digital_display_menu
   end
 end

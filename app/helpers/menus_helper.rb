@@ -20,20 +20,4 @@ module MenusHelper
   def menu_font_options
     Menu::FONTS
   end
-
-  def add_menu_button(account, establishment)
-    css_classes = %w(btn btn-primary)
-    if establishment.persisted?
-      href = new_account_establishment_menu_path(account, establishment)
-    else
-      css_classes << 'disabled'
-      href = ''
-    end
-    link_to('Add Menu', href, {
-      class: css_classes.join(' '),
-      data: {
-        test: 'add-menu'
-      }
-    })
-  end
 end

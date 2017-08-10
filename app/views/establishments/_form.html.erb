@@ -3,7 +3,7 @@
   window.BEERMAPPER.lists = <%= raw lists_json establishment %>;
 </script>
 <div class="row edit-establishment">
-  <div class="establishment-form-wrapper col-sm-6">
+  <div class="establishment-form-left-column col-sm-6">
     <%= form_for [account, establishment], html: { class: 'form-horizontal establishment-form' } do |f| %>
       <%= render 'shared/panel', title: 'Establishment Info' do %>
         <div class="form-group">
@@ -60,22 +60,18 @@
     <% end %>
   </div>
 
-  <div class="lists-wrapper col-sm-6" data-test="lists">
-    <%= render 'shared/panel', title: 'Lists' do %>
-      <% if !establishment.persisted? %>
-        <div class="well">Please create your establishment before adding a list</div>
-      <% else %>
+  <div class="establishment-form-right-column col-sm-6">
+    <%= render 'shared/panel', title: 'Lists', data_test: 'lists' do %>
+      <% if establishment.persisted? %>
         <div id="lists-app"></div>
+      <% else %>
+        <div class="well">Please create your establishment before adding a list</div>
       <% end %>
       <%= add_list_button(account, establishment) %>
     <% end %>
-  </div>
 
-  <div class="col-sm-6" data-test="menus">
-    <%= render 'shared/panel', title: 'Menus' do %>
-      <% if !establishment.persisted? %>
-        <div class="well">Please create your establishment before adding a menu</div>
-      <% else %>
+    <%= render 'shared/panel', title: 'Menus', data_test: 'menus' do %>
+      <% if establishment.persisted? %>
         <div class="list-group">
           <% establishment.menus.each do |menu| %>
             <div class="list-group-item" data-test="menu-list-item">
@@ -83,8 +79,27 @@
             </div>
           <% end %>
         </div>
+      <% else %>
+        <div class="well">Please create your establishment before adding a menu</div>
       <% end %>
       <%= add_menu_button(account, establishment) %>
+    <% end %>
+
+    <%= render 'shared/panel', title: 'Digital Display Menus', data_test: 'digital-display-menus' do %>
+      <% if establishment.persisted? %>
+        <div class="list-group">
+          <% establishment.digital_display_menus.each do |dd_menu| %>
+            <div class="list-group-item" data-test="digital-display-menu-list-item">
+              <%= link_to dd_menu.name, edit_account_establishment_digital_display_menu_path(account, establishment, dd_menu), data: { test: 'establishment-digital-display-menu' } %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="well">
+          Please create your establishment before adding a digital display menu
+        </div>
+      <% end %>
+      <%= add_digital_display_menu_button(account, establishment) %>
     <% end %>
   </div>
 </div>

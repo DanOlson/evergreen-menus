@@ -288,7 +288,7 @@ feature 'establishment management' do
     taps_form.submit
     expect(page).to have_css "div.alert-success", text: "List created"
 
-    click_link 'Add List'
+    establishment_form.add_list
 
     bottles_form = PageObjects::Admin::ListForm.new
     bottles_form.set_name 'Bottles'
