@@ -24,7 +24,7 @@ class DigitalDisplayPreview extends Component {
     const { height } = this.state;
 
     return (
-      <Panel title='Preview' dataTest="digital-display-menu-preview">
+      <Panel title='Preview' dataTest="digital-display-menu-preview-panel">
         <div
           className="digital-display-menu-preview-wrapper">
           <object

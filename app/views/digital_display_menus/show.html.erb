@@ -1,12 +1,16 @@
 <div class="digital-display-menu-container">
   <% @digital_display_menu.lists.each do |list| %>
-    <div class="digital-display-menu-list center-block" id="digital-display-menu-<%= list.id %>">
-      <h4 class="list-title"><%= list.name %></h4>
+    <div 
+      class="digital-display-menu-list center-block"
+      id="digital-display-menu-<%= list.id %>"
+      data-test="digital-display-menu-list">
+
+      <h4 class="list-title" data-test="digital-display-menu-list-name"><%= list.name %></h4>
 
       <div class="list-container">
         <ul>
         <% list.beers.each do |beer| %>
-          <li><%= beer.name %></li>
+          <li data-test="digital-display-menu-list-item"><%= beer.name %></li>
         <% end %>
         </ul>
       </div>

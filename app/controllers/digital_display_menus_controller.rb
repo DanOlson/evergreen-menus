@@ -8,6 +8,7 @@ class DigitalDisplayMenusController < ApplicationController
   end
 
   def show
+    render :show, layout: 'digital_display'
   end
 
   def preview

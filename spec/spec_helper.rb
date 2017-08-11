@@ -20,8 +20,9 @@ VCR.configure do |c|
   c.ignore_localhost = true
   c.ignore_request do |req|
     ###
-    # Requests for testing PDF content
-    req.uri['menu_preview.pdf']
+    # Requests for testing PDF and display previews
+    req.uri['menu_preview.pdf'] ||
+    req.uri['/digital_display_menu_preview?']
   end
 end
 

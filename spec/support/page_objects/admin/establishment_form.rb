@@ -22,17 +22,17 @@ module PageObjects
           end
         end
 
-        element :add_list_button, '[data-test="add-list"]'
+        element :add_button, '[data-test="add-list"]'
         sections :lists, List, '[data-test="establishment-list-item"]'
 
         def add_list
-          add_list_button.click
+          add_button.click
         end
       end
 
       class MenusPanel < SitePrism::Section
         class Menu < SitePrism::Section
-          element :print_button, '[data-test="print-menu"]'
+          element :print_button, '[data-test="print-menu"]' # TODO
           element :link, '[data-test="establishment-menu"]'
 
           def name
@@ -44,11 +44,32 @@ module PageObjects
           end
         end
 
-        element :add_menu_button, '[data-test="add-menu"]'
+        element :add_button, '[data-test="add-menu"]'
         sections :menus, Menu, '[data-test="menu-list-item"]'
 
         def add_menu
-          add_menu_button.click
+          add_button.click
+        end
+      end
+
+      class DigitalDisplayMenusPanel < SitePrism::Section
+        class DigitalDisplayMenu < SitePrism::Section
+          element :link, '[data-test="establishment-digital-display-menu"]'
+
+          def name
+            link.text
+          end
+
+          def visit
+            link.click
+          end
+        end
+
+        element :add_button, '[data-test="add-digital-display-menu"]'
+        sections :digital_display_menus, DigitalDisplayMenu, '[data-test="digital-display-menu-list-item"]'
+
+        def add_digital_display_menu
+          add_button.click
         end
       end
 
@@ -64,6 +85,7 @@ module PageObjects
 
       section :lists_panel, ListsPanel, '[data-test="lists"]'
       section :menus_panel, MenusPanel, '[data-test="menus"]'
+      section :digital_display_menus_panel, DigitalDisplayMenusPanel, '[data-test="digital-display-menus"]'
 
       def submit
         submit_button.click
@@ -85,6 +107,10 @@ module PageObjects
 
       def add_menu
         menus_panel.add_menu
+      end
+
+      def add_digital_display_menu
+        digital_display_menus_panel.add_digital_display_menu
       end
 
       def set_name(name)
