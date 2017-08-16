@@ -44,12 +44,20 @@ feature 'digital display menu management' do
     expect(display_form).to have_selected_list 'Taps'
     expect(display_form).to have_selected_list 'Bottles'
 
+    expect(display_form.selected_list_named('Taps')).to have_price_shown
+    expect(display_form.selected_list_named('Bottles')).to have_price_shown
+
     expect(display_form.preview).to have_list 'Taps'
     expect(display_form.preview).to have_list 'Bottles'
 
-    expect(display_form.preview.list_named('Taps')).to have_beer 'Fulton Sweet Child of Vine'
-    expect(display_form.preview.list_named('Taps')).to have_beer 'Nitro Milk Stout'
-    expect(display_form.preview.list_named('Bottles')).to have_beer 'Arrogant Bastard'
+    preview_taps_list = display_form.preview.list_named('Taps')
+    preview_bottles_list = display_form.preview.list_named('Bottles')
+    expect(preview_taps_list).to have_beer 'Fulton Sweet Child of Vine'
+    expect(preview_taps_list).to have_beer 'Nitro Milk Stout'
+    expect(preview_bottles_list).to have_beer 'Arrogant Bastard'
+    expect(preview_taps_list.beer_named('Fulton Sweet Child of Vine').price).to eq '$5.00'
+    expect(preview_taps_list.beer_named('Nitro Milk Stout').price).to eq '$6.50'
+    expect(preview_bottles_list.beer_named('Arrogant Bastard').price).to eq '$7.50'
 
     display_form.submit
 
@@ -70,6 +78,13 @@ feature 'digital display menu management' do
     expect(display_form.preview).to have_list 'Taps'
     expect(display_form.preview).to_not have_list 'Bottles'
 
+    display_form.hide_prices(list: 'Taps')
+
+    expect(display_form.selected_list_named('Taps')).to_not have_price_shown
+    preview_taps_list = display_form.preview.list_named('Taps')
+    expect(preview_taps_list.beer_named('Fulton Sweet Child of Vine')).to_not have_price
+    expect(preview_taps_list.beer_named('Nitro Milk Stout')).to_not have_price
+
     display_form.submit
 
     expect(page).to have_css '[data-test="flash-success"]', text: "Digital display menu updated"
@@ -82,6 +97,11 @@ feature 'digital display menu management' do
 
     expect(display_form.preview).to have_list 'Taps'
     expect(display_form.preview).to_not have_list 'Bottles'
+
+    expect(display_form.selected_list_named('Taps')).to_not have_price_shown
+    preview_taps_list = display_form.preview.list_named('Taps')
+    expect(preview_taps_list.beer_named('Fulton Sweet Child of Vine')).to_not have_price
+    expect(preview_taps_list.beer_named('Nitro Milk Stout')).to_not have_price
   end
 
   scenario 'manager can manage a digital display menu for their establishments', :js, :admin do

@@ -55,11 +55,30 @@ module PageObjects
 
       class DigitalDisplayMenuPreview < SitePrism::Section
         class List < SitePrism::Section
+          class Beer < SitePrism::Section
+            element :name_wrapper, '[data-test="digital-display-menu-list-item-name"]'
+            element :price_wrapper, '[data-test="digital-display-menu-list-item-price"]'
+
+            def name
+              name_wrapper.text.strip
+            end
+
+            def price
+              price_wrapper.text.strip
+            end
+
+            alias_method :has_price?, :has_price_wrapper?
+          end
+
           element :name, '[data-test="digital-display-menu-list-name"]'
-          elements :beers, '[data-test="digital-display-menu-list-item"]'
+          sections :beers, Beer, '[data-test="digital-display-menu-list-item"]'
+
+          def beer_named(beer_name)
+            beers.find { |b| b.name == beer_name }
+          end
 
           def has_beer?(beer_name)
-            beers.any? { |b| b.text == beer_name }
+            !!beer_named(beer_name)
           end
         end
 

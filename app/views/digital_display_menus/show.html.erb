@@ -10,7 +10,14 @@
       <div class="list-container">
         <ul>
         <% list.beers.each do |beer| %>
-          <li data-test="digital-display-menu-list-item"><%= beer.name %></li>
+          <li data-test="digital-display-menu-list-item">
+            <span data-test="digital-display-menu-list-item-name"><%= beer.name %></span>
+            <% if list.show_price_on_menu %>
+              <span class="pull-right" data-test="digital-display-menu-list-item-price">
+                <%= number_to_currency beer.price %>
+              </span>
+            <% end %>
+          </li>
         <% end %>
         </ul>
       </div>
