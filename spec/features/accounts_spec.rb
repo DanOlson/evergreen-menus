@@ -278,6 +278,11 @@ feature 'account management' do
       find('[data-test="reset-password"]').click
 
       expect(page).to have_css '.alert-success', text: 'Your password has been changed successfully. You are now signed in.'
+
+      logout
+
+      login user, password: 'password123'
+      expect(page).to have_css '[data-test="flash-success"]', text: 'Signed in successfully.'
     end
   end
 end

@@ -10,6 +10,6 @@ shared_context type: :feature do
   end
 
   def logout
-    click_link 'Logout'
+    find('[data-test="logout"]').click
   end
 end

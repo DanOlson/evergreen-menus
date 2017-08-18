@@ -2,5 +2,5 @@
   <%= tab name: 'Accounts', path: accounts_path %>
 </ul>
 <ul class="nav navbar-nav navbar-right">
-  <li><%= link_to 'Logout', destroy_user_session_path %></li>
+  <li><%= link_to 'Logout', destroy_user_session_path, data: { test: 'logout' } %></li>
 </ul>
