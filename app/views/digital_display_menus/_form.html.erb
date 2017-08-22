@@ -5,6 +5,7 @@
   window.BEERMAPPER.submitButtonText = "<%= submit_text %>";
   <% if digital_display_menu.persisted? %>
     window.BEERMAPPER.canDestroy = <%= can?(:destroy, digital_display_menu) %>;
+    window.BEERMAPPER.viewDisplayPath = "<%= account_establishment_digital_display_menu_path(account, establishment, digital_display_menu) %>"
   <% end %>
 </script>
 <%= form_for [account, establishment, digital_display_menu], html: { class: 'digital-display-menu-form' } do |f| %>

@@ -106,10 +106,11 @@ module PageObjects
         end
       end
 
-      element :name_input,      '[data-test="digital-display-menu-name"]'
-      element :submit_button,   '[data-test="digital-display-menu-form-submit"]'
-      element :cancel_link,     '[data-test="digital-display-menu-form-cancel"]'
-      element :delete_button,   '[data-test="digital-display-menu-form-delete"]'
+      element :name_input,          '[data-test="digital-display-menu-name"]'
+      element :submit_button,       '[data-test="digital-display-menu-form-submit"]'
+      element :cancel_link,         '[data-test="digital-display-menu-form-cancel"]'
+      element :delete_button,       '[data-test="digital-display-menu-form-delete"]'
+      element :view_display_button, '[data-test="view-digital-display-menu"]'
 
       section :preview, DigitalDisplayMenuPreview, '[data-test="digital-display-menu-preview"]'
       section :lists_available, ListsAvailable, '[data-test="menu-lists-available"]'
@@ -135,6 +136,10 @@ module PageObjects
         accept_confirm do
           delete_button.click
         end
+      end
+
+      def visit_digital_display_menu
+        view_display_button.click
       end
 
       def available_list_named(name)

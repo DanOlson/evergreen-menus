@@ -68,6 +68,7 @@ function applyConfirm(element) {
     const {
       digitalDisplayMenu,
       cancelEditPath,
+      viewDisplayPath,
       submitButtonText,
       canDestroy
     } = window.BEERMAPPER;
@@ -75,6 +76,7 @@ function applyConfirm(element) {
       <DigitalDisplayApp
         digitalDisplayMenu={digitalDisplayMenu}
         cancelEditPath={cancelEditPath}
+        viewDisplayPath={viewDisplayPath}
         submitButtonText={submitButtonText}
         canDestroy={canDestroy}
       />,

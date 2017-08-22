@@ -68,7 +68,7 @@ class DigitalDisplayApp extends Component {
   }
 
   renderButtons() {
-    let deleteButton
+    let deleteButton, viewDisplayButton;
     if (!!this.props.canDestroy) {
       deleteButton = (
         <label
@@ -78,6 +78,13 @@ class DigitalDisplayApp extends Component {
           Delete
         </label>
       );
+    }
+    if (this.props.viewDisplayPath) {
+      viewDisplayButton = (
+        <a href={this.props.viewDisplayPath}
+           className="btn btn-success pull-right"
+           data-test="view-digital-display-menu">View Display</a>
+      )
     }
     return (
       <div className="form-group">
@@ -93,6 +100,7 @@ class DigitalDisplayApp extends Component {
            className="btn btn-default menu-form-action"
            data-test="digital-display-menu-form-cancel">Cancel</a>
         {deleteButton}
+        {viewDisplayButton}
       </div>
     );
   }
@@ -146,6 +154,7 @@ class DigitalDisplayApp extends Component {
 DigitalDisplayApp.propTypes = {
   digitalDisplayMenu: PropTypes.object.isRequired,
   cancelEditPath: PropTypes.string.isRequired,
+  viewDisplayPath: PropTypes.string,
   submitButtonText: PropTypes.string.isRequired,
   canDestroy: PropTypes.bool
 };
