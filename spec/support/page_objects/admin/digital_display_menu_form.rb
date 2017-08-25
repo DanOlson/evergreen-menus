@@ -104,9 +104,19 @@ module PageObjects
         def has_list?(list_name)
           !!list_named(list_name)
         end
+
+        def oriented_vertically?
+          lists.first.root_element[:class].include? 'vertical'
+        end
+
+        def oriented_horizontally?
+          lists.first.root_element[:class].include? 'horizontal'
+        end
       end
 
       element :name_input,          '[data-test="digital-display-menu-name"]'
+      element :horizontal_orientation_radio, '[data-test=digital-display-menu-horizontal-orientation-true]'
+      element :vertical_orientation_radio,   '[data-test=digital-display-menu-horizontal-orientation-false]'
       element :submit_button,       '[data-test="digital-display-menu-form-submit"]'
       element :cancel_link,         '[data-test="digital-display-menu-form-cancel"]'
       element :delete_button,       '[data-test="digital-display-menu-form-delete"]'
@@ -122,6 +132,18 @@ module PageObjects
 
       def name
         name_input.value
+      end
+
+      def set_orientation(o)
+        radio = {
+          horizontal: horizontal_orientation_radio,
+          vertical: vertical_orientation_radio
+        }.fetch(o)
+        radio.set(true);
+      end
+
+      def orientation
+        horizontal_orientation_radio.checked? ? :horizontal : :vertical
       end
 
       def submit

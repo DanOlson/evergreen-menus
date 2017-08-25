@@ -46,6 +46,14 @@ module PageObjects
       def has_list_named?(name)
         !!list_named(name)
       end
+
+      def oriented_vertically?
+        menu_lists.first.root_element[:class].include? 'vertical'
+      end
+
+      def oriented_horizontally?
+        menu_lists.first.root_element[:class].include? 'horizontal'
+      end
     end
   end
 end

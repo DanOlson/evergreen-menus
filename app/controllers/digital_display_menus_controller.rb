@@ -51,6 +51,7 @@ class DigitalDisplayMenusController < ApplicationController
     params.require(:digital_display_menu).permit(
       :id,
       :name,
+      :horizontal_orientation,
       {
         digital_display_menu_lists_attributes: [
           :id,

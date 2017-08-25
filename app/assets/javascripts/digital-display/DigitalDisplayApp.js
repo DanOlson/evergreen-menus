@@ -13,16 +13,20 @@ class DigitalDisplayApp extends Component {
     super(props);
     const { digitalDisplayMenu } = this.props;
     const { lists, listsAvailable, name } = digitalDisplayMenu;
+    const isHorizontal = digitalDisplayMenu.horizontal_orientation;
 
-    this.handleNameChange      = this.handleNameChange.bind(this);
-    this.addListToDisplay      = this.addListToDisplay.bind(this);
-    this.removeListFromDisplay = this.removeListFromDisplay.bind(this);
-    this.onShowPriceChange     = this.onShowPriceChange.bind(this);
+    this.handleNameChange         = this.handleNameChange.bind(this);
+    this.setOrientationHorizontal = this.setOrientationHorizontal.bind(this);
+    this.setOrientationVertical   = this.setOrientationVertical.bind(this);
+    this.addListToDisplay         = this.addListToDisplay.bind(this);
+    this.removeListFromDisplay    = this.removeListFromDisplay.bind(this);
+    this.onShowPriceChange        = this.onShowPriceChange.bind(this);
 
     this.state = {
       lists,
       listsAvailable,
-      name
+      name,
+      isHorizontal
     };
   }
 
@@ -54,6 +58,18 @@ class DigitalDisplayApp extends Component {
     const name = event.target.value;
     this.setState(prevState => {
       return { name };
+    });
+  }
+
+  setOrientationHorizontal(event) {
+    this.setState(prevState => {
+      return { isHorizontal: true };
+    });
+  }
+
+  setOrientationVertical(event) {
+    this.setState(prevState => {
+      return { isHorizontal: false };
     });
   }
 
@@ -106,7 +122,7 @@ class DigitalDisplayApp extends Component {
   }
 
   render() {
-    const { lists, listsAvailable, name } = this.state;
+    const { lists, listsAvailable, name, isHorizontal } = this.state;
     const totalListCount = lists.length + listsAvailable.length;
     const buttons        = this.renderButtons();
     const previewPath    = generatePreviewPath(this.props.digitalDisplayMenu, this.state);
@@ -127,6 +143,36 @@ class DigitalDisplayApp extends Component {
               />
             </div>
 
+            <div className="form-group">
+              <label>Orientation</label>
+              <div className="radio">
+                <label>
+                  <input
+                    type="radio"
+                    name="digital_display_menu[horizontal_orientation]"
+                    value="true"
+                    defaultChecked={isHorizontal}
+                    onChange={this.setOrientationHorizontal}
+                    data-test="digital-display-menu-horizontal-orientation-true"
+                  />
+                  Horizontal
+                </label>
+              </div>
+              <div className="radio">
+                <label>
+                  <input
+                    type="radio"
+                    name="digital_display_menu[horizontal_orientation]"
+                    value="false"
+                    defaultChecked={!isHorizontal}
+                    onChange={this.setOrientationVertical}
+                    data-test="digital-display-menu-horizontal-orientation-false"
+                  />
+                  Vertical
+                </label>
+              </div>
+            </div>
+
             <AvailableListGroup
               totalListCount={totalListCount}
               lists={listsAvailable}
@@ -144,7 +190,7 @@ class DigitalDisplayApp extends Component {
           </Panel>
         </div>
         <div className="col-sm-6">
-          <DigitalDisplayPreview previewPath={previewPath} />
+          <DigitalDisplayPreview {...{ previewPath, isHorizontal }} />
         </div>
       </div>
     );

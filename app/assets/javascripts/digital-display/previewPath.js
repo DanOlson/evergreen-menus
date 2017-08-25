@@ -46,13 +46,15 @@ function buildQueryString(lists, base) {
 }
 
 function generatePreviewPath(digitalDisplayMenu, formState) {
-  const { lists, name } = formState;
+  const { lists, isHorizontal } = formState;
   const { previewPath, id } = digitalDisplayMenu;
-  const seed = `?digital_display_menu[name]=${name}`;
+  const seed = `?digital_display_menu[horizontal_orientation]=${isHorizontal}`;
   const queryString = buildQueryString(lists, seed);
   if (id) {
+    // Menu is already persisted
     return previewPath + queryString + `&digital_display_menu[id]=${id}`;
   } else {
+    // Menu is not yet saved
     return previewPath + queryString;
   }
 }

@@ -47,7 +47,14 @@ body {
 .digital-display-menu-list {
   display: none;
   padding-top: 2em;
-  width: 50%;
+
+  &.horizontal {
+    width: 50%;
+  }
+
+  &.vertical {
+    width: 80%;
+  }
 
   .list-title {
     text-align: center;
@@ -70,8 +77,8 @@ body {
       font-size: $base-font-size*1.5;
     }
   }
-
 }
+
 ul {
   margin: 0;
   padding: 0;
