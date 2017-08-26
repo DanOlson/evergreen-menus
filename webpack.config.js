@@ -1,8 +1,9 @@
 'use strict';
 
-const isProd = process.argv.indexOf('-p') !== -1;
-const fs     = require('fs');
-const path   = require('path');
+const isProd  = process.argv.indexOf('-p') !== -1;
+const fs      = require('fs');
+const path    = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -44,6 +45,13 @@ module.exports = {
       }
     ]),
     new ExtractTextPlugin(cssOutputFile),
+
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development')
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true
+    }),
 
     function() {
       // delete previous outputs
