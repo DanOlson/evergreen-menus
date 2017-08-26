@@ -22,7 +22,7 @@ module.exports = {
     path: __dirname + '/public',
     filename: jsOutputFile
   },
-  devtool: 'sourcemap',
+  devtool: 'source-map',
   module: {
     loaders: [{
       test: /\.js$/,
