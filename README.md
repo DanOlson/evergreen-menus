@@ -131,7 +131,7 @@ npm i
 
 ```
 rake db:bootstrap --trace
-webpack --format=progress
+webpack --watch
 ```
 
 ### Run Tests
