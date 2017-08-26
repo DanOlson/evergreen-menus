@@ -24,17 +24,22 @@ module.exports = {
   },
   devtool: 'source-map',
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loader: 'babel-loader',
-      include: path.join(__dirname, 'app', 'assets', 'javascripts'),
-      query: {
-        presets: ['es2015', 'react']
+    rules: [
+      {
+        test: /\.js$/,
+        include: path.join(__dirname, 'app', 'assets', 'javascripts'),
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015', 'react']
+          }
+        }
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
       }
-    },{
-      test: /\.scss$/,
-      loader: ExtractTextPlugin.extract(['css', 'sass'])
-    }]
+    ]
   },
 
   plugins: [
@@ -44,7 +49,9 @@ module.exports = {
         to: 'images/'
       }
     ]),
-    new ExtractTextPlugin(cssOutputFile),
+    new ExtractTextPlugin({
+      filename: cssOutputFile
+    }),
 
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development')
