@@ -152,7 +152,7 @@ class DigitalDisplayApp extends Component {
                     name="digital_display_menu[horizontal_orientation]"
                     value="true"
                     defaultChecked={isHorizontal}
-                    onChange={this.setOrientationHorizontal}
+                    onClick={this.setOrientationHorizontal}
                     data-test="digital-display-menu-horizontal-orientation-true"
                   />
                   Horizontal
@@ -165,7 +165,7 @@ class DigitalDisplayApp extends Component {
                     name="digital_display_menu[horizontal_orientation]"
                     value="false"
                     defaultChecked={!isHorizontal}
-                    onChange={this.setOrientationVertical}
+                    onClick={this.setOrientationVertical}
                     data-test="digital-display-menu-horizontal-orientation-false"
                   />
                   Vertical
