@@ -209,7 +209,7 @@ class MenuApp extends Component {
                         data-test="menu-columns-1"
                         value="1"
                         defaultChecked={columns === 1}
-                        onChange={this.handleColumnsChange}/>
+                        onClick={this.handleColumnsChange}/>
                       1
                     </label>
                     <label className="radio-inline">
@@ -219,7 +219,7 @@ class MenuApp extends Component {
                         data-test="menu-columns-2"
                         value="2"
                         defaultChecked={columns === 2}
-                        onChange={this.handleColumnsChange}/>
+                        onClick={this.handleColumnsChange}/>
                       2
                     </label>
                     <label className="radio-inline">
@@ -229,7 +229,7 @@ class MenuApp extends Component {
                         data-test="menu-columns-3"
                         value="3"
                         defaultChecked={columns === 3}
-                        onChange={this.handleColumnsChange}/>
+                        onClick={this.handleColumnsChange}/>
                       3
                     </label>
                   </div>
