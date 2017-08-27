@@ -152,6 +152,8 @@ feature 'account management' do
 
         expect(donny_invite.to).to eq ['donny@lebowski.me']
         expect(walter_invite.to).to eq ['walter@lebowski.me']
+        expect(donny_invite.from).to eq ['do-not-reply@beermapper.com']
+        expect(walter_invite.from).to eq ['do-not-reply@beermapper.com']
       end
 
       scenario 'manager can edit staff invitations' do

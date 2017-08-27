@@ -34,7 +34,7 @@ describe InvitationMailer, type: :mailer do
     end
 
     it 'sends an email from the correct address' do
-      expect(email.from).to eq ['admin@beermapper.com']
+      expect(email.from).to eq ['do-not-reply@beermapper.com']
     end
 
     it 'sends an email with the correct subject' do

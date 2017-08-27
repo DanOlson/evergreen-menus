@@ -10,7 +10,8 @@ class InvitationMailer < ApplicationMailer
 
     mail({
       to: user_invitation.email,
-      subject: "Your BeerMapper Invitation"
+      subject: "Your BeerMapper Invitation",
+      from: DO_NOT_REPLY_EMAIL_ADDR
     })
   end
 end
