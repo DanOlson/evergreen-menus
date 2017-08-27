@@ -46,9 +46,11 @@ function buildQueryString(lists, base) {
 }
 
 function generatePreviewPath(digitalDisplayMenu, formState) {
-  const { lists, isHorizontal } = formState;
+  const { lists, isHorizontal, rotationInterval } = formState;
   const { previewPath, id } = digitalDisplayMenu;
-  const seed = `?digital_display_menu[horizontal_orientation]=${isHorizontal}`;
+  const orientationParam = `digital_display_menu[horizontal_orientation]=${isHorizontal}`;
+  const rotationIntervalParam = `digital_display_menu[rotation_interval]=${rotationInterval}`;
+  const seed = `?${orientationParam}&${rotationIntervalParam}`;
   const queryString = buildQueryString(lists, seed);
   if (id) {
     // Menu is already persisted

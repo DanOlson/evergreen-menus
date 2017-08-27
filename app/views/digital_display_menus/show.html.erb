@@ -27,6 +27,7 @@
 </div>
 <script>
   var ids = <%= raw @digital_display_menu.lists.map(&:id) %>;
+  var rotationInterval = <%= @digital_display_menu.rotation_interval %>;
   function showNext() {
     var idToShow = ids[0];
     var lists = document.getElementsByClassName('digital-display-menu-list');
@@ -42,5 +43,5 @@
     }
   }
   showNext();
-  setInterval(showNext, 5000);
+  setInterval(showNext, parseInt(rotationInterval, 10));
 </script>

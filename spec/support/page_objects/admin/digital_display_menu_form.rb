@@ -117,6 +117,7 @@ module PageObjects
       element :name_input,          '[data-test="digital-display-menu-name"]'
       element :horizontal_orientation_radio, '[data-test=digital-display-menu-horizontal-orientation-true]'
       element :vertical_orientation_radio,   '[data-test=digital-display-menu-horizontal-orientation-false]'
+      element :rotation_interval_input, '[data-test="digital-display-menu-rotation-interval"]'
       element :submit_button,       '[data-test="digital-display-menu-form-submit"]'
       element :cancel_link,         '[data-test="digital-display-menu-form-cancel"]'
       element :delete_button,       '[data-test="digital-display-menu-form-delete"]'
@@ -132,6 +133,15 @@ module PageObjects
 
       def name
         name_input.value
+      end
+
+      def rotation_interval=(interval)
+        rotation_interval_input.find(:option, interval).select_option
+      end
+
+      def rotation_interval
+        current_value = rotation_interval_input.value
+        rotation_interval_input.find("option[value='#{current_value}']").text
       end
 
       def set_orientation(o)

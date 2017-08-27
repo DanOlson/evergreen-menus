@@ -5,18 +5,6 @@ import ListsApp from './ListsApp';
 import MenuApp from './menu/MenuApp';
 import DigitalDisplayApp from './digital-display/DigitalDisplayApp';
 
-function getList() {
-  return window.BEERMAPPER ? window.BEERMAPPER.list : {};
-}
-
-function getLists() {
-  return window.BEERMAPPER ? window.BEERMAPPER.lists : [];
-}
-
-function getMenu() {
-  return window.BEERMAPPER ? window.BEERMAPPER.menu : {};
-}
-
 function applyConfirm(element) {
   var message = element.getAttribute('data-confirm');
   if (message) {
@@ -36,52 +24,19 @@ function applyConfirm(element) {
   const confirmNodes       = document.querySelectorAll('[data-confirm]');
 
   if (appRoot) {
-    render(<App list={getList()} />, appRoot);
+    render(<App {...window.BEERMAPPER} />, appRoot);
   }
 
   if (listsRoot) {
-    render(<ListsApp lists={getLists()} />, listsRoot);
+    render(<ListsApp {...window.BEERMAPPER} />, listsRoot);
   }
 
   if (menuRoot) {
-    const {
-      cancelEditMenuPath,
-      downloadMenuPath,
-      menuFormSubmitText,
-      canDestroyMenu,
-      fontOptions
-    } = window.BEERMAPPER;
-    render(
-      <MenuApp
-        menu={getMenu()}
-        cancelEditMenuPath={cancelEditMenuPath}
-        downloadMenuPath={downloadMenuPath}
-        menuFormSubmitText={menuFormSubmitText}
-        canDestroyMenu={canDestroyMenu}
-        fontOptions={fontOptions}
-      />,
-      menuRoot
-    );
+    render(<MenuApp {...window.BEERMAPPER} />, menuRoot);
   }
 
   if (digitalDisplayRoot) {
-    const {
-      digitalDisplayMenu,
-      cancelEditPath,
-      viewDisplayPath,
-      submitButtonText,
-      canDestroy
-    } = window.BEERMAPPER;
-    render(
-      <DigitalDisplayApp
-        digitalDisplayMenu={digitalDisplayMenu}
-        cancelEditPath={cancelEditPath}
-        viewDisplayPath={viewDisplayPath}
-        submitButtonText={submitButtonText}
-        canDestroy={canDestroy}
-      />,
-      digitalDisplayRoot
-    );
+    render(<DigitalDisplayApp {...window.BEERMAPPER} />, digitalDisplayRoot);
   }
 
   for (let i = 0; i < confirmNodes.length; i++) {

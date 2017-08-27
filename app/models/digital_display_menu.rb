@@ -11,4 +11,5 @@ class DigitalDisplayMenu < ActiveRecord::Base
   belongs_to :establishment
 
   accepts_nested_attributes_for :digital_display_menu_lists, allow_destroy: true
+  alias_attribute :rotation_interval, :rotate_interval_milliseconds
 end

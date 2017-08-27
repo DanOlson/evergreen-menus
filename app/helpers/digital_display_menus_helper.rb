@@ -1,4 +1,15 @@
 module DigitalDisplayMenusHelper
+  ROTATION_INTERVALS = [
+    { value: 5000, name: '5 seconds' },
+    { value: 10000, name: '10 seconds' },
+    { value: 15000, name: '15 seconds' },
+    { value: 30000, name: '30 seconds' },
+    { value: 60000, name: '1 minute' },
+    { value: 120000, name: '2 minutes' },
+    { value: 300000, name: '5 minutes' },
+    { value: 600000, name: '10 minutes' }
+  ]
+
   def digital_display_menu_json(digital_display_menu)
     establishment   = digital_display_menu.establishment
     account         = establishment.account
@@ -10,10 +21,17 @@ module DigitalDisplayMenusHelper
         show_price_on_menu: ml.show_price_on_menu
       }.merge(ml.list.attributes)
     end
+
     digital_display_menu.as_json.merge({
       lists: lists.as_json,
       listsAvailable: available_lists.as_json,
-      previewPath: preview_path
+      previewPath: preview_path,
+      isHorizontal: digital_display_menu.horizontal_orientation,
+      rotationInterval: digital_display_menu.rotation_interval || ROTATION_INTERVALS.first[:value]
     }).to_json
+  end
+
+  def rotation_intervals_json
+    ROTATION_INTERVALS.to_json
   end
 end

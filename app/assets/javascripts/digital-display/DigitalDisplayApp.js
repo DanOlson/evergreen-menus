@@ -11,22 +11,28 @@ applyFind();
 class DigitalDisplayApp extends Component {
   constructor(props) {
     super(props);
-    const { digitalDisplayMenu } = this.props;
-    const { lists, listsAvailable, name } = digitalDisplayMenu;
-    const isHorizontal = digitalDisplayMenu.horizontal_orientation;
+    const {
+      lists,
+      listsAvailable,
+      name,
+      rotationInterval,
+      isHorizontal
+    } = this.props.digitalDisplayMenu;
 
-    this.handleNameChange         = this.handleNameChange.bind(this);
-    this.setOrientationHorizontal = this.setOrientationHorizontal.bind(this);
-    this.setOrientationVertical   = this.setOrientationVertical.bind(this);
-    this.addListToDisplay         = this.addListToDisplay.bind(this);
-    this.removeListFromDisplay    = this.removeListFromDisplay.bind(this);
-    this.onShowPriceChange        = this.onShowPriceChange.bind(this);
+    this.handleNameChange             = this.handleNameChange.bind(this);
+    this.setOrientationHorizontal     = this.setOrientationHorizontal.bind(this);
+    this.setOrientationVertical       = this.setOrientationVertical.bind(this);
+    this.handleRotationIntervalChange = this.handleRotationIntervalChange.bind(this);
+    this.addListToDisplay             = this.addListToDisplay.bind(this);
+    this.removeListFromDisplay        = this.removeListFromDisplay.bind(this);
+    this.onShowPriceChange            = this.onShowPriceChange.bind(this);
 
     this.state = {
       lists,
       listsAvailable,
       name,
-      isHorizontal
+      isHorizontal,
+      rotationInterval
     };
   }
 
@@ -71,6 +77,13 @@ class DigitalDisplayApp extends Component {
     this.setState(prevState => {
       return { isHorizontal: false };
     });
+  }
+
+  handleRotationIntervalChange(event) {
+    const rotationInterval = event.target.value;
+    this.setState(prevState => {
+      return { rotationInterval }
+    })
   }
 
   onShowPriceChange(listId, showPrice) {
@@ -121,11 +134,19 @@ class DigitalDisplayApp extends Component {
     );
   }
 
+  renderRotationIntervalOptions() {
+    return this.props.rotationIntervalOptions.map((option, index) => {
+      return <option value={option.value} key={index}>{option.name}</option>
+    });
+  }
+
   render() {
-    const { lists, listsAvailable, name, isHorizontal } = this.state;
-    const totalListCount = lists.length + listsAvailable.length;
-    const buttons        = this.renderButtons();
-    const previewPath    = generatePreviewPath(this.props.digitalDisplayMenu, this.state);
+    const { lists, listsAvailable, name, isHorizontal, rotationInterval } = this.state;
+    const totalListCount          = lists.length + listsAvailable.length;
+    const buttons                 = this.renderButtons();
+    const rotationIntervalOptions = this.renderRotationIntervalOptions();
+    const previewPath             = generatePreviewPath(this.props.digitalDisplayMenu, this.state);
+
     return (
       <div className="row">
         <div className="col-sm-6">
@@ -173,6 +194,19 @@ class DigitalDisplayApp extends Component {
               </div>
             </div>
 
+            <div className="form-group">
+              <label htmlFor="menu_font">Rotation Interval</label>
+              <select
+                id="digital_display_menu_rotation_interval"
+                data-test="digital-display-menu-rotation-interval"
+                name="digital_display_menu[rotation_interval]"
+                className="form-control"
+                defaultValue={rotationInterval}
+                onChange={this.handleRotationIntervalChange}>
+                {rotationIntervalOptions}
+              </select>
+            </div>
+
             <AvailableListGroup
               totalListCount={totalListCount}
               lists={listsAvailable}
@@ -202,7 +236,8 @@ DigitalDisplayApp.propTypes = {
   cancelEditPath: PropTypes.string.isRequired,
   viewDisplayPath: PropTypes.string,
   submitButtonText: PropTypes.string.isRequired,
-  canDestroy: PropTypes.bool
+  canDestroy: PropTypes.bool,
+  rotationIntervalOptions: PropTypes.array
 };
 
 export default DigitalDisplayApp;

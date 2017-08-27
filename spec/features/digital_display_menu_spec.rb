@@ -38,17 +38,20 @@ feature 'digital display menu management' do
     expect(display_form).to have_available_list 'Taps'
     expect(display_form).to have_available_list 'Bottles'
     expect(display_form.orientation).to eq :horizontal
+    expect(display_form.rotation_interval).to eq '5 seconds'
 
     # Manipulate the form
     display_form.name = 'Test Display'
     display_form.select_list 'Taps'
     display_form.select_list 'Bottles'
+    display_form.rotation_interval = '10 seconds'
 
     # Query form again
     expect(display_form).to have_selected_list 'Taps'
     expect(display_form).to have_selected_list 'Bottles'
     expect(display_form.selected_list_named('Taps')).to have_price_shown
     expect(display_form.selected_list_named('Bottles')).to have_price_shown
+    expect(display_form.rotation_interval).to eq '10 seconds'
 
     # Query preview
     expect(display_form.preview).to have_list 'Taps'
@@ -72,12 +75,14 @@ feature 'digital display menu management' do
     expect(display_form.name).to eq 'Test Display'
     expect(display_form).to have_selected_list 'Taps'
     expect(display_form).to have_selected_list 'Bottles'
+    expect(display_form.rotation_interval).to eq '10 seconds'
 
     # Manipulate them form some more
     display_form.name = 'HD Display'
     display_form.remove_list 'Bottles'
     display_form.hide_prices(list: 'Taps')
     display_form.set_orientation :vertical
+    display_form.rotation_interval = '5 seconds'
 
     # Query the form
     expect(display_form).to have_selected_list 'Taps'
@@ -86,6 +91,7 @@ feature 'digital display menu management' do
     expect(display_form).to_not have_available_list 'Taps'
     expect(display_form.selected_list_named('Taps')).to_not have_price_shown
     expect(display_form.orientation).to eq :vertical
+    expect(display_form.rotation_interval).to eq '5 seconds'
 
     # Query the preview
     expect(display_form.preview).to have_list 'Taps'
@@ -108,6 +114,7 @@ feature 'digital display menu management' do
     expect(display_form).to_not have_available_list 'Taps'
     expect(display_form.selected_list_named('Taps')).to_not have_price_shown
     expect(display_form.orientation).to eq :vertical
+    expect(display_form.rotation_interval).to eq '5 seconds'
 
     # Verify preview
     expect(display_form.preview).to have_list 'Taps'

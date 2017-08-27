@@ -1,8 +1,10 @@
 <script>
-  window.BEERMAPPER = window.BEERMAPPER || {};
-  window.BEERMAPPER.digitalDisplayMenu = <%= raw digital_display_menu_json digital_display_menu %>;
-  window.BEERMAPPER.cancelEditPath = "<%= edit_account_establishment_path(account, establishment) %>";
-  window.BEERMAPPER.submitButtonText = "<%= submit_text %>";
+  window.BEERMAPPER = {
+    digitalDisplayMenu: <%= raw digital_display_menu_json digital_display_menu %>,
+    rotationIntervalOptions:  <%= raw rotation_intervals_json %>,
+    cancelEditPath: "<%= edit_account_establishment_path(account, establishment) %>",
+    submitButtonText: "<%= submit_text %>"
+  };
   <% if digital_display_menu.persisted? %>
     window.BEERMAPPER.canDestroy = <%= can?(:destroy, digital_display_menu) %>;
     window.BEERMAPPER.viewDisplayPath = "<%= account_establishment_digital_display_menu_path(account, establishment, digital_display_menu) %>"

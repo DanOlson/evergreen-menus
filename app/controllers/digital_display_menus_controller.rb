@@ -52,6 +52,7 @@ class DigitalDisplayMenusController < ApplicationController
       :id,
       :name,
       :horizontal_orientation,
+      :rotation_interval,
       {
         digital_display_menu_lists_attributes: [
           :id,
