@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import BeerInput from './BeerInput';
 import Panel from './Panel';
 
-class List extends React.Component {
+class List extends Component {
   constructor(props) {
     super(props);
     this.state = {

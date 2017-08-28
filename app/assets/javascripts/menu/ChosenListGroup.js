@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import attributeNameResolver from './attributeNameResolver';
 
-class ChosenListGroup extends React.Component {
+class ChosenListGroup extends Component {
   constructor(props) {
     super(props);
     this.ifEmptyText = "Choose at least one list"

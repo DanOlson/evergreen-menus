@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ListItem from './EstablishmentListItem';
 
-class ListsApp extends React.Component {
+class ListsApp extends Component {
   render() {
     const lists = this.props.lists.map(list => {
       return (

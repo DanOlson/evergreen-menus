@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-class EstablishmentListItem extends React.Component {
+class EstablishmentListItem extends Component {
   constructor(props) {
     super(props);
     this.getSnippet              = this.getSnippet.bind(this);
