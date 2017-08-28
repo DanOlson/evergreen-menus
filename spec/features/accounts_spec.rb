@@ -233,6 +233,7 @@ feature 'account management' do
         invitation = ActionMailer::Base.deliveries.last
         message = invitation.text_part.decoded
         registration_link = message.match(/link:\s(.*)$/).captures.first
+        expect(registration_link).to start_with 'https'
 
         visit URI(registration_link).path
 
@@ -271,8 +272,14 @@ feature 'account management' do
       fill_in 'Email', with: user.email
       find('[data-test="send-reset-password-instructions"]').click
 
-      email = ActionMailer::Base.deliveries.first.body.raw_source
-      reset_password_link = email.match(/href="(.*)"/).captures.first
+      email = ActionMailer::Base.deliveries.first
+      email_body = email.body.raw_source
+
+      expect(email.from).to eq ['do-not-reply@beermapper.com']
+
+      reset_password_link = email_body.match(/href="(.*)"/).captures.first
+      expect(reset_password_link).to start_with 'https'
+
       visit reset_password_link
 
       fill_in 'New password', with: 'password123'

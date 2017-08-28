@@ -16,7 +16,10 @@ Beermapper::Application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.default_url_options = { host: 'admin.beermapper.dev' }
+  config.action_mailer.default_url_options = {
+    host: 'admin.beermapper.dev',
+    protocol: 'https'
+  }
 
   ###
   # Uncomment for local testing. Must add Mailgun api_key
