@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  helper_method :after_sign_in_path_for
+
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to current_user.account, alert: MESSAGE_UNAUTHORIZED
   end

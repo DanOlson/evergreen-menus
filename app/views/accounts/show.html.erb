@@ -1,3 +1,4 @@
+<% breadcrumb :account, @account %>
 <%= render 'shared/panel', title: @account.name do %>
   <div class="list-group">
     <% if account_establishments(@account).any? %>

@@ -15,6 +15,7 @@ gem 'devise',                   '~> 4.2.0'
 gem 'cancancan',                '~> 1.15.0'
 gem 'prawn',                    '~> 2.2'
 gem 'mailgun-ruby',             '~> 1.1.6'
+gem 'gretel',                   '~> 3.0.9'
 
 group :development, :test do
   gem 'rspec-rails',  '~> 3.5.0'

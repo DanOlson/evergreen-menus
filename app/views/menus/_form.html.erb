@@ -9,6 +9,7 @@
   <% end %>
   window.BEERMAPPER.fontOptions = <%= menu_font_options.to_json.html_safe %>
 </script>
+<% breadcrumb :menu, account, establishment, menu %>
 <%= form_for [account, establishment, menu], html: { class: 'menu-form' } do |f| %>
   <div id="menu-app-root"></div>
 <% end %>

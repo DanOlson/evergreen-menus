@@ -10,6 +10,7 @@
     window.BEERMAPPER.viewDisplayPath = "<%= account_establishment_digital_display_menu_path(account, establishment, digital_display_menu) %>"
   <% end %>
 </script>
+<% breadcrumb :digital_display_menu, account, establishment, digital_display_menu %>
 <%= form_for [account, establishment, digital_display_menu], html: { class: 'digital-display-menu-form' } do |f| %>
   <div id="digital-display-app-root"></div>
 <% end %>

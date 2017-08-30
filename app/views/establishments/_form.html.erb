@@ -2,6 +2,7 @@
   window.BEERMAPPER = window.BEERMAPPER || {};
   window.BEERMAPPER.lists = <%= raw lists_json establishment %>;
 </script>
+<% breadcrumb :establishment, account, establishment %>
 <div class="row edit-establishment">
   <div class="establishment-form-left-column col-sm-6">
     <%= form_for [account, establishment], html: { class: 'form-horizontal establishment-form' } do |f| %>

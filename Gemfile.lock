@@ -109,6 +109,8 @@ GEM
     geocoder (1.1.9)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    gretel (3.0.9)
+      rails (>= 3.1.0)
     hashdiff (0.3.1)
     hashery (2.1.2)
     http-cookie (1.0.2)
@@ -284,6 +286,7 @@ DEPENDENCIES
   factory_girl (~> 4.7.0)
   faker (~> 1.6.6)
   geocoder (~> 1.1.8)
+  gretel (~> 3.0.9)
   kaminari (~> 0.15.1)
   launchy (~> 2.4.3)
   logvisible
