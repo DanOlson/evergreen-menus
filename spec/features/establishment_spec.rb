@@ -489,4 +489,84 @@ feature 'establishment management' do
 
     expect(page).to have_css "div.alert-success", text: "List deleted"
   end
+
+  scenario 'contextual help', :admin, :js do
+    login user
+    find('[data-test="add-establishment"]').click
+
+    form = PageObjects::Admin::EstablishmentForm.new
+    expect(form.lists_panel).to have_help_text
+    expect(form.menus_panel).to have_help_text
+    expect(form.digital_display_menus_panel).to have_help_text
+
+    form.set_name 'The Lanes'
+    form.set_url 'http://thelanes.com/beer-menu'
+    form.set_street '123 Freemont Ave'
+    form.set_city 'Encino'
+    form.set_state 'California'
+    form.set_postal_code '91316'
+    form.submit
+
+    expect(form.lists_panel).to have_help_text
+    expect(form.menus_panel).to have_help_text
+    expect(form.digital_display_menus_panel).to have_help_text
+
+    form.add_list
+
+    list_form = PageObjects::Admin::ListForm.new
+    list_form.set_name 'Beers'
+
+    list_form.add_beer 'Deschutes Pinedrops', price: '6', description: 'IPA'
+    list_form.add_beer 'Deschutes Mirror Pond', price: '6', description: 'APA'
+    list_form.add_beer 'Indeed Stir Crazy', price: '7', description: 'Winter Seasonal'
+    list_form.add_beer 'Surly Stout', price: '6.5', description: 'Stout'
+
+    list_form.submit
+
+    expect(form).to be_displayed
+    expect(form.lists_panel).to have_no_help_text
+    expect(form.menus_panel).to have_help_text
+    expect(form.digital_display_menus_panel).to have_help_text
+
+    form.add_menu
+
+    menu_form = PageObjects::Admin::MenuForm.new
+    menu_form.name = 'Beer Menu'
+    menu_form.select_list 'Beers'
+    menu_form.submit
+    menu_form.cancel
+
+    expect(form).to be_displayed
+    expect(form.lists_panel).to have_no_help_text
+    expect(form.menus_panel).to have_no_help_text
+    expect(form.digital_display_menus_panel).to have_help_text
+
+    form.add_digital_display_menu
+
+    display_form = PageObjects::Admin::DigitalDisplayMenuForm.new
+    display_form.name = 'Test Display'
+    display_form.select_list 'Beers'
+    display_form.submit
+    display_form.cancel
+
+    expect(form).to be_displayed
+    expect(form.lists_panel).to have_no_help_text
+    expect(form.menus_panel).to have_no_help_text
+    expect(form.digital_display_menus_panel).to have_no_help_text
+
+    form.toggle_lists_help
+    expect(form.lists_panel).to have_help_text
+    form.toggle_lists_help
+    expect(form.lists_panel).to have_no_help_text
+
+    form.toggle_menus_help
+    expect(form.menus_panel).to have_help_text
+    form.toggle_menus_help
+    expect(form.menus_panel).to have_no_help_text
+
+    form.toggle_digital_display_menus_help
+    expect(form.digital_display_menus_panel).to have_help_text
+    form.toggle_digital_display_menus_help
+    expect(form.digital_display_menus_panel).to have_no_help_text
+  end
 end

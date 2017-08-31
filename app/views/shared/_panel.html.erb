@@ -1,9 +1,33 @@
 <% panel_class ||= "panel-info" %>
-<div class="panel <%= panel_class %>" data-test=<%= data_test ||= nil %>>
+<% help_type   ||= nil %>
+<% data_test   ||= nil %>
+
+<div class="panel <%= panel_class %>" data-test=<%= data_test %>>
   <div class="panel-heading">
+    <% if help_type %>
+      <div class="pull-right">
+        <span
+          onclick="toggleHelp('<%= help_type %>')"
+          class="glyphicon glyphicon-question-sign help-icon"
+          data-test="toggle-help-<%= help_type %>"
+          aria-hidden="true">
+        </span>
+      </div>
+    <% end %>
     <h3 class="panel-title" data-test="panel-title"><%= title %></h3>
   </div>
   <div class="panel-body">
     <%= yield %>
   </div>
 </div>
+
+<% if help_type %>
+  <% content_for :javascripts do %>
+    <script type="text/javascript">
+      function toggleHelp(helpType) {
+        var help = document.querySelector('[data-help="' + helpType + '"]');
+        help.classList.toggle('hidden');
+      }
+    </script>
+  <% end %>
+<% end %>

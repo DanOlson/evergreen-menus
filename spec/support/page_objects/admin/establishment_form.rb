@@ -22,6 +22,8 @@ module PageObjects
           end
         end
 
+        element :toggle_help_icon, '[data-test="toggle-help-lists"]'
+        element :help_text, '[data-test="lists-help-text"]'
         element :add_button, '[data-test="add-list"]'
         sections :lists, List, '[data-test="establishment-list-item"]'
 
@@ -44,6 +46,8 @@ module PageObjects
           end
         end
 
+        element :toggle_help_icon, '[data-test="toggle-help-menus"]'
+        element :help_text, '[data-test="menus-help-text"]'
         element :add_button, '[data-test="add-menu"]'
         sections :menus, Menu, '[data-test="menu-list-item"]'
 
@@ -65,6 +69,8 @@ module PageObjects
           end
         end
 
+        element :toggle_help_icon, '[data-test="toggle-help-digital-display"]'
+        element :help_text, '[data-test="digital-display-menus-help-text"]'
         element :add_button, '[data-test="add-digital-display-menu"]'
         sections :digital_display_menus, DigitalDisplayMenu, '[data-test="digital-display-menu-list-item"]'
 
@@ -173,6 +179,18 @@ module PageObjects
         list = list_named list_name
         list.show_snippet
         list.html_snippet.text
+      end
+
+      def toggle_lists_help
+        lists_panel.toggle_help_icon.trigger('click')
+      end
+
+      def toggle_menus_help
+        menus_panel.toggle_help_icon.trigger('click')
+      end
+
+      def toggle_digital_display_menus_help
+        digital_display_menus_panel.toggle_help_icon.trigger('click')
       end
     end
   end
