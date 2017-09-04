@@ -24,7 +24,6 @@ class EstablishmentListItem extends Component {
     if (this.props.canShowSnippet) {
       return (
         <a
-          href="#"
           role="button"
           data-test="get-snippet"
           title="get snippet"
