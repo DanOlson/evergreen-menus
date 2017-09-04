@@ -23,7 +23,7 @@ feature 'account management' do
 
     form.submit
     expect(page).to have_css '[data-test="flash-success"]', text: 'Account created'
-    expect(page).to have_css 'h3', text: 'Lebowski, Inc.'
+    expect(page).to have_css 'ol.breadcrumb li.active', text: 'Lebowski, Inc.'
 
     account_details = PageObjects::Admin::AccountDetails.new
     account_details.edit_button.click
@@ -34,7 +34,7 @@ feature 'account management' do
 
     expect(account_details).to be_displayed
     expect(page).to have_css '[data-test="flash-success"]', text: 'Account updated'
-    expect(page).to have_css 'h3', text: 'Lebowski, Incorporated'
+    expect(page).to have_css 'ol.breadcrumb li.active', text: 'Lebowski, Incorporated'
 
     account_details.edit_button.click
     form.delete
@@ -92,7 +92,6 @@ feature 'account management' do
       account_details = PageObjects::Admin::AccountDetails.new
       expect(account_details).to be_displayed
       expect(account_details).to have_current_path "/accounts/#{user.account_id}"
-      expect(account_details.name).to eq account.name
       expect(account_details).to have_establishment 'Bar 1'
       expect(account_details).to have_establishment 'Bar 2'
       expect(account_details).to have_no_edit_button
