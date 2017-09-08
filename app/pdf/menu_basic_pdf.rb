@@ -92,7 +92,7 @@ class MenuBasicPdf
       align: :left
     }
 
-    if show_price
+    if show_price && beer.price
       text_box number_to_currency(beer.price), {
         at: [bounds.left, current_y_pos],
         size: font_size,

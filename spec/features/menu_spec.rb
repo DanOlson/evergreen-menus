@@ -23,8 +23,7 @@ feature 'menu management' do
       name: 'Specials'
     })
     specials_list.beers.create!(
-      name: 'Nitro Milk Stout',
-      price: '6.50'
+      name: 'Nitro Milk Stout'
     )
   end
 
