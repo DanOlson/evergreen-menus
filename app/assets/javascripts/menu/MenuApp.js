@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import AvailableListGroup from './AvailableListGroup';
-import ChosenListGroup from './ChosenListGroup';
+import AvailableListGroup from '../shared/AvailableListGroup';
+import ChosenListGroup from '../shared/ChosenListGroup';
 import Preview from './MenuPreview';
 import Panel from '../Panel';
 import generatePreviewPath from './previewPath';

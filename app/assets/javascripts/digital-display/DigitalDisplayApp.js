@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Panel from '../Panel';
-import AvailableListGroup from '../menu/AvailableListGroup';
-import ChosenListGroup from '../menu/ChosenListGroup';
+import AvailableListGroup from '../shared/AvailableListGroup';
+import ChosenListGroup from '../shared/ChosenListGroup';
 import DigitalDisplayPreview from './DigitalDisplayPreview';
 import generatePreviewPath from './previewPath';
 import { applyFind } from '../polyfills/Array';
