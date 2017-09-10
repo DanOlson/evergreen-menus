@@ -24,6 +24,7 @@ class MenuApp extends Component {
     this.addListToMenu        = this.addListToMenu.bind(this);
     this.removeListFromMenu   = this.removeListFromMenu.bind(this);
     this.onShowPriceChange    = this.onShowPriceChange.bind(this);
+    this.moveChosenList       = this.moveChosenList.bind(this);
 
     this.state = {
       lists,
@@ -33,6 +34,17 @@ class MenuApp extends Component {
       fontSize,
       columns
     };
+  }
+
+  moveChosenList(dragIndex, hoverIndex) {
+    this.setState(prevState => {
+      const { lists } = prevState;
+      const dragList = lists[dragIndex];
+      const newLists = [...lists];
+      newLists.splice(dragIndex, 1);
+      newLists.splice(hoverIndex, 0, dragList);
+      return { lists: newLists };
+    });
   }
 
   addListToMenu(listId) {
@@ -249,6 +261,7 @@ class MenuApp extends Component {
               menuType="pdf"
               onRemove={this.removeListFromMenu}
               onShowPriceChange={this.onShowPriceChange}
+              moveItem={this.moveChosenList}
             />
 
             {buttons}

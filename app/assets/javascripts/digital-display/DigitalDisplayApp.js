@@ -27,6 +27,7 @@ class DigitalDisplayApp extends Component {
     this.addListToDisplay             = this.addListToDisplay.bind(this);
     this.removeListFromDisplay        = this.removeListFromDisplay.bind(this);
     this.onShowPriceChange            = this.onShowPriceChange.bind(this);
+    this.moveChosenList               = this.moveChosenList.bind(this);
 
     this.state = {
       lists,
@@ -46,6 +47,17 @@ class DigitalDisplayApp extends Component {
         listsAvailable: listsAvailable.filter(list => list.id !== listId),
         lists: newLists
       }
+    });
+  }
+
+  moveChosenList(dragIndex, hoverIndex) {
+    this.setState(prevState => {
+      const { lists } = prevState;
+      const dragList = lists[dragIndex];
+      const newLists = [...lists];
+      newLists.splice(dragIndex, 1);
+      newLists.splice(hoverIndex, 0, dragList);
+      return { lists: newLists };
     });
   }
 
@@ -219,6 +231,7 @@ class DigitalDisplayApp extends Component {
               menuType="digitalDisplay"
               onRemove={this.removeListFromDisplay}
               onShowPriceChange={this.onShowPriceChange}
+              moveItem={this.moveChosenList}
             />
 
             {buttons}

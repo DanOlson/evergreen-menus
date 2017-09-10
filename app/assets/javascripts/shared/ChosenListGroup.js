@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import attributeNameResolver from './attributeNameResolver';
 import ChosenListItem from './ChosenListItem';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 class ChosenListGroup extends Component {
   constructor(props) {
     super(props);
-    this.ifEmptyText = "Choose at least one list"
+    this.ifEmptyText = "Choose at least one list";
   }
 
   renderList(listGroupItems) {
@@ -14,7 +16,7 @@ class ChosenListGroup extends Component {
     if (listGroupItems.length === 0) {
       itemsToRender = <li className="list-group-item">{this.ifEmptyText}</li>;
     } else {
-      itemsToRender = listGroupItems
+      itemsToRender = listGroupItems;
     }
 
     return (
@@ -25,7 +27,7 @@ class ChosenListGroup extends Component {
   }
 
   render() {
-    const { lists, onShowPriceChange, menuType, onRemove } = this.props;
+    const { lists, onShowPriceChange, menuType, onRemove, moveItem } = this.props;
     const nestedAttrsName    = attributeNameResolver.resolveNestedAttrName(menuType);
     const entityName         = attributeNameResolver.resolveEntityName(menuType);
     const nestedEntityIdName = attributeNameResolver.resolveNestedEntityIdName(menuType);
@@ -38,6 +40,7 @@ class ChosenListGroup extends Component {
         list,
         index,
         onRemove,
+        moveItem,
         key: list.id
       };
       return <ChosenListItem { ...listItemProps } />
@@ -56,7 +59,8 @@ ChosenListGroup.propTypes = {
   lists: PropTypes.array.isRequired,
   menuType: PropTypes.string.isRequired,
   onRemove: PropTypes.func.isRequired,
-  onShowPriceChange: PropTypes.func.isRequired
+  onShowPriceChange: PropTypes.func.isRequired,
+  moveItem: PropTypes.func.isRequired
 };
 
-export default ChosenListGroup;
+export default DragDropContext(HTML5Backend)(ChosenListGroup);
