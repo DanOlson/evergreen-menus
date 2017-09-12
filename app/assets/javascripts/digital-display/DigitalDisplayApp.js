@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import update from 'react/lib/update';
 import Panel from '../Panel';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import ChosenListGroup from '../shared/ChosenListGroup';
 import DigitalDisplayPreview from './DigitalDisplayPreview';
 import generatePreviewPath from './previewPath';
 import { applyFind } from '../polyfills/Array';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 applyFind();
 
@@ -224,7 +227,8 @@ class DigitalDisplayApp extends Component {
               totalListCount={totalListCount}
               lists={listsAvailable}
               menuType="digitalDisplay"
-              onClick={this.addListToDisplay}
+              onAdd={this.addListToDisplay}
+              onDrop={this.removeListFromDisplay}
             />
             <ChosenListGroup
               lists={lists}
@@ -232,6 +236,7 @@ class DigitalDisplayApp extends Component {
               onRemove={this.removeListFromDisplay}
               onShowPriceChange={this.onShowPriceChange}
               moveItem={this.moveChosenList}
+              onDrop={this.addListToDisplay}
             />
 
             {buttons}
@@ -254,4 +259,4 @@ DigitalDisplayApp.propTypes = {
   rotationIntervalOptions: PropTypes.array
 };
 
-export default DigitalDisplayApp;
+export default DragDropContext(HTML5Backend)(DigitalDisplayApp);

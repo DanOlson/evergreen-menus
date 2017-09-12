@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import update from 'react/lib/update';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import ChosenListGroup from '../shared/ChosenListGroup';
 import Preview from './MenuPreview';
 import Panel from '../Panel';
 import generatePreviewPath from './previewPath';
 import { applyFind } from '../polyfills/Array';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 applyFind();
 
@@ -37,9 +40,17 @@ class MenuApp extends Component {
   }
 
   moveChosenList(dragIndex, hoverIndex) {
+    const { lists } = this.state;
+    const dragList = lists[dragIndex];
+    // this.setState(update(this.state, {
+    //   lists: {
+    //     $splice: [
+    //       [dragIndex, 1],
+    //       [hoverIndex, 0, dragList]
+    //     ]
+    //   }
+    // }));
     this.setState(prevState => {
-      const { lists } = prevState;
-      const dragList = lists[dragIndex];
       const newLists = [...lists];
       newLists.splice(dragIndex, 1);
       newLists.splice(hoverIndex, 0, dragList);
@@ -254,7 +265,8 @@ class MenuApp extends Component {
               totalListCount={totalListCount}
               lists={listsAvailable}
               menuType="pdf"
-              onClick={this.addListToMenu}
+              onAdd={this.addListToMenu}
+              onDrop={this.removeListFromMenu}
             />
             <ChosenListGroup
               lists={lists}
@@ -262,6 +274,7 @@ class MenuApp extends Component {
               onRemove={this.removeListFromMenu}
               onShowPriceChange={this.onShowPriceChange}
               moveItem={this.moveChosenList}
+              onDrop={this.addListToMenu}
             />
 
             {buttons}
@@ -285,4 +298,4 @@ MenuApp.propTypes = {
   canDestroyMenu: PropTypes.bool
 };
 
-export default MenuApp;
+export default DragDropContext(HTML5Backend)(MenuApp);

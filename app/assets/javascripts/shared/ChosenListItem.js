@@ -66,14 +66,14 @@ function dragCollect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
-  }
+  };
 }
 
 // specifies which props to inject
 function dropCollect(connect) {
   return {
     connectDropTarget: connect.dropTarget()
-  }
+  };
 }
 
 class ChosenListItem extends Component {

@@ -1,3 +1,4 @@
 export default {
-  chosenListItem: 'chosen-list-item'
+  chosenListItem: 'chosen-list-item',
+  availableListItem: 'available-list-item'
 };
