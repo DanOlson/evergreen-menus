@@ -18,8 +18,13 @@ class AvailableListItem extends Component {
       entityName,
       nestedEntityIdName,
       connectDragSource,
+      isDragging,
       onAdd
     } = this.props;
+
+    const style = {
+      opacity: isDragging ? 0 : 1
+    };
 
     let menuListIdInput, menuListDestroyInput;
     if (list[nestedEntityIdName]) {
@@ -42,7 +47,7 @@ class AvailableListItem extends Component {
     }
 
     return connectDragSource(
-      <li className="list-group-item" data-test="menu-list">
+      <li className="list-group-item" data-test="menu-list" style={style}>
         <AddButton onClick={onAdd} listId={list.id} />
         <span className="list-name" data-test="list-name">{list.name}</span>
         {menuListIdInput}
@@ -77,7 +82,12 @@ AvailableListItem.propTypes = {
   entityName: PropTypes.string.isRequired,
   nestedEntityIdName: PropTypes.string.isRequired,
   connectDragSource: PropTypes.func.isRequired,
-  onAdd: PropTypes.func.isRequired
+  isDragging: PropTypes.bool.isRequired,
+  onAdd: PropTypes.func.isRequired,
 }
 
-export default DragSource(itemTypes.availableListItem, itemSource, collect)(AvailableListItem);
+export default DragSource(
+  itemTypes.availableListItem,
+  itemSource,
+  collect
+)(AvailableListItem);

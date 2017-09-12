@@ -16,7 +16,8 @@ const dropTargetSpec = {
 // props to be injected
 function collect(connect, monitor) {
   return {
-    connectDropTarget: connect.dropTarget()
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
   };
 }
 
@@ -48,7 +49,8 @@ class ChosenListGroup extends Component {
       menuType,
       onRemove,
       moveItem,
-      connectDropTarget
+      connectDropTarget,
+      isOver
     } = this.props;
     const nestedAttrsName    = attributeNameResolver.resolveNestedAttrName(menuType);
     const entityName         = attributeNameResolver.resolveEntityName(menuType);
@@ -68,8 +70,12 @@ class ChosenListGroup extends Component {
       return <ChosenListItem { ...listItemProps } />
     });
 
+    const style = {
+      opacity: isOver ? 0.5 : 1
+    };
+
     return connectDropTarget(
-      <div className="panel panel-default" data-test="menu-lists-selected">
+      <div className="panel panel-default" data-test="menu-lists-selected" style={style}>
         <div className="panel-heading list-group-heading">Lists Selected</div>
         {this.renderList(listGroupItems)}
       </div>
@@ -84,11 +90,12 @@ ChosenListGroup.propTypes = {
   onShowPriceChange: PropTypes.func.isRequired,
   moveItem: PropTypes.func.isRequired,
   onDrop: PropTypes.func.isRequired,
-  connectDropTarget: PropTypes.func.isRequired
+  connectDropTarget: PropTypes.func.isRequired,
+  isOver: PropTypes.bool.isRequired
 };
 
 export default DropTarget(
-  [/*itemTypes.chosenListItem,*/ itemTypes.availableListItem],
+  itemTypes.availableListItem,
   dropTargetSpec,
   collect
 )(ChosenListGroup);

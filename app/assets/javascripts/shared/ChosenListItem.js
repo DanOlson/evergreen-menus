@@ -96,7 +96,8 @@ class ChosenListItem extends Component {
       nestedEntityIdName,
       onRemove,
       connectDragSource,
-      connectDropTarget
+      connectDropTarget,
+      isDragging
     } = this.props;
     const showPriceInputId = `menu_${nestedAttrsName}_${index}_show_price_on_menu`
     const showPrice = {
@@ -111,8 +112,12 @@ class ChosenListItem extends Component {
     if (list.show_price_on_menu === undefined || list.show_price_on_menu) {
       showPrice.defaultChecked = 'checked';
     }
+
+    const style = {
+      opacity: isDragging ? 0 : 1
+    };
     return connectDragSource(connectDropTarget(
-      <li className="list-group-item" data-test="menu-list">
+      <li className="list-group-item" data-test="menu-list" style={style}>
         <RemoveButton onClick={onRemove} listId={list.id} />
         <span className="list-name" data-test="list-name">{list.name}</span>
         <input
@@ -159,6 +164,14 @@ ChosenListItem.propTypes = {
   moveItem: PropTypes.func.isRequired
 };
 
-const dragSource = DragSource(itemTypes.chosenListItem, itemSource, dragCollect)(ChosenListItem);
+const dragSource = DragSource(
+  itemTypes.chosenListItem,
+  itemSource,
+  dragCollect
+)(ChosenListItem);
 
-export default DropTarget(itemTypes.chosenListItem, itemTarget, dropCollect)(dragSource);
+export default DropTarget(
+  itemTypes.chosenListItem,
+  itemTarget,
+  dropCollect
+)(dragSource);
