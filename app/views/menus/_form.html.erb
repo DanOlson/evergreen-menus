@@ -1,13 +1,15 @@
 <script>
-  window.BEERMAPPER = window.BEERMAPPER || {};
-  window.BEERMAPPER.menu = <%= raw menu_json menu %>;
-  window.BEERMAPPER.cancelEditMenuPath = "<%= edit_account_establishment_path(account, establishment) %>";
-  window.BEERMAPPER.menuFormSubmitText = "<%= submit_text %>";
+  window.BEERMAPPER = window.BEERMAPPER || {
+    menu: <%= raw menu_json menu %>,
+    cancelEditMenuPath: "<%= edit_account_establishment_path(account, establishment) %>",
+    menuFormSubmitText: "<%= submit_text %>",
+    fontOptions: <%= menu_font_options.to_json.html_safe %>,
+    templateOptions: <%= menu_template_options.to_json.html_safe %>
+  };
   <% if menu.persisted? %>
     window.BEERMAPPER.downloadMenuPath = "<%= account_establishment_menu_path(account, establishment, menu, format: :pdf, download: '1') %>";
     window.BEERMAPPER.canDestroyMenu = <%= can?(:destroy, menu) %>;
   <% end %>
-  window.BEERMAPPER.fontOptions = <%= menu_font_options.to_json.html_safe %>
 </script>
 <% breadcrumb :menu, account, establishment, menu %>
 <%= form_for [account, establishment, menu], html: { class: 'menu-form' } do |f| %>

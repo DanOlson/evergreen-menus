@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import update from 'react/lib/update';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import ChosenListGroup from '../shared/ChosenListGroup';
 import Preview from './MenuPreview';
@@ -16,11 +15,12 @@ class MenuApp extends Component {
   constructor(props) {
     super(props);
     const { menu } = this.props;
-    const { lists, listsAvailable, name, font } = menu;
+    const { lists, listsAvailable, name, font, template } = menu;
     const fontSize = menu.font_size;
     const columns = menu.number_of_columns;
 
     this.handleMenuNameChange = this.handleMenuNameChange.bind(this);
+    this.handleTemplateChange = this.handleTemplateChange.bind(this);
     this.handleFontChange     = this.handleFontChange.bind(this);
     this.handleFontSizeChange = this.handleFontSizeChange.bind(this);
     this.handleColumnsChange  = this.handleColumnsChange.bind(this);
@@ -33,6 +33,7 @@ class MenuApp extends Component {
       lists,
       listsAvailable,
       name,
+      template,
       font,
       fontSize,
       columns
@@ -42,14 +43,7 @@ class MenuApp extends Component {
   moveChosenList(dragIndex, hoverIndex) {
     const { lists } = this.state;
     const dragList = lists[dragIndex];
-    // this.setState(update(this.state, {
-    //   lists: {
-    //     $splice: [
-    //       [dragIndex, 1],
-    //       [hoverIndex, 0, dragList]
-    //     ]
-    //   }
-    // }));
+
     this.setState(prevState => {
       const newLists = [...lists];
       newLists.splice(dragIndex, 1);
@@ -89,6 +83,13 @@ class MenuApp extends Component {
     });
   }
 
+  handleTemplateChange(event) {
+    const template = event.target.value;
+    this.setState(prevState => {
+      return { template };
+    });
+  }
+
   handleFontChange(event) {
     const font = event.target.value;
     this.setState(prevState => {
@@ -125,8 +126,8 @@ class MenuApp extends Component {
     });
   }
 
-  renderFontOptions() {
-    return this.props.fontOptions.map((option, index) => {
+  renderOptions(choices) {
+    return choices.map((option, index) => {
       return <option value={option} key={index}>{option}</option>
     });
   }
@@ -170,11 +171,12 @@ class MenuApp extends Component {
   }
 
   render() {
-    const { lists, listsAvailable, font, fontSize, columns, name } = this.state;
-    const fontOptions    = this.renderFontOptions();
-    const totalListCount = lists.length + listsAvailable.length;
-    const buttons        = this.renderButtons();
-    const previewPath    = generatePreviewPath(this.props.menu, this.state);
+    const { lists, listsAvailable, font, fontSize, columns, name, template } = this.state;
+    const fontOptions     = this.renderOptions(this.props.fontOptions);
+    const templateOptions = this.renderOptions(this.props.templateOptions);
+    const totalListCount  = lists.length + listsAvailable.length;
+    const buttons         = this.renderButtons();
+    const previewPath     = generatePreviewPath(this.props.menu, this.state);
     return (
       <div className="row">
         <div className="col-sm-6">
@@ -194,6 +196,19 @@ class MenuApp extends Component {
 
             <div className="form-group">
               <div className="row">
+                <div className="col-sm-3">
+                  <label htmlFor="menu_font">Template</label>
+                  <select
+                    id="menu_template"
+                    data-test="menu-template"
+                    name="menu[template]"
+                    className="form-control"
+                    defaultValue={template}
+                    onChange={this.handleTemplateChange}>
+                    {templateOptions}
+                  </select>
+                </div>
+
                 <div className="col-sm-4">
                   <label htmlFor="menu_font">Font</label>
                   <select
@@ -207,7 +222,7 @@ class MenuApp extends Component {
                   </select>
                 </div>
 
-                <div className="col-sm-4">
+                <div className="col-sm-2">
                   <label htmlFor="menu_font_size">Font Size</label>
                   <input
                     id="menu_font_size"
@@ -222,7 +237,7 @@ class MenuApp extends Component {
                   />
                 </div>
 
-                <div className="col-sm-4">
+                <div className="col-sm-3">
                   <label htmlFor="menu_number_of_columns">Columns</label>
 
                   <div>
@@ -295,7 +310,9 @@ MenuApp.propTypes = {
   cancelEditMenuPath: PropTypes.string.isRequired,
   downloadMenuPath: PropTypes.string,
   menuFormSubmitText: PropTypes.string.isRequired,
-  canDestroyMenu: PropTypes.bool
+  canDestroyMenu: PropTypes.bool,
+  fontOptions: PropTypes.array.isRequired,
+  templateOptions: PropTypes.array.isRequired
 };
 
 export default DragDropContext(HTML5Backend)(MenuApp);

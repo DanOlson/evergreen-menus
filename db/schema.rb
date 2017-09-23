@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170826153253) do
+ActiveRecord::Schema.define(version: 20170923014609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,13 +132,14 @@ ActiveRecord::Schema.define(version: 20170826153253) do
   end
 
   create_table "menus", force: :cascade do |t|
-    t.string   "name",                          null: false
-    t.integer  "establishment_id",              null: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.string   "name",                                     null: false
+    t.integer  "establishment_id",                         null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.string   "font"
     t.integer  "font_size"
-    t.integer  "number_of_columns", default: 1
+    t.integer  "number_of_columns",            default: 1
+    t.string   "template",          limit: 60
   end
 
   create_table "roles", force: :cascade do |t|

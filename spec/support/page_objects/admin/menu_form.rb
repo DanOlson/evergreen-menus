@@ -82,6 +82,7 @@ module PageObjects
       end
 
       element :name_input,      '[data-test="menu-name"]'
+      element :template_input,  '[data-test="menu-template"]'
       element :font_input,      '[data-test="menu-font"]'
       element :font_size_input, '[data-test="menu-font-size"]'
       elements :columns_inputs, '[data-test^="menu-columns"]'
@@ -110,8 +111,16 @@ module PageObjects
         name_input.set string
       end
 
+      def template=(template)
+        template_input.find(:option, template).select_option
+      end
+
+      def template
+        template_input.value
+      end
+
       def font=(font)
-        select font, from: 'Font'
+        font_input.find(:option, font).select_option
       end
 
       def font_size=(font_size)

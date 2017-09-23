@@ -11,6 +11,26 @@ class Menu < ActiveRecord::Base
     COURIER   = 'Courier'
   end
 
+  module Templates
+    BASIC    = 'Basic'
+    STANDARD = 'Standard'
+
+    class << self
+      def pdf_class_for(template)
+        if TEMPLATES.include? template
+          const_get "Menu#{template}Pdf"
+        else
+          MenuBasicPdf
+        end
+      end
+    end
+  end
+
+  TEMPLATES = [
+    Templates::BASIC,
+    Templates::STANDARD
+  ]
+
   FONTS = [
     Fonts::TIMES,
     Fonts::HELVETICA,

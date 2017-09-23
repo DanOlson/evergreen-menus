@@ -13,7 +13,8 @@ class MenuPreviewGenerator
   end
 
   def generate_pdf
-    MenuBasicPdf.new menu: menu, lists: ordered_lists
+    pdf_class = Menu::Templates.pdf_class_for options[:template]
+    pdf_class.new menu: menu, lists: ordered_lists
   end
 
   def menu

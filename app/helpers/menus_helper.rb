@@ -20,4 +20,8 @@ module MenusHelper
   def menu_font_options
     Menu::FONTS
   end
+
+  def menu_template_options
+    Menu::TEMPLATES
+  end
 end

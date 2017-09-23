@@ -11,7 +11,8 @@ class MenusController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf {
-        pdf = MenuBasicPdf.new menu: @menu
+        pdf_class = Menu::Templates.pdf_class_for @menu.template
+        pdf = pdf_class.new menu: @menu
         send_data pdf.render, {
           filename: pdf.filename,
           type: 'application/pdf',
@@ -67,6 +68,7 @@ class MenusController < ApplicationController
     params.require(:menu).permit(
       :id,
       :name,
+      :template,
       :font,
       :font_size,
       :number_of_columns,

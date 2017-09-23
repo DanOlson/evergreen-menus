@@ -33,7 +33,7 @@ class MenuStandardPdf
   private
 
   def default_lists
-    menu.lists
+    menu.menu_lists.joins(:list).select('lists.*, menu_lists.show_price_on_menu')
   end
 
   def header
@@ -82,7 +82,9 @@ class MenuStandardPdf
     list_heading list: list
 
     beers = Beer.where(list: list).order(:name)
-    beers.each { |beer| menu_item beer }
+    beers.each do |beer|
+      menu_item beer, show_price: list.show_price_on_menu?
+    end
   end
 
   def list_heading(list:)
@@ -97,7 +99,7 @@ class MenuStandardPdf
     end
   end
 
-  def menu_item(beer)
+  def menu_item(beer, show_price:)
     font_size = menu.font_size
     current_y_pos = cursor
 
@@ -116,9 +118,10 @@ class MenuStandardPdf
         size: font_size - 2,
       }
     ]
+    name_box_width_multiplier = show_price ?  0.6 : 1
     name_box = Prawn::Text::Formatted::Box.new(fragments, {
       at: [bounds.left, current_y_pos],
-      width: bounds.width * 0.6,
+      width: bounds.width * name_box_width_multiplier,
       align: :left,
       document: document
     })
@@ -128,11 +131,11 @@ class MenuStandardPdf
     descent_amount = name_box.height + 5
     if y - descent_amount < bounds.bottom
       bounds.move_past_bottom
-      return menu_item beer
+      return menu_item beer, show_price: show_price
     end
     name_box.render
 
-    if beer.price
+    if beer.price && show_price
       text_box number_to_currency(beer.price), {
         at: [bounds.left, current_y_pos],
         size: font_size,

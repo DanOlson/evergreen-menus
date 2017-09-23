@@ -46,9 +46,9 @@ function buildQueryString(lists, base) {
 }
 
 function generatePreviewPath(menu, formState) {
-  const { lists, name, font, fontSize, columns } = formState;
+  const { lists, name, font, fontSize, columns, template } = formState;
   const { previewPath, id } = menu;
-  const seed = `?menu[name]=${name}&menu[font]=${font}&menu[font_size]=${fontSize}&menu[number_of_columns]=${columns}`;
+  const seed = `?menu[name]=${name}&menu[template]=${template}&menu[font]=${font}&menu[font_size]=${fontSize}&menu[number_of_columns]=${columns}`;
   const queryString = buildQueryString(lists, seed);
   if (id) {
     return previewPath + queryString + `&menu[id]=${id}`;
