@@ -22,6 +22,8 @@ class MenuBasicPdf
     header
     body
     footer
+
+    draw_border
   end
 
   def render
@@ -31,6 +33,20 @@ class MenuBasicPdf
   end
 
   private
+
+  def draw_border
+    repeat(:all) do
+      exp_left = bounds.left - 10
+      exp_top = bounds.top + 10
+
+      move_to [exp_left, exp_top]
+      stroke_color 'cecece'
+
+      stroke do
+        rounded_rectangle [exp_left, exp_top], bounds.width + 20, bounds.height + 20, 10
+      end
+    end
+  end
 
   def default_lists
     menu.menu_lists.joins(:list).select('lists.*, menu_lists.show_price_on_menu')
