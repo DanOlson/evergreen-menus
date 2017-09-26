@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ColumnsInput from './ColumnsInput';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import ChosenListGroup from '../shared/ChosenListGroup';
 import Preview from './MenuPreview';
@@ -110,7 +111,7 @@ class MenuApp extends Component {
   }
 
   handleColumnsChange(event) {
-    let columns = event.target.value;
+    let columns = Number(event.target.value);
     this.setState(prevState => {
       return { columns };
     });
@@ -238,45 +239,12 @@ class MenuApp extends Component {
                   />
                 </div>
 
-                <div className="col-sm-3">
-                  <label htmlFor="menu_number_of_columns">Columns</label>
-
-                  <div>
-                    <label className="radio-inline">
-                      <input
-                        type="radio"
-                        name="menu[number_of_columns]"
-                        data-test="menu-columns-1"
-                        value="1"
-                        defaultChecked={columns === 1}
-                        onClick={this.handleColumnsChange}
-                        disabled={columnsDisabled}/>
-                      1
-                    </label>
-                    <label className="radio-inline">
-                      <input
-                        type="radio"
-                        name="menu[number_of_columns]"
-                        data-test="menu-columns-2"
-                        value="2"
-                        defaultChecked={columns === 2}
-                        onClick={this.handleColumnsChange}
-                        disabled={columnsDisabled}/>
-                      2
-                    </label>
-                    <label className="radio-inline">
-                      <input
-                        type="radio"
-                        name="menu[number_of_columns]"
-                        data-test="menu-columns-3"
-                        value="3"
-                        defaultChecked={columns === 3}
-                        onClick={this.handleColumnsChange}
-                        disabled={columnsDisabled}/>
-                      3
-                    </label>
-                  </div>
-                </div>
+                <ColumnsInput
+                  className="col-sm-3"
+                  onChange={this.handleColumnsChange}
+                  columns={columns}
+                  disabled={columnsDisabled}
+                />
               </div>
             </div>
 
