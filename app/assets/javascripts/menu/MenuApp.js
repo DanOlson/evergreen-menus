@@ -177,6 +177,7 @@ class MenuApp extends Component {
     const totalListCount  = lists.length + listsAvailable.length;
     const buttons         = this.renderButtons();
     const previewPath     = generatePreviewPath(this.props.menu, this.state);
+    const columnsDisabled = template === 'Centered';
     return (
       <div className="row">
         <div className="col-sm-6">
@@ -248,7 +249,8 @@ class MenuApp extends Component {
                         data-test="menu-columns-1"
                         value="1"
                         defaultChecked={columns === 1}
-                        onClick={this.handleColumnsChange}/>
+                        onClick={this.handleColumnsChange}
+                        disabled={columnsDisabled}/>
                       1
                     </label>
                     <label className="radio-inline">
@@ -258,7 +260,8 @@ class MenuApp extends Component {
                         data-test="menu-columns-2"
                         value="2"
                         defaultChecked={columns === 2}
-                        onClick={this.handleColumnsChange}/>
+                        onClick={this.handleColumnsChange}
+                        disabled={columnsDisabled}/>
                       2
                     </label>
                     <label className="radio-inline">
@@ -268,7 +271,8 @@ class MenuApp extends Component {
                         data-test="menu-columns-3"
                         value="3"
                         defaultChecked={columns === 3}
-                        onClick={this.handleColumnsChange}/>
+                        onClick={this.handleColumnsChange}
+                        disabled={columnsDisabled}/>
                       3
                     </label>
                   </div>

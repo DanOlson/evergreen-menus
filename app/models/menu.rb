@@ -14,6 +14,7 @@ class Menu < ActiveRecord::Base
   module Templates
     BASIC    = 'Basic'
     STANDARD = 'Standard'
+    CENTERED = 'Centered'
 
     class << self
       def pdf_class_for(template)
@@ -28,7 +29,8 @@ class Menu < ActiveRecord::Base
 
   TEMPLATES = [
     Templates::BASIC,
-    Templates::STANDARD
+    Templates::STANDARD,
+    Templates::CENTERED
   ]
 
   FONTS = [

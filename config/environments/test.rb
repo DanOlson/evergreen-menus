@@ -24,7 +24,7 @@ Beermapper::Application.configure do
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = false
+  config.action_dispatch.show_exceptions = true
 
   config.action_mailer.default_url_options = {
     host: 'admin.beermapper.dev',

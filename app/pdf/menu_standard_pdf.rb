@@ -21,7 +21,6 @@ class MenuStandardPdf
 
     header
     body
-    # footer
   end
 
   def render
@@ -42,17 +41,6 @@ class MenuStandardPdf
         align: :center,
         style: :bold,
         size: menu.font_size * 1.25
-      }
-    end
-  end
-
-  def footer
-    bottom_left = [bounds.left, bounds.bottom]
-    bounding_box(bottom_left, width: bounds.width, height: 10) do
-      text = "Page <page> - Updated #{@menu.updated_at.strftime('%m/%d')}"
-      number_pages text, {
-        size: [menu.font_size, 10].min,
-        align: :center
       }
     end
   end
@@ -92,6 +80,7 @@ class MenuStandardPdf
     pad_bottom(15) do
       text list.name.upcase, {
         size: font_size,
+        color: 'c7254e',
         style: :bold
       }
       dash 1, space: 2

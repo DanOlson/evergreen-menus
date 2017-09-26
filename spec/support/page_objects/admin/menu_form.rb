@@ -137,6 +137,10 @@ module PageObjects
         Integer(input.value)
       end
 
+      def has_column_choices_disabled?
+        columns_inputs.all? { |el| el.disabled? }
+      end
+
       def has_font_size?(font_size)
         font_size_input.value == String(font_size)
       end

@@ -90,18 +90,20 @@ feature 'menu management' do
     menu_form.name = 'Bottles Large Insert'
     menu_form.remove_list('Taps')
     menu_form.select_list('Bottles')
+    menu_form.template = 'Centered'
 
+    expect(menu_form).to have_column_choices_disabled
     expect(menu_form).to_not have_preview_content 'Taps - Mini Insert'
     expect(menu_form).to_not have_preview_content 'Taps'
     expect(menu_form).to_not have_preview_content 'Fulton Sweet Child of Vine'
-    expect(menu_form).to have_preview_content 'Bottles Large Insert'
+    expect(menu_form).to have_preview_content 'BOTTLES LARGE INSERT'
     expect(menu_form).to have_preview_content 'Arrogant Bastard'
-    expect(menu_form).to have_preview_content '$7.50'
+    expect(menu_form).to have_preview_content '7.5'
     expect(menu_form.selected_list_named('Bottles')).to have_price_shown
 
     menu_form.hide_prices(list: 'Bottles')
 
-    expect(menu_form).to_not have_preview_content '$7.50'
+    expect(menu_form).to_not have_preview_content '7.5'
 
     expect(menu_form).to have_selected_list('Bottles')
     expect(menu_form).to have_available_list('Taps')
@@ -117,13 +119,14 @@ feature 'menu management' do
     establishment_form.menu_named('Bottles Large Insert').visit
     expect(menu_form).to have_preview_content 'Arrogant Bastard'
     expect(menu_form.selected_list_named('Bottles')).to_not have_price_shown
-    expect(menu_form).to_not have_preview_content '$7.50'
+    expect(menu_form).to_not have_preview_content '7.5'
+    expect(menu_form.template).to eq 'Centered'
 
     menu_form.show_prices(list: 'Bottles')
     menu_form.submit
 
     expect(menu_form.selected_list_named('Bottles')).to have_price_shown
-    expect(menu_form).to have_preview_content '$7.50'
+    expect(menu_form).to have_preview_content '7.5'
   end
 
   scenario 'staff with establishment access can manage a menu', :js, :admin do
