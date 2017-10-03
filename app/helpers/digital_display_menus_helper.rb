@@ -27,7 +27,9 @@ module DigitalDisplayMenusHelper
       listsAvailable: available_lists.as_json,
       previewPath: preview_path,
       isHorizontal: digital_display_menu.horizontal_orientation,
-      rotationInterval: digital_display_menu.rotation_interval || ROTATION_INTERVALS.first[:value]
+      rotationInterval: digital_display_menu.rotation_interval || ROTATION_INTERVALS.first[:value],
+      backgroundColor: digital_display_menu.background_color,
+      textColor: digital_display_menu.text_color
     }).to_json
   end
 

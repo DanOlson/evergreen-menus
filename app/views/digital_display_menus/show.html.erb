@@ -25,6 +25,13 @@
     </div>
   <% end %>
 </div>
+<% content_for :head do %>
+  <style>
+    body {
+      background-color: <%= @digital_display_menu.background_color %>;
+    }
+  </style>
+<% end %>
 <script>
   var ids = <%= raw @digital_display_menu.lists.map(&:id) %>;
   var rotationInterval = <%= @digital_display_menu.rotation_interval %>;

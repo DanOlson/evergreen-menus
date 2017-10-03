@@ -9,6 +9,7 @@ import generatePreviewPath from './previewPath';
 import { applyFind } from '../polyfills/Array';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { ChromePicker } from 'react-color';
 
 applyFind();
 
@@ -20,10 +21,14 @@ class DigitalDisplayApp extends Component {
       listsAvailable,
       name,
       rotationInterval,
-      isHorizontal
+      isHorizontal,
+      backgroundColor,
+      textColor
     } = this.props.digitalDisplayMenu;
 
     this.handleNameChange             = this.handleNameChange.bind(this);
+    this.handleBackgroundColorChange  = this.handleBackgroundColorChange.bind(this);
+    this.handleTextColorChange        = this.handleTextColorChange.bind(this);
     this.setOrientationHorizontal     = this.setOrientationHorizontal.bind(this);
     this.setOrientationVertical       = this.setOrientationVertical.bind(this);
     this.handleRotationIntervalChange = this.handleRotationIntervalChange.bind(this);
@@ -37,7 +42,9 @@ class DigitalDisplayApp extends Component {
       listsAvailable,
       name,
       isHorizontal,
-      rotationInterval
+      rotationInterval,
+      backgroundColor,
+      textColor
     };
   }
 
@@ -95,11 +102,25 @@ class DigitalDisplayApp extends Component {
     });
   }
 
+  handleBackgroundColorChange(color, event) {
+    const backgroundColor = color.hex;
+    this.setState(prevState => {
+      return { backgroundColor };
+    });
+  }
+
+  handleTextColorChange(event) {
+    const textColor = event.target.value;
+    this.setState(prevState => {
+      return { textColor };
+    });
+  }
+
   handleRotationIntervalChange(event) {
     const rotationInterval = event.target.value;
     this.setState(prevState => {
-      return { rotationInterval }
-    })
+      return { rotationInterval };
+    });
   }
 
   onShowPriceChange(listId, showPrice) {
@@ -157,7 +178,15 @@ class DigitalDisplayApp extends Component {
   }
 
   render() {
-    const { lists, listsAvailable, name, isHorizontal, rotationInterval } = this.state;
+    const {
+      lists,
+      listsAvailable,
+      name,
+      isHorizontal,
+      rotationInterval,
+      backgroundColor,
+      textColor
+    } = this.state;
     const totalListCount          = lists.length + listsAvailable.length;
     const buttons                 = this.renderButtons();
     const rotationIntervalOptions = this.renderRotationIntervalOptions();
@@ -211,6 +240,22 @@ class DigitalDisplayApp extends Component {
             </div>
 
             <div className="form-group">
+              <label>Background Color</label>
+              <ChromePicker
+                color={backgroundColor}
+                onChangeComplete={this.handleBackgroundColorChange}
+              />
+
+              <input
+                id="digital_display_menu_background_color"
+                name="digital_display_menu[background_color]"
+                data-test="digital-display-menu-background-color"
+                type="hidden"
+                defaultValue={backgroundColor}
+              />
+            </div>
+
+            <div className="form-group">
               <label htmlFor="menu_font">Rotation Interval</label>
               <select
                 id="digital_display_menu_rotation_interval"
@@ -256,7 +301,9 @@ DigitalDisplayApp.propTypes = {
   viewDisplayPath: PropTypes.string,
   submitButtonText: PropTypes.string.isRequired,
   canDestroy: PropTypes.bool,
-  rotationIntervalOptions: PropTypes.array
+  rotationIntervalOptions: PropTypes.array,
+  backgroundColor: PropTypes.string,
+  textColor: PropTypes.string
 };
 
 export default DragDropContext(HTML5Backend)(DigitalDisplayApp);

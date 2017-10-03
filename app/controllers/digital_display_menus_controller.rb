@@ -53,6 +53,9 @@ class DigitalDisplayMenusController < ApplicationController
       :name,
       :horizontal_orientation,
       :rotation_interval,
+      :font,
+      :background_color,
+      :text_color,
       {
         digital_display_menu_lists_attributes: [
           :id,
