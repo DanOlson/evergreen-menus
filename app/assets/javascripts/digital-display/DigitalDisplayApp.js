@@ -9,7 +9,7 @@ import generatePreviewPath from './previewPath';
 import { applyFind } from '../polyfills/Array';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { ChromePicker } from 'react-color';
+import ColorPickerInput from '../shared/ColorPickerInput';
 
 applyFind();
 
@@ -239,33 +239,29 @@ class DigitalDisplayApp extends Component {
               </div>
             </div>
 
-            <div className="form-group">
-              <label>Background Color</label>
-              <ChromePicker
-                color={backgroundColor}
-                onChangeComplete={this.handleBackgroundColorChange}
-              />
-
-              <input
+            <div className="row">
+              <ColorPickerInput
                 id="digital_display_menu_background_color"
                 name="digital_display_menu[background_color]"
-                data-test="digital-display-menu-background-color"
-                type="hidden"
-                defaultValue={backgroundColor}
+                className="form-group col-sm-4"
+                dataTest="digital-display-menu-background-color"
+                label="Background Color"
+                onChangeComplete={this.handleBackgroundColorChange}
+                color={backgroundColor}
               />
-            </div>
 
-            <div className="form-group">
-              <label htmlFor="menu_font">Rotation Interval</label>
-              <select
-                id="digital_display_menu_rotation_interval"
-                data-test="digital-display-menu-rotation-interval"
-                name="digital_display_menu[rotation_interval]"
-                className="form-control"
-                defaultValue={rotationInterval}
-                onChange={this.handleRotationIntervalChange}>
-                {rotationIntervalOptions}
-              </select>
+              <div className="form-group col-sm-4">
+                <label htmlFor="menu_font">Rotation Interval</label>
+                <select
+                  id="digital_display_menu_rotation_interval"
+                  data-test="digital-display-menu-rotation-interval"
+                  name="digital_display_menu[rotation_interval]"
+                  className="form-control"
+                  defaultValue={rotationInterval}
+                  onChange={this.handleRotationIntervalChange}>
+                  {rotationIntervalOptions}
+                </select>
+              </div>
             </div>
 
             <AvailableListGroup
