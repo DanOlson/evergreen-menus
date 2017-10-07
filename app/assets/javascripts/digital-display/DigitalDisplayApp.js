@@ -102,15 +102,15 @@ class DigitalDisplayApp extends Component {
     });
   }
 
-  handleBackgroundColorChange(color, event) {
+  handleBackgroundColorChange(color) {
     const backgroundColor = color.hex;
     this.setState(prevState => {
       return { backgroundColor };
     });
   }
 
-  handleTextColorChange(event) {
-    const textColor = event.target.value;
+  handleTextColorChange(color) {
+    const textColor = color.hex;
     this.setState(prevState => {
       return { textColor };
     });
@@ -248,6 +248,16 @@ class DigitalDisplayApp extends Component {
                 label="Background Color"
                 onChangeComplete={this.handleBackgroundColorChange}
                 color={backgroundColor}
+              />
+
+              <ColorPickerInput
+                id="digital_display_menu_text_color"
+                name="digital_display_menu[text_color]"
+                className="form-group col-sm-4"
+                dataTest="digital-display-menu-text-color"
+                label="Text Color"
+                onChangeComplete={this.handleTextColorChange}
+                color={textColor}
               />
 
               <div className="form-group col-sm-4">

@@ -1,15 +1,16 @@
 <% orientation = @digital_display_menu.horizontal_orientation? ? 'horizontal' : 'vertical' %>
 <div class="digital-display-menu-container">
   <% @digital_display_menu.lists.each do |list| %>
+    <% list_class = list.beers.count > 10 && orientation == 'horizontal' ? 'two-column-list' : 'one-column-list' %>
     <div 
-      class="digital-display-menu-list center-block <%= orientation %>"
+      class="digital-display-menu-list center-block <%= list_class %> <%= orientation %>"
       id="digital-display-menu-<%= list.id %>"
       data-test="digital-display-menu-list">
 
       <h4 class="list-title" data-test="digital-display-menu-list-name"><%= list.name %></h4>
 
       <div class="list-container">
-        <ul>
+        <ul class="<%= list_class %>">
         <% list.beers.each do |beer| %>
           <li data-test="digital-display-menu-list-item">
             <span data-test="digital-display-menu-list-item-name"><%= beer.name %></span>
@@ -29,6 +30,7 @@
   <style>
     body {
       background-color: <%= @digital_display_menu.background_color %>;
+      color: <%= @digital_display_menu.text_color %>;
     }
   </style>
 <% end %>

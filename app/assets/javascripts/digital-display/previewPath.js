@@ -52,7 +52,7 @@ function generatePreviewPath(digitalDisplayMenu, formState) {
   const rotationIntervalParam = `digital_display_menu[rotation_interval]=${rotationInterval}`;
   const backgroundColorParam = `digital_display_menu[background_color]=${encodeURIComponent(backgroundColor)}`;
   const textColorParam = `digital_display_menu[text_color]=${encodeURIComponent(textColor)}`;
-  const seed = `?${orientationParam}&${rotationIntervalParam}&${backgroundColorParam}`;
+  const seed = `?${orientationParam}&${rotationIntervalParam}&${backgroundColorParam}&${textColorParam}`;
   const queryString = buildQueryString(lists, seed);
   if (id) {
     // Menu is already persisted

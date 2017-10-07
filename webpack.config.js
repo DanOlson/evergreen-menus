@@ -22,6 +22,7 @@ const plugins = [
   }),
 
   function() {
+    if (!isProd) return;
     // delete previous outputs
     this.plugin("compile", function() {
       let basepath = __dirname + "/public";

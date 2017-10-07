@@ -18,4 +18,8 @@ class DigitalDisplayMenu < ActiveRecord::Base
   def background_color
     self[:background_hex_color] || '#242424'
   end
+
+  def text_color
+    self[:text_hex_color] || '#CCC'
+  end
 end

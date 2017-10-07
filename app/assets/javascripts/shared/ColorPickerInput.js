@@ -73,6 +73,7 @@ class ColorPickerInput extends Component {
           type="text"
           className="form-control"
           value={color}
+          readOnly={true}
           onFocus={this.handleFocus}
           onClick={this.handleFocus}
         />
