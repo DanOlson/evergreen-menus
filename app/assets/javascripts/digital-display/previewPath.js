@@ -46,13 +46,21 @@ function buildQueryString(lists, base) {
 }
 
 function generatePreviewPath(digitalDisplayMenu, formState) {
-  const { lists, isHorizontal, rotationInterval, backgroundColor, textColor } = formState;
+  const {
+    lists,
+    isHorizontal,
+    rotationInterval,
+    backgroundColor,
+    textColor,
+    listTitleColor
+  } = formState;
   const { previewPath, id } = digitalDisplayMenu;
   const orientationParam = `digital_display_menu[horizontal_orientation]=${isHorizontal}`;
   const rotationIntervalParam = `digital_display_menu[rotation_interval]=${rotationInterval}`;
   const backgroundColorParam = `digital_display_menu[background_color]=${encodeURIComponent(backgroundColor)}`;
   const textColorParam = `digital_display_menu[text_color]=${encodeURIComponent(textColor)}`;
-  const seed = `?${orientationParam}&${rotationIntervalParam}&${backgroundColorParam}&${textColorParam}`;
+  const listTitleColorParam = `digital_display_menu[list_title_color]=${encodeURIComponent(listTitleColor)}`;
+  const seed = `?${orientationParam}&${rotationIntervalParam}&${backgroundColorParam}&${textColorParam}&${listTitleColorParam}`;
   const queryString = buildQueryString(lists, seed);
   if (id) {
     // Menu is already persisted

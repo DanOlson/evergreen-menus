@@ -56,6 +56,7 @@ class DigitalDisplayMenusController < ApplicationController
       :font,
       :background_color,
       :text_color,
+      :list_title_color,
       {
         digital_display_menu_lists_attributes: [
           :id,

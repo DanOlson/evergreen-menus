@@ -23,12 +23,14 @@ class DigitalDisplayApp extends Component {
       rotationInterval,
       isHorizontal,
       backgroundColor,
-      textColor
+      textColor,
+      listTitleColor
     } = this.props.digitalDisplayMenu;
 
     this.handleNameChange             = this.handleNameChange.bind(this);
     this.handleBackgroundColorChange  = this.handleBackgroundColorChange.bind(this);
     this.handleTextColorChange        = this.handleTextColorChange.bind(this);
+    this.handleListTitleColorChange   = this.handleListTitleColorChange.bind(this);
     this.setOrientationHorizontal     = this.setOrientationHorizontal.bind(this);
     this.setOrientationVertical       = this.setOrientationVertical.bind(this);
     this.handleRotationIntervalChange = this.handleRotationIntervalChange.bind(this);
@@ -44,7 +46,8 @@ class DigitalDisplayApp extends Component {
       isHorizontal,
       rotationInterval,
       backgroundColor,
-      textColor
+      textColor,
+      listTitleColor
     };
   }
 
@@ -113,6 +116,13 @@ class DigitalDisplayApp extends Component {
     const textColor = color.hex;
     this.setState(prevState => {
       return { textColor };
+    });
+  }
+
+  handleListTitleColorChange(color) {
+    const listTitleColor = color.hex;
+    this.setState(prevState => {
+      return { listTitleColor };
     });
   }
 
@@ -185,7 +195,8 @@ class DigitalDisplayApp extends Component {
       isHorizontal,
       rotationInterval,
       backgroundColor,
-      textColor
+      textColor,
+      listTitleColor
     } = this.state;
     const totalListCount          = lists.length + listsAvailable.length;
     const buttons                 = this.renderButtons();
@@ -240,6 +251,21 @@ class DigitalDisplayApp extends Component {
             </div>
 
             <div className="row">
+              <div className="form-group col-sm-4">
+                <label htmlFor="menu_font">Rotation Interval</label>
+                <select
+                  id="digital_display_menu_rotation_interval"
+                  data-test="digital-display-menu-rotation-interval"
+                  name="digital_display_menu[rotation_interval]"
+                  className="form-control"
+                  defaultValue={rotationInterval}
+                  onChange={this.handleRotationIntervalChange}>
+                  {rotationIntervalOptions}
+                </select>
+              </div>
+            </div>
+
+            <div className="row">
               <ColorPickerInput
                 id="digital_display_menu_background_color"
                 name="digital_display_menu[background_color]"
@@ -260,18 +286,15 @@ class DigitalDisplayApp extends Component {
                 color={textColor}
               />
 
-              <div className="form-group col-sm-4">
-                <label htmlFor="menu_font">Rotation Interval</label>
-                <select
-                  id="digital_display_menu_rotation_interval"
-                  data-test="digital-display-menu-rotation-interval"
-                  name="digital_display_menu[rotation_interval]"
-                  className="form-control"
-                  defaultValue={rotationInterval}
-                  onChange={this.handleRotationIntervalChange}>
-                  {rotationIntervalOptions}
-                </select>
-              </div>
+              <ColorPickerInput
+                id="digital_display_menu_list_title_color"
+                name="digital_display_menu[list_title_color]"
+                className="form-group col-sm-4"
+                dataTest="digital-display-menu-list-title-color"
+                label="List Title Color"
+                onChangeComplete={this.handleListTitleColorChange}
+                color={listTitleColor}
+              />
             </div>
 
             <AvailableListGroup

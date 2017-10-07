@@ -14,6 +14,7 @@ class DigitalDisplayMenu < ActiveRecord::Base
   alias_attribute :rotation_interval, :rotate_interval_milliseconds
   alias_attribute :background_color, :background_hex_color
   alias_attribute :text_color, :text_hex_color
+  alias_attribute :list_title_color, :list_title_hex_color
 
   def background_color
     self[:background_hex_color] || '#242424'
@@ -21,5 +22,9 @@ class DigitalDisplayMenu < ActiveRecord::Base
 
   def text_color
     self[:text_hex_color] || '#CCC'
+  end
+
+  def list_title_color
+    self[:list_title_hex_color] || text_color
   end
 end

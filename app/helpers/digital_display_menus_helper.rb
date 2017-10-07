@@ -29,7 +29,8 @@ module DigitalDisplayMenusHelper
       isHorizontal: digital_display_menu.horizontal_orientation,
       rotationInterval: digital_display_menu.rotation_interval || ROTATION_INTERVALS.first[:value],
       backgroundColor: digital_display_menu.background_color,
-      textColor: digital_display_menu.text_color
+      textColor: digital_display_menu.text_color,
+      listTitleColor: digital_display_menu.list_title_color
     }).to_json
   end
 
