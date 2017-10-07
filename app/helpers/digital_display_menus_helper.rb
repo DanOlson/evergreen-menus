@@ -10,6 +10,15 @@ module DigitalDisplayMenusHelper
     { value: 600000, name: '10 minutes' }
   ]
 
+  FONTS = [
+    'Convergence',
+    'Droid Sans',
+    'News Cycle',
+    'Open Sans',
+    'Architects Daughter',
+    'Bubblegum Sans'
+  ]
+
   def digital_display_menu_json(digital_display_menu)
     establishment   = digital_display_menu.establishment
     account         = establishment.account
@@ -36,5 +45,11 @@ module DigitalDisplayMenusHelper
 
   def rotation_intervals_json
     ROTATION_INTERVALS.to_json
+  end
+
+  def font_options_json
+    FONTS.map do |font|
+      { name: font, value: font }
+    end.to_json
   end
 end

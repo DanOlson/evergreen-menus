@@ -26,11 +26,19 @@
     </div>
   <% end %>
 </div>
+
 <% content_for :head do %>
+  <% font = @digital_display_menu.font %>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="//fonts.googleapis.com/css?family=<%= font.gsub(' ', '+') %>"
+  />
   <style>
     body {
       background-color: <%= @digital_display_menu.background_color %>;
       color: <%= @digital_display_menu.text_color %>;
+      font-family: <%= font %>;
     }
 
     .list-title {
@@ -38,6 +46,7 @@
     }
   </style>
 <% end %>
+
 <script>
   var ids = <%= raw @digital_display_menu.lists.map(&:id) %>;
   var rotationInterval = <%= @digital_display_menu.rotation_interval %>;

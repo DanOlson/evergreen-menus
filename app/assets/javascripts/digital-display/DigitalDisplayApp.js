@@ -24,10 +24,12 @@ class DigitalDisplayApp extends Component {
       isHorizontal,
       backgroundColor,
       textColor,
-      listTitleColor
+      listTitleColor,
+      font
     } = this.props.digitalDisplayMenu;
 
     this.handleNameChange             = this.handleNameChange.bind(this);
+    this.handleFontChange             = this.handleFontChange.bind(this);
     this.handleBackgroundColorChange  = this.handleBackgroundColorChange.bind(this);
     this.handleTextColorChange        = this.handleTextColorChange.bind(this);
     this.handleListTitleColorChange   = this.handleListTitleColorChange.bind(this);
@@ -47,7 +49,8 @@ class DigitalDisplayApp extends Component {
       rotationInterval,
       backgroundColor,
       textColor,
-      listTitleColor
+      listTitleColor,
+      font
     };
   }
 
@@ -90,6 +93,13 @@ class DigitalDisplayApp extends Component {
     const name = event.target.value;
     this.setState(prevState => {
       return { name };
+    });
+  }
+
+  handleFontChange(event) {
+    const font = event.target.value;
+    this.setState(prevState => {
+      return { font };
     });
   }
 
@@ -187,6 +197,12 @@ class DigitalDisplayApp extends Component {
     });
   }
 
+  renderFontOptions() {
+    return this.props.fontOptions.map((option, index) => {
+      return <option value={option.value} key={index}>{option.name}</option>
+    });
+  }
+
   render() {
     const {
       lists,
@@ -196,11 +212,13 @@ class DigitalDisplayApp extends Component {
       rotationInterval,
       backgroundColor,
       textColor,
-      listTitleColor
+      listTitleColor,
+      font
     } = this.state;
     const totalListCount          = lists.length + listsAvailable.length;
     const buttons                 = this.renderButtons();
     const rotationIntervalOptions = this.renderRotationIntervalOptions();
+    const fontOptions             = this.renderFontOptions();
     const previewPath             = generatePreviewPath(this.props.digitalDisplayMenu, this.state);
 
     return (
@@ -252,7 +270,9 @@ class DigitalDisplayApp extends Component {
 
             <div className="row">
               <div className="form-group col-sm-4">
-                <label htmlFor="menu_font">Rotation Interval</label>
+                <label htmlFor="digital_display_menu_rotation_interval">
+                  Rotation Interval
+                </label>
                 <select
                   id="digital_display_menu_rotation_interval"
                   data-test="digital-display-menu-rotation-interval"
@@ -261,6 +281,19 @@ class DigitalDisplayApp extends Component {
                   defaultValue={rotationInterval}
                   onChange={this.handleRotationIntervalChange}>
                   {rotationIntervalOptions}
+                </select>
+              </div>
+
+              <div className="form-group col-sm-4">
+                <label htmlFor="digital_display_menu_font">Font</label>
+                <select
+                  id="digital_display_menu_font"
+                  data-test="digital-display-menu-font"
+                  name="digital_display_menu[font]"
+                  className="form-control"
+                  defaultValue={font}
+                  onChange={this.handleFontChange}>
+                  {fontOptions}
                 </select>
               </div>
             </div>
@@ -331,8 +364,10 @@ DigitalDisplayApp.propTypes = {
   submitButtonText: PropTypes.string.isRequired,
   canDestroy: PropTypes.bool,
   rotationIntervalOptions: PropTypes.array,
+  fontOptions: PropTypes.array,
   backgroundColor: PropTypes.string,
-  textColor: PropTypes.string
+  textColor: PropTypes.string,
+  listTitleColor: PropTypes.string
 };
 
 export default DragDropContext(HTML5Backend)(DigitalDisplayApp);

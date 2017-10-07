@@ -27,4 +27,8 @@ class DigitalDisplayMenu < ActiveRecord::Base
   def list_title_color
     self[:list_title_hex_color] || text_color
   end
+
+  def font
+    self[:font] || 'Convergence'
+  end
 end
