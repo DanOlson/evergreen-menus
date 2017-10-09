@@ -16,7 +16,71 @@ module DigitalDisplayMenusHelper
     'News Cycle',
     'Open Sans',
     'Architects Daughter',
-    'Bubblegum Sans'
+    'Bubblegum Sans',
+    'Nova Flat',
+    'Over the Rainbow',
+    'Patrick Hand',
+    'Cabin Sketch',
+    'Calligraffiti',
+    'IM Fell English SC',
+    'Artifika',
+    'Delius',
+    'Permanent Marker',
+    'Special Elite',
+    'Walter Turncoat'
+  ]
+
+  class Theme
+    attr_reader :name, :font, :background_color, :text_color, :list_title_color
+
+    def initialize(name:, font:, background_color:, text_color:, list_title_color:)
+      @name             = name
+      @font             = font
+      @background_color = background_color
+      @text_color       = text_color
+      @list_title_color = list_title_color
+    end
+
+    def as_json(*)
+      {
+        name: name,
+        font: font,
+        backgroundColor: background_color,
+        textColor: text_color,
+        listTitleColor: list_title_color
+      }
+    end
+  end
+
+  THEMES = [
+    Theme.new({
+      name: 'Standard',
+      font: 'Architects Daughter',
+      background_color: '#FFF',
+      text_color: '#040000',
+      list_title_color: '#d40a0a'
+    }),
+    Theme.new({
+      name: 'Dark',
+      font: 'Walter Turncoat',
+      background_color: '#242424',
+      text_color: '#CCC',
+      list_title_color: '#CCC'
+    }),
+    Theme.new({
+      name: 'Ireland',
+      font: 'Artifika',
+      background_color: '#293b2a',
+      text_color: '#bbbbbb',
+      list_title_color: '#bbbbbb'
+    }),
+    Theme.new({
+      name: 'Custom',
+      font: nil,
+      background_color: nil,
+      text_color: nil,
+      list_title_color: nil
+    })
   ]
 
   def digital_display_menu_json(digital_display_menu)
@@ -39,7 +103,8 @@ module DigitalDisplayMenusHelper
       rotationInterval: digital_display_menu.rotation_interval || ROTATION_INTERVALS.first[:value],
       backgroundColor: digital_display_menu.background_color,
       textColor: digital_display_menu.text_color,
-      listTitleColor: digital_display_menu.list_title_color
+      listTitleColor: digital_display_menu.list_title_color,
+      theme: digital_display_menu.theme
     }).to_json
   end
 
@@ -51,5 +116,9 @@ module DigitalDisplayMenusHelper
     FONTS.map do |font|
       { name: font, value: font }
     end.to_json
+  end
+
+  def theme_options_json
+    THEMES.to_json
   end
 end

@@ -16,6 +16,10 @@ class DigitalDisplayMenu < ActiveRecord::Base
   alias_attribute :text_color, :text_hex_color
   alias_attribute :list_title_color, :list_title_hex_color
 
+  def theme
+    self[:theme] || 'Standard'
+  end
+
   def background_color
     self[:background_hex_color] || '#242424'
   end

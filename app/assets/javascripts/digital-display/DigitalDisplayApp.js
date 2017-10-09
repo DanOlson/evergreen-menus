@@ -10,6 +10,7 @@ import { applyFind } from '../polyfills/Array';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import ColorPickerInput from '../shared/ColorPickerInput';
+import ThemeOptions from './ThemeOptions';
 
 applyFind();
 
@@ -25,11 +26,13 @@ class DigitalDisplayApp extends Component {
       backgroundColor,
       textColor,
       listTitleColor,
-      font
+      font,
+      theme
     } = this.props.digitalDisplayMenu;
 
     this.handleNameChange             = this.handleNameChange.bind(this);
     this.handleFontChange             = this.handleFontChange.bind(this);
+    this.handleThemeChange            = this.handleThemeChange.bind(this);
     this.handleBackgroundColorChange  = this.handleBackgroundColorChange.bind(this);
     this.handleTextColorChange        = this.handleTextColorChange.bind(this);
     this.handleListTitleColorChange   = this.handleListTitleColorChange.bind(this);
@@ -50,7 +53,8 @@ class DigitalDisplayApp extends Component {
       backgroundColor,
       textColor,
       listTitleColor,
-      font
+      font,
+      theme
     };
   }
 
@@ -101,6 +105,21 @@ class DigitalDisplayApp extends Component {
     this.setState(prevState => {
       return { font };
     });
+  }
+
+  handleThemeChange(theme) {
+    const newState = { theme: theme.name };
+    [
+      'font',
+      'backgroundColor',
+      'textColor',
+      'listTitleColor'
+    ].forEach(attr => {
+      if (theme[attr]) {
+        newState[attr] = theme[attr];
+      }
+    });
+    this.setState(prevState => newState);
   }
 
   setOrientationHorizontal(event) {
@@ -213,8 +232,11 @@ class DigitalDisplayApp extends Component {
       backgroundColor,
       textColor,
       listTitleColor,
-      font
+      font,
+      theme
     } = this.state;
+    const showCustomThemeFields   = theme === 'Custom';
+    const customThemeFieldClass   = showCustomThemeFields ? 'show' : 'hidden';
     const totalListCount          = lists.length + listsAvailable.length;
     const buttons                 = this.renderButtons();
     const rotationIntervalOptions = this.renderRotationIntervalOptions();
@@ -269,6 +291,12 @@ class DigitalDisplayApp extends Component {
             </div>
 
             <div className="row">
+              <ThemeOptions
+                onChange={this.handleThemeChange}
+                options={this.props.themeOptions}
+                value={theme}
+              />
+
               <div className="form-group col-sm-4">
                 <label htmlFor="digital_display_menu_rotation_interval">
                   Rotation Interval
@@ -284,21 +312,21 @@ class DigitalDisplayApp extends Component {
                 </select>
               </div>
 
-              <div className="form-group col-sm-4">
+              <div className={`form-group col-sm-4 ${customThemeFieldClass}`}>
                 <label htmlFor="digital_display_menu_font">Font</label>
                 <select
                   id="digital_display_menu_font"
                   data-test="digital-display-menu-font"
                   name="digital_display_menu[font]"
                   className="form-control"
-                  defaultValue={font}
+                  value={font}
                   onChange={this.handleFontChange}>
                   {fontOptions}
                 </select>
               </div>
             </div>
 
-            <div className="row">
+            <div className={`row ${customThemeFieldClass}`}>
               <ColorPickerInput
                 id="digital_display_menu_background_color"
                 name="digital_display_menu[background_color]"
@@ -365,6 +393,7 @@ DigitalDisplayApp.propTypes = {
   canDestroy: PropTypes.bool,
   rotationIntervalOptions: PropTypes.array,
   fontOptions: PropTypes.array,
+  themeOptions: PropTypes.array,
   backgroundColor: PropTypes.string,
   textColor: PropTypes.string,
   listTitleColor: PropTypes.string

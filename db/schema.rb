@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20171001191425) do
     t.string   "background_hex_color",         limit: 10
     t.string   "text_hex_color",               limit: 10
     t.string   "list_title_hex_color",         limit: 10
+    t.string   "theme",                        limit: 40
   end
 
   create_table "establishment_staff_assignments", force: :cascade do |t|

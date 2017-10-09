@@ -53,7 +53,8 @@ function generatePreviewPath(digitalDisplayMenu, formState) {
     backgroundColor,
     textColor,
     listTitleColor,
-    font
+    font,
+    theme
   } = formState;
   const { previewPath, id } = digitalDisplayMenu;
   const orientationParam = `digital_display_menu[horizontal_orientation]=${isHorizontal}`;
@@ -61,8 +62,17 @@ function generatePreviewPath(digitalDisplayMenu, formState) {
   const backgroundColorParam = `digital_display_menu[background_color]=${encodeURIComponent(backgroundColor)}`;
   const textColorParam = `digital_display_menu[text_color]=${encodeURIComponent(textColor)}`;
   const listTitleColorParam = `digital_display_menu[list_title_color]=${encodeURIComponent(listTitleColor)}`;
-  const fontParam = `digital_display_menu[font]=${encodeURIComponent(font)}`;
-  const seed = `?${orientationParam}&${rotationIntervalParam}&${backgroundColorParam}&${textColorParam}&${listTitleColorParam}&${fontParam}`;
+  const fontParam = `digital_display_menu[font]=${font}`;
+  const themeParam = `digital_display_menu[theme]=${theme}`;
+  const seed = '?' + [
+    orientationParam,
+    rotationIntervalParam,
+    backgroundColorParam,
+    textColorParam,
+    listTitleColorParam,
+    fontParam,
+    themeParam
+  ].join('&');
   const queryString = buildQueryString(lists, seed);
   if (id) {
     // Menu is already persisted
