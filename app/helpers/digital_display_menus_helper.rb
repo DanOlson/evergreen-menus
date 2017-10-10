@@ -21,7 +21,7 @@ module DigitalDisplayMenusHelper
     'Over the Rainbow',
     'Patrick Hand',
     'Cabin Sketch',
-    'Calligraffiti',
+    # 'Calligraffiti',
     'IM Fell English SC',
     'Artifika',
     'Delius',

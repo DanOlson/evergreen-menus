@@ -10,7 +10,9 @@ import { applyFind } from '../polyfills/Array';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import ColorPickerInput from '../shared/ColorPickerInput';
-import ThemeOptions from './ThemeOptions';
+import ThemeSelect from './ThemeSelect';
+import FontSelect from './FontSelect';
+import RotationIntervalSelect from './RotationIntervalSelect';
 
 applyFind();
 
@@ -100,8 +102,8 @@ class DigitalDisplayApp extends Component {
     });
   }
 
-  handleFontChange(event) {
-    const font = event.target.value;
+  handleFontChange(chosenFont) {
+    const font = chosenFont.value;
     this.setState(prevState => {
       return { font };
     });
@@ -155,8 +157,8 @@ class DigitalDisplayApp extends Component {
     });
   }
 
-  handleRotationIntervalChange(event) {
-    const rotationInterval = event.target.value;
+  handleRotationIntervalChange(chosenInterval) {
+    const rotationInterval = chosenInterval.value;
     this.setState(prevState => {
       return { rotationInterval };
     });
@@ -210,18 +212,6 @@ class DigitalDisplayApp extends Component {
     );
   }
 
-  renderRotationIntervalOptions() {
-    return this.props.rotationIntervalOptions.map((option, index) => {
-      return <option value={option.value} key={index}>{option.name}</option>
-    });
-  }
-
-  renderFontOptions() {
-    return this.props.fontOptions.map((option, index) => {
-      return <option value={option.value} key={index}>{option.name}</option>
-    });
-  }
-
   render() {
     const {
       lists,
@@ -239,8 +229,6 @@ class DigitalDisplayApp extends Component {
     const customThemeFieldClass   = showCustomThemeFields ? 'show' : 'hidden';
     const totalListCount          = lists.length + listsAvailable.length;
     const buttons                 = this.renderButtons();
-    const rotationIntervalOptions = this.renderRotationIntervalOptions();
-    const fontOptions             = this.renderFontOptions();
     const previewPath             = generatePreviewPath(this.props.digitalDisplayMenu, this.state);
 
     return (
@@ -291,39 +279,26 @@ class DigitalDisplayApp extends Component {
             </div>
 
             <div className="row">
-              <ThemeOptions
+              <ThemeSelect
+                className="form-group col-sm-4"
                 onChange={this.handleThemeChange}
                 options={this.props.themeOptions}
                 value={theme}
               />
 
-              <div className="form-group col-sm-4">
-                <label htmlFor="digital_display_menu_rotation_interval">
-                  Rotation Interval
-                </label>
-                <select
-                  id="digital_display_menu_rotation_interval"
-                  data-test="digital-display-menu-rotation-interval"
-                  name="digital_display_menu[rotation_interval]"
-                  className="form-control"
-                  defaultValue={rotationInterval}
-                  onChange={this.handleRotationIntervalChange}>
-                  {rotationIntervalOptions}
-                </select>
-              </div>
+              <RotationIntervalSelect
+                className="form-group col-sm-4"
+                onChange={this.handleRotationIntervalChange}
+                options={this.props.rotationIntervalOptions}
+                value={rotationInterval}
+              />
 
-              <div className={`form-group col-sm-4 ${customThemeFieldClass}`}>
-                <label htmlFor="digital_display_menu_font">Font</label>
-                <select
-                  id="digital_display_menu_font"
-                  data-test="digital-display-menu-font"
-                  name="digital_display_menu[font]"
-                  className="form-control"
-                  value={font}
-                  onChange={this.handleFontChange}>
-                  {fontOptions}
-                </select>
-              </div>
+              <FontSelect
+                className={`form-group col-sm-4 ${customThemeFieldClass}`}
+                onChange={this.handleFontChange}
+                options={this.props.fontOptions}
+                value={font}
+              />
             </div>
 
             <div className={`row ${customThemeFieldClass}`}>

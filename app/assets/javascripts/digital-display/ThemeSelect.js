@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class ThemeOptions extends Component {
+class ThemeSelect extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -16,13 +16,13 @@ class ThemeOptions extends Component {
   }
 
   render() {
-    const { value } = this.props;
+    const { value, className } = this.props;
     const themeOptions = this.props.options.map((theme, index) => {
       return <option value={theme.name} key={index}>{theme.name}</option>
     });
 
     return (
-      <div className="form-group col-sm-4">
+      <div className={className}>
         <label htmlFor="digital_display_menu_theme">
           Theme
         </label>
@@ -40,10 +40,11 @@ class ThemeOptions extends Component {
   }
 };
 
-ThemeOptions.propTypes = {
+ThemeSelect.propTypes = {
   options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired,
+  className: PropTypes.string
 };
 
-export default ThemeOptions;
+export default ThemeSelect;

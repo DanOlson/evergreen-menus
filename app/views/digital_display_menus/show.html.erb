@@ -1,7 +1,7 @@
 <% orientation = @digital_display_menu.horizontal_orientation? ? 'horizontal' : 'vertical' %>
 <div class="digital-display-menu-container">
   <% @digital_display_menu.lists.each do |list| %>
-    <% list_class = list.beers.count > 10 && orientation == 'horizontal' ? 'two-column-list' : 'one-column-list' %>
+    <% list_class = list.beers.count > 8 && orientation == 'horizontal' ? 'two-column-list' : 'one-column-list' %>
     <div 
       class="digital-display-menu-list center-block <%= list_class %> <%= orientation %>"
       id="digital-display-menu-<%= list.id %>"
