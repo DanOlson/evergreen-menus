@@ -75,6 +75,13 @@ module DigitalDisplayMenusHelper
       list_title_color: '#bbbbbb'
     }),
     Theme.new({
+      name: 'Lounge',
+      font: 'Patrick Hand',
+      background_color: '#242424',
+      text_color: '#755C5C',
+      list_title_color: '#711f1f'
+    }),
+    Theme.new({
       name: 'Custom',
       font: nil,
       background_color: nil,
