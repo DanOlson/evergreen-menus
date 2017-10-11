@@ -23,15 +23,15 @@ class RotationIntervalSelect extends Component {
 
     return (
       <div className={className}>
-        <label htmlFor="digital_display_rotation_interval">
+        <label htmlFor="digital_display_menu_rotation_interval">
           Rotation Interval
         </label>
         <select
-          id="digital_display_rotation_interval"
-          data-test="digital-display-rotation-interval"
+          id="digital_display_menu_rotation_interval"
+          data-test="digital-display-menu-rotation-interval"
           name="digital_display_menu[rotation_interval]"
           className="form-control"
-          defaultValue={value}
+          value={value}
           onChange={this.handleChange}>
           {intervalOptions}
         </select>

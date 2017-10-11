@@ -31,7 +31,7 @@ class ThemeSelect extends Component {
           data-test="digital-display-menu-theme"
           name="digital_display_menu[theme]"
           className="form-control"
-          defaultValue={value}
+          value={value}
           onChange={this.handleChange}>
           {themeOptions}
         </select>
