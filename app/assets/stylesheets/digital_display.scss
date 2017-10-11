@@ -24,6 +24,7 @@ $header-line-height: 1.25;
 
   @media #{$mq-xsmall} {
     line-height: 2em;
+    font-size: $base-font-size*0.75;
   }
 
   @media #{$mq-medium} {
