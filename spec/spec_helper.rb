@@ -34,6 +34,7 @@ Capybara::Webkit.configure do |config|
   config.allow_url("csi.gstatic.com")
   config.allow_url("fonts.googleapis.com")
   config.allow_url("platform.twitter.com")
+  config.allow_url("https://syndication.twitter.com/settings")
   config.allow_url("builds.emberjs.com")
   config.allow_url("test.beermapper.ember")
   config.allow_url("admin.test.beermapper.dev")
