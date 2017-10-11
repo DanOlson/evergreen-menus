@@ -13,6 +13,7 @@ import ColorPickerInput from '../shared/ColorPickerInput';
 import ThemeSelect from './ThemeSelect';
 import FontSelect from './FontSelect';
 import RotationIntervalSelect from './RotationIntervalSelect';
+import OrientationInput from './OrientationInput';
 
 applyFind();
 
@@ -38,12 +39,11 @@ class DigitalDisplayApp extends Component {
     this.handleBackgroundColorChange  = this.handleBackgroundColorChange.bind(this);
     this.handleTextColorChange        = this.handleTextColorChange.bind(this);
     this.handleListTitleColorChange   = this.handleListTitleColorChange.bind(this);
-    this.setOrientationHorizontal     = this.setOrientationHorizontal.bind(this);
-    this.setOrientationVertical       = this.setOrientationVertical.bind(this);
+    this.handleOrientationChange      = this.handleOrientationChange.bind(this);
     this.handleRotationIntervalChange = this.handleRotationIntervalChange.bind(this);
     this.addListToDisplay             = this.addListToDisplay.bind(this);
     this.removeListFromDisplay        = this.removeListFromDisplay.bind(this);
-    this.onShowPriceChange            = this.onShowPriceChange.bind(this);
+    this.handleShowPriceChange        = this.handleShowPriceChange.bind(this);
     this.moveChosenList               = this.moveChosenList.bind(this);
 
     this.state = {
@@ -124,15 +124,10 @@ class DigitalDisplayApp extends Component {
     this.setState(prevState => newState);
   }
 
-  setOrientationHorizontal(event) {
+  handleOrientationChange(orientation) {
+    const isHorizontal = orientation === 'horizontal';
     this.setState(prevState => {
-      return { isHorizontal: true };
-    });
-  }
-
-  setOrientationVertical(event) {
-    this.setState(prevState => {
-      return { isHorizontal: false };
+      return { isHorizontal };
     });
   }
 
@@ -164,7 +159,7 @@ class DigitalDisplayApp extends Component {
     });
   }
 
-  onShowPriceChange(listId, showPrice) {
+  handleShowPriceChange(listId, showPrice) {
     this.setState(prevState => {
       const prevLists = prevState.lists;
       const { lists, name, font } = prevState;
@@ -248,35 +243,10 @@ class DigitalDisplayApp extends Component {
               />
             </div>
 
-            <div className="form-group">
-              <label>Orientation</label>
-              <div className="radio">
-                <label>
-                  <input
-                    type="radio"
-                    name="digital_display_menu[horizontal_orientation]"
-                    value="true"
-                    defaultChecked={isHorizontal}
-                    onClick={this.setOrientationHorizontal}
-                    data-test="digital-display-menu-horizontal-orientation-true"
-                  />
-                  Horizontal
-                </label>
-              </div>
-              <div className="radio">
-                <label>
-                  <input
-                    type="radio"
-                    name="digital_display_menu[horizontal_orientation]"
-                    value="false"
-                    defaultChecked={!isHorizontal}
-                    onClick={this.setOrientationVertical}
-                    data-test="digital-display-menu-horizontal-orientation-false"
-                  />
-                  Vertical
-                </label>
-              </div>
-            </div>
+            <OrientationInput
+              onChange={this.handleOrientationChange}
+              isHorizontal={isHorizontal}
+            />
 
             <div className="row">
               <ThemeSelect
@@ -344,7 +314,7 @@ class DigitalDisplayApp extends Component {
               lists={lists}
               menuType="digitalDisplay"
               onRemove={this.removeListFromDisplay}
-              onShowPriceChange={this.onShowPriceChange}
+              onShowPriceChange={this.handleShowPriceChange}
               moveItem={this.moveChosenList}
               onDrop={this.addListToDisplay}
             />
