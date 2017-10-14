@@ -27,6 +27,7 @@ class Buttons extends Component {
     if (viewDisplayPath) {
       viewDisplayButton = (
         <a href={viewDisplayPath}
+           target="_blank"
            className="btn btn-success pull-right"
            data-test="view-digital-display-menu">View Display</a>
       )

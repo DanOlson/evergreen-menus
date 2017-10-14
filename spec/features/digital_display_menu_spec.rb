@@ -148,17 +148,19 @@ feature 'digital display menu management' do
 
     # Validate digital display menu (show)
     display_form.visit_digital_display_menu
-    display_url = current_url
-    digital_display = PageObjects::Admin::DigitalDisplayMenu.new
-    expect(digital_display).to be_displayed
-    expect(digital_display).to have_list_named('Taps')
-    expect(digital_display).to be_oriented_vertically
+    new_tab = windows.last
+    within_window new_tab do
+      digital_display = PageObjects::Admin::DigitalDisplayMenu.new
+      expect(digital_display).to be_displayed
+      expect(digital_display).to have_list_named('Taps')
+      expect(digital_display).to be_oriented_vertically
 
-    taps_list = digital_display.list_named('Taps')
-    expect(taps_list).to have_beer_named 'Fulton Sweet Child of Vine'
-    expect(taps_list).to have_beer_named 'Nitro Milk Stout'
-    expect(taps_list.beer_named('Fulton Sweet Child of Vine')).to_not have_price
-    expect(taps_list.beer_named('Nitro Milk Stout')).to_not have_price
+      taps_list = digital_display.list_named('Taps')
+      expect(taps_list).to have_beer_named 'Fulton Sweet Child of Vine'
+      expect(taps_list).to have_beer_named 'Nitro Milk Stout'
+      expect(taps_list.beer_named('Fulton Sweet Child of Vine')).to_not have_price
+      expect(taps_list.beer_named('Nitro Milk Stout')).to_not have_price
+    end
   end
 
   scenario 'manager can manage a digital display menu for their establishments', :js, :admin do
