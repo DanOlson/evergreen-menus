@@ -14,6 +14,7 @@ import ThemeSelect from './ThemeSelect';
 import FontSelect from './FontSelect';
 import RotationIntervalSelect from './RotationIntervalSelect';
 import OrientationInput from './OrientationInput';
+import Buttons from './Buttons';
 
 applyFind();
 
@@ -169,44 +170,6 @@ class DigitalDisplayApp extends Component {
     });
   }
 
-  renderButtons() {
-    let deleteButton, viewDisplayButton;
-    if (!!this.props.canDestroy) {
-      deleteButton = (
-        <label
-          htmlFor="digital-display-menu-form-delete"
-          className="btn btn-danger menu-form-action"
-          data-test="digital-display-menu-form-delete">
-          Delete
-        </label>
-      );
-    }
-    if (this.props.viewDisplayPath) {
-      viewDisplayButton = (
-        <a href={this.props.viewDisplayPath}
-           className="btn btn-success pull-right"
-           data-test="view-digital-display-menu">View Display</a>
-      )
-    }
-    return (
-      <div className="form-group">
-        <input
-          type="submit"
-          name="commit"
-          value={this.props.submitButtonText}
-          className="btn btn-primary menu-form-action"
-          data-test="digital-display-menu-form-submit"
-          data-disable-with="Create"
-        />
-        <a href={this.props.cancelEditPath}
-           className="btn btn-default menu-form-action"
-           data-test="digital-display-menu-form-cancel">Cancel</a>
-        {deleteButton}
-        {viewDisplayButton}
-      </div>
-    );
-  }
-
   render() {
     const {
       lists,
@@ -220,11 +183,10 @@ class DigitalDisplayApp extends Component {
       font,
       theme
     } = this.state;
-    const showCustomThemeFields   = theme === 'Custom';
-    const customThemeFieldClass   = showCustomThemeFields ? 'show' : 'hidden';
-    const totalListCount          = lists.length + listsAvailable.length;
-    const buttons                 = this.renderButtons();
-    const previewPath             = generatePreviewPath(this.props.digitalDisplayMenu, this.state);
+    const showCustomThemeFields = theme === 'Custom';
+    const customThemeFieldClass = showCustomThemeFields ? 'show' : 'hidden';
+    const totalListCount        = lists.length + listsAvailable.length;
+    const previewPath           = generatePreviewPath(this.props.digitalDisplayMenu, this.state);
 
     return (
       <div className="row">
@@ -320,7 +282,7 @@ class DigitalDisplayApp extends Component {
               onDrop={this.addListToDisplay}
             />
 
-            {buttons}
+            <Buttons {...this.props} />
           </Panel>
         </div>
         <div className="col-sm-6">
@@ -333,16 +295,9 @@ class DigitalDisplayApp extends Component {
 
 DigitalDisplayApp.propTypes = {
   digitalDisplayMenu: PropTypes.object.isRequired,
-  cancelEditPath: PropTypes.string.isRequired,
-  viewDisplayPath: PropTypes.string,
-  submitButtonText: PropTypes.string.isRequired,
-  canDestroy: PropTypes.bool,
   rotationIntervalOptions: PropTypes.array,
   fontOptions: PropTypes.array,
-  themeOptions: PropTypes.array,
-  backgroundColor: PropTypes.string,
-  textColor: PropTypes.string,
-  listTitleColor: PropTypes.string
+  themeOptions: PropTypes.array
 };
 
 export default DragDropContext(HTML5Backend)(DigitalDisplayApp);
