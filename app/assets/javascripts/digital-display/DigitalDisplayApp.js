@@ -60,6 +60,18 @@ class DigitalDisplayApp extends Component {
     };
   }
 
+  moveChosenList(dragIndex, hoverIndex) {
+    const { lists } = this.state;
+    const dragList = lists[dragIndex];
+
+    this.setState(prevState => {
+      const newLists = [...lists];
+      newLists.splice(dragIndex, 1);
+      newLists.splice(hoverIndex, 0, dragList);
+      return { lists: newLists };
+    });
+  }
+
   addListToDisplay(listId) {
     this.setState(prevState => {
       const { lists, listsAvailable } = prevState;
@@ -69,17 +81,6 @@ class DigitalDisplayApp extends Component {
         listsAvailable: listsAvailable.filter(list => list.id !== listId),
         lists: newLists
       }
-    });
-  }
-
-  moveChosenList(dragIndex, hoverIndex) {
-    this.setState(prevState => {
-      const { lists } = prevState;
-      const dragList = lists[dragIndex];
-      const newLists = [...lists];
-      newLists.splice(dragIndex, 1);
-      newLists.splice(hoverIndex, 0, dragList);
-      return { lists: newLists };
     });
   }
 
@@ -161,7 +162,6 @@ class DigitalDisplayApp extends Component {
 
   handleShowPriceChange(listId, showPrice) {
     this.setState(prevState => {
-      const prevLists = prevState.lists;
       const { lists, name, font } = prevState;
       const list = lists.find(list => list.id === listId);
       list.show_price_on_menu = showPrice;
@@ -244,6 +244,7 @@ class DigitalDisplayApp extends Component {
             </div>
 
             <OrientationInput
+              className="form-group"
               onChange={this.handleOrientationChange}
               isHorizontal={isHorizontal}
             />

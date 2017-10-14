@@ -114,7 +114,8 @@ class ChosenListItem extends Component {
     }
 
     const style = {
-      opacity: isDragging ? 0 : 1
+      opacity: isDragging ? 0 : 1,
+      cursor: 'move'
     };
     return connectDragSource(connectDropTarget(
       <li className="list-group-item" data-test="menu-list" style={style}>

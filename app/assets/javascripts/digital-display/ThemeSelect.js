@@ -9,9 +9,7 @@ class ThemeSelect extends Component {
 
   handleChange(event) {
     const themeName = event.target.value;
-    const theme = this.props.options.find(opt => {
-      return opt.name === themeName;
-    });
+    const theme = this.props.options.find(opt => opt.name === themeName);
     this.props.onChange(theme);
   }
 

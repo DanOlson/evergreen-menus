@@ -13,10 +13,6 @@ class FontSelect extends Component {
     this.props.onChange(font);
   }
 
-  componentWillReceiveProps(nextProps) {
-    nextProps;
-  }
-
   render() {
     const { value, className } = this.props;
     const fontOptions = this.props.options.map((option, index) => {

@@ -119,7 +119,6 @@ class MenuApp extends Component {
 
   onShowPriceChange(listId, showPrice) {
     this.setState(prevState => {
-      const prevLists = prevState.lists;
       const { lists, name, font } = prevState;
       const list = lists.find(list => list.id === listId);
       list.show_price_on_menu = showPrice;

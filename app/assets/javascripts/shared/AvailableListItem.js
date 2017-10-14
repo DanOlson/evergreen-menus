@@ -23,7 +23,8 @@ class AvailableListItem extends Component {
     } = this.props;
 
     const style = {
-      opacity: isDragging ? 0 : 1
+      opacity: isDragging ? 0 : 1,
+      cursor: 'move'
     };
 
     let menuListIdInput, menuListDestroyInput;
