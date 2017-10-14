@@ -118,10 +118,15 @@ module PageObjects
       element :horizontal_orientation_radio, '[data-test=digital-display-menu-horizontal-orientation-true]'
       element :vertical_orientation_radio,   '[data-test=digital-display-menu-horizontal-orientation-false]'
       element :rotation_interval_input, '[data-test="digital-display-menu-rotation-interval"]'
-      element :submit_button,       '[data-test="digital-display-menu-form-submit"]'
-      element :cancel_link,         '[data-test="digital-display-menu-form-cancel"]'
-      element :delete_button,       '[data-test="digital-display-menu-form-delete"]'
-      element :view_display_button, '[data-test="view-digital-display-menu"]'
+      element :theme_input,             '[data-test="digital-display-menu-theme"]'
+      element :font_input,              '[data-test="digital-display-menu-font"]'
+      element :background_color_input,  '[data-test="digital-display-menu-background-color"]'
+      element :text_color_input,        '[data-test="digital-display-menu-text-color"]'
+      element :list_title_color_input,  '[data-test="digital-display-menu-list-title-color"]'
+      element :submit_button,           '[data-test="digital-display-menu-form-submit"]'
+      element :cancel_link,             '[data-test="digital-display-menu-form-cancel"]'
+      element :delete_button,           '[data-test="digital-display-menu-form-delete"]'
+      element :view_display_button,     '[data-test="view-digital-display-menu"]'
 
       section :preview, DigitalDisplayMenuPreview, '[data-test="digital-display-menu-preview"]'
       section :lists_available, ListsAvailable, '[data-test="menu-lists-available"]'
@@ -133,6 +138,15 @@ module PageObjects
 
       def name
         name_input.value
+      end
+
+      def theme=(theme)
+        theme_input.find(:option, theme).select_option
+      end
+
+      def theme
+        current_value = theme_input.value
+        theme_input.find("option[value='#{current_value}']").text
       end
 
       def rotation_interval=(interval)

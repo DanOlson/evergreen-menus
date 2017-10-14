@@ -39,12 +39,17 @@ feature 'digital display menu management' do
     expect(display_form).to have_available_list 'Bottles'
     expect(display_form.orientation).to eq :horizontal
     expect(display_form.rotation_interval).to eq '5 seconds'
+    expect(display_form.theme).to eq 'Standard'
+    expect(display_form).to_not have_background_color_input
+    expect(display_form).to_not have_text_color_input
+    expect(display_form).to_not have_list_title_color_input
 
     # Manipulate the form
     display_form.name = 'Test Display'
     display_form.select_list 'Taps'
     display_form.select_list 'Bottles'
     display_form.rotation_interval = '10 seconds'
+    display_form.theme = 'Custom'
 
     # Query form again
     expect(display_form).to have_selected_list 'Taps'
@@ -52,6 +57,10 @@ feature 'digital display menu management' do
     expect(display_form.selected_list_named('Taps')).to have_price_shown
     expect(display_form.selected_list_named('Bottles')).to have_price_shown
     expect(display_form.rotation_interval).to eq '10 seconds'
+    expect(display_form.theme).to eq 'Custom'
+    expect(display_form).to have_background_color_input
+    expect(display_form).to have_text_color_input
+    expect(display_form).to have_list_title_color_input
 
     # Query preview
     expect(display_form.preview).to have_list 'Taps'
@@ -76,6 +85,10 @@ feature 'digital display menu management' do
     expect(display_form).to have_selected_list 'Taps'
     expect(display_form).to have_selected_list 'Bottles'
     expect(display_form.rotation_interval).to eq '10 seconds'
+    expect(display_form.theme).to eq 'Custom'
+    expect(display_form).to have_background_color_input
+    expect(display_form).to have_text_color_input
+    expect(display_form).to have_list_title_color_input
 
     # Manipulate them form some more
     display_form.name = 'HD Display'
@@ -83,6 +96,7 @@ feature 'digital display menu management' do
     display_form.hide_prices(list: 'Taps')
     display_form.set_orientation :vertical
     display_form.rotation_interval = '5 seconds'
+    display_form.theme = 'Dark'
 
     # Query the form
     expect(display_form).to have_selected_list 'Taps'
@@ -92,6 +106,10 @@ feature 'digital display menu management' do
     expect(display_form.selected_list_named('Taps')).to_not have_price_shown
     expect(display_form.orientation).to eq :vertical
     expect(display_form.rotation_interval).to eq '5 seconds'
+    expect(display_form.theme).to eq 'Dark'
+    expect(display_form).to_not have_background_color_input
+    expect(display_form).to_not have_text_color_input
+    expect(display_form).to_not have_list_title_color_input
 
     # Query the preview
     expect(display_form.preview).to have_list 'Taps'
@@ -115,6 +133,10 @@ feature 'digital display menu management' do
     expect(display_form.selected_list_named('Taps')).to_not have_price_shown
     expect(display_form.orientation).to eq :vertical
     expect(display_form.rotation_interval).to eq '5 seconds'
+    expect(display_form.theme).to eq 'Dark'
+    expect(display_form).to_not have_background_color_input
+    expect(display_form).to_not have_text_color_input
+    expect(display_form).to_not have_list_title_color_input
 
     # Verify preview
     expect(display_form.preview).to have_list 'Taps'
