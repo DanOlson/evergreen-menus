@@ -2,26 +2,27 @@
 <div class="digital-display-menu-container">
   <% @digital_display_menu.lists.each do |list| %>
     <% list_class = list.beers.count > 8 && orientation == 'horizontal' ? 'two-column-list' : 'one-column-list' %>
-    <div 
-      class="digital-display-menu-list center-block <%= list_class %> <%= orientation %>"
-      id="digital-display-menu-<%= list.id %>"
-      data-test="digital-display-menu-list">
+    <div class="card" id="card-<%= list.id %>">
+      <div 
+        class="digital-display-menu-list center-block <%= list_class %> <%= orientation %>"
+        data-test="digital-display-menu-list">
 
-      <h4 class="list-title" data-test="digital-display-menu-list-name"><%= list.name %></h4>
+        <h4 class="list-title" data-test="digital-display-menu-list-name"><%= list.name %></h4>
 
-      <div class="list-container">
-        <ul class="<%= list_class %>">
-        <% list.beers.each do |beer| %>
-          <li data-test="digital-display-menu-list-item">
-            <span data-test="digital-display-menu-list-item-name"><%= beer.name %></span>
-            <% if list.show_price_on_menu %>
-              <span class="pull-right" data-test="digital-display-menu-list-item-price">
-                <%= number_to_currency beer.price %>
-              </span>
-            <% end %>
-          </li>
-        <% end %>
-        </ul>
+        <div class="list-container">
+          <ul class="<%= list_class %>">
+          <% list.beers.each do |beer| %>
+            <li data-test="digital-display-menu-list-item">
+              <span data-test="digital-display-menu-list-item-name"><%= beer.name %></span>
+              <% if list.show_price_on_menu %>
+                <span class="pull-right" data-test="digital-display-menu-list-item-price">
+                  <%= number_to_currency beer.price %>
+                </span>
+              <% end %>
+            </li>
+          <% end %>
+          </ul>
+        </div>
       </div>
     </div>
   <% end %>
@@ -52,15 +53,13 @@
   var rotationInterval = <%= @digital_display_menu.rotation_interval %>;
   function showNext() {
     var idToShow = ids[0];
-    var lists = document.getElementsByClassName('digital-display-menu-list');
-    var el = document.getElementById('digital-display-menu-' + idToShow);
+    var lists = document.getElementsByClassName('card');
+    var el = document.getElementById('card-' + idToShow);
     for (var i = 0; i < lists.length; i++) {
-      lists[i].classList.remove('show');
-      lists[i].classList.add('hidden');
+      lists[i].classList.remove('flipped');
     }
     if (el) {
-      el.classList.remove('hidden');
-      el.classList.add('show');
+      el.classList.add('flipped');
       ids.unshift(ids.pop());
     }
   }
