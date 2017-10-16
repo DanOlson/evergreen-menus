@@ -53,6 +53,9 @@ $header-line-height: 1.25;
   height: 100%;
   position: absolute;
   transform-style: preserve-3d;
+  -webkit-transition: transform 1s;
+  -moz-transition: transform 1s;
+  -o-transition: transform 1s;
   transition: transform 1s;
 
   &.flipped {
