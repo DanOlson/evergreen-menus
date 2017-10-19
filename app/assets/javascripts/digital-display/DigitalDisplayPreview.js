@@ -6,6 +6,7 @@ class DigitalDisplayPreview extends Component {
   constructor(props) {
     super(props);
     this.configureOrientation = this.configureOrientation.bind(this);
+    this.setWidth = this.setWidth.bind(this);
     this.state = { height: "100%", width: "100%" };
   }
 
@@ -40,25 +41,23 @@ class DigitalDisplayPreview extends Component {
     this.configureOrientation(isHorizontal);
   }
 
+  setWidth(obj) {
+    this.width = obj.offsetWidth;
+  }
+
   render() {
-    const applyHeight = (div) => {
-      if (div && !this.width) {
-        this.width = div.offsetWidth;
-      }
-    }
     const { height, width } = this.state;
     const className = this.props.isHorizontal ? 'preview-horizontal' : 'preview-vertical';
 
     return (
       <Panel title='Preview' dataTest="digital-display-menu-preview-panel">
-        <div className="digital-display-menu-preview-wrapper">
+        <div className="digital-display-menu-preview-wrapper" ref={this.setWidth}>
           <object
             className={className}
             data={this.props.previewPath}
             type="text/html"
             style={{ width }}
             height={height}
-            ref={applyHeight}
             data-test="digital-display-menu-preview">
           </object>
         </div>
