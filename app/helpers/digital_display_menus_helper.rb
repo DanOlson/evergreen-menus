@@ -25,6 +25,7 @@ module DigitalDisplayMenusHelper
     'Bangers',
     'Bubblegum Sans',
     'Cabin Sketch',
+    'Comfortaa',
     'Coming Soon',
     'Convergence',
     'Cousine',
@@ -39,6 +40,7 @@ module DigitalDisplayMenusHelper
     'Gochi Hand',
     'Gruppo',
     'Hammersmith One',
+    'Holtwood One SC',
     'IM Fell English SC',
     'Inconsolata',
     'Istok Web',
@@ -61,6 +63,7 @@ module DigitalDisplayMenusHelper
     'Rationale',
     'Rock Salt',
     'Rokkitt',
+    'Smokum',
     'Special Elite',
     'Spirax',
     'Syncopate',
@@ -117,6 +120,41 @@ module DigitalDisplayMenusHelper
       background_color: '#242424',
       text_color: '#755C5C',
       list_title_color: '#711f1f'
+    }),
+    Theme.new({
+      name: 'Hollywood',
+      font: 'Federo',
+      background_color: '#FFF',
+      text_color: '#040000',
+      list_title_color: '#040000'
+    }),
+    Theme.new({
+      name: 'Gamer',
+      font: 'Bangers',
+      background_color: '#3fa4e8',
+      text_color: '#080000',
+      list_title_color: '#420798'
+    }),
+    Theme.new({
+      name: 'Metalworks',
+      font: 'Orbitron',
+      background_color: '#cbc9a7',
+      text_color: '#292622',
+      list_title_color: '#5a4104'
+    }),
+    Theme.new({
+      name: 'Granola',
+      font: 'Special Elite',
+      background_color: '#ab9c75',
+      text_color: '#194e33',
+      list_title_color: '#074624'
+    }),
+    Theme.new({
+      name: 'Medieval',
+      font: 'IM Fell English SC',
+      background_color: '#e4e4e4',
+      text_color: '#040000',
+      list_title_color: '#d40a0a'
     }),
     Theme.new({
       name: 'Custom',
