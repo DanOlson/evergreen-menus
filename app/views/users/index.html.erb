@@ -2,19 +2,21 @@
   <div class="list-group">
     <% @users.each do |person| %>
       <% href = person == current_user ? edit_user_registration_path : edit_account_user_path(@account, person) %>
-      <%= link_to href, class: "list-group-item", data: { test: "staff-member" } do %>
+      <%= link_to href, class: "list-group-item list-group-item-action", data: { test: "staff-member" } do %>
         <%= "#{person.first_name} #{person.last_name}" %>
         <%= role_icon person %>
       <% end %>
     <% end %>
   </div>
-  <%= link_to 'Invite staff', new_account_user_invitation_path(@account), class: 'btn btn-success', data: { test: 'invite-staff-button' } %>
+  <div class="button-wrapper">
+    <%= link_to 'Invite staff', new_account_user_invitation_path(@account), class: 'btn btn-success', data: { test: 'invite-staff-button' } %>
+  </div>
 <% end %>
 
 <%= render 'shared/panel', title: 'Pending Invitations', data_test: 'pending-invitations-panel' do %>
   <div class="list-group">
     <% @user_invitations.each do |person| %>
-      <%= link_to "#{person.first_name} #{person.last_name}", edit_account_user_invitation_path(@account, person), class: 'list-group-item', data: { test: 'staff-member-invited' } %>
+      <%= link_to "#{person.first_name} #{person.last_name}", edit_account_user_invitation_path(@account, person), class: 'list-group-item list-group-item-action', data: { test: 'staff-member-invited' } %>
     <% end %>
   </div>
 <% end %>

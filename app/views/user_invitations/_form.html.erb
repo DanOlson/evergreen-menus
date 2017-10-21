@@ -19,8 +19,8 @@
       <label>Establishments</label>
       <div class="">
         <% @account.establishments.each_with_index do |establishment, index| %>
-          <div class="checkbox">
-            <label data-test="invitation-establishment-access">
+          <div class="form-check">
+            <label class="form-check-label" data-test="invitation-establishment-access">
               <%= check_box_tag 'user_invitation[establishment_ids][]', establishment.id, f.object.establishment_ids.include?(establishment.id) %>
 
               <%= establishment.name %>
@@ -32,9 +32,9 @@
 
     <%= yield f %>
 
-    <div class='form-group'>
+    <div class='button-wrapper'>
       <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'invitation-submit-button' } %>
-      <%= link_to 'Cancel', account_users_path(@account), class: 'btn btn-default', data: { test: 'invitation-cancel-link' } %>
+      <%= link_to 'Cancel', account_users_path(@account), class: 'btn btn-outline-secondary', data: { test: 'invitation-cancel-link' } %>
       <% if f.object.persisted? && can?(:destroy, @user_invitation) %>
         <label for="invitation-form-delete" class="btn btn-danger" data-test="invitation-delete-button">Delete</label>
       <% end %>

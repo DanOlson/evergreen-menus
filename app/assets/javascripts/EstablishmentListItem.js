@@ -28,8 +28,8 @@ class EstablishmentListItem extends Component {
           data-test="get-snippet"
           title="get snippet"
           onClick={this.getSnippet}
-          className={`btn btn-default btn-sm get-snippet-btn ${buttonClass}`}>
-          <span className="glyphicon glyphicon-scissors"></span>
+          className={`btn btn-outline-secondary btn-sm get-snippet-btn ${buttonClass}`}>
+          <i className="fa fa-code fa-lg"></i>
         </a>
       );
     } else {
@@ -38,14 +38,16 @@ class EstablishmentListItem extends Component {
   }
 
   renderSnippet() {
-    const htmlSnippetClass = this.state.showSnippet ? 'show' : 'hidden';
+    const htmlVisiblity = this.state.showSnippet ? 'show' : 'hidden';
     if (this.props.canShowSnippet) {
       return (
-        <div
-          className={htmlSnippetClass}
-          data-test="list-html-snippet"
-          dangerouslySetInnerHTML={this.htmlSnippet()}
-        />
+        <div className={`card bg-light ${htmlVisiblity}`}>
+          <div
+            className="card-body"
+            data-test="list-html-snippet"
+            dangerouslySetInnerHTML={this.htmlSnippet()}
+          />
+        </div>
       );
     } else {
       return '';

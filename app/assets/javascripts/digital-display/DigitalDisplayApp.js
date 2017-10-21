@@ -184,12 +184,12 @@ class DigitalDisplayApp extends Component {
       theme
     } = this.state;
     const showCustomThemeFields = theme === 'Custom';
-    const customThemeFieldClass = showCustomThemeFields ? 'show' : 'hidden';
+    const customThemeFieldClass = showCustomThemeFields ? 'visible' : 'invisible';
     const totalListCount        = lists.length + listsAvailable.length;
     const previewPath           = generatePreviewPath(this.props.digitalDisplayMenu, this.state);
 
     return (
-      <div className="row">
+      <div className="form-row">
         <div className="col-sm-6">
           <Panel title={name}>
             <div className="form-group">
@@ -211,7 +211,7 @@ class DigitalDisplayApp extends Component {
               isHorizontal={isHorizontal}
             />
 
-            <div className="row">
+            <div className="form-row">
               <ThemeSelect
                 className="form-group col-sm-4"
                 onChange={this.handleThemeChange}
@@ -234,7 +234,7 @@ class DigitalDisplayApp extends Component {
               />
             </div>
 
-            <div className={`row ${customThemeFieldClass}`}>
+            <div className={`form-row ${customThemeFieldClass}`}>
               <ColorPickerInput
                 id="digital_display_menu_background_color"
                 name="digital_display_menu[background_color]"

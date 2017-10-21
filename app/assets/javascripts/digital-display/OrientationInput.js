@@ -17,11 +17,12 @@ class OrientationInput extends Component {
     return (
       <div className={className}>
         <label>Orientation</label>
-        <div className="radio">
-          <label>
+        <div className="form-check">
+          <label className="form-check-label">
             <input
               type="radio"
               name="digital_display_menu[horizontal_orientation]"
+              className="form-check-input"
               value="true"
               defaultChecked={isHorizontal}
               onClick={this.handleChange}
@@ -30,11 +31,12 @@ class OrientationInput extends Component {
             Horizontal
           </label>
         </div>
-        <div className="radio">
-          <label>
+        <div className="form-check">
+          <label className="form-check-label">
             <input
               type="radio"
               name="digital_display_menu[horizontal_orientation]"
+              className="form-check-input"
               value="false"
               defaultChecked={!isHorizontal}
               onClick={this.handleChange}

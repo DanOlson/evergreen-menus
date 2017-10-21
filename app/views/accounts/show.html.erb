@@ -3,14 +3,18 @@
   <div class="list-group">
     <% if account_establishments(@account).any? %>
       <% account_establishments(@account).each do |establishment| %>
-        <%= link_to establishment.name, edit_account_establishment_path(@account, establishment), class: "list-group-item", data: { test: 'establishment' } %>
+        <%= link_to establishment.name, edit_account_establishment_path(@account, establishment), class: "list-group-item list-group-item-action", data: { test: 'establishment' } %>
       <% end %>
     <% else %>
-      <div class="well">Add an establishment to get started</div>
+      <div class="card bg-light">
+        <div class="card-body">Add an establishment to get started</div>
+      </div>
     <% end %>
   </div>
-  <%= link_to "Add Establishment", new_account_establishment_path(@account), class: 'btn btn-success', data: { test: 'add-establishment' } %>
-  <% if can? :edit, @account %>
-    <%= link_to 'Edit Account', edit_account_path(@account), class: 'btn btn-primary', data: { test: 'edit-account' } %>
-  <% end %>
+  <div class="button-wrapper">
+    <%= link_to "Add Establishment", new_account_establishment_path(@account), class: 'btn btn-success', data: { test: 'add-establishment' } %>
+    <% if can? :edit, @account %>
+      <%= link_to 'Edit Account', edit_account_path(@account), class: 'btn btn-primary', data: { test: 'edit-account' } %>
+    <% end %>
+  </div>
 <% end %>

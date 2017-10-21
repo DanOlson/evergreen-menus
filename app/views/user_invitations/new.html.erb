@@ -1,9 +1,7 @@
 <%= render 'user_invitations/form', submit_text: 'Invite' do |f| %>
-  <div class="form-group">
-    <div class='checkbox'>
-      <label>
-        <%= f.check_box :invite_another %> Invite another
-      </label>
-    </div>
+  <div class="form-check">
+    <label class="form-check-label">
+      <%= f.check_box :invite_another, class: 'form-check-input' %> Invite another
+    </label>
   </div>
 <% end %>

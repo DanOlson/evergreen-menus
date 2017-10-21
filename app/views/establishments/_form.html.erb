@@ -5,52 +5,54 @@
 <% breadcrumb :establishment, account, establishment %>
 <div class="row edit-establishment">
   <div class="establishment-form-left-column col-sm-6">
-    <%= form_for [account, establishment], html: { class: 'form-horizontal establishment-form' } do |f| %>
+    <%= form_for [account, establishment], html: { class: 'establishment-form' } do |f| %>
       <%= render 'shared/panel', title: 'Establishment Info' do %>
         <div class="form-group">
-          <%= f.label :name, class: 'col-sm-1 control-label' %>
-          <div class="col-sm-11">
+          <%= f.label :name, class: 'col-form-label' %>
+          <div class="">
             <%= f.text_field :name, class: 'form-control', data: { test: 'establishment-name' } %>
           </div>
         </div>
 
         <div class="form-group">
-          <%= f.label :url, class: 'col-sm-1 control-label' %>
-          <div class="col-sm-11">
+          <%= f.label :url, class: 'col-form-label' %>
+          <div class="">
             <%= f.text_field :url, class: 'form-control', data: { test: 'establishment-url' } %>
           </div>
         </div>
 
         <div class="form-group">
-          <%= f.label :street_address, 'Street', class: 'col-sm-1 control-label' %>
-          <div class="col-sm-11">
+          <%= f.label :street_address, 'Street', class: 'col-form-label' %>
+          <div class="">
             <%= f.text_field :street_address, class: 'form-control', data: { test: 'establishment-street-address' } %>
           </div>
         </div>
 
         <div class="form-group">
-          <%= f.label :city, class: 'col-sm-1 control-label' %>
-          <div class="col-sm-11">
+          <%= f.label :city, class: 'col-form-label' %>
+          <div class="">
             <%= f.text_field :city, class: 'form-control', data: { test: 'establishment-city' } %>
           </div>
         </div>
 
-        <div class="form-group">
-          <%= f.label :state, class: 'col-sm-1 control-label' %>
-          <div class="col-sm-11">
-            <%= f.select :state, options_for_select(state_options, selected: establishment.state), { include_blank: true }, class: 'form-control', data: { test: 'establishment-state' } %>
+        <div class="row">
+          <div class="form-group col-sm-6">
+            <%= f.label :state, class: 'col-form-label' %>
+            <div class="">
+              <%= f.select :state, options_for_select(state_options, selected: establishment.state), { include_blank: true }, class: 'form-control', data: { test: 'establishment-state' } %>
+            </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <%= f.label :postal_code, 'Postal Code', class: 'col-sm-1 control-label' %>
-          <div class="col-sm-11">
-            <%= f.text_field :postal_code, maxlength: 5, class: 'form-control', data: { test: 'establishment-postal-code' } %>
+          <div class="form-group col-sm-6">
+            <%= f.label :postal_code, 'Postal Code', class: 'col-form-label' %>
+            <div class="">
+              <%= f.text_field :postal_code, maxlength: 5, class: 'form-control', data: { test: 'establishment-postal-code' } %>
+            </div>
           </div>
         </div>
 
         <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'establishment-form-submit' } %>
-        <%= link_to 'Cancel', account_path(account), class: 'btn btn-default', data: { test: 'establishment-form-cancel' } %>
+        <%= link_to 'Cancel', account_path(account), class: 'btn btn-outline-secondary', data: { test: 'establishment-form-cancel' } %>
         <% if establishment.persisted? && can?(:destroy, establishment) %>
           <label for="establishment-form-delete" class="btn btn-danger" data-test="establishment-form-delete">Delete</label>
         <% end %>
@@ -63,22 +65,28 @@
 
   <div class="establishment-form-right-column col-sm-6">
     <%= render 'shared/panel', title: 'Lists', data_test: 'lists', help_type: 'lists' do %>
-        <div
-          class="well <%= hide_lists_help?(establishment) and 'hidden' %>"
-          data-help="lists"
-          data-test="lists-help-text">
+      <div
+        class="card contextual-help bg-light <%= hide_lists_help?(establishment) ? 'hidden' : '' %>"
+        data-help="lists"
+        data-test="lists-help-text">
+        <div class="card-body">
           Lists are groups of beers you serve at your establishment. For example, you might have a "Taps" list and a "Bottles" list. Each list can be easily embedded on your restaurant's website so that your online menu is always up to date. Then, any changes made to your lists here are automatically reflected on your website.
         </div>
-        <div id="lists-app"></div>
-      <%= add_list_button(account, establishment) %>
+      </div>
+      <div id="lists-app"></div>
+      <div class="button-wrapper">
+        <%= add_list_button(account, establishment) %>
+      </div>
     <% end %>
 
     <%= render 'shared/panel', title: 'Menus', data_test: 'menus', help_type: 'menus' do %>
       <div
-        class="well <%= hide_menus_help?(establishment) and 'hidden' %>"
+        class="card contextual-help bg-light <%= hide_menus_help?(establishment) and 'hidden' %>"
         data-help="menus"
         data-test="menus-help-text">
-        Create PDF menus by composing your lists. As you update your lists, your PDF menus will stay up to date.
+        <div class="card-body">
+          Create PDF menus by composing your lists. As you update your lists, your PDF menus will stay up to date.
+        </div>
       </div>
       <div class="list-group">
         <% establishment.menus.each do |menu| %>
@@ -87,15 +95,19 @@
           </div>
         <% end %>
       </div>
-      <%= add_menu_button(account, establishment) %>
+      <div class="button-wrapper">
+        <%= add_menu_button(account, establishment) %>
+      </div>
     <% end %>
 
     <%= render 'shared/panel', title: 'Digital Display Menus', data_test: 'digital-display-menus', help_type: 'digital-display' do %>
       <div
-        class="well <%= hide_displays_help?(establishment) and 'hidden' %>"
+        class="card contextual-help bg-light <%= hide_displays_help?(establishment) ? 'hidden' : '' %>"
         data-help="digital-display"
         data-test="digital-display-menus-help-text">
-        Use the TVs you already have to provide an impactful in-restaurant experience. Digital display menus will rotate through lists of your choosing, and changes made to your lists are automatically reflected on your digital display menus.
+        <div class="card-body">
+          Use the TVs you already have to provide an impactful in-restaurant experience. Digital display menus will rotate through lists of your choosing, and changes made to your lists are automatically reflected on your digital display menus.
+        </div>
       </div>
       <div class="list-group">
         <% establishment.digital_display_menus.each do |dd_menu| %>
@@ -104,7 +116,9 @@
           </div>
         <% end %>
       </div>
-      <%= add_digital_display_menu_button(account, establishment) %>
+      <div class="button-wrapper">
+        <%= add_digital_display_menu_button(account, establishment) %>
+      </div>
     <% end %>
   </div>
 </div>

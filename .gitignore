@@ -20,6 +20,7 @@ node_modules
 public/javascripts/*
 public/stylesheets/*
 public/images/*
+public/font*
 
 third-party-site/public
 third-party-site/public-test

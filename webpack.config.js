@@ -17,6 +17,18 @@ const plugins = [
       to: 'images/'
     }
   ]),
+  new CopyWebpackPlugin([
+    {
+      from: path.join(__dirname, 'app', 'assets', 'font-awesome-4.7.0/css'),
+      to: 'font-awesome/css'
+    }
+  ]),
+  new CopyWebpackPlugin([
+    {
+      from: path.join(__dirname, 'app', 'assets', 'font-awesome-4.7.0/fonts'),
+      to: 'font-awesome/fonts'
+    }
+  ]),
   new ExtractTextPlugin({
     filename: cssOutputFile
   }),

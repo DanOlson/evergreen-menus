@@ -21,8 +21,8 @@ class RemoveButton extends Component {
         data-test="remove-list"
         title="Remove list"
         onClick={this.handleClick}
-        className={`btn btn-default btn-sm move-list-button`}>
-        <span className="glyphicon glyphicon-minus"></span>
+        className={`btn btn-outline-secondary btn-sm move-list-button`}>
+        <span className="fa fa-minus fa-lg"></span>
       </a>
     );
   }

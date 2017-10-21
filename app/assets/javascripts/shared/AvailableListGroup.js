@@ -36,7 +36,7 @@ class AvailableListGroup extends Component {
     }
 
     return (
-      <ul className="list-group">
+      <ul className="list-group list-group-flush">
         {itemsToRender}
       </ul>
     );
@@ -76,8 +76,10 @@ class AvailableListGroup extends Component {
     });
 
     return connectDropTarget(
-      <div className="panel panel-default" data-test="menu-lists-available" style={style}>
-        <div className="panel-heading list-group-heading">Lists Available</div>
+      <div className="card" data-test="menu-lists-available" style={style}>
+        <div className="card-header list-group-heading">
+          <div className="card-title">Lists Available</div>
+        </div>
         {this.renderList(listGroupItems)}
       </div>
     )

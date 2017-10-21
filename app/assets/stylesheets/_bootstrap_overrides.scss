@@ -1,0 +1,27 @@
+.btn {
+  cursor: pointer;
+}
+
+label {
+  font-weight: 700;
+
+  &.form-check-label {
+    font-weight: 400;
+  }
+}
+
+label.btn {
+  margin-bottom: 0px;
+}
+
+.card {
+  margin-top: 1rem;
+
+  &.contextual-help {
+    margin-top: 0px;
+  }
+}
+
+.card-title {
+  margin-bottom: 0px;
+}

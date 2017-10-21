@@ -42,7 +42,7 @@ Capybara::Webkit.configure do |config|
   config.allow_url("test.beermapper-api.dev")
   ###
   # Beermapper Admin
-  config.allow_url("https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css")
+  config.allow_url("maxcdn.bootstrapcdn.com")
 end
 
 RSpec.configure do |config|

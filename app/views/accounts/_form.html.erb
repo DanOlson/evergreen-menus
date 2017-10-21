@@ -11,18 +11,18 @@
 
       <% if can? :activate, @account %>
         <div class="form-group">
-          <div class="checkbox">
-            <label>
-              <%= f.check_box :active, data: { test: 'account-active' } %>
+          <div class="form-check">
+            <label class="form-check-label">
+              <%= f.check_box :active, class: 'form-check-input', data: { test: 'account-active' } %>
               Active
             </label>
           </div>
         </div>
       <% end %>
 
-      <div class="form-group">
+      <div class="button-wrapper">
         <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'account-form-submit' } %>
-        <%= link_to 'Cancel', accounts_path, class: 'btn btn-default', data: { test: 'account-form-cancel' } %>
+        <%= link_to 'Cancel', accounts_path, class: 'btn btn-outline-secondary', data: { test: 'account-form-cancel' } %>
         <% if @account.persisted? && can?(:delete, @account) %>
           <label for="account-form-delete" class="btn btn-danger" data-test="account-form-delete">Delete</label>
         <% end %>

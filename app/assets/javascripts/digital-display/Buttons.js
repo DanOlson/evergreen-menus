@@ -33,7 +33,7 @@ class Buttons extends Component {
       )
     }
     return (
-      <div className="form-group">
+      <div className="button-wrapper">
         <input
           type="submit"
           name="commit"
@@ -43,7 +43,7 @@ class Buttons extends Component {
           data-disable-with="Create"
         />
         <a href={cancelEditPath}
-           className="btn btn-default menu-form-action"
+           className="btn btn-outline-secondary menu-form-action"
            data-test="digital-display-menu-form-cancel">Cancel</a>
         {deleteButton}
         {viewDisplayButton}

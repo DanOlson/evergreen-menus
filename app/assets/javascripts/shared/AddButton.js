@@ -21,8 +21,8 @@ class AddButton extends Component {
         data-test="add-list"
         title="Add list"
         onClick={this.handleClick}
-        className={`btn btn-default btn-sm move-list-button`}>
-        <span className="glyphicon glyphicon-plus"></span>
+        className={`btn btn-outline-secondary btn-sm move-list-button`}>
+        <span className="fa fa-plus fa-lg"></span>
       </a>
     );
   }

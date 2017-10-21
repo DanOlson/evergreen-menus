@@ -50,8 +50,8 @@ class BeerInput extends Component {
            title="Remove"
            onClick={this.onRemoveBeer}
            data-test={`remove-beer-${appId}`}
-           className="btn btn-default">
-          <span className="glyphicon glyphicon-remove"></span>
+           className="btn btn-outline-secondary">
+          <span className="fa fa-remove fa-lg"></span>
         </a>
       )
     }
@@ -107,7 +107,7 @@ class BeerInput extends Component {
   renderDescriptionInput() {
     const { showDescription } = this.props;
     const { appId, description } = this.state;
-    const classNames = ['col-sm-5 col-xs-8'];
+    const classNames = ['col-sm-6 col-xs-8'];
     if (!showDescription) classNames.push('hidden');
     return (
       <div className={classNames.join(' ')}>
@@ -135,9 +135,9 @@ class BeerInput extends Component {
     const descriptionInput = this.renderDescriptionInput();
 
     return (
-      <div data-test={`beer-${appId}`} className={`${className} row`}>
+      <div data-test={`beer-${appId}`} className={className}>
         <div data-test="beer-input">
-          <div className="row">
+          <div className="form-row">
             {nameInput}
             {priceInput}
             {descriptionInput}
@@ -145,7 +145,7 @@ class BeerInput extends Component {
               {actionable}
             </div>
           </div>
-          <div className="row">
+          <div className="form-row">
             <div className="col-sm-10 col-xs-12 beer-separator"></div>
           </div>
           <input

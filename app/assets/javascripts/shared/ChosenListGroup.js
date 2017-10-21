@@ -36,7 +36,7 @@ class ChosenListGroup extends Component {
     }
 
     return (
-      <ul className="list-group">
+      <ul className="list-group list-group-flush">
         {itemsToRender}
       </ul>
     );
@@ -75,8 +75,10 @@ class ChosenListGroup extends Component {
     };
 
     return connectDropTarget(
-      <div className="panel panel-default" data-test="menu-lists-selected" style={style}>
-        <div className="panel-heading list-group-heading">Lists Selected</div>
+      <div className="card" data-test="menu-lists-selected" style={style}>
+        <div className="card-header list-group-heading">
+          <div className="card-title">Lists Selected</div>
+        </div>
         {this.renderList(listGroupItems)}
       </div>
     );

@@ -2,21 +2,21 @@
 <% help_type   ||= nil %>
 <% data_test   ||= nil %>
 
-<div class="panel <%= panel_class %>" data-test=<%= data_test %>>
-  <div class="panel-heading">
+<div class="card <%= panel_class %>" data-test=<%= data_test %>>
+  <div class="card-header">
     <% if help_type %>
-      <div class="pull-right">
-        <span
+      <div class="float-right">
+        <i
           onclick="toggleHelp('<%= help_type %>')"
-          class="glyphicon glyphicon-question-sign help-icon"
+          class="fa fa-question-circle-o fa-2x help-icon"
           data-test="toggle-help-<%= help_type %>"
           aria-hidden="true">
-        </span>
+        </i>
       </div>
     <% end %>
-    <h3 class="panel-title" data-test="panel-title"><%= title %></h3>
+    <h3 class="card-title" data-test="panel-title"><%= title %></h3>
   </div>
-  <div class="panel-body">
+  <div class="card-body">
     <%= yield %>
   </div>
 </div>

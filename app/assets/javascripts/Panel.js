@@ -5,11 +5,11 @@ class Panel extends Component {
   render() {
     const { dataTest, title, children } = this.props;
     return (
-      <div className="panel panel-info" data-test={dataTest}>
-        <div className="panel-heading">
-          <h3 className="panel-title">{title}</h3>
+      <div className="card" data-test={dataTest}>
+        <div className="card-header">
+          <h3 className="card-title">{title}</h3>
         </div>
-        <div className="panel-body">
+        <div className="card-body">
           {children}
         </div>
       </div>

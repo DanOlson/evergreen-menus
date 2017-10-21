@@ -72,62 +72,62 @@ class List extends Component {
 
     return (
       <Panel title={name}>
-        <div className="establishment-beer-list col-sm-offset-1">
+        <div className="establishment-beer-list">
           <div className="form-group">
-            <div className="row">
-              <div className="row">
-                <div className="col-sm-4">
-                  <label htmlFor="list_name">List Name</label>
-                  <input
-                    type="text"
-                    name="list[name]"
-                    id="list_name"
-                    className="form-control"
-                    data-test="list-name"
-                    defaultValue={name}
-                  />
-                </div>
+            <div className="form-row">
+              <div className="col-sm-4">
+                <label htmlFor="list_name">List Name</label>
+                <input
+                  type="text"
+                  name="list[name]"
+                  id="list_name"
+                  className="form-control"
+                  data-test="list-name"
+                  defaultValue={name}
+                />
               </div>
+            </div>
 
-              <div className="checkbox">
-                <label htmlFor="list_show_price">
-                  <input
-                    type="checkbox"
-                    id="list_show_price"
-                    data-test="list-show-price"
-                    checked={showPrice}
-                    value={showPrice}
-                    onChange={this.handleShowPriceChange}
-                  />
-                  <input
-                    type="hidden"
-                    name="list[show_price]"
-                    id="list_show_price"
-                    value={showPrice}
-                  />
-                  Show Price
-                </label>
-              </div>
+            <div className="form-check">
+              <label className="form-check-label" htmlFor="list_show_price">
+                <input
+                  type="checkbox"
+                  id="list_show_price"
+                  data-test="list-show-price"
+                  className="form-check-input"
+                  checked={showPrice}
+                  value={showPrice}
+                  onChange={this.handleShowPriceChange}
+                />
+                <input
+                  type="hidden"
+                  name="list[show_price]"
+                  id="list_show_price"
+                  value={showPrice}
+                />
+                Show Price
+              </label>
+            </div>
 
-              <div className="checkbox">
-                <label htmlFor="list_show_description">
-                  <input
-                    type="checkbox"
-                    id="list_show_description"
-                    data-test="list-show-description"
-                    checked={showDescription}
-                    value={showDescription}
-                    onChange={this.handleShowDescriptionChange}
-                  />
-                  <input
-                    type="hidden"
-                    name="list[show_description]"
-                    id="list_show_description"
-                    value={showDescription}
-                  />
-                  Show Description
-                </label>
-              </div>
+            <div className="form-check">
+              <label className="form-check-label" htmlFor="list_show_description">
+                <input
+                  type="checkbox"
+                  id="list_show_description"
+                  data-test="list-show-description"
+                  className="form-check-input"
+                  checked={showDescription}
+                  value={showDescription}
+                  onChange={this.handleShowDescriptionChange}
+                />
+                <input
+                  type="hidden"
+                  name="list[show_description]"
+                  id="list_show_description"
+                  value={showDescription}
+                />
+                Show Description
+              </label>
             </div>
           </div>
           <div className="form-group">
@@ -140,7 +140,7 @@ class List extends Component {
               title="Add item"
               onClick={this.addBeer}
               className="btn btn-success">
-              <span className="glyphicon glyphicon-plus"></span>
+              <span className="fa fa-plus fa-lg"></span>
             </button>
           </div>
         </div>

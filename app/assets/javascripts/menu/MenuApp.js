@@ -162,7 +162,7 @@ class MenuApp extends Component {
           data-disable-with="Create"
         />
         <a href={this.props.cancelEditMenuPath}
-           className="btn btn-default menu-form-action"
+           className="btn btn-outline-secondary menu-form-action"
            data-test="menu-form-cancel">Cancel</a>
         {deleteButton}
         {downloadButton}
@@ -179,7 +179,7 @@ class MenuApp extends Component {
     const previewPath     = generatePreviewPath(this.props.menu, this.state);
     const columnsDisabled = template === 'Centered';
     return (
-      <div className="row">
+      <div className="form-row">
         <div className="col-sm-6">
           <Panel title={name}>
             <div className="form-group">
@@ -196,7 +196,7 @@ class MenuApp extends Component {
             </div>
 
             <div className="form-group">
-              <div className="row">
+              <div className="form-row">
                 <div className="col-sm-3">
                   <label htmlFor="menu_font">Template</label>
                   <select
@@ -243,6 +243,7 @@ class MenuApp extends Component {
                   onChange={this.handleColumnsChange}
                   columns={columns}
                   disabled={columnsDisabled}
+                  className="menu-columns-input"
                 />
               </div>
             </div>
@@ -263,7 +264,9 @@ class MenuApp extends Component {
               onDrop={this.addListToMenu}
             />
 
-            {buttons}
+            <div className="button-wrapper">
+              {buttons}
+            </div>
           </Panel>
         </div>
         <div className="col-sm-6">

@@ -19,39 +19,48 @@ class ColumnsInput extends Component {
         <label htmlFor="menu_number_of_columns">Columns</label>
 
         <div>
-          <label className="radio-inline">
-            <input
-              type="radio"
-              name="menu[number_of_columns]"
-              data-test="menu-columns-1"
-              value="1"
-              defaultChecked={columns === 1}
-              onClick={this.onChange}
-              disabled={disabled}/>
-            1
-          </label>
-          <label className="radio-inline">
-            <input
-              type="radio"
-              name="menu[number_of_columns]"
-              data-test="menu-columns-2"
-              value="2"
-              defaultChecked={columns === 2}
-              onClick={this.onChange}
-              disabled={disabled}/>
-            2
-          </label>
-          <label className="radio-inline">
-            <input
-              type="radio"
-              name="menu[number_of_columns]"
-              data-test="menu-columns-3"
-              value="3"
-              defaultChecked={columns === 3}
-              onClick={this.onChange}
-              disabled={disabled}/>
-            3
-          </label>
+          <div className="form-check form-check-inline mr-2">
+            <label className="form-check-label">
+              <input
+                type="radio"
+                name="menu[number_of_columns]"
+                data-test="menu-columns-1"
+                className="form-check-input"
+                value="1"
+                defaultChecked={columns === 1}
+                onClick={this.onChange}
+                disabled={disabled}/>
+              1
+            </label>
+          </div>
+          <div className="form-check form-check-inline mr-2">
+            <label className="form-check-label">
+              <input
+                type="radio"
+                name="menu[number_of_columns]"
+                data-test="menu-columns-2"
+                className="form-check-input"
+                value="2"
+                defaultChecked={columns === 2}
+                onClick={this.onChange}
+                disabled={disabled}/>
+              2
+            </label>
+          </div>
+          <div className="form-check form-check-inline mr-2">
+            <label className="form-check-label">
+              <input
+                type="radio"
+                name="menu[number_of_columns]"
+                data-test="menu-columns-3"
+                className="form-check-input"
+                value="3"
+                defaultChecked={columns === 3}
+                onClick={this.onChange}
+                disabled={disabled}/>
+              3
+            </label>
+          </div>
         </div>
       </div>
     );

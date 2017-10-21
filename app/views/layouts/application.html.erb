@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name='description' content='BeerMapper is a search tool to help you find your favorite craft beer.'>
   <meta name='robots' content='index,follow'>
   <title>Beer Mapper</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <%= stylesheet_link_tag fingerprinted_asset(:application) %>
   <%= csrf_meta_tags %>
 </head>
 <body>
   <%= render 'layouts/header' %>
   <div class="container">
-    <%= breadcrumbs style: :bootstrap %>
+    <%= breadcrumbs style: :bootstrap4 %>
     <%= render 'layouts/flash_messages' %>
     <%= yield %>
   </div>

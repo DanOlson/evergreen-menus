@@ -3,13 +3,13 @@
   window.BEERMAPPER.list = <%= raw list_json list %>;
 </script>
 <% breadcrumb :list, @account, @establishment, @list %>
-<%= form_for [account, establishment, list], html: { class: 'form-horizontal list-form' } do |f| %>
+<%= form_for [account, establishment, list], html: { class: 'list-form' } do |f| %>
 
   <div id="app-root"></div>
 
-  <div>
+  <div class="button-wrapper">
     <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'list-form-submit' } %>
-    <%= link_to 'Cancel', edit_account_establishment_path(account, establishment), class: 'btn btn-default', data: { test: 'list-form-cancel' } %>
+    <%= link_to 'Cancel', edit_account_establishment_path(account, establishment), class: 'btn btn-outline-secondary', data: { test: 'list-form-cancel' } %>
     <% if list.persisted? %>
       <label for="list-form-delete" data-test="list-form-delete" class="btn btn-danger">Delete</label>
     <% end %>

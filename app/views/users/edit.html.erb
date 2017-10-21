@@ -8,9 +8,9 @@
     <div class="form-group js-establishment-checkboxes">
       <label>Establishments</label>
       <% @account.establishments.each_with_index do |establishment, index| %>
-        <div class="checkbox">
-          <label>
-            <%= check_box_tag 'user[establishment_ids][]', establishment.id, @user.establishments.include?(establishment), class: 'js-establishment-checkbox', data: { test: 'establishment-access' } %>
+        <div class="form-check">
+          <label class="form-check-label">
+            <%= check_box_tag 'user[establishment_ids][]', establishment.id, @user.establishments.include?(establishment), class: 'form-check-input js-establishment-checkbox', data: { test: 'establishment-access' } %>
 
             <%= establishment.name %>
           </label>
@@ -20,7 +20,7 @@
 
     <div class="form-group">
       <%= f.submit 'Update', class: 'btn btn-primary', data: { test: 'staff-form-submit' } %>
-      <%= link_to 'Cancel', account_users_path(@account), class: 'btn btn-default', data: { test: 'staff-form-cancel' } %>
+      <%= link_to 'Cancel', account_users_path(@account), class: 'btn btn-outline-secondary', data: { test: 'staff-form-cancel' } %>
       <label for="staff-form-delete" class="btn btn-danger" data-test="staff-form-delete">Delete</label>
     </div>
   <% end %>

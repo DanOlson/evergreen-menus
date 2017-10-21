@@ -8,23 +8,23 @@ module ApplicationHelper
   end
 
   def tab(path:, name:)
-    content_tag(:li, class: active_class(path)) do
-      link_to name, path
+    content_tag(:li, class: "nav-item #{active_class(path)}") do
+      link_to name, path, class: 'nav-link'
     end
   end
 
   def role_icon(user)
-    if current_user == user
-      css_class = 'pull-right glyphicon glyphicon-star'
-      title = 'You'
-    elsif user.role == Role.manager
-      css_class = 'pull-right glyphicon glyphicon-user'
+    if user.role == Role.manager
+      css_class = 'float-right fa fa-user-o fa-lg'
       title = 'Manager'
+    elsif current_user == user
+      css_class = 'float-right fa fa-star fa-lg'
+      title = 'You'
     else
       return
     end
 
-    content_tag(:span, class: css_class, title: title) do
+    content_tag(:i, class: css_class, title: title) do
     end
   end
 
