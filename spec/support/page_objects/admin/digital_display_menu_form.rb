@@ -98,7 +98,7 @@ module PageObjects
         end
 
         def list_named(list_name)
-          lists.find { |l| l.name.text == list_name }
+          lists.find { |l| l.name.text.strip == list_name }
         end
 
         def has_list?(list_name)

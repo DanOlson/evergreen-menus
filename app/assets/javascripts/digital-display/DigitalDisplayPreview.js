@@ -50,7 +50,7 @@ class DigitalDisplayPreview extends Component {
     const className = this.props.isHorizontal ? 'preview-horizontal' : 'preview-vertical';
 
     return (
-      <Panel title='Preview' dataTest="digital-display-menu-preview-panel">
+      <Panel className="sticky-top" title='Preview' dataTest="digital-display-menu-preview-panel">
         <div className="digital-display-menu-preview-wrapper" ref={this.setWidth}>
           <object
             className={className}

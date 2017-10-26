@@ -3,6 +3,7 @@ class DigitalDisplayMenu < ActiveRecord::Base
   has_many :lists, -> {
               select(<<-EOF
                 lists.*,
+                digital_display_menu_lists.position as position,
                 digital_display_menu_lists.show_price_on_menu as show_price_on_menu
               EOF
               )
