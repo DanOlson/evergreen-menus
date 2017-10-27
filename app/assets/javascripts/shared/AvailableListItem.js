@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import AddButton from './AddButton';
 import { DragSource } from 'react-dnd';
 import itemTypes from './item-types';
+import pluralize from './pluralize';
 
 class AvailableListItem extends Component {
   constructor(props) {
@@ -27,6 +28,8 @@ class AvailableListItem extends Component {
       cursor: 'move'
     };
 
+    const badgeContent = `${list.beerCount} ${pluralize('item', list.beerCount)}`;
+
     let menuListIdInput, menuListDestroyInput;
     if (list[nestedEntityIdName]) {
       // Avoid collisions with nestedAttrsName in ChosenListGroup
@@ -49,8 +52,16 @@ class AvailableListItem extends Component {
 
     return connectDragSource(
       <li className="list-group-item" data-test="menu-list" style={style}>
-        <AddButton onClick={onAdd} listId={list.id} />
-        <span className="list-name" data-test="list-name">{list.name}</span>
+        <div className="valign-wrapper">
+          <AddButton onClick={onAdd} listId={list.id} />
+          <span className="list-name" data-test="list-name">{list.name}</span>
+        </div>
+        <div className="valign-wrapper">
+          <span
+            data-test="list-badge"
+            className="badge badge-pill badge-secondary float-right"
+          >{badgeContent}</span>
+        </div>
         {menuListIdInput}
         {menuListDestroyInput}
       </li>

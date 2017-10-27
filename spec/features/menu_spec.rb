@@ -48,6 +48,10 @@ feature 'menu management' do
     expect(menu_form).to have_available_list('Bottles')
     expect(menu_form).to have_available_list('Specials')
 
+    expect(menu_form.available_list_named('Taps').badge_text).to eq '1 item'
+    expect(menu_form.available_list_named('Bottles').badge_text).to eq '1 item'
+    expect(menu_form.available_list_named('Specials').badge_text).to eq '1 item'
+
     menu_form.name = 'Taps - Mini Insert'
     menu_form.font = 'Courier'
     menu_form.font_size = 8
@@ -67,6 +71,7 @@ feature 'menu management' do
     expect(menu_form.menu_preview).to have_font('Courier')
 
     expect(menu_form.selected_list_named('Taps')).to have_price_shown
+    expect(menu_form.selected_list_named('Taps').badge_text).to eq '1 item'
 
     menu_form.submit
 

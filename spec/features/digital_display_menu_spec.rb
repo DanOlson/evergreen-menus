@@ -37,6 +37,13 @@ feature 'digital display menu management' do
     expect(display_form).to be_displayed
     expect(display_form).to have_available_list 'Taps'
     expect(display_form).to have_available_list 'Bottles'
+
+    available_taps_list = display_form.available_list_named('Taps')
+    available_bottles_list = display_form.available_list_named('Bottles')
+
+    expect(available_taps_list.badge_text).to eq '2 items'
+    expect(available_bottles_list.badge_text).to eq '1 item'
+
     expect(display_form.orientation).to eq :horizontal
     expect(display_form.rotation_interval).to eq '5 seconds'
     expect(display_form.theme).to eq 'Standard'
@@ -56,6 +63,13 @@ feature 'digital display menu management' do
     expect(display_form).to have_selected_list 'Bottles'
     expect(display_form.selected_list_named('Taps')).to have_price_shown
     expect(display_form.selected_list_named('Bottles')).to have_price_shown
+
+    selected_taps_list = display_form.selected_list_named('Taps')
+    selected_bottles_list = display_form.selected_list_named('Bottles')
+
+    expect(selected_taps_list.badge_text).to eq '2 items'
+    expect(selected_bottles_list.badge_text).to eq '1 item'
+
     expect(display_form.rotation_interval).to eq '10 seconds'
     expect(display_form.theme).to eq 'Custom'
     expect(display_form).to have_background_color_input

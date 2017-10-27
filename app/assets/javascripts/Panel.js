@@ -18,10 +18,14 @@ class Panel extends Component {
   }
 }
 
+Panel.defaultProps = {
+  className: ''
+};
+
 Panel.propTypes = {
   dataTest: PropTypes.string,
   title: PropTypes.string.isRequired,
   className: PropTypes.string
-}
+};
 
 export default Panel;

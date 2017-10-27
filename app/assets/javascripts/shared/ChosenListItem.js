@@ -4,6 +4,7 @@ import RemoveButton from './RemoveButton';
 import { findDOMNode } from 'react-dom';
 import itemTypes from './item-types';
 import { DragSource, DropTarget } from 'react-dnd';
+import pluralize from './pluralize';
 
 const itemSource = {
   beginDrag(props) {
@@ -112,6 +113,7 @@ class ChosenListItem extends Component {
     if (list.show_price_on_menu === undefined || list.show_price_on_menu) {
       showPrice.defaultChecked = 'checked';
     }
+    const badgeContent = `${list.beerCount} ${pluralize('item', list.beerCount)}`;
 
     const style = {
       opacity: isDragging ? 0 : 1,
@@ -119,19 +121,33 @@ class ChosenListItem extends Component {
     };
     return connectDragSource(connectDropTarget(
       <li className="list-group-item" data-test="menu-list" style={style}>
-        <RemoveButton onClick={onRemove} listId={list.id} />
-        <span className="list-name" data-test="list-name">{list.name}</span>
-        <input
-          type="hidden"
-          name={`${entityName}[${nestedAttrsName}][${index}][show_price_on_menu]`}
-          value="0"
-        />
-        <label
-          htmlFor={showPriceInputId}
-          className="menu-list-show-price"
-          data-test="show-price-label">Display Price
-          <input {...showPrice} />
-        </label>
+        <div className="row">
+          <div className="col-sm-8">
+            <RemoveButton onClick={onRemove} listId={list.id} />
+            <span className="list-name" data-test="list-name">{list.name}</span>
+          </div>
+          <div className="col-sm-4">
+            <div className="valign-wrapper">
+              <input
+                type="hidden"
+                name={`${entityName}[${nestedAttrsName}][${index}][show_price_on_menu]`}
+                value="0"
+              />
+              <label
+                htmlFor={showPriceInputId}
+                className="menu-list-show-price"
+                data-test="show-price-label">$
+                <input {...showPrice} />
+              </label>
+            </div>
+            <div className="valign-wrapper">
+              <span
+                data-test="list-badge"
+                className="badge badge-pill badge-success float-right"
+              >{badgeContent}</span>
+            </div>
+          </div>
+        </div>
         <input
           type="hidden"
           name={`${entityName}[${nestedAttrsName}][${index}][id]`}

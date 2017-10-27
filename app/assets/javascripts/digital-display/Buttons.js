@@ -29,7 +29,7 @@ class Buttons extends Component {
         <a href={viewDisplayPath}
            target="_blank"
            className="btn btn-success pull-right"
-           data-test="view-digital-display-menu">View Display</a>
+           data-test="view-digital-display-menu">View</a>
       )
     }
     return (

@@ -1,19 +1,12 @@
 .digital-display-menu-form {
+  @include show-price-input;
+
   .move-list-button {
     margin-right: 20px;
   }
 
   .list-group-heading {
     font-weight: 700;
-  }
-
-  .menu-list-show-price {
-    line-height: 30px;
-    vertical-align: middle;
-    float: right;
-    input {
-      margin-left: 10px;
-    }
   }
 
   .menu-form-action {

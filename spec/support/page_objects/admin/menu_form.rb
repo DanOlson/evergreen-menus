@@ -11,9 +11,14 @@ module PageObjects
           element :show_price_input, '[data-test="show-price"]'
           element :show_price_input_label, '[data-test="show-price-label"]'
           element :name_wrapper, '[data-test="list-name"]'
+          element :badge, '[data-test="list-badge"]'
 
           def name
             name_wrapper.text
+          end
+
+          def badge_text
+            badge.text
           end
 
           def has_price_shown?
@@ -40,9 +45,14 @@ module PageObjects
         class List < SitePrism::Section
           element :add_button, '[data-test="add-list"]'
           element :name_wrapper, '[data-test="list-name"]'
+          element :badge, '[data-test="list-badge"]'
 
           def name
             name_wrapper.text
+          end
+
+          def badge_text
+            badge.text
           end
         end
 

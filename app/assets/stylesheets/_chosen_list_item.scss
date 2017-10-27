@@ -1,0 +1,8 @@
+@mixin show-price-input {
+  .menu-list-show-price {
+    margin-bottom: 0px;
+    input {
+      margin-left: 10px;
+    }
+  }
+}
