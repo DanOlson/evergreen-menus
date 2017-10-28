@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Panel from '../Panel';
+import Panel from '../shared/Panel';
 
 class DigitalDisplayPreview extends Component {
   constructor(props) {

@@ -4,7 +4,7 @@ import ColumnsInput from './ColumnsInput';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import ChosenListGroup from '../shared/ChosenListGroup';
 import Preview from './MenuPreview';
-import Panel from '../Panel';
+import Panel from '../shared/Panel';
 import generatePreviewPath from './previewPath';
 import { applyFind } from '../polyfills/Array';
 import { DragDropContext } from 'react-dnd';

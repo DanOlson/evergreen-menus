@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import update from 'react/lib/update';
-import Panel from '../Panel';
+import Panel from '../shared/Panel';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import ChosenListGroup from '../shared/ChosenListGroup';
 import DigitalDisplayPreview from './DigitalDisplayPreview';

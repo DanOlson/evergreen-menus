@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import BeerInput from './BeerInput';
-import Panel from './Panel';
+import Panel from '../shared/Panel';
 
 class List extends Component {
   constructor(props) {
