@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import App from './list/App';
-import ListsApp from './ListsApp';
+import ListsApp from './establishment/ListsApp';
 import MenuApp from './menu/MenuApp';
 import DigitalDisplayApp from './digital-display/DigitalDisplayApp';
 
