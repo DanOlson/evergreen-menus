@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import BeerInput from './BeerInput';
+import TypeSelect from './TypeSelect';
 import Panel from '../shared/Panel';
 
 class List extends Component {
@@ -9,12 +10,14 @@ class List extends Component {
     this.state = {
       beers: this.sortBeers(this.props.beers),
       name: this.props.name,
+      type: this.props.type,
       showPrice: this.props.showPrice,
       showDescription: this.props.showDescription
     };
-    this.deleteBeer = this.deleteBeer.bind(this);
-    this.addBeer    = this.addBeer.bind(this);
-    this.handleShowPriceChange = this.handleShowPriceChange.bind(this);
+    this.deleteBeer                  = this.deleteBeer.bind(this);
+    this.addBeer                     = this.addBeer.bind(this);
+    this.handleTypeChange            = this.handleTypeChange.bind(this);
+    this.handleShowPriceChange       = this.handleShowPriceChange.bind(this);
     this.handleShowDescriptionChange = this.handleShowDescriptionChange.bind(this);
   }
 
@@ -29,6 +32,13 @@ class List extends Component {
     return sorted.map((beer, index) => {
       beer.appId = index;
       return beer;
+    });
+  }
+
+  handleTypeChange(newType) {
+    const type = newType.value;
+    this.setState(prevState => {
+      return { type };
     });
   }
 
@@ -55,8 +65,8 @@ class List extends Component {
   }
 
   render() {
-    const { listId } = this.props;
-    const { name, showPrice, showDescription } = this.state;
+    const { listId, typeOptions } = this.props;
+    const { name, type, showPrice, showDescription } = this.state;
     const inputs = this.state.beers.map((beer, index, array) => {
       const beerInputProps = {
         beer,
@@ -86,8 +96,17 @@ class List extends Component {
                   defaultValue={name}
                 />
               </div>
-            </div>
 
+              <TypeSelect
+                className="col-sm-2"
+                options={typeOptions}
+                value={type}
+                onChange={this.handleTypeChange}
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
             <div className="form-check">
               <label className="form-check-label" htmlFor="list_show_price">
                 <input
@@ -154,6 +173,7 @@ List.propTypes = {
   name: PropTypes.string.isRequired,
   showPrice: PropTypes.bool.isRequired,
   showDescription: PropTypes.bool.isRequired,
+  typeOptions: PropTypes.array.isRequired,
   listId: PropTypes.number
 }
 

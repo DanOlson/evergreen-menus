@@ -1,6 +1,8 @@
 <script>
-  window.BEERMAPPER = window.BEERMAPPER || {};
-  window.BEERMAPPER.list = <%= raw list_json list %>;
+  window.BEERMAPPER = {
+    list: <%= raw list_json list %>,
+    typeOptions: <%= raw list_type_options_json %>
+  };
 </script>
 <% breadcrumb :list, @account, @establishment, @list %>
 <%= form_for [account, establishment, list], html: { class: 'list-form' } do |f| %>

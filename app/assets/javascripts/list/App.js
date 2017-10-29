@@ -8,13 +8,16 @@ class App extends Component {
   }
 
   render() {
-    const { list } = this.props;
+    const { list, typeOptions } = this.props;
+    const { beers, name, type } = list;
     const listProps = {
       listId: list.id,
-      beers: list.beers,
-      name: list.name,
+      beers,
+      name,
       showPrice: list.show_price,
-      showDescription: list.show_description
+      showDescription: list.show_description,
+      type,
+      typeOptions
     };
 
     return <List {...listProps} />;
@@ -22,7 +25,8 @@ class App extends Component {
 };
 
 App.propTypes = {
-  list: PropTypes.object.isRequired
+  list: PropTypes.object.isRequired,
+  typeOptions: PropTypes.array.isRequired
 };
 
 export default App;

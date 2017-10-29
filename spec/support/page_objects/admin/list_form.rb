@@ -37,6 +37,7 @@ module PageObjects
       set_url '/accounts{/account_id}/establishments{/establishment_id}/lists{/list_id}/edit'
 
       element :list_name_input,           '[data-test="list-name"]'
+      element :list_type_input,           '[data-test="list-type"]'
       element :show_price_checkbox,       '[data-test="list-show-price"]'
       element :show_description_checkbox, '[data-test="list-show-description"]'
 
@@ -49,6 +50,15 @@ module PageObjects
 
       def empty?
         !has_beers?
+      end
+
+      def list_type=(type)
+        list_type_input.find(:option, type).select_option
+      end
+
+      def list_type
+        current_value = list_type_input.value
+        list_type_input.find("option[value='#{current_value}']").text
       end
 
       def hide_prices

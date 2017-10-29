@@ -49,6 +49,7 @@ class ListsController < ApplicationController
     params.require(:list).permit(
       :id,
       :name,
+      :type,
       :show_price,
       :show_description,
       { beers_attributes: [:id, :name, :price, :description, :_destroy] }

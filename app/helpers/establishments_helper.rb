@@ -57,10 +57,6 @@ module EstablishmentsHelper
     STATES.invert.to_a
   end
 
-  def list_json(list)
-    list.as_json.merge(beers: list.beers.as_json).to_json
-  end
-
   def lists_json(establishment)
     account = establishment.account
     establishment.lists.map do |list|
