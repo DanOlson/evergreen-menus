@@ -1,6 +1,7 @@
 <script>
-  window.BEERMAPPER = window.BEERMAPPER || {};
-  window.BEERMAPPER.lists = <%= raw lists_json establishment %>;
+  window.BEERMAPPER = {
+    lists: <%= raw lists_json establishment %>
+  };
 </script>
 <% breadcrumb :establishment, account, establishment %>
 <div class="row edit-establishment">
@@ -89,7 +90,7 @@
         </div>
       </div>
       <div class="list-group">
-        <% establishment.menus.each do |menu| %>
+        <% establishment.menus.order(:name).each do |menu| %>
           <div class="list-group-item" data-test="menu-list-item">
             <%= link_to menu.name, edit_account_establishment_menu_path(account, establishment, menu), data: { test: 'establishment-menu' } %>
           </div>
@@ -110,7 +111,7 @@
         </div>
       </div>
       <div class="list-group">
-        <% establishment.digital_display_menus.each do |dd_menu| %>
+        <% establishment.digital_display_menus.order(:name).each do |dd_menu| %>
           <div class="list-group-item" data-test="digital-display-menu-list-item">
             <%= link_to dd_menu.name, edit_account_establishment_digital_display_menu_path(account, establishment, dd_menu), data: { test: 'establishment-digital-display-menu' } %>
           </div>

@@ -59,7 +59,7 @@ module EstablishmentsHelper
 
   def lists_json(establishment)
     account = establishment.account
-    establishment.lists.map do |list|
+    establishment.lists.order(:name).map do |list|
       {
         id: list.id,
         name: list.name,
