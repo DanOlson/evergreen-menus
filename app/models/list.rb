@@ -9,7 +9,8 @@ class List < ActiveRecord::Base
     'lunch',
     'dinner',
     'happy hour',
-    'late night'
+    'late night',
+    'other'
   ]
 
   class << self
