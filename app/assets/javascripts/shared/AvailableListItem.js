@@ -4,6 +4,7 @@ import AddButton from './AddButton';
 import { DragSource } from 'react-dnd';
 import itemTypes from './item-types';
 import pluralize from './pluralize';
+import ListTypeIcon from './ListTypeIcon';
 
 class AvailableListItem extends Component {
   constructor(props) {
@@ -52,14 +53,15 @@ class AvailableListItem extends Component {
 
     return connectDragSource(
       <li className="list-group-item" data-test="menu-list" style={style}>
-        <div className="valign-wrapper">
+        <div className="valign-wrapper-w80">
           <AddButton onClick={onAdd} listId={list.id} />
           <span className="list-name" data-test="list-name">{list.name}</span>
         </div>
-        <div className="valign-wrapper">
+        <div className="valign-wrapper-w20">
+          <ListTypeIcon listType={list.type} />
           <span
             data-test="list-badge"
-            className="badge badge-pill badge-secondary float-right"
+            className="badge badge-pill badge-secondary float-right mr-2"
           >{badgeContent}</span>
         </div>
         {menuListIdInput}

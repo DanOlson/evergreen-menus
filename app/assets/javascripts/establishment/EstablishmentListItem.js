@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ListTypeIcon from '../shared/ListTypeIcon';
 
 class EstablishmentListItem extends Component {
   constructor(props) {
@@ -55,13 +56,18 @@ class EstablishmentListItem extends Component {
   }
 
   render() {
-    const { name, editPath } = this.props;
+    const { name, listType, editPath } = this.props;
     const showSnippetButton = this.renderShowSnippetButton();
     const snippet = this.renderSnippet();
     return (
       <div className="list-group-item" data-test="establishment-list-item">
-        {showSnippetButton}
-        <a href={editPath} data-test="establishment-list">{name}</a>
+        <div className="valign-wrapper-w80">
+          {showSnippetButton}
+          <a href={editPath} data-test="establishment-list">{name}</a>
+        </div>
+        <div className="valign-wrapper-w20">
+          <ListTypeIcon listType={listType} />
+        </div>
         {snippet}
       </div>
     );

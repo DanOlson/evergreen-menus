@@ -21,6 +21,9 @@ public/javascripts/*
 public/stylesheets/*
 public/images/*
 public/font*
+public/*.ttf
+public/*.eot
+public/*.svg
 
 third-party-site/public
 third-party-site/public-test

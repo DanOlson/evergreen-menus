@@ -8,6 +8,7 @@ class ListsApp extends Component {
       return (
         <ListItem
           name={list.name}
+          listType={list.type}
           editPath={list.edit_path}
           htmlSnippet={list.html_snippet}
           canShowSnippet={!!list.html_snippet}

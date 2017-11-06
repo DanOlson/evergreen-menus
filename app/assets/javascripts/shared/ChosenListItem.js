@@ -5,6 +5,7 @@ import { findDOMNode } from 'react-dom';
 import itemTypes from './item-types';
 import { DragSource, DropTarget } from 'react-dnd';
 import pluralize from './pluralize';
+import ListTypeIcon from './ListTypeIcon';
 
 const itemSource = {
   beginDrag(props) {
@@ -121,32 +122,27 @@ class ChosenListItem extends Component {
     };
     return connectDragSource(connectDropTarget(
       <li className="list-group-item" data-test="menu-list" style={style}>
-        <div className="row">
-          <div className="col-sm-8">
-            <RemoveButton onClick={onRemove} listId={list.id} />
-            <span className="list-name" data-test="list-name">{list.name}</span>
-          </div>
-          <div className="col-sm-4">
-            <div className="valign-wrapper">
-              <input
-                type="hidden"
-                name={`${entityName}[${nestedAttrsName}][${index}][show_price_on_menu]`}
-                value="0"
-              />
-              <label
-                htmlFor={showPriceInputId}
-                className="menu-list-show-price"
-                data-test="show-price-label">$
-                <input {...showPrice} />
-              </label>
-            </div>
-            <div className="valign-wrapper">
-              <span
-                data-test="list-badge"
-                className="badge badge-pill badge-success float-right"
-              >{badgeContent}</span>
-            </div>
-          </div>
+        <div className="valign-wrapper-w60">
+          <RemoveButton onClick={onRemove} listId={list.id} />
+          <span className="list-name" data-test="list-name">{list.name}</span>
+        </div>
+        <div className="valign-wrapper-w40">
+          <input
+            type="hidden"
+            name={`${entityName}[${nestedAttrsName}][${index}][show_price_on_menu]`}
+            value="0"
+          />
+          <label
+            htmlFor={showPriceInputId}
+            className="menu-list-show-price"
+            data-test="show-price-label">$
+            <input {...showPrice} />
+          </label>
+          <ListTypeIcon listType={list.type} />
+          <span
+            data-test="list-badge"
+            className="badge badge-pill badge-success float-right mr-2"
+          >{badgeContent}</span>
         </div>
         <input
           type="hidden"

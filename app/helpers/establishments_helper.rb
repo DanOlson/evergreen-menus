@@ -63,6 +63,7 @@ module EstablishmentsHelper
       {
         id: list.id,
         name: list.name,
+        type: list.type,
         edit_path: edit_account_establishment_list_path(account, establishment, list),
         html_snippet: make_snippet(list)
       }
