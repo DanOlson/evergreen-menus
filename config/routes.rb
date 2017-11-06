@@ -26,6 +26,7 @@ Beermapper::Application.routes.draw do
       resources :lists
       resources :menus, path: '/print_menus'
       resources :digital_display_menus, path: '/digital_displays'
+      resources :web_menus
       get 'digital_display_menu_preview' => 'digital_display_menus#preview'
       get 'menu_preview' => 'menus#preview'
     end

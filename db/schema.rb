@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171028012951) do
+ActiveRecord::Schema.define(version: 20171106031244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -199,6 +199,23 @@ ActiveRecord::Schema.define(version: 20171028012951) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  create_table "web_menu_lists", force: :cascade do |t|
+    t.integer  "web_menu_id",                             null: false
+    t.integer  "list_id",                                 null: false
+    t.integer  "position",                                null: false
+    t.boolean  "show_price_on_menu",       default: true, null: false
+    t.boolean  "show_description_on_menu", default: true, null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
+  create_table "web_menus", force: :cascade do |t|
+    t.string   "name",             null: false
+    t.integer  "establishment_id", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
   add_foreign_key "beers", "lists"
   add_foreign_key "digital_display_menu_lists", "digital_display_menus"
   add_foreign_key "digital_display_menu_lists", "lists"
@@ -217,4 +234,7 @@ ActiveRecord::Schema.define(version: 20171028012951) do
   add_foreign_key "user_invitations", "users", column: "inviting_user_id"
   add_foreign_key "users", "accounts"
   add_foreign_key "users", "roles"
+  add_foreign_key "web_menu_lists", "lists"
+  add_foreign_key "web_menu_lists", "web_menus"
+  add_foreign_key "web_menus", "establishments"
 end

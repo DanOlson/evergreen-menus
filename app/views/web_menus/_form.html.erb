@@ -1,0 +1,14 @@
+<script>
+  window.BEERMAPPER = {
+    menu: <%= raw web_menu_json web_menu %>,
+    cancelEditPath: "<%= edit_account_establishment_path(account, establishment) %>",
+    submitButtonText: "<%= submit_text %>"
+  };
+</script>
+<% breadcrumb :web_menu, account, establishment, web_menu %>
+<%= form_for [account, establishment, web_menu], html: { class: 'web-menu-form' } do |f| %>
+  <div id="web-menu-app-root"></div>
+<% end %>
+<% if web_menu.persisted? && can?(:destroy, web_menu) %>
+  <%= button_to 'Delete', account_establishment_web_menu_path(account, establishment, web_menu), method: :delete, class: 'hidden', id: 'web-menu-form-delete', data: { confirm: 'Are you sure you want to delete this menu?' } %>
+<% end %>

@@ -40,6 +40,16 @@ crumb :menu do |account, establishment, menu|
   parent :establishment, account, establishment
 end
 
+crumb :web_menu do |account, establishment, web_menu|
+  if web_menu.persisted?
+    path = edit_account_establishment_web_menu_path(account, establishment, web_menu)
+    link web_menu.name, path
+  else
+    link 'New Menu'
+  end
+  parent :establishment, account, establishment
+end
+
 crumb :digital_display_menu do |account, establishment, digital_display_menu|
   if digital_display_menu.persisted?
     path = edit_account_establishment_digital_display_menu_path(
