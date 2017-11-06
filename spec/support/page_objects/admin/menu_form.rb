@@ -3,7 +3,7 @@ require 'open-uri'
 module PageObjects
   module Admin
     class MenuForm < SitePrism::Page
-      set_url_matcher %r{/accounts/\d+/establishments/\d+/menus/(new|\d+/edit)}
+      set_url_matcher %r{/accounts/\d+/establishments/\d+/print_menus/(new|\d+/edit)}
 
       class ListsSelected < SitePrism::Section
         class List < SitePrism::Section

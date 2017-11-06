@@ -233,7 +233,7 @@ feature 'menu management' do
 
     login staff
 
-    visit "/accounts/#{account.id}/establishments/#{establishment.id}/menus/new"
+    visit "/accounts/#{account.id}/establishments/#{establishment.id}/print_menus/new"
 
     expect(page).to have_css '[data-test="flash-alert"]', text: 'You are not authorized to access this page.'
   end
