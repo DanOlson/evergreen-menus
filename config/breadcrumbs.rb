@@ -45,7 +45,7 @@ crumb :web_menu do |account, establishment, web_menu|
     path = edit_account_establishment_web_menu_path(account, establishment, web_menu)
     link web_menu.name, path
   else
-    link 'New Menu'
+    link 'New Web Menu'
   end
   parent :establishment, account, establishment
 end

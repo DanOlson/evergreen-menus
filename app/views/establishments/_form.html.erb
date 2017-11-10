@@ -80,6 +80,27 @@
       </div>
     <% end %>
 
+    <%= render 'shared/panel', title: 'Web Menus', data_test: 'web-menus', help_type: 'web-menus' do %>
+      <div
+        class="card contextual-help bg-light <%= hide_web_menus_help?(establishment) and 'hidden' %>"
+        data-help="web-menus"
+        data-test="web-menus-help-text">
+        <div class="card-body">
+          Web Menus can be displayed on your establishment's website. Choose one or more lists to create a Web Menu, link your Web Menu to your site, and any updates you make to your lists are instantly synced to your site.
+        </div>
+      </div>
+      <div class="list-group">
+        <% establishment.web_menus.order(:name).each do |web_menu| %>
+          <div class="list-group-item" data-test="web-menu-list-item">
+            <%= link_to web_menu.name, edit_account_establishment_web_menu_path(account, establishment, web_menu), data: { test: 'establishment-web-menu' } %>
+          </div>
+        <% end %>
+      </div>
+      <div class="button-wrapper">
+        <%= add_web_menu_button(account, establishment) %>
+      </div>
+    <% end %>
+
     <%= render 'shared/panel', title: 'Print Menus', data_test: 'menus', help_type: 'menus' do %>
       <div
         class="card contextual-help bg-light <%= hide_menus_help?(establishment) and 'hidden' %>"

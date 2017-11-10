@@ -53,11 +53,11 @@ class AvailableListItem extends Component {
 
     return connectDragSource(
       <li className="list-group-item" data-test="menu-list" style={style}>
-        <div className="valign-wrapper-w80">
+        <div className="valign-wrapper-w60">
           <AddButton onClick={onAdd} listId={list.id} />
           <span className="list-name" data-test="list-name">{list.name}</span>
         </div>
-        <div className="valign-wrapper-w20">
+        <div className="valign-wrapper-w40">
           <ListTypeIcon listType={list.type} />
           <span
             data-test="list-badge"

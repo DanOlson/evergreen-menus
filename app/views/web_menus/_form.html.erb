@@ -1,8 +1,9 @@
 <script>
   window.BEERMAPPER = {
-    menu: <%= raw web_menu_json web_menu %>,
+    webMenu: <%= raw web_menu_json web_menu %>,
     cancelEditPath: "<%= edit_account_establishment_path(account, establishment) %>",
-    submitButtonText: "<%= submit_text %>"
+    submitButtonText: "<%= submit_text %>",
+    canDestroy: <%= web_menu.persisted? && can?(:destroy, web_menu) %>
   };
 </script>
 <% breadcrumb :web_menu, account, establishment, web_menu %>

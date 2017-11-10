@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import App from './list/App';
 import ListsApp from './establishment/ListsApp';
 import MenuApp from './menu/MenuApp';
+import WebMenuApp from './web-menu/WebMenuApp';
 import DigitalDisplayApp from './digital-display/DigitalDisplayApp';
 
 function applyConfirm(element) {
@@ -20,6 +21,7 @@ function applyConfirm(element) {
   const appRoot            = document.getElementById('app-root');
   const listsRoot          = document.getElementById('lists-app');
   const menuRoot           = document.getElementById('menu-app-root');
+  const webMenuRoot        = document.getElementById('web-menu-app-root');
   const digitalDisplayRoot = document.getElementById('digital-display-app-root');
   const confirmNodes       = document.querySelectorAll('[data-confirm]');
 
@@ -37,6 +39,10 @@ function applyConfirm(element) {
 
   if (digitalDisplayRoot) {
     render(<DigitalDisplayApp {...window.BEERMAPPER} />, digitalDisplayRoot);
+  }
+
+  if (webMenuRoot) {
+    render(<WebMenuApp {...window.BEERMAPPER} />, webMenuRoot);
   }
 
   for (let i = 0; i < confirmNodes.length; i++) {

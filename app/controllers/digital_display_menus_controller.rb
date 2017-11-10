@@ -4,7 +4,7 @@ class DigitalDisplayMenusController < ApplicationController
   load_and_authorize_resource :digital_display_menu, through: :establishment
 
   def new
-    @digital_display_menu.name = "New Digital Display Menu"
+    @digital_display_menu.name = 'New Digital Display Menu'
   end
 
   def show

@@ -1,17 +1,5 @@
 .digital-display-menu-form {
-  @include show-price-input;
-
-  .move-list-button {
-    margin-right: 20px;
-  }
-
-  .list-group-heading {
-    font-weight: 700;
-  }
-
-  .menu-form-action {
-    margin-right: 4px;
-  }
+  @include draggable-list-item;
 
   .digital-display-menu-preview-wrapper {
     background: transparent url(/images/loading.gif) no-repeat;

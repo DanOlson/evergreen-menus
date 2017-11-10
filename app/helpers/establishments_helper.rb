@@ -115,6 +115,10 @@ module EstablishmentsHelper
     add_new_button account, establishment, :digital_display_menu
   end
 
+  def add_web_menu_button(account, establishment)
+    add_new_button account, establishment, :web_menu
+  end
+
   def hide_lists_help?(establishment)
     establishment.lists.any?
   end
@@ -125,5 +129,9 @@ module EstablishmentsHelper
 
   def hide_displays_help?(establishment)
     establishment.digital_display_menus.any?
+  end
+
+  def hide_web_menus_help?(establishment)
+    establishment.web_menus.any?
   end
 end

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import update from 'react/lib/update';
 import Panel from '../shared/Panel';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import ChosenListGroup from '../shared/ChosenListGroup';
@@ -32,7 +31,7 @@ class DigitalDisplayApp extends Component {
       listTitleColor,
       font,
       theme
-    } = this.props.digitalDisplayMenu;
+    } = props.digitalDisplayMenu;
 
     this.handleNameChange             = this.handleNameChange.bind(this);
     this.handleFontChange             = this.handleFontChange.bind(this);

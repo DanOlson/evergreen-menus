@@ -19,6 +19,7 @@ class Ability
     can :manage, List, establishment_id: user.establishment_ids
     can :manage, Menu, establishment_id: user.establishment_ids
     can :manage, DigitalDisplayMenu, establishment_id: user.establishment_ids
+    can :manage, WebMenu, establishment_id: user.establishment_ids
     can :read,   Establishment, establishment_staff_assignments: { user_id: user.id }
     can :create, Establishment, establishment_staff_assignments: { user_id: user.id }
     can :update, Establishment, establishment_staff_assignments: { user_id: user.id }
@@ -35,6 +36,7 @@ class Ability
     can :manage, List, establishment_id: user.account.establishment_ids
     can :manage, Menu, establishment_id: user.account.establishment_ids
     can :manage, DigitalDisplayMenu, establishment_id: user.account.establishment_ids
+    can :manage, WebMenu, establishment_id: user.account.establishment_ids
     can :update, Account, id: user.account_id
     can :manage, User, account_id: user.account_id
     can :manage, UserInvitation, account_id: user.account_id
