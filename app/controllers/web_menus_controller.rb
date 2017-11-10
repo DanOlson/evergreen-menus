@@ -1,7 +1,9 @@
 class WebMenusController < ApplicationController
-  load_and_authorize_resource :account
-  load_and_authorize_resource :establishment, through: :account
-  load_and_authorize_resource :web_menu, through: :establishment
+  load_and_authorize_resource :account, except: :show
+  load_and_authorize_resource :establishment, through: :account, except: :show
+  load_and_authorize_resource :web_menu, through: :establishment, except: :show
+
+  skip_before_action :verify_authenticity_token, :authenticate_user!, only: :show
 
   def new
     @web_menu.name = 'New Web Menu'
@@ -30,6 +32,11 @@ class WebMenusController < ApplicationController
   end
 
   def show
+    @web_menu = WebMenu.find params[:id]
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def destroy

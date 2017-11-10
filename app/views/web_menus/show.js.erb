@@ -1,0 +1,5 @@
+(function() {
+  var target = document.getElementById('<%= "beermapper-menu-#{params[:id]}" %>');
+
+  target.innerHTML = '<%=j render @web_menu %>';
+})();

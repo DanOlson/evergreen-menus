@@ -21,6 +21,7 @@ Beermapper::Application.routes.draw do
   end
 
   resources :menu_lists, only: :show
+  resources :web_menus, only: :show
   resources :accounts do
     resources :establishments do
       resources :lists
