@@ -1,4 +1,6 @@
 class WebMenuSerializer
+  include Rails.application.routes.url_helpers
+
   def initialize(web_menu)
     @web_menu = web_menu
   end
@@ -6,7 +8,8 @@ class WebMenuSerializer
   def call
     @web_menu.as_json.merge({
       lists: lists.as_json,
-      listsAvailable: available_lists.as_json
+      listsAvailable: available_lists.as_json,
+      previewPath: preview_path
     }).to_json
   end
 
@@ -27,5 +30,12 @@ class WebMenuSerializer
 
   def available_lists
     establishment.lists.includes(:beers) - @web_menu.lists.includes(:beers)
+  end
+
+  def preview_path
+    account_establishment_web_menu_preview_path(
+      establishment.account,
+      establishment
+    )
   end
 end

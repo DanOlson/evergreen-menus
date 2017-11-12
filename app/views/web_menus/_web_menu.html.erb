@@ -1,5 +1,5 @@
 <div class="beermapper-menu">
   <% @web_menu.lists.each do |list| %>
-    <%= render partial: "list", locals: { beers: list.beers, show_description: list.show_description?, show_price: list.show_price?, title: list.name } %>
+    <%= render partial: "list", locals: { beers: list.beers, show_description: list.show_description_on_menu?, show_price: list.show_price_on_menu?, title: list.name } %>
   <% end %>
 </div>

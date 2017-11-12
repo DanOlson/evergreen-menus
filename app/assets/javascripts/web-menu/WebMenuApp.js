@@ -4,6 +4,8 @@ import Panel from '../shared/Panel';
 import Buttons from './Buttons';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import ChosenListGroup from '../shared/ChosenListGroup';
+import Preview from './Preview';
+import generatePreviewPath from './previewPath';
 import { applyFind } from '../polyfills/Array';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -87,6 +89,7 @@ class WebMenuApp extends Component {
 
   render() {
     const { lists, listsAvailable, name } = this.state;
+    const previewPath = generatePreviewPath(this.props.webMenu, this.state);
     const totalListCount = lists.length + listsAvailable.length;
     return (
       <div className="form-row">
@@ -125,8 +128,7 @@ class WebMenuApp extends Component {
           </Panel>
         </div>
         <div className="col-sm-6">
-          <Panel title="Embed Code">
-          </Panel>
+          <Preview previewPath={previewPath} />
         </div>
       </div>
     );

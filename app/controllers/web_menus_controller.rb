@@ -39,6 +39,12 @@ class WebMenusController < ApplicationController
     end
   end
 
+  def preview
+    preview = WebMenuPreviewGenerator.new(web_menu_params, current_ability)
+    @web_menu = preview.call
+    render :show, layout: false
+  end
+
   def destroy
     @web_menu.destroy
     redirect_to edit_account_establishment_path(@account, @establishment), notice: 'Web menu deleted'
