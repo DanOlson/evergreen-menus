@@ -4,8 +4,18 @@ import Panel from '../shared/Panel';
 
 class Preview extends Component {
   render() {
+    const panelHeaderElement = (
+      <div className="float-right text-danger">
+        <i
+          className="fa fa-exclamation-triangle help-icon"
+          aria-hidden="true">
+        </i>
+        <span className="unstyled-warning-text">Unstyled</span>
+      </div>
+    );
+
     return (
-      <Panel title="Preview">
+      <Panel title="Preview" headerContent={panelHeaderElement}>
         <div className="web-menu-preview-wrapper">
           <object
             data={this.props.previewPath}

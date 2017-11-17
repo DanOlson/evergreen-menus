@@ -46,9 +46,9 @@ function buildQueryString(lists, base) {
 }
 
 function generatePreviewPath(webMenu, formState) {
-  const { lists } = formState;
+  const { lists, name } = formState;
   const { previewPath, id } = webMenu;
-  const seed = '?';
+  const seed = `?web_menu[name]=${name}`;
   const queryString = buildQueryString(lists, seed);
   if (id) {
     // Menu is already persisted

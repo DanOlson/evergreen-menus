@@ -1,6 +1,7 @@
 <script>
   window.BEERMAPPER = {
-    lists: <%= raw lists_json establishment %>
+    lists: <%= raw lists_json establishment %>,
+    webMenus: <%= raw web_menus_json establishment %>
   };
 </script>
 <% breadcrumb :establishment, account, establishment %>
@@ -89,13 +90,7 @@
           Web Menus can be displayed on your establishment's website. Choose one or more lists to create a Web Menu, link your Web Menu to your site, and any updates you make to your lists are instantly synced to your site.
         </div>
       </div>
-      <div class="list-group">
-        <% establishment.web_menus.order(:name).each do |web_menu| %>
-          <div class="list-group-item" data-test="web-menu-list-item">
-            <%= link_to web_menu.name, edit_account_establishment_web_menu_path(account, establishment, web_menu), data: { test: 'establishment-web-menu' } %>
-          </div>
-        <% end %>
-      </div>
+      <div id="web-menus-app"></div>
       <div class="button-wrapper">
         <%= add_web_menu_button(account, establishment) %>
       </div>

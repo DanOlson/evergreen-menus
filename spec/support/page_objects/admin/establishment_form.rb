@@ -32,6 +32,29 @@ module PageObjects
         end
       end
 
+      class WebMenusPanel < SitePrism::Section
+        class Menu < SitePrism::Section
+          element :link, '[data-test="establishment-web-menu"]'
+
+          def name
+            link.text
+          end
+
+          def visit
+            link.click
+          end
+        end
+
+        element :toggle_help_icon, '[data-test="toggle-help-web-menus"]'
+        element :help_text, '[data-test="web-menus-help-text"]'
+        element :add_button, '[data-test="add-web-menu"]'
+        sections :menus, Menu, '[data-test="establishment-web-menu-item"]'
+
+        def add_menu
+          add_button.click
+        end
+      end
+
       class MenusPanel < SitePrism::Section
         class Menu < SitePrism::Section
           element :print_button, '[data-test="print-menu"]' # TODO
@@ -91,6 +114,7 @@ module PageObjects
 
       section :lists_panel, ListsPanel, '[data-test="lists"]'
       section :menus_panel, MenusPanel, '[data-test="menus"]'
+      section :web_menus_panel, WebMenusPanel, '[data-test="web-menus"]'
       section :digital_display_menus_panel, DigitalDisplayMenusPanel, '[data-test="digital-display-menus"]'
 
       def submit
@@ -109,6 +133,10 @@ module PageObjects
 
       def add_list
         lists_panel.add_list
+      end
+
+      def add_web_menu
+        web_menus_panel.add_menu
       end
 
       def add_menu

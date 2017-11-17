@@ -26,6 +26,7 @@ class Ability
     can :show,   Account, id: user.account_id
 
     cannot :view_snippet, List
+    cannot :view_snippet, WebMenu
   end
 
   def manager_abilities(user)

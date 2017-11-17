@@ -104,7 +104,7 @@ feature 'digital display menu management' do
     expect(display_form).to have_text_color_input
     expect(display_form).to have_list_title_color_input
 
-    # Manipulate them form some more
+    # Manipulate the form some more
     display_form.name = 'HD Display'
     display_form.remove_list 'Bottles'
     display_form.hide_prices(list: 'Taps')

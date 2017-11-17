@@ -1,3 +1,9 @@
 .web-menu-form {
   @include draggable-list-item;
+
+  .unstyled-warning-text {
+    font-weight: 200;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
 }

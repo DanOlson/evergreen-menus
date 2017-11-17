@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import App from './list/App';
 import ListsApp from './establishment/ListsApp';
+import WebMenusApp from './establishment/WebMenusApp';
 import MenuApp from './menu/MenuApp';
 import WebMenuApp from './web-menu/WebMenuApp';
 import DigitalDisplayApp from './digital-display/DigitalDisplayApp';
@@ -20,6 +21,7 @@ function applyConfirm(element) {
 (function bootstrap() {
   const appRoot            = document.getElementById('app-root');
   const listsRoot          = document.getElementById('lists-app');
+  const webMenusRoot       = document.getElementById('web-menus-app');
   const menuRoot           = document.getElementById('menu-app-root');
   const webMenuRoot        = document.getElementById('web-menu-app-root');
   const digitalDisplayRoot = document.getElementById('digital-display-app-root');
@@ -31,6 +33,10 @@ function applyConfirm(element) {
 
   if (listsRoot) {
     render(<ListsApp {...window.BEERMAPPER} />, listsRoot);
+  }
+
+  if (webMenusRoot) {
+    render(<WebMenusApp {...window.BEERMAPPER} />, webMenusRoot);
   }
 
   if (menuRoot) {

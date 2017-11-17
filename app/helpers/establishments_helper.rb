@@ -57,6 +57,35 @@ module EstablishmentsHelper
     STATES.invert.to_a
   end
 
+  def web_menus_json(establishment)
+    account = establishment.account
+    establishment.web_menus.order(:name).map do |menu|
+      {
+        id: menu.id,
+        name: menu.name,
+        editPath: edit_account_establishment_web_menu_path(account, establishment, menu),
+        embedCode: make_embed_code(menu)
+      }
+    end.to_json
+  end
+
+  def make_embed_code(menu)
+    if can?(:view_snippet, WebMenu)
+      embed_code = MenuEmbedCode.new({
+        web_menu: menu,
+        menu_url: web_menu_url(menu.id)
+      })
+
+      <<~HTML.strip.html_safe
+        <pre>
+          <code>
+  #{embed_code.generate_encoded}
+          </code>
+        </pre>
+      HTML
+    end
+  end
+
   def lists_json(establishment)
     account = establishment.account
     establishment.lists.order(:name).map do |list|
@@ -77,7 +106,7 @@ module EstablishmentsHelper
         menu_url: menu_list_url(list.id)
       })
 
-      <<~HTML.html_safe
+      <<~HTML.strip.html_safe
         <pre>
           <code>
   #{snippet.generate_encoded}
