@@ -34,7 +34,6 @@ class WebMenusController < ApplicationController
   def show
     @web_menu = WebMenu.find params[:id]
     respond_to do |format|
-      format.html
       format.js
     end
   end

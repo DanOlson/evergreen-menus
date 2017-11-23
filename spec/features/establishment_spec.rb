@@ -420,16 +420,22 @@ feature 'establishment management' do
     expect(page).to have_css "div.alert-success", text: "List created"
     establishment_form.click_list_named 'Beers'
     expect(form.beers.size).to eq 6
-    list_url = page.current_url
-
     form.cancel
 
-    establishment_form = PageObjects::Admin::EstablishmentForm.new
-    list_html = establishment_form.get_snippet_for 'Beers'
+    establishment_form.add_web_menu
+    web_menu_form = PageObjects::Admin::WebMenuForm.new
+    web_menu_form.name = 'Beer Menu'
+    web_menu_form.select_list 'Beers'
+    web_menu_form.submit
+
+    web_menu_url = page.current_url
+    web_menu_form.cancel
+
+    embed_code = establishment_form.get_snippet_for 'Beer Menu'
 
     ThirdPartySiteGenerator.call({
       establishment: establishment,
-      list_snippets: [list_html]
+      list_snippets: [embed_code]
     })
 
     menu = PageObjects::ThirdPartySite::Menu.new
@@ -466,33 +472,30 @@ feature 'establishment management' do
     expect(bud.price.text).to eq '$4.50'
     expect(bud.description.text).to eq 'Meh'
 
-    visit list_url
-    list_form = PageObjects::Admin::ListForm.new
-    list_form.hide_prices
-    list_form.submit
+    visit web_menu_url
+    web_menu_form.hide_prices list: 'Beers'
+    web_menu_form.submit
 
     menu.load
     expect(menu.list_named('Beers')).to_not have_prices
-    expect(menu.list_named('Beers')).to have_descriptions
+    # expect(menu.list_named('Beers')).to have_descriptions
 
-    visit list_url
-    list_form = PageObjects::Admin::ListForm.new
-    list_form.hide_descriptions
-    list_form.submit
+    visit web_menu_url
+    # web_menu_form.hide_descriptions
+    # web_menu_form.submit
 
     menu.load
     expect(menu.list_named('Beers')).to_not have_prices
-    expect(menu.list_named('Beers')).to_not have_descriptions
+    # expect(menu.list_named('Beers')).to_not have_descriptions
 
-    visit list_url
-    list_form = PageObjects::Admin::ListForm.new
-    list_form.show_prices
-    list_form.show_descriptions
-    list_form.submit
+    visit web_menu_url
+    web_menu_form.show_prices list: 'Beers'
+    # web_menu_form.show_descriptions
+    web_menu_form.submit
 
     menu.load
     expect(menu.list_named('Beers')).to have_prices
-    expect(menu.list_named('Beers')).to have_descriptions
+    # expect(menu.list_named('Beers')).to have_descriptions
   end
 
   scenario 'list html snippets are visible by managers, but not staff', :admin, :js do
@@ -516,21 +519,29 @@ feature 'establishment management' do
     form.submit
 
     expect(establishment_form).to be_displayed
-    list = establishment_form.list_named 'Taps'
 
-    expect(list).to have_toggle_snippet_button
-    list.show_snippet
-    expect(list).to have_html_snippet
+    establishment_form.add_web_menu
+    menu_form = PageObjects::Admin::WebMenuForm.new
+    expect(menu_form).to be_displayed
+    menu_form.name = 'Taps Menu'
+    menu_form.select_list 'Taps'
+    menu_form.submit
+    menu_form.cancel
+
+    web_menu = establishment_form.web_menu_named 'Taps Menu'
+    expect(web_menu).to have_toggle_embed_code_button
+    web_menu.show_embed_code
+    expect(web_menu).to have_embed_code
 
     logout
 
     login staff_member
 
     click_link establishment.name
-    establishment_form = PageObjects::Admin::EstablishmentForm.new
-    list = establishment_form.list_named 'Taps'
-    expect(list).to_not have_toggle_snippet_button
-    expect(list).to_not have_html_snippet
+
+    web_menu = establishment_form.web_menu_named 'Taps Menu'
+    expect(web_menu).to_not have_toggle_embed_code_button
+    expect(web_menu).to_not have_embed_code
   end
 
   scenario 'lists can be deleted', :admin, :js do

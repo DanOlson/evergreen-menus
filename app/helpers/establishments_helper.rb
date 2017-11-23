@@ -86,36 +86,6 @@ module EstablishmentsHelper
     end
   end
 
-  def lists_json(establishment)
-    account = establishment.account
-    establishment.lists.order(:name).map do |list|
-      {
-        id: list.id,
-        name: list.name,
-        type: list.type,
-        edit_path: edit_account_establishment_list_path(account, establishment, list),
-        html_snippet: make_snippet(list)
-      }
-    end.to_json
-  end
-
-  def make_snippet(list)
-    if can?(:view_snippet, List)
-      snippet = ListHtmlSnippet.new({
-        list: list,
-        menu_url: menu_list_url(list.id)
-      })
-
-      <<~HTML.strip.html_safe
-        <pre>
-          <code>
-  #{snippet.generate_encoded}
-          </code>
-        </pre>
-      HTML
-    end
-  end
-
   def add_new_button(account, establishment, type)
     css_classes = %w(btn btn-primary)
     if establishment.persisted?

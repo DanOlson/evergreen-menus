@@ -44,7 +44,7 @@ class WebMenu extends Component {
         <div className={`card bg-light ${htmlVisiblity}`}>
           <div
             className="card-body"
-            data-test="list-html-snippet"
+            data-test="menu-html-snippet"
             dangerouslySetInnerHTML={this.htmlSnippet()}
           />
         </div>

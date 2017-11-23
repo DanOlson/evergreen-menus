@@ -4,15 +4,15 @@ task generate_third_party_site: :environment do
   include Rails.application.routes.url_helpers
 
   establishment = Establishment.first || abort("NO ESTABLISHMENTS!")
-  list = establishment.lists.first
+  menu = establishment.web_menus.first
   host = Rails.env.test? ? 'http://test.beermapper-api.dev' : 'http://beermapper-api.dev'
-  list_html = ListHtmlSnippet.new({
-    list: list,
-    menu_url: menu_list_url(list, host: host)
+  embed_code = MenuEmbedCode.new({
+    web_menu: menu,
+    menu_url: web_menu_url(menu.id, host: host)
   }).generate
 
   ThirdPartySiteGenerator.call({
     establishment: establishment,
-    list_snippets: [list_html]
+    list_snippets: [embed_code]
   })
 end

@@ -14,8 +14,6 @@ class App extends Component {
       listId: list.id,
       beers,
       name,
-      showPrice: list.show_price,
-      showDescription: list.show_description,
       type,
       typeOptions
     };

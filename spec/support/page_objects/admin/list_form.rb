@@ -36,11 +36,8 @@ module PageObjects
     class ListForm < SitePrism::Page
       set_url '/accounts{/account_id}/establishments{/establishment_id}/lists{/list_id}/edit'
 
-      element :list_name_input,           '[data-test="list-name"]'
-      element :list_type_input,           '[data-test="list-type"]'
-      element :show_price_checkbox,       '[data-test="list-show-price"]'
-      element :show_description_checkbox, '[data-test="list-show-description"]'
-
+      element :list_name_input, '[data-test="list-name"]'
+      element :list_type_input, '[data-test="list-type"]'
       element :add_beer_button, '[data-test="add-beer"]'
       element :submit_button,   '[data-test="list-form-submit"]'
       element :cancel_link,     '[data-test="list-form-cancel"]'
@@ -59,30 +56,6 @@ module PageObjects
       def list_type
         current_value = list_type_input.value
         list_type_input.find("option[value='#{current_value}']").text
-      end
-
-      def hide_prices
-        if show_price_checkbox.checked?
-          show_price_checkbox.click
-        end
-      end
-
-      def show_prices
-        if !show_price_checkbox.checked?
-          show_price_checkbox.click
-        end
-      end
-
-      def hide_descriptions
-        if show_description_checkbox.checked?
-          show_description_checkbox.click
-        end
-      end
-
-      def show_descriptions
-        if !show_description_checkbox.checked?
-          show_description_checkbox.click
-        end
       end
 
       def set_name(list_name)

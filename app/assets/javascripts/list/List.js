@@ -7,18 +7,15 @@ import Panel from '../shared/Panel';
 class List extends Component {
   constructor(props) {
     super(props);
+    const { name, type } = props;
     this.state = {
       beers: this.sortBeers(this.props.beers),
-      name: this.props.name,
-      type: this.props.type,
-      showPrice: this.props.showPrice,
-      showDescription: this.props.showDescription
+      name,
+      type
     };
-    this.deleteBeer                  = this.deleteBeer.bind(this);
-    this.addBeer                     = this.addBeer.bind(this);
-    this.handleTypeChange            = this.handleTypeChange.bind(this);
-    this.handleShowPriceChange       = this.handleShowPriceChange.bind(this);
-    this.handleShowDescriptionChange = this.handleShowDescriptionChange.bind(this);
+    this.deleteBeer       = this.deleteBeer.bind(this);
+    this.addBeer          = this.addBeer.bind(this);
+    this.handleTypeChange = this.handleTypeChange.bind(this);
   }
 
   sortBeers(beers) {
@@ -42,14 +39,6 @@ class List extends Component {
     });
   }
 
-  handleShowPriceChange(event) {
-    this.setState({ showPrice: event.target.checked })
-  }
-
-  handleShowDescriptionChange(event) {
-    this.setState({ showDescription: event.target.checked })
-  }
-
   deleteBeer(beerAppId) {
     const beers       = this.state.beers;
     const newBeerList = beers.filter(beer => beer.appId !== beerAppId);
@@ -66,13 +55,11 @@ class List extends Component {
 
   render() {
     const { listId, typeOptions } = this.props;
-    const { name, type, showPrice, showDescription } = this.state;
+    const { name, type } = this.state;
     const inputs = this.state.beers.map((beer, index, array) => {
       const beerInputProps = {
         beer,
         listId,
-        showPrice,
-        showDescription,
         deleteBeer: this.deleteBeer,
         key: `${beer}-${index}`
       };
@@ -105,50 +92,6 @@ class List extends Component {
               />
             </div>
           </div>
-
-          <div className="form-group">
-            <div className="form-check">
-              <label className="form-check-label" htmlFor="list_show_price">
-                <input
-                  type="checkbox"
-                  id="list_show_price"
-                  data-test="list-show-price"
-                  className="form-check-input"
-                  checked={showPrice}
-                  value={showPrice}
-                  onChange={this.handleShowPriceChange}
-                />
-                <input
-                  type="hidden"
-                  name="list[show_price]"
-                  id="list_show_price"
-                  value={showPrice}
-                />
-                Show Price
-              </label>
-            </div>
-
-            <div className="form-check">
-              <label className="form-check-label" htmlFor="list_show_description">
-                <input
-                  type="checkbox"
-                  id="list_show_description"
-                  data-test="list-show-description"
-                  className="form-check-input"
-                  checked={showDescription}
-                  value={showDescription}
-                  onChange={this.handleShowDescriptionChange}
-                />
-                <input
-                  type="hidden"
-                  name="list[show_description]"
-                  id="list_show_description"
-                  value={showDescription}
-                />
-                Show Description
-              </label>
-            </div>
-          </div>
           <div className="form-group">
             {inputs}
           </div>
@@ -171,8 +114,6 @@ class List extends Component {
 List.propTypes = {
   beers: PropTypes.array.isRequired,
   name: PropTypes.string.isRequired,
-  showPrice: PropTypes.bool.isRequired,
-  showDescription: PropTypes.bool.isRequired,
   typeOptions: PropTypes.array.isRequired,
   listId: PropTypes.number
 }

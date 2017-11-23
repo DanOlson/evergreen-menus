@@ -78,12 +78,9 @@ class BeerInput extends Component {
   }
 
   renderPriceInput() {
-    const { showPrice } = this.props;
     const { appId, price } = this.state;
-    const classNames = ['col-sm-2', 'col-xs-4'];
-    if (!showPrice) classNames.push('hidden');
     return (
-      <div className={classNames.join(' ')}>
+      <div className="col-sm-2 col-xs-4">
         <div className="input-group">
           <label htmlFor={`list_beers_attributes_${appId}_price`} className="sr-only">
             Price
@@ -105,12 +102,9 @@ class BeerInput extends Component {
   }
 
   renderDescriptionInput() {
-    const { showDescription } = this.props;
     const { appId, description } = this.state;
-    const classNames = ['col-sm-6 col-xs-8'];
-    if (!showDescription) classNames.push('hidden');
     return (
-      <div className={classNames.join(' ')}>
+      <div className="col-sm-6 col-xs-8">
         <label htmlFor={`list_beers_attributes_${appId}_description`} className="sr-only">
           Description
         </label>
@@ -168,9 +162,7 @@ class BeerInput extends Component {
 
 BeerInput.propTypes = {
   beer: PropTypes.object.isRequired,
-  deleteBeer: PropTypes.func.isRequired,
-  showPrice: PropTypes.bool.isRequired,
-  showDescription: PropTypes.bool.isRequired
+  deleteBeer: PropTypes.func.isRequired
 }
 
 export default BeerInput;

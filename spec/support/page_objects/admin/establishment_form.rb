@@ -5,20 +5,10 @@ module PageObjects
 
       class ListsPanel < SitePrism::Section
         class List < SitePrism::Section
-          element :toggle_snippet_button, '[data-test="get-snippet"]'
-          element :html_snippet, '[data-test="list-html-snippet"]'
           element :link, '[data-test="establishment-list"]'
 
           def name
             link.text
-          end
-
-          def show_snippet
-            toggle_snippet_button.click unless has_html_snippet?
-          end
-
-          def hide_snippet
-            toggle_snippet_button.click if has_html_snippet?
           end
         end
 
@@ -35,9 +25,19 @@ module PageObjects
       class WebMenusPanel < SitePrism::Section
         class Menu < SitePrism::Section
           element :link, '[data-test="establishment-web-menu"]'
+          element :toggle_embed_code_button, '[data-test="get-snippet"]'
+          element :embed_code, '[data-test="menu-html-snippet"]'
 
           def name
             link.text
+          end
+
+          def show_embed_code
+            toggle_embed_code_button.click unless has_embed_code?
+          end
+
+          def hide_embed_code
+            toggle_embed_code_button.click if has_embed_code?
           end
 
           def visit
@@ -203,10 +203,18 @@ module PageObjects
         menus.find { |m| m.name == menu_name }
       end
 
-      def get_snippet_for(list_name)
-        list = list_named list_name
-        list.show_snippet
-        list.html_snippet.text
+      def web_menu_named(name)
+        web_menus.find { |m| m.name == name }
+      end
+
+      def web_menus
+        web_menus_panel.menus
+      end
+
+      def get_snippet_for(menu_name)
+        menu = web_menu_named menu_name
+        menu.show_embed_code
+        menu.embed_code.text
       end
 
       def toggle_lists_help

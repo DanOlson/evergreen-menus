@@ -1,6 +1,5 @@
 <script>
   window.BEERMAPPER = {
-    lists: <%= raw lists_json establishment %>,
     webMenus: <%= raw web_menus_json establishment %>
   };
 </script>
@@ -72,10 +71,21 @@
         data-help="lists"
         data-test="lists-help-text">
         <div class="card-body">
-          Lists are groups of beers you serve at your establishment. For example, you might have a "Taps" list and a "Bottles" list. Each list can be easily embedded on your restaurant's website so that your online menu is always up to date. Then, any changes made to your lists here are automatically reflected on your website.
+          Lists are groups of food or drink that you serve at your establishment. For example, you might have lists for Appetizers, Entrees, Beer, Wine, etc. Lists can be grouped together into menus. Any edits you make to your lists are automatically reflected on the menus they are a part of.
         </div>
       </div>
-      <div id="lists-app"></div>
+      <div class="list-group">
+        <% establishment.lists.order(:name).each do |list| %>
+          <div class="list-group-item" data-test="establishment-list-item">
+            <div class="valign-wrapper-w80">
+              <%= link_to list.name, edit_account_establishment_list_path(account, establishment, list), data: { test: 'establishment-list' } %>
+            </div>
+            <div class="valign-wrapper-w19">
+              <%= list_type_icon(list) %>
+            </div>
+          </div>
+        <% end %>
+      </div>
       <div class="button-wrapper">
         <%= add_list_button(account, establishment) %>
       </div>
@@ -87,7 +97,7 @@
         data-help="web-menus"
         data-test="web-menus-help-text">
         <div class="card-body">
-          Web Menus can be displayed on your establishment's website. Choose one or more lists to create a Web Menu, link your Web Menu to your site, and any updates you make to your lists are instantly synced to your site.
+          Web Menus can be embedded on your establishment's website. Choose one or more lists to create a Web Menu, link your Web Menu to your site, and any updates you make to your lists are instantly synced to your site.
         </div>
       </div>
       <div id="web-menus-app"></div>
