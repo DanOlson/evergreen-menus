@@ -46,6 +46,7 @@ class ChosenListGroup extends Component {
     const {
       lists,
       onShowPriceChange,
+      onShowDescriptionChange,
       menuType,
       onRemove,
       moveItem,
@@ -61,6 +62,7 @@ class ChosenListGroup extends Component {
         entityName,
         nestedEntityIdName,
         onShowPriceChange,
+        onShowDescriptionChange,
         list,
         index,
         onRemove,
@@ -90,6 +92,7 @@ ChosenListGroup.propTypes = {
   menuType: PropTypes.string.isRequired,
   onRemove: PropTypes.func.isRequired,
   onShowPriceChange: PropTypes.func.isRequired,
+  onShowDescriptionChange: PropTypes.func,
   moveItem: PropTypes.func.isRequired,
   onDrop: PropTypes.func.isRequired,
   connectDropTarget: PropTypes.func.isRequired,

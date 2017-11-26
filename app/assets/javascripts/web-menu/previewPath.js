@@ -6,10 +6,24 @@ function shouldShowPrice(list) {
   }
 }
 
+function shouldShowDescription(list) {
+  if (list.show_description_on_menu === undefined) {
+    return true;
+  } else {
+    return list.show_description_on_menu;
+  }
+}
+
 function buildMenuListShowPrice(list, index) {
   const listRep = buildMenuListRep(index);
   const showPrice = shouldShowPrice(list);
   return `${listRep}[show_price_on_menu]=${showPrice}`;
+}
+
+function buildMenuListShowDescription(list, index) {
+  const listRep = buildMenuListRep(index);
+  const showDesc = shouldShowDescription(list);
+  return `${listRep}[show_description_on_menu]=${showDesc}`;
 }
 
 function buildMenuListPosition(list, index) {
@@ -36,8 +50,9 @@ function buildQueryString(lists, base) {
     let params = [
       buildMenuListListId(list, idx),
       buildMenuListPosition(list, idx),
-      buildMenuListShowPrice(list, idx)
-    ]
+      buildMenuListShowPrice(list, idx),
+      buildMenuListShowDescription(list, idx)
+    ];
     if (list.web_menu_list_id) {
       params.push(buildMenuListId(list, idx));
     }

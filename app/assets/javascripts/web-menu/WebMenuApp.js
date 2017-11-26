@@ -22,11 +22,12 @@ class WebMenuApp extends Component {
       listsAvailable
     } = props.webMenu;
 
-    this.handleNameChange   = this.handleNameChange.bind(this);
-    this.addListToMenu      = this.addListToMenu.bind(this);
-    this.removeListFromMenu = this.removeListFromMenu.bind(this);
-    this.onShowPriceChange  = this.onShowPriceChange.bind(this);
-    this.moveChosenList     = this.moveChosenList.bind(this);
+    this.handleNameChange        = this.handleNameChange.bind(this);
+    this.addListToMenu           = this.addListToMenu.bind(this);
+    this.removeListFromMenu      = this.removeListFromMenu.bind(this);
+    this.onShowPriceChange       = this.onShowPriceChange.bind(this);
+    this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this);
+    this.moveChosenList          = this.moveChosenList.bind(this);
 
     this.state = {
       name,
@@ -87,6 +88,15 @@ class WebMenuApp extends Component {
     });
   }
 
+  onShowDescriptionChange(listId, showDesc) {
+    this.setState(prevState => {
+      const { lists, name, font } = prevState;
+      const list = lists.find(list => list.id === listId);
+      list.show_description_on_menu = showDesc;
+      return { lists };
+    });
+  }
+
   render() {
     const { lists, listsAvailable, name } = this.state;
     const previewPath = generatePreviewPath(this.props.webMenu, this.state);
@@ -120,6 +130,7 @@ class WebMenuApp extends Component {
               menuType="web"
               onRemove={this.removeListFromMenu}
               onShowPriceChange={this.onShowPriceChange}
+              onShowDescriptionChange={this.onShowDescriptionChange}
               moveItem={this.moveChosenList}
               onDrop={this.addListToMenu}
             />

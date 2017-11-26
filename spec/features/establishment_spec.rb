@@ -478,24 +478,24 @@ feature 'establishment management' do
 
     menu.load
     expect(menu.list_named('Beers')).to_not have_prices
-    # expect(menu.list_named('Beers')).to have_descriptions
+    expect(menu.list_named('Beers')).to have_descriptions
 
     visit web_menu_url
-    # web_menu_form.hide_descriptions
-    # web_menu_form.submit
+    web_menu_form.hide_descriptions list: 'Beers'
+    web_menu_form.submit
 
     menu.load
     expect(menu.list_named('Beers')).to_not have_prices
-    # expect(menu.list_named('Beers')).to_not have_descriptions
+    expect(menu.list_named('Beers')).to_not have_descriptions
 
     visit web_menu_url
     web_menu_form.show_prices list: 'Beers'
-    # web_menu_form.show_descriptions
+    web_menu_form.show_descriptions list: 'Beers'
     web_menu_form.submit
 
     menu.load
     expect(menu.list_named('Beers')).to have_prices
-    # expect(menu.list_named('Beers')).to have_descriptions
+    expect(menu.list_named('Beers')).to have_descriptions
   end
 
   scenario 'list html snippets are visible by managers, but not staff', :admin, :js do

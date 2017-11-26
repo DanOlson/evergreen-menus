@@ -6,6 +6,8 @@ import itemTypes from './item-types';
 import { DragSource, DropTarget } from 'react-dnd';
 import pluralize from './pluralize';
 import ListTypeIcon from './ListTypeIcon';
+import ShowPriceCheckbox from './ShowPriceCheckbox';
+import ShowDescriptionCheckbox from './ShowDescriptionCheckbox';
 
 const itemSource = {
   beginDrag(props) {
@@ -82,11 +84,17 @@ class ChosenListItem extends Component {
   constructor(props) {
     super(props);
     this.onShowPriceChange = this.onShowPriceChange.bind(this);
+    this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this);
   }
 
   onShowPriceChange(event) {
     const { list, onShowPriceChange } = this.props;
     onShowPriceChange(list.id, event.target.checked);
+  }
+
+  onShowDescriptionChange(event) {
+    const { list, onShowDescriptionChange } = this.props;
+    onShowDescriptionChange(list.id, event.target.checked);
   }
 
   render() {
@@ -101,19 +109,21 @@ class ChosenListItem extends Component {
       connectDropTarget,
       isDragging
     } = this.props;
-    const showPriceInputId = `menu_${nestedAttrsName}_${index}_show_price_on_menu`
-    const showPrice = {
-      type: 'checkbox',
-      name: `${entityName}[${nestedAttrsName}][${index}][show_price_on_menu]`,
-      id: showPriceInputId,
-      'data-test': 'show-price',
-      value: '1',
-      onChange: this.onShowPriceChange
+
+    let showDescriptionInput;
+
+    if (this.props.onShowDescriptionChange) {
+      showDescriptionInput = (
+        <ShowDescriptionCheckbox
+          entityName={entityName}
+          nestedAttrsName={nestedAttrsName}
+          index={index}
+          onChange={this.onShowDescriptionChange}
+          value={list.show_description_on_menu}
+        />
+      );
     }
-    // New records are always checked
-    if (list.show_price_on_menu === undefined || list.show_price_on_menu) {
-      showPrice.defaultChecked = 'checked';
-    }
+
     const badgeContent = `${list.beerCount} ${pluralize('item', list.beerCount)}`;
 
     const style = {
@@ -122,22 +132,19 @@ class ChosenListItem extends Component {
     };
     return connectDragSource(connectDropTarget(
       <li className="list-group-item" data-test="menu-list" style={style}>
-        <div className="valign-wrapper-w60">
+        <div className="valign-wrapper-w50">
           <RemoveButton onClick={onRemove} listId={list.id} />
           <span className="list-name" data-test="list-name">{list.name}</span>
         </div>
-        <div className="valign-wrapper-w40">
-          <input
-            type="hidden"
-            name={`${entityName}[${nestedAttrsName}][${index}][show_price_on_menu]`}
-            value="0"
+        <div className="valign-wrapper-w50">
+          <ShowPriceCheckbox
+            entityName={entityName}
+            nestedAttrsName={nestedAttrsName}
+            index={index}
+            onChange={this.onShowPriceChange}
+            value={list.show_price_on_menu}
           />
-          <label
-            htmlFor={showPriceInputId}
-            className="menu-list-show-price"
-            data-test="show-price-label">$
-            <input {...showPrice} />
-          </label>
+          {showDescriptionInput}
           <ListTypeIcon listType={list.type} />
           <span
             data-test="list-badge"
@@ -169,6 +176,7 @@ ChosenListItem.propTypes = {
   index: PropTypes.number.isRequired,
   onRemove: PropTypes.func.isRequired,
   onShowPriceChange: PropTypes.func.isRequired,
+  onShowDescriptionChange: PropTypes.func,
   nestedAttrsName: PropTypes.string.isRequired,
   entityName: PropTypes.string.isRequired,
   nestedEntityIdName: PropTypes.string.isRequired,

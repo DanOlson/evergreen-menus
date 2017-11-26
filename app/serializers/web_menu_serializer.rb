@@ -23,7 +23,8 @@ class WebMenuSerializer
     @web_menu.web_menu_lists.includes(list: :beers).map do |ml|
       {
         web_menu_list_id: ml.id,
-        show_price_on_menu: ml.show_price_on_menu
+        show_price_on_menu: ml.show_price_on_menu,
+        show_description_on_menu: ml.show_description_on_menu
       }.merge(ml.list.as_json)
     end
   end

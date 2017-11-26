@@ -8,6 +8,8 @@ module PageObjects
           element :remove_button, '[data-test="remove-list"]'
           element :show_price_input, '[data-test="show-price"]'
           element :show_price_input_label, '[data-test="show-price-label"]'
+          element :show_descriptions_input, '[data-test="show-descriptions"]'
+          element :show_descriptions_input_label, '[data-test="show-descriptions-label"]'
           element :name_wrapper, '[data-test="list-name"]'
           element :badge, '[data-test="list-badge"]'
 
@@ -24,11 +26,23 @@ module PageObjects
           end
 
           def hide_prices
-            uncheck(show_price_input_label.text) if has_price_shown?
+            show_price_input.set false
           end
 
           def show_prices
-            check(show_price_input_label.text) unless has_price_shown?
+            show_price_input.set true
+          end
+
+          def has_descriptions_shown?
+            show_descriptions_input.checked?
+          end
+
+          def hide_descriptions
+            show_descriptions_input.set false
+          end
+
+          def show_descriptions
+            show_descriptions_input.set true
           end
         end
 
@@ -184,6 +198,14 @@ module PageObjects
 
       def show_prices(list:)
         selected_list_named(list).show_prices
+      end
+
+      def hide_descriptions(list:)
+        selected_list_named(list).hide_descriptions
+      end
+
+      def show_descriptions(list:)
+        selected_list_named(list).show_descriptions
       end
     end
   end

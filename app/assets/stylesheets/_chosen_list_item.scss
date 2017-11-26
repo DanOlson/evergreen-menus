@@ -1,9 +1,6 @@
 @mixin draggable-list-item {
   .menu-list-show-price {
     margin-bottom: 0px;
-    input {
-      margin-left: 10px;
-    }
   }
 
   .move-list-button {
@@ -16,5 +13,13 @@
 
   .menu-form-action {
     margin-right: 4px;
+  }
+
+  .chosen-list-toggle-detail {
+    margin-left: 1rem;
+
+    input {
+      margin-left: 0.25rem;
+    }
   }
 }
