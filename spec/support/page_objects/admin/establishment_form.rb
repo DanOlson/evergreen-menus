@@ -228,6 +228,18 @@ module PageObjects
       def toggle_digital_display_menus_help
         digital_display_menus_panel.toggle_help_icon.trigger('click')
       end
+
+      def add_web_menu_button
+        web_menus_panel.add_button
+      end
+
+      def add_menu_button
+        menus_panel.add_button
+      end
+
+      def add_digital_display_menu_button
+        digital_display_menus_panel.add_button
+      end
     end
   end
 end

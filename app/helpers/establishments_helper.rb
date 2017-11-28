@@ -86,8 +86,9 @@ module EstablishmentsHelper
     end
   end
 
-  def add_new_button(account, establishment, type)
+  def add_new_button(account, establishment, type, enabled: true)
     css_classes = %w(btn btn-primary)
+    css_classes << 'disabled' unless enabled
     if establishment.persisted?
       href = public_send("new_account_establishment_#{type}_path", account, establishment)
     else
@@ -106,16 +107,16 @@ module EstablishmentsHelper
     add_new_button account, establishment, :list
   end
 
-  def add_menu_button(account, establishment)
-    add_new_button account, establishment, :menu
+  def add_menu_button(account, establishment, enabled: true)
+    add_new_button account, establishment, :menu, enabled: enabled
   end
 
-  def add_digital_display_menu_button(account, establishment)
-    add_new_button account, establishment, :digital_display_menu
+  def add_digital_display_menu_button(account, establishment, enabled: true)
+    add_new_button account, establishment, :digital_display_menu, enabled: enabled
   end
 
-  def add_web_menu_button(account, establishment)
-    add_new_button account, establishment, :web_menu
+  def add_web_menu_button(account, establishment, enabled: true)
+    add_new_button account, establishment, :web_menu, enabled: enabled
   end
 
   def hide_lists_help?(establishment)

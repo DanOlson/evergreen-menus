@@ -79,6 +79,11 @@ feature 'establishment management' do
 
     click_link establishment.name
     establishment_form = PageObjects::Admin::EstablishmentForm.new
+
+    expect(establishment_form.add_web_menu_button[:class]).to include('disabled')
+    expect(establishment_form.add_menu_button[:class]).to include('disabled')
+    expect(establishment_form.add_digital_display_menu_button[:class]).to include('disabled')
+
     establishment_form.add_list
 
     form = PageObjects::Admin::ListForm.new

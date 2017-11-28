@@ -1,3 +1,4 @@
+<% has_lists = establishment.lists.any? %>
 <script>
   window.BEERMAPPER = {
     webMenus: <%= raw web_menus_json establishment %>
@@ -102,7 +103,7 @@
       </div>
       <div id="web-menus-app"></div>
       <div class="button-wrapper">
-        <%= add_web_menu_button(account, establishment) %>
+        <%= add_web_menu_button(account, establishment, enabled: has_lists) %>
       </div>
     <% end %>
 
@@ -123,7 +124,7 @@
         <% end %>
       </div>
       <div class="button-wrapper">
-        <%= add_menu_button(account, establishment) %>
+        <%= add_menu_button(account, establishment, enabled: has_lists) %>
       </div>
     <% end %>
 
@@ -144,7 +145,7 @@
         <% end %>
       </div>
       <div class="button-wrapper">
-        <%= add_digital_display_menu_button(account, establishment) %>
+        <%= add_digital_display_menu_button(account, establishment, enabled: has_lists) %>
       </div>
     <% end %>
   </div>
