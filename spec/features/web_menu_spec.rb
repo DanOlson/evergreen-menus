@@ -127,6 +127,11 @@ feature 'digital display menu management' do
     manager = create :user, :manager, account: account
 
     run_test manager
+
+    web_menu_form = PageObjects::Admin::WebMenuForm.new
+    expect(web_menu_form).to have_toggle_embed_code_button
+    web_menu_form.show_embed_code
+    expect(web_menu_form).to have_embed_code
   end
 
   scenario 'staff with establishment access can manage a web menu', :js, :admin do
@@ -134,6 +139,8 @@ feature 'digital display menu management' do
     staff.establishments << establishment
 
     run_test staff
+    web_menu_form = PageObjects::Admin::WebMenuForm.new
+    expect(web_menu_form).to_not have_toggle_embed_code_button
   end
 
   scenario 'staff without access cannot access web menu', :js, :admin do

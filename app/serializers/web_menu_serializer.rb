@@ -1,16 +1,22 @@
 class WebMenuSerializer
   include Rails.application.routes.url_helpers
 
-  def initialize(web_menu)
+  def initialize(web_menu, include_embed_code: true, host:, protocol:)
     @web_menu = web_menu
+    @host = host
+    @protocol = protocol
+    @include_embed_code = include_embed_code
   end
 
   def call
-    @web_menu.as_json.merge({
+    additional_attrs = {
       lists: lists.as_json,
       listsAvailable: available_lists.as_json,
       previewPath: preview_path
-    }).to_json
+    }
+
+    additional_attrs.merge!(embedCode: embed_code) if @web_menu.persisted?
+    @web_menu.as_json.merge(additional_attrs).to_json
   end
 
   private
@@ -38,5 +44,22 @@ class WebMenuSerializer
       establishment.account,
       establishment
     )
+  end
+
+  def embed_code
+    if @include_embed_code
+      embed_code = MenuEmbedCode.new({
+        web_menu: @web_menu,
+        menu_url: web_menu_url(@web_menu.id, host: @host, protocol: @protocol)
+      })
+
+      <<~HTML.strip.html_safe
+        <pre>
+          <code>
+  #{embed_code.generate_encoded}
+          </code>
+        </pre>
+      HTML
+    end
   end
 end

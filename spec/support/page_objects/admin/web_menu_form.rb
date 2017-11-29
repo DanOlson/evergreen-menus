@@ -137,10 +137,12 @@ module PageObjects
         end
       end
 
-      element :name_input,      '[data-test="web-menu-name"]'
-      element :submit_button,   '[data-test="web-menu-form-submit"]'
-      element :cancel_link,     '[data-test="web-menu-form-cancel"]'
-      element :delete_button,   '[data-test="web-menu-form-delete"]'
+      element :name_input,               '[data-test="web-menu-name"]'
+      element :submit_button,            '[data-test="web-menu-form-submit"]'
+      element :cancel_link,              '[data-test="web-menu-form-cancel"]'
+      element :delete_button,            '[data-test="web-menu-form-delete"]'
+      element :toggle_embed_code_button, '[data-test="get-embed-code"]'
+      element :embed_code,               '[data-test="menu-embed-code"]'
 
       section :preview, WebMenuPreview, '[data-test="web-menu-preview"]'
       section :lists_available, ListsAvailable, '[data-test="menu-lists-available"]'
@@ -206,6 +208,19 @@ module PageObjects
 
       def show_descriptions(list:)
         selected_list_named(list).show_descriptions
+      end
+
+      def get_embed_code
+        show_embed_code
+        embed_code.text
+      end
+
+      def show_embed_code
+        toggle_embed_code_button.click unless has_embed_code?
+      end
+
+      def hide_embed_code
+        toggle_embed_code_button.click if has_embed_code?
       end
     end
   end

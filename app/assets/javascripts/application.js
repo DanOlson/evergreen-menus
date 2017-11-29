@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import App from './list/App';
-import WebMenusApp from './establishment/WebMenusApp';
+import ListApp from './list/App';
 import MenuApp from './menu/MenuApp';
 import WebMenuApp from './web-menu/WebMenuApp';
 import DigitalDisplayApp from './digital-display/DigitalDisplayApp';
@@ -19,18 +18,13 @@ function applyConfirm(element) {
 
 (function bootstrap() {
   const appRoot            = document.getElementById('app-root');
-  const webMenusRoot       = document.getElementById('web-menus-app');
   const menuRoot           = document.getElementById('menu-app-root');
   const webMenuRoot        = document.getElementById('web-menu-app-root');
   const digitalDisplayRoot = document.getElementById('digital-display-app-root');
   const confirmNodes       = document.querySelectorAll('[data-confirm]');
 
   if (appRoot) {
-    render(<App {...window.BEERMAPPER} />, appRoot);
-  }
-
-  if (webMenusRoot) {
-    render(<WebMenusApp {...window.BEERMAPPER} />, webMenusRoot);
+    render(<ListApp {...window.BEERMAPPER} />, appRoot);
   }
 
   if (menuRoot) {

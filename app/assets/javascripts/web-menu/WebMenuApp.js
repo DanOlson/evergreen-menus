@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Panel from '../shared/Panel';
 import Buttons from './Buttons';
+import EmbedCode from './EmbedCode';
+import ShowCodeButton from './ShowCodeButton';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import ChosenListGroup from '../shared/ChosenListGroup';
 import Preview from './Preview';
@@ -28,11 +30,13 @@ class WebMenuApp extends Component {
     this.onShowPriceChange       = this.onShowPriceChange.bind(this);
     this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this);
     this.moveChosenList          = this.moveChosenList.bind(this);
+    this.toggleCodeVisibility    = this.toggleCodeVisibility.bind(this);
 
     this.state = {
       name,
       lists,
-      listsAvailable
+      listsAvailable,
+      showEmbedCode: false
     };
   }
 
@@ -97,10 +101,20 @@ class WebMenuApp extends Component {
     });
   }
 
+  toggleCodeVisibility () {
+    this.setState(prevState => {
+      return {
+        showEmbedCode: !prevState.showEmbedCode
+      };
+    });
+  }
+
   render() {
-    const { lists, listsAvailable, name } = this.state;
+    const { lists, listsAvailable, name, showEmbedCode } = this.state;
     const previewPath = generatePreviewPath(this.props.webMenu, this.state);
     const totalListCount = lists.length + listsAvailable.length;
+    const { embedCode } = this.props.webMenu;
+    const toggleCodeButtonClass = embedCode ? (showEmbedCode ? 'active' : '') : 'hidden';
     return (
       <div className="form-row">
         <div className="col-sm-6">
@@ -135,7 +149,15 @@ class WebMenuApp extends Component {
               onDrop={this.addListToMenu}
             />
 
-            <Buttons {...this.props} />
+            <Buttons {...this.props}>
+              <ShowCodeButton
+                onClick={this.toggleCodeVisibility}
+                buttonClass={toggleCodeButtonClass}>
+                Embed Code
+              </ShowCodeButton>
+            </Buttons>
+
+            <EmbedCode embedCode={embedCode} show={showEmbedCode} />
           </Panel>
         </div>
         <div className="col-sm-6">

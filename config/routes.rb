@@ -5,7 +5,7 @@ Beermapper::Application.routes.draw do
   end
 
   root to: 'home#index'
-  
+
   namespace :api do
     namespace :v1 do
       resources :establishments, only: [:show, :index, :update, :create] do
@@ -76,7 +76,7 @@ Beermapper::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'

@@ -22,43 +22,9 @@ module PageObjects
         end
       end
 
-      class WebMenusPanel < SitePrism::Section
-        class Menu < SitePrism::Section
-          element :link, '[data-test="establishment-web-menu"]'
-          element :toggle_embed_code_button, '[data-test="get-snippet"]'
-          element :embed_code, '[data-test="menu-html-snippet"]'
-
-          def name
-            link.text
-          end
-
-          def show_embed_code
-            toggle_embed_code_button.click unless has_embed_code?
-          end
-
-          def hide_embed_code
-            toggle_embed_code_button.click if has_embed_code?
-          end
-
-          def visit
-            link.click
-          end
-        end
-
-        element :toggle_help_icon, '[data-test="toggle-help-web-menus"]'
-        element :help_text, '[data-test="web-menus-help-text"]'
-        element :add_button, '[data-test="add-web-menu"]'
-        sections :menus, Menu, '[data-test="establishment-web-menu-item"]'
-
-        def add_menu
-          add_button.click
-        end
-      end
-
       class MenusPanel < SitePrism::Section
         class Menu < SitePrism::Section
-          element :print_button, '[data-test="print-menu"]' # TODO
-          element :link, '[data-test="establishment-menu"]'
+          element :link, '[data-test="menu-link"]'
 
           def name
             link.text
@@ -71,34 +37,23 @@ module PageObjects
 
         element :toggle_help_icon, '[data-test="toggle-help-menus"]'
         element :help_text, '[data-test="menus-help-text"]'
-        element :add_button, '[data-test="add-menu"]'
-        sections :menus, Menu, '[data-test="menu-list-item"]'
+        element :add_print_menu_button, '[data-test="add-menu"]'
+        element :add_web_menu_button, '[data-test="add-web-menu"]'
+        element :add_digital_display_menu_button, '[data-test="add-digital-display-menu"]'
+        sections :print_menus, Menu, '[data-test="menu-list-item"]'
+        sections :web_menus, Menu, '[data-test="web-menu-list-item"]'
+        sections :digital_display_menus, Menu, '[data-test="digital-display-menu-list-item"]'
 
-        def add_menu
-          add_button.click
-        end
-      end
-
-      class DigitalDisplayMenusPanel < SitePrism::Section
-        class DigitalDisplayMenu < SitePrism::Section
-          element :link, '[data-test="establishment-digital-display-menu"]'
-
-          def name
-            link.text
-          end
-
-          def visit
-            link.click
-          end
+        def add_print_menu
+          add_print_menu_button.click
         end
 
-        element :toggle_help_icon, '[data-test="toggle-help-digital-display"]'
-        element :help_text, '[data-test="digital-display-menus-help-text"]'
-        element :add_button, '[data-test="add-digital-display-menu"]'
-        sections :digital_display_menus, DigitalDisplayMenu, '[data-test="digital-display-menu-list-item"]'
+        def add_web_menu
+          add_web_menu_button.click
+        end
 
         def add_digital_display_menu
-          add_button.click
+          add_digital_display_menu_button.click
         end
       end
 
@@ -114,8 +69,6 @@ module PageObjects
 
       section :lists_panel, ListsPanel, '[data-test="lists"]'
       section :menus_panel, MenusPanel, '[data-test="menus"]'
-      section :web_menus_panel, WebMenusPanel, '[data-test="web-menus"]'
-      section :digital_display_menus_panel, DigitalDisplayMenusPanel, '[data-test="digital-display-menus"]'
 
       def submit
         submit_button.click
@@ -136,15 +89,15 @@ module PageObjects
       end
 
       def add_web_menu
-        web_menus_panel.add_menu
+        menus_panel.add_web_menu
       end
 
       def add_menu
-        menus_panel.add_menu
+        menus_panel.add_print_menu
       end
 
       def add_digital_display_menu
-        digital_display_menus_panel.add_digital_display_menu
+        menus_panel.add_digital_display_menu
       end
 
       def set_name(name)
@@ -188,7 +141,7 @@ module PageObjects
       end
 
       def menus
-        menus_panel.menus
+        menus_panel.print_menus
       end
 
       def menu_count
@@ -208,13 +161,7 @@ module PageObjects
       end
 
       def web_menus
-        web_menus_panel.menus
-      end
-
-      def get_snippet_for(menu_name)
-        menu = web_menu_named menu_name
-        menu.show_embed_code
-        menu.embed_code.text
+        menus_panel.web_menus
       end
 
       def toggle_lists_help
@@ -225,20 +172,16 @@ module PageObjects
         menus_panel.toggle_help_icon.trigger('click')
       end
 
-      def toggle_digital_display_menus_help
-        digital_display_menus_panel.toggle_help_icon.trigger('click')
-      end
-
       def add_web_menu_button
-        web_menus_panel.add_button
+        menus_panel.add_web_menu_button
       end
 
       def add_menu_button
-        menus_panel.add_button
+        menus_panel.add_print_menu_button
       end
 
       def add_digital_display_menu_button
-        digital_display_menus_panel.add_button
+        menus_panel.add_digital_display_menu_button
       end
     end
   end

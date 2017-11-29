@@ -1,9 +1,4 @@
 <% has_lists = establishment.lists.any? %>
-<script>
-  window.BEERMAPPER = {
-    webMenus: <%= raw web_menus_json establishment %>
-  };
-</script>
 <% breadcrumb :establishment, account, establishment %>
 <div class="row edit-establishment">
   <div class="establishment-form-left-column col-sm-6">
@@ -68,7 +63,7 @@
   <div class="establishment-form-right-column col-sm-6">
     <%= render 'shared/panel', title: 'Lists', data_test: 'lists', help_type: 'lists' do %>
       <div
-        class="card contextual-help bg-light <%= hide_lists_help?(establishment) ? 'hidden' : '' %>"
+        class="card contextual-help bg-light <%= has_lists ? 'hidden' : '' %>"
         data-help="lists"
         data-test="lists-help-text">
         <div class="card-body">
@@ -92,59 +87,39 @@
       </div>
     <% end %>
 
-    <%= render 'shared/panel', title: 'Web Menus', data_test: 'web-menus', help_type: 'web-menus' do %>
+    <%= render 'shared/panel', title: 'Menus', data_test: 'menus', help_type: 'menus' do %>
       <div
-        class="card contextual-help bg-light <%= hide_web_menus_help?(establishment) and 'hidden' %>"
-        data-help="web-menus"
-        data-test="web-menus-help-text">
-        <div class="card-body">
-          Web Menus can be embedded on your establishment's website. Choose one or more lists to create a Web Menu, link your Web Menu to your site, and any updates you make to your lists are instantly synced to your site.
-        </div>
-      </div>
-      <div id="web-menus-app"></div>
-      <div class="button-wrapper">
-        <%= add_web_menu_button(account, establishment, enabled: has_lists) %>
-      </div>
-    <% end %>
-
-    <%= render 'shared/panel', title: 'Print Menus', data_test: 'menus', help_type: 'menus' do %>
-      <div
-        class="card contextual-help bg-light <%= hide_menus_help?(establishment) and 'hidden' %>"
+        class="card contextual-help bg-light <%= hide_menus_help?(establishment) ? 'hidden' : '' %>"
         data-help="menus"
         data-test="menus-help-text">
         <div class="card-body">
-          Create PDF menus by composing your lists. As you update your lists, your PDF menus will stay up to date.
+          Your lists can be grouped into menus. Embed a menu on your website, design a print menu to place
+          at the tables, or turn an HDTV into a high-impact, in-restuarant menu experience.
         </div>
       </div>
       <div class="list-group">
+        <% establishment.web_menus.order(:name).each do |web_menu| %>
+          <div class="list-group-item" data-test="web-menu-list-item">
+            <span class="menu-type-icon fa fa-code" aria-hidden="true" title="Web Menu"></span>
+            <%= link_to web_menu.name, edit_account_establishment_web_menu_path(account, establishment, web_menu), data: { test: 'menu-link' } %>
+          </div>
+        <% end %>
         <% establishment.menus.order(:name).each do |menu| %>
           <div class="list-group-item" data-test="menu-list-item">
-            <%= link_to menu.name, edit_account_establishment_menu_path(account, establishment, menu), data: { test: 'establishment-menu' } %>
+            <span class="menu-type-icon fa fa-file-pdf-o" aria-hidden="true" title="Print Menu"></span>
+            <%= link_to menu.name, edit_account_establishment_menu_path(account, establishment, menu), data: { test: 'menu-link' } %>
           </div>
         <% end %>
-      </div>
-      <div class="button-wrapper">
-        <%= add_menu_button(account, establishment, enabled: has_lists) %>
-      </div>
-    <% end %>
-
-    <%= render 'shared/panel', title: 'Digital Display Menus', data_test: 'digital-display-menus', help_type: 'digital-display' do %>
-      <div
-        class="card contextual-help bg-light <%= hide_displays_help?(establishment) ? 'hidden' : '' %>"
-        data-help="digital-display"
-        data-test="digital-display-menus-help-text">
-        <div class="card-body">
-          Use the TVs you already have to provide an impactful in-restaurant experience. Digital display menus will rotate through lists of your choosing, and changes made to your lists are automatically reflected on your digital display menus.
-        </div>
-      </div>
-      <div class="list-group">
         <% establishment.digital_display_menus.order(:name).each do |dd_menu| %>
           <div class="list-group-item" data-test="digital-display-menu-list-item">
-            <%= link_to dd_menu.name, edit_account_establishment_digital_display_menu_path(account, establishment, dd_menu), data: { test: 'establishment-digital-display-menu' } %>
+            <span class="menu-type-icon fa fa-tv" aria-hidden="true" title="Digital Display Menu"></span>
+            <%= link_to dd_menu.name, edit_account_establishment_digital_display_menu_path(account, establishment, dd_menu), data: { test: 'menu-link' } %>
           </div>
         <% end %>
       </div>
       <div class="button-wrapper">
+        <%= add_web_menu_button(account, establishment, enabled: has_lists) %>
+        <%= add_menu_button(account, establishment, enabled: has_lists) %>
         <%= add_digital_display_menu_button(account, establishment, enabled: has_lists) %>
       </div>
     <% end %>

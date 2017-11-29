@@ -413,7 +413,7 @@ feature 'establishment management' do
 
     form = PageObjects::Admin::ListForm.new
     form.set_name 'Beers'
-    
+
     form.add_beer 'Deschutes Pinedrops', price: '6', description: 'IPA'
     form.add_beer 'Deschutes Mirror Pond', price: '6', description: 'APA'
     form.add_beer 'Deschutes Big Rig', price: '6', description: '???'
@@ -434,9 +434,7 @@ feature 'establishment management' do
     web_menu_form.submit
 
     web_menu_url = page.current_url
-    web_menu_form.cancel
-
-    embed_code = establishment_form.get_snippet_for 'Beer Menu'
+    embed_code = web_menu_form.get_embed_code
 
     ThirdPartySiteGenerator.call({
       establishment: establishment,
@@ -503,52 +501,6 @@ feature 'establishment management' do
     expect(menu.list_named('Beers')).to have_descriptions
   end
 
-  scenario 'list html snippets are visible by managers, but not staff', :admin, :js do
-    establishment = create :establishment, name: "The Lanes", account: user.account
-    staff_member = create :user, account: user.account
-    staff_member.establishments << establishment
-
-    login user
-
-    click_link establishment.name
-    establishment_form = PageObjects::Admin::EstablishmentForm.new
-    establishment_form.add_list
-
-    form = PageObjects::Admin::ListForm.new
-    form.set_name 'Taps'
-
-    form.add_beer 'Deschutes Pinedrops'
-    form.add_beer 'Deschutes Mirror Pond'
-    form.add_beer 'Deschutes Big Rig'
-
-    form.submit
-
-    expect(establishment_form).to be_displayed
-
-    establishment_form.add_web_menu
-    menu_form = PageObjects::Admin::WebMenuForm.new
-    expect(menu_form).to be_displayed
-    menu_form.name = 'Taps Menu'
-    menu_form.select_list 'Taps'
-    menu_form.submit
-    menu_form.cancel
-
-    web_menu = establishment_form.web_menu_named 'Taps Menu'
-    expect(web_menu).to have_toggle_embed_code_button
-    web_menu.show_embed_code
-    expect(web_menu).to have_embed_code
-
-    logout
-
-    login staff_member
-
-    click_link establishment.name
-
-    web_menu = establishment_form.web_menu_named 'Taps Menu'
-    expect(web_menu).to_not have_toggle_embed_code_button
-    expect(web_menu).to_not have_embed_code
-  end
-
   scenario 'lists can be deleted', :admin, :js do
     establishment = create :establishment, name: "The Lanes", account: user.account
     list = establishment.lists.create!(name: 'Weekly Specials')
@@ -577,7 +529,6 @@ feature 'establishment management' do
     form = PageObjects::Admin::EstablishmentForm.new
     expect(form.lists_panel).to have_help_text
     expect(form.menus_panel).to have_help_text
-    expect(form.digital_display_menus_panel).to have_help_text
 
     form.set_name 'The Lanes'
     form.set_url 'http://thelanes.com/beer-menu'
@@ -589,7 +540,6 @@ feature 'establishment management' do
 
     expect(form.lists_panel).to have_help_text
     expect(form.menus_panel).to have_help_text
-    expect(form.digital_display_menus_panel).to have_help_text
 
     form.add_list
 
@@ -606,7 +556,6 @@ feature 'establishment management' do
     expect(form).to be_displayed
     expect(form.lists_panel).to have_no_help_text
     expect(form.menus_panel).to have_help_text
-    expect(form.digital_display_menus_panel).to have_help_text
 
     form.add_menu
 
@@ -619,7 +568,6 @@ feature 'establishment management' do
     expect(form).to be_displayed
     expect(form.lists_panel).to have_no_help_text
     expect(form.menus_panel).to have_no_help_text
-    expect(form.digital_display_menus_panel).to have_help_text
 
     form.add_digital_display_menu
 
@@ -632,7 +580,6 @@ feature 'establishment management' do
     expect(form).to be_displayed
     expect(form.lists_panel).to have_no_help_text
     expect(form.menus_panel).to have_no_help_text
-    expect(form.digital_display_menus_panel).to have_no_help_text
 
     form.toggle_lists_help
     expect(form.lists_panel).to have_help_text
@@ -643,10 +590,5 @@ feature 'establishment management' do
     expect(form.menus_panel).to have_help_text
     form.toggle_menus_help
     expect(form.menus_panel).to have_no_help_text
-
-    form.toggle_digital_display_menus_help
-    expect(form.digital_display_menus_panel).to have_help_text
-    form.toggle_digital_display_menus_help
-    expect(form.digital_display_menus_panel).to have_no_help_text
   end
 end

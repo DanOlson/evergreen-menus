@@ -10,7 +10,8 @@ class Buttons extends Component {
     const {
       canDestroy,
       submitButtonText,
-      cancelEditPath
+      cancelEditPath,
+      children
     } = this.props;
     let deleteButton;
 
@@ -39,6 +40,7 @@ class Buttons extends Component {
            className="btn btn-outline-secondary menu-form-action"
            data-test="web-menu-form-cancel">Cancel</a>
         {deleteButton}
+        {children}
       </div>
     );
   }

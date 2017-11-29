@@ -43,12 +43,16 @@ class ShowDescriptionInput extends Component {
   }
 }
 
+ShowDescriptionInput.defaultProps = {
+  value: true
+};
+
 ShowDescriptionInput.propTypes = {
   entityName: PropTypes.string.isRequired,
   nestedAttrsName: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.bool.isRequired
+  value: PropTypes.bool
 }
 
 export default ShowDescriptionInput;

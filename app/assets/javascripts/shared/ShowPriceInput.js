@@ -43,12 +43,16 @@ class ShowPriceInput extends Component {
   }
 }
 
+ShowPriceInput.defaultProps = {
+  value: true
+};
+
 ShowPriceInput.propTypes = {
   entityName: PropTypes.string.isRequired,
   nestedAttrsName: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.bool.isRequired
+  value: PropTypes.bool
 }
 
 export default ShowPriceInput;

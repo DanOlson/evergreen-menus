@@ -6,8 +6,8 @@ import itemTypes from './item-types';
 import { DragSource, DropTarget } from 'react-dnd';
 import pluralize from './pluralize';
 import ListTypeIcon from './ListTypeIcon';
-import ShowPriceCheckbox from './ShowPriceCheckbox';
-import ShowDescriptionCheckbox from './ShowDescriptionCheckbox';
+import ShowPriceInput from './ShowPriceInput';
+import ShowDescriptionInput from './ShowDescriptionInput';
 
 const itemSource = {
   beginDrag(props) {
@@ -114,7 +114,7 @@ class ChosenListItem extends Component {
 
     if (this.props.onShowDescriptionChange) {
       showDescriptionInput = (
-        <ShowDescriptionCheckbox
+        <ShowDescriptionInput
           entityName={entityName}
           nestedAttrsName={nestedAttrsName}
           index={index}
@@ -137,7 +137,7 @@ class ChosenListItem extends Component {
           <span className="list-name" data-test="list-name">{list.name}</span>
         </div>
         <div className="valign-wrapper-w50">
-          <ShowPriceCheckbox
+          <ShowPriceInput
             entityName={entityName}
             nestedAttrsName={nestedAttrsName}
             index={index}

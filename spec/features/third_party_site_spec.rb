@@ -44,9 +44,8 @@ feature 'establishment website', :admin, :js do
     menu_form.select_list 'Taps'
     menu_form.select_list 'Bottles'
     menu_form.submit
-    menu_form.cancel
 
-    embed_code = establishment_form.get_snippet_for 'Beer Menu'
+    embed_code = menu_form.get_embed_code
 
     ThirdPartySiteGenerator.call({
       establishment: establishment,
@@ -78,6 +77,9 @@ feature 'establishment website', :admin, :js do
     tap_menu_form.name = 'Taps Menu'
     tap_menu_form.select_list 'Taps'
     tap_menu_form.submit
+
+    embed_code_taps = tap_menu_form.get_embed_code
+
     tap_menu_form.cancel
 
     establishment_form.add_web_menu
@@ -86,10 +88,8 @@ feature 'establishment website', :admin, :js do
     bottle_menu_form.name = 'Bottles Menu'
     bottle_menu_form.select_list 'Bottles'
     bottle_menu_form.submit
-    bottle_menu_form.cancel
 
-    embed_code_taps = establishment_form.get_snippet_for 'Taps Menu'
-    embed_code_bottles = establishment_form.get_snippet_for 'Bottles Menu'
+    embed_code_bottles = bottle_menu_form.get_embed_code
 
     ThirdPartySiteGenerator.call({
       establishment: establishment,
