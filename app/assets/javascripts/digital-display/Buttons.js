@@ -52,9 +52,13 @@ class Buttons extends Component {
   }
 }
 
+Buttons.defaultProps = {
+  canDestroy: false
+};
+
 Buttons.propTypes = {
-  canDestroy: PropTypes.bool.isRequired,
-  viewDisplayPath: PropTypes.string.isRequired,
+  canDestroy: PropTypes.bool,
+  viewDisplayPath: PropTypes.string,
   submitButtonText: PropTypes.string.isRequired,
   cancelEditPath: PropTypes.string.isRequired,
 };

@@ -90,7 +90,7 @@ module PageObjects
           end
         end
 
-        sections :lists, List, '[data-test="digital-display-menu-list"]' 
+        sections :lists, List, '[data-test="digital-display-menu-list"]'
 
         ###
         # Call the HTML <object>'s data url and provide super() with a
