@@ -10,7 +10,7 @@ class InvitationMailer < ApplicationMailer
 
     mail({
       to: user_invitation.email,
-      subject: "Your BeerMapper Invitation",
+      subject: "Invitation to Evergreen Menus",
       from: DO_NOT_REPLY_EMAIL_ADDR
     })
   end

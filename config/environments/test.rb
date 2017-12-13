@@ -27,8 +27,8 @@ Beermapper::Application.configure do
   config.action_dispatch.show_exceptions = true
 
   config.action_mailer.default_url_options = {
-    host: 'admin.beermapper.dev',
-    protocol: 'https'
+    host: 'admin.evergreenmenus.dev',
+    protocol: 'http'
   }
 
   # Disable request forgery protection in test environment.
