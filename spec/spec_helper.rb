@@ -39,6 +39,7 @@ Capybara::Webkit.configure do |config|
   config.allow_url("builds.emberjs.com")
   config.allow_url("test.beermapper.ember")
   config.allow_url("admin.test.beermapper.dev")
+  config.allow_url("cdn.test.beermapper.dev")
   config.allow_url("test.my-bar.dev")
   config.allow_url("test.beermapper-api.dev")
   ###

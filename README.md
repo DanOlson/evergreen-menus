@@ -6,7 +6,7 @@
 
 QT is needed for capybara-webkit
 
-```
+```bash
 brew tap homebrew/versions
 brew install qt55
 bundle
@@ -14,21 +14,21 @@ bundle
 
 Install Passenger
 
-```
+```bash
 gem install passenger --no-rdoc --no-ri
 passenger-install-apache2-module
 ```
 
 ### Configure Apache
 
-```
+```xml
 NameVirtualHost *:80
 
 ###
 # Beermapper dev
 <VirtualHost *:80>
   ServerName beermapper-api.dev
-  ServerAlias www.beermapper-api.dev admin.beermapper.dev
+  ServerAlias www.beermapper-api.dev admin.beermapper.dev cdn.beermapper.dev
   DocumentRoot /Users/dan/code/beermapper/public
   RailsEnv development
   <Directory /Users/dan/code/beermapper/public>
@@ -79,7 +79,7 @@ NameVirtualHost *:80
 
 <VirtualHost *:80>
   ServerName test.beermapper-api.dev
-  ServerAlias www.test.beermapper-api.dev admin.test.beermapper.dev
+  ServerAlias www.test.beermapper-api.dev admin.test.beermapper.dev cdn.test.beermapper.dev
   DocumentRoot /Users/dan/code/beermapper/public
   RailsEnv test
   <Directory /Users/dan/code/beermapper/public>
@@ -104,9 +104,11 @@ NameVirtualHost *:80
 ```
 127.0.0.1 beermapper-api.dev
 127.0.0.1 admin.beermapper.dev
+127.0.0.1 cdn.beermapper.dev
 127.0.0.1 beermapper.ember
 127.0.0.1 test.beermapper-api.dev
 127.0.0.1 admin.test.beermapper.dev
+127.0.0.1 cdn.test.beermapper.dev
 127.0.0.1 test.beermapper.ember
 127.0.0.1 my-bar.dev
 ```
