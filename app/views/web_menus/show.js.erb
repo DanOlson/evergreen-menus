@@ -1,5 +1,5 @@
 (function() {
-  var target = document.getElementById('<%= "beermapper-menu-#{params[:id]}" %>');
+  var target = document.getElementById('<%= "evergreen-menu-#{params[:id]}" %>');
 
   target.innerHTML = '<%=j render @web_menu %>';
 })();

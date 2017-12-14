@@ -1,20 +1,20 @@
-<div class="beermapper-menu" style="text-align: center;" data-test="list">
-  <h3 class="beermapper-menu-title" data-test="list-title"><%= title %></h3>
+<div class="evergreen-menu" style="text-align: center;" data-test="list">
+  <h3 class="evergreen-menu-title" data-test="list-title"><%= title %></h3>
   <ul style="list-style: none;">
     <% beers.each do |beer| %>
       <li>
-        <div class="beermapper-menu-item" data-test="list-item">
-          <span class="beermapper-menu-item-name" data-test="list-item-name">
+        <div class="evergreen-menu-item" data-test="list-item">
+          <span class="evergreen-menu-item-name" data-test="list-item-name">
             <strong><%= beer.name %></strong>
           </span>
           <% if show_price && beer.price %>
             &nbsp;&mdash;&nbsp;
-            <span class="beermapper-menu-item-price" data-test="list-item-price">
+            <span class="evergreen-menu-item-price" data-test="list-item-price">
               <%= number_to_currency beer.price, precision: beer.price % 1 > 0 ? 2 : 0 %>
             </span>
           <% end %>
         <% if show_description %>
-          <div class="beermapper-menu-item-description" data-test="list-item-description">
+          <div class="evergreen-menu-item-description" data-test="list-item-description">
             <%= beer.description %>
           </div>
         <% end %>

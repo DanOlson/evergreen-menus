@@ -4,14 +4,14 @@ module PageObjects
       set_url 'http://test.my-bar.dev'
 
       class MenuItem < SitePrism::Section
-        element :name, '.beermapper-menu-item-name'
-        element :price, '.beermapper-menu-item-price'
-        element :description, '.beermapper-menu-item-description'
+        element :name, '.evergreen-menu-item-name'
+        element :price, '.evergreen-menu-item-price'
+        element :description, '.evergreen-menu-item-description'
       end
 
       class List < SitePrism::Section
-        sections :menu_items, MenuItem, '.beermapper-menu-item'
-        element :title, '.beermapper-menu-title'
+        sections :menu_items, MenuItem, '.evergreen-menu-item'
+        element :title, '.evergreen-menu-title'
 
         def has_prices?
           menu_items.any? &:has_price?
@@ -30,7 +30,7 @@ module PageObjects
         end
       end
 
-      sections :lists, List, '.beermapper-menu'
+      sections :lists, List, '.evergreen-menu'
 
       def list_named(name)
         lists.find { |l| l.title.text == name }
