@@ -27,19 +27,19 @@ function applyConfirm(element) {
   const confirmNodes       = document.querySelectorAll('[data-confirm]');
 
   if (appRoot) {
-    render(<ListApp {...window.BEERMAPPER} />, appRoot);
+    render(<ListApp {...window._EVERGREEN} />, appRoot);
   }
 
   if (menuRoot) {
-    render(<MenuApp {...window.BEERMAPPER} />, menuRoot);
+    render(<MenuApp {...window._EVERGREEN} />, menuRoot);
   }
 
   if (digitalDisplayRoot) {
-    render(<DigitalDisplayApp {...window.BEERMAPPER} />, digitalDisplayRoot);
+    render(<DigitalDisplayApp {...window._EVERGREEN} />, digitalDisplayRoot);
   }
 
   if (webMenuRoot) {
-    render(<WebMenuApp {...window.BEERMAPPER} />, webMenuRoot);
+    render(<WebMenuApp {...window._EVERGREEN} />, webMenuRoot);
   }
 
   for (let i = 0; i < confirmNodes.length; i++) {

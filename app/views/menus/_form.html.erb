@@ -1,5 +1,5 @@
 <script>
-  window.BEERMAPPER = {
+  window._EVERGREEN = {
     menu: <%= raw menu_json menu %>,
     cancelEditMenuPath: "<%= edit_account_establishment_path(account, establishment) %>",
     menuFormSubmitText: "<%= submit_text %>",
@@ -7,8 +7,8 @@
     templateOptions: <%= menu_template_options.to_json.html_safe %>
   };
   <% if menu.persisted? %>
-    window.BEERMAPPER.downloadMenuPath = "<%= account_establishment_menu_path(account, establishment, menu, format: :pdf, download: '1') %>";
-    window.BEERMAPPER.canDestroyMenu = <%= can?(:destroy, menu) %>;
+    window._EVERGREEN.downloadMenuPath = "<%= account_establishment_menu_path(account, establishment, menu, format: :pdf, download: '1') %>";
+    window._EVERGREEN.canDestroyMenu = <%= can?(:destroy, menu) %>;
   <% end %>
 </script>
 <% breadcrumb :menu, account, establishment, menu %>
