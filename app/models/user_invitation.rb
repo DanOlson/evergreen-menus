@@ -9,4 +9,6 @@ class UserInvitation < ActiveRecord::Base
 
   has_many :invitation_establishment_assignments, dependent: :destroy
   has_many :establishments, through: :invitation_establishment_assignments
+
+  validates :first_name, :email, presence: true
 end

@@ -256,6 +256,43 @@ feature 'account management' do
         expect(staff_list.invitations.size).to eq 0
         expect(staff_list).to have_member_named 'Maude Lebowski'
       end
+
+      scenario 'invited users can be deleted', :js, :admin do
+        logout
+        invitation = UserInvitation.create!({
+          first_name: 'Donny',
+          last_name: 'Kerabatsos',
+          email: 'donny@lebowski.me',
+          account: account,
+          inviting_user: user
+        })
+        invitation.establishments << bar_1
+        registration_path = new_invited_registration_path(invitation.to_sgid(for: 'registration'))
+
+        visit registration_path
+
+        fill_in 'Password', with: 'myPassword123'
+        fill_in 'Password confirmation', with: 'myPassword123'
+        click_button 'Register'
+
+        expect(page).to have_content 'Welcome, Donny!'
+
+        logout
+
+        login user
+        click_link 'Staff'
+
+        staff_list = PageObjects::Admin::StaffList.new
+        staff_list.member_named('Donny Kerabatsos').click
+
+        staff_form = PageObjects::Admin::StaffForm.new
+        expect(staff_form).to be_displayed
+
+        staff_form.delete
+
+        expect(staff_list).to be_displayed
+        expect(page).to have_css '[data-test="flash-success"]', text: "Donny Kerabatsos has been deleted"
+      end
     end
   end
 

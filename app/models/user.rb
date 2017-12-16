@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :api_keys
   has_many :establishment_staff_assignments, dependent: :destroy
   has_many :establishments, through: :establishment_staff_assignments
+  has_one :user_invitation, foreign_key: :accepting_user_id, dependent: :destroy
   belongs_to :account
   belongs_to :role
 
