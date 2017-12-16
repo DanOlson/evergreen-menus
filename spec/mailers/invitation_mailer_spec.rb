@@ -34,11 +34,11 @@ describe InvitationMailer, type: :mailer do
     end
 
     it 'sends an email from the correct address' do
-      expect(email.from).to eq ['do-not-reply@beermapper.com']
+      expect(email.from).to eq ['do-not-reply@evergreenmenus.com']
     end
 
     it 'sends an email with the correct subject' do
-      expect(email.subject).to eq 'Your BeerMapper Invitation'
+      expect(email.subject).to eq 'Invitation to Evergreen Menus'
     end
 
     it 'sends a multipart email' do
@@ -46,7 +46,7 @@ describe InvitationMailer, type: :mailer do
     end
 
     it 'sends an email that includes a registration url' do
-      expect(email.text_part.decoded).to match(%r{admin.beermapper.dev/register/.+})
+      expect(email.text_part.decoded).to match(%r{admin.evergreenmenus.locl/register/.+})
     end
   end
 end

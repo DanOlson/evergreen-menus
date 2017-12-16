@@ -1,5 +1,5 @@
 <script>
-  window.BEERMAPPER = {
+  window._EVERGREEN = {
     digitalDisplayMenu: <%= raw digital_display_menu_json digital_display_menu %>,
     rotationIntervalOptions:  <%= raw rotation_intervals_json %>,
     fontOptions: <%= raw font_options_json %>,
@@ -8,8 +8,8 @@
     submitButtonText: "<%= submit_text %>"
   };
   <% if digital_display_menu.persisted? %>
-    window.BEERMAPPER.canDestroy = <%= can?(:destroy, digital_display_menu) %>;
-    window.BEERMAPPER.viewDisplayPath = "<%= account_establishment_digital_display_menu_path(account, establishment, digital_display_menu) %>"
+    window._EVERGREEN.canDestroy = <%= can?(:destroy, digital_display_menu) %>;
+    window._EVERGREEN.viewDisplayPath = "<%= account_establishment_digital_display_menu_path(account, establishment, digital_display_menu) %>"
   <% end %>
 </script>
 <% breadcrumb :digital_display_menu, account, establishment, digital_display_menu %>

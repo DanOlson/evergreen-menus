@@ -27,8 +27,8 @@ NameVirtualHost *:80
 ###
 # Beermapper dev
 <VirtualHost *:80>
-  ServerName beermapper-api.dev
-  ServerAlias www.beermapper-api.dev admin.beermapper.dev cdn.beermapper.dev
+  ServerName beermapper-api.locl
+  ServerAlias www.beermapper-api.locl admin.evergreenmenus.locl cdn.evergreenmenus.locl
   DocumentRoot /Users/dan/code/beermapper/public
   RailsEnv development
   <Directory /Users/dan/code/beermapper/public>
@@ -47,13 +47,13 @@ NameVirtualHost *:80
     Options -MultiViews
   </Directory>
   <Location /api/v1/>
-    ProxyPass http://beermapper-api.dev/api/v1/
+    ProxyPass http://beermapper-api.locl/api/v1/
   </Location>
 </VirtualHost>
 
 <VirtualHost *:80>
-  ServerName my-bar.dev
-  ServerAlias www.my-bar.dev
+  ServerName my-bar.locl
+  ServerAlias www.my-bar.locl
   DocumentRoot /Users/dan/code/beermapper/third-party-site/public
   <Directory /Users/dan/code/beermapper/third-party-site/public>
     Require all granted
@@ -73,13 +73,13 @@ NameVirtualHost *:80
     Options -MultiViews
   </Directory>
   <Location /api/v1/>
-    ProxyPass http://test.beermapper-api.dev/api/v1/
+    ProxyPass http://test.beermapper-api.locl/api/v1/
   </Location>
 </VirtualHost>
 
 <VirtualHost *:80>
-  ServerName test.beermapper-api.dev
-  ServerAlias www.test.beermapper-api.dev admin.test.beermapper.dev cdn.test.beermapper.dev
+  ServerName test.beermapper-api.locl
+  ServerAlias www.test.beermapper-api.locl admin.test.evergreenmenus.locl cdn.test.evergreenmenus.locl
   DocumentRoot /Users/dan/code/beermapper/public
   RailsEnv test
   <Directory /Users/dan/code/beermapper/public>
@@ -89,8 +89,8 @@ NameVirtualHost *:80
 </VirtualHost>
 
 <VirtualHost *:80>
-  ServerName test.my-bar.dev
-  ServerAlias www.test.my-bar.dev
+  ServerName test.my-bar.locl
+  ServerAlias www.test.my-bar.locl
   DocumentRoot /Users/dan/code/beermapper/third-party-site/public-test
   <Directory /Users/dan/code/beermapper/third-party-site/public-test>
     Require all granted
@@ -102,15 +102,15 @@ NameVirtualHost *:80
 ### Configure /etc/hosts
 
 ```
-127.0.0.1 beermapper-api.dev
-127.0.0.1 admin.beermapper.dev
-127.0.0.1 cdn.beermapper.dev
+127.0.0.1 beermapper-api.locl
+127.0.0.1 admin.evergreenmenus.locl
+127.0.0.1 cdn.evergreenmenus.locl
 127.0.0.1 beermapper.ember
-127.0.0.1 test.beermapper-api.dev
-127.0.0.1 admin.test.beermapper.dev
-127.0.0.1 cdn.test.beermapper.dev
+127.0.0.1 test.beermapper-api.locl
+127.0.0.1 admin.test.evergreenmenus.locl
+127.0.0.1 cdn.test.evergreenmenus.locl
 127.0.0.1 test.beermapper.ember
-127.0.0.1 my-bar.dev
+127.0.0.1 my-bar.locl
 ```
 
 ### Restart Apache
@@ -143,4 +143,4 @@ webpack --watch
 ### Go
 
 Navigate to http://beermapper.ember
-Navigate to http://admin.beermapper.dev
+Navigate to http://admin.beermapper.locl

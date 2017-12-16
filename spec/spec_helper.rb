@@ -35,13 +35,13 @@ Capybara::Webkit.configure do |config|
   config.allow_url("csi.gstatic.com")
   config.allow_url("fonts.googleapis.com")
   config.allow_url("platform.twitter.com")
-  config.allow_url("https://syndication.twitter.com/settings")
+  config.allow_url("syndication.twitter.com")
   config.allow_url("builds.emberjs.com")
   config.allow_url("test.beermapper.ember")
-  config.allow_url("admin.test.beermapper.dev")
-  config.allow_url("cdn.test.beermapper.dev")
-  config.allow_url("test.my-bar.dev")
-  config.allow_url("test.beermapper-api.dev")
+  config.allow_url("admin.test.evergreenmenus.locl")
+  config.allow_url("cdn.test.evergreenmenus.locl")
+  config.allow_url("test.my-bar.locl")
+  config.allow_url("test.beermapper-api.locl")
   ###
   # Beermapper Admin
   config.allow_url("maxcdn.bootstrapcdn.com")
@@ -83,7 +83,7 @@ RSpec.configure do |config|
 
   config.around(:each, admin: true) do |example|
     old_app_host = Capybara.app_host
-    Capybara.app_host = 'http://admin.test.beermapper.dev'
+    Capybara.app_host = 'http://admin.test.evergreenmenus.locl'
     example.run
     Capybara.app_host = old_app_host
   end

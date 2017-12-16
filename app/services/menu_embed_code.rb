@@ -2,8 +2,8 @@ require 'cgi'
 
 class MenuEmbedCode
   TEMPLATE = <<~HTML.strip
-    <div class="beermapper-wrapper">
-      <div class="beermapper" id="beermapper-menu-%<menu_id>s">
+    <div class="evergreen-wrapper">
+      <div class="evergreen" id="evergreen-menu-%<menu_id>s">
       </div>
       <script
         type="text/javascript"

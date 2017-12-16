@@ -5,7 +5,7 @@ task generate_third_party_site: :environment do
 
   establishment = Establishment.first || abort("NO ESTABLISHMENTS!")
   menu = establishment.web_menus.first
-  host = Rails.env.test? ? 'http://test.beermapper-api.dev' : 'http://beermapper-api.dev'
+  host = Rails.env.test? ? 'http://test.beermapper-api.locl' : 'http://beermapper-api.locl'
   embed_code = MenuEmbedCode.new({
     web_menu: menu,
     menu_url: web_menu_url(menu.id, host: host)

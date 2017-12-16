@@ -1,5 +1,0 @@
-(function() {
-  var target = document.getElementById('<%= "beermapper-menu-#{params[:id]}" %>');
-
-  target.innerHTML = '<%=j render partial: "list", locals: { beers: @list.beers, show_description: @list.show_description?, show_price: @list.show_price?, title: @list.name } %>';
-})();

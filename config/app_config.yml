@@ -4,11 +4,11 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  web_menu_host: 'cdn.beermapper.dev'
+  web_menu_host: 'cdn.evergreenmenus.locl'
 
 test:
   <<: *defaults
-  web_menu_host: 'cdn.test.beermapper.dev'
+  web_menu_host: 'cdn.test.evergreenmenus.locl'
 
 production:
   <<: *defaults
