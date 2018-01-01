@@ -20,7 +20,8 @@ const itemSource = {
 
 const itemTarget = {
   hover(props, monitor, component) {
-    const dragIndex = monitor.getItem().index;
+    const item = monitor.getItem();
+    const dragIndex = item.index;
     const hoverIndex = props.index;
 
     // Don't replace items with themselves
@@ -61,15 +62,16 @@ const itemTarget = {
     // Generally it's better to avoid mutations,
     // but it's good here for the sake of performance
     // to avoid expensive index searches.
-    monitor.getItem().index = hoverIndex;
+    item.index = hoverIndex;
   }
 };
 
 // specifies which props to inject
 function dragCollect(connect, monitor) {
+  const isDragging = monitor.isDragging();
   return {
     connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
+    isDragging
   };
 }
 
@@ -185,14 +187,14 @@ ChosenListItem.propTypes = {
   moveItem: PropTypes.func.isRequired
 };
 
-const dragSource = DragSource(
-  itemTypes.chosenListItem,
-  itemSource,
-  dragCollect
-)(ChosenListItem);
-
-export default DropTarget(
+const dropTarget = DropTarget(
   itemTypes.chosenListItem,
   itemTarget,
   dropCollect
-)(dragSource);
+)(ChosenListItem);
+
+export default DragSource(
+  itemTypes.chosenListItem,
+  itemSource,
+  dragCollect
+)(dropTarget);
