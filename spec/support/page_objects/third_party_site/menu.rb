@@ -3,6 +3,8 @@ module PageObjects
     class Menu < SitePrism::Page
       set_url 'http://test.my-bar.locl'
 
+      element :schema_dot_org_markup, '[data-test="json-linked-data"]', visible: false
+
       class MenuItem < SitePrism::Section
         element :name, '.evergreen-menu-item-name'
         element :price, '.evergreen-menu-item-price'

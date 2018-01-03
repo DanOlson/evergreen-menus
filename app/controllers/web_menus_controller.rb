@@ -33,6 +33,10 @@ class WebMenusController < ApplicationController
 
   def show
     @web_menu = WebMenu.find params[:id]
+    @web_menu_json_ld = JsonLdMenuSerializer.new({
+      menu: @web_menu,
+      url: request.referer
+    }).call
     respond_to do |format|
       format.js
     end

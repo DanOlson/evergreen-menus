@@ -1,13 +1,13 @@
 class List < ActiveRecord::Base
   TYPES = [
     TYPE_BEER = 'beer',
-    'wine',
+    TYPE_WINE = 'wine',
     'spirits',
     'cocktails',
     'appetizers',
     'breakfast',
     'lunch',
-    'dinner',
+    TYPE_DINNER = 'dinner',
     'happy hour',
     'late night',
     'other'

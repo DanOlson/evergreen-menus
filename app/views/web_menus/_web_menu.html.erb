@@ -2,4 +2,7 @@
   <% @web_menu.lists.each do |list| %>
     <%= render partial: "list", locals: { beers: list.beers, show_description: list.show_description_on_menu?, show_price: list.show_price_on_menu?, title: list.name } %>
   <% end %>
+  <script type="application/ld+json" data-test="json-linked-data">
+    <%= raw @web_menu_json_ld %>
+  </script>
 </div>

@@ -66,6 +66,8 @@ feature 'establishment website', :admin, :js do
 
     bottle_names = site_bottles_list.menu_items.map { |i| i.name.text }
     expect(bottle_names).to match_array bottles_list.beers.map &:name
+
+    expect(website).to have_schema_dot_org_markup
   end
 
   scenario 'displaying multiple menus' do
