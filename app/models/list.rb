@@ -20,7 +20,7 @@ class List < ActiveRecord::Base
   end
 
   belongs_to :establishment
-  has_many :beers, dependent: :destroy
+  has_many :beers, -> () { order(:name) }, dependent: :destroy
 
   validates :name, presence: true
   validates :show_price, :show_description, inclusion: { in: [true, false] }
