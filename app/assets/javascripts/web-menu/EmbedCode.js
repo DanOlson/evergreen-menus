@@ -1,17 +1,51 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Clipboard from 'react-clipboard.js';
+import htmlEntities from 'html-entities';
+
+const entities = new htmlEntities.Html5Entities();
 
 class EmbedCode extends Component {
+  constructor (props) {
+    super(props);
+    this.getEmbedCode = this.getEmbedCode.bind(this);
+    this.handleCopy = this.handleCopy.bind(this);
+
+    this.state = { isCopied: false };
+  }
+
+  getEmbedCode () {
+    const { embedCode } = this.props;
+    return entities.decode(embedCode);
+  }
+
+  handleCopy () {
+    this.setState(prevState => {
+      return { isCopied: true };
+    });
+  }
+
   render () {
     const embedCode = { __html: this.props.embedCode };
     const htmlVisibility = this.props.show ? 'show' : 'hidden';
+    const iconClass = this.state.isCopied ? 'fa-thumbs-o-up fa-lg' : 'fa-clipboard';
+    const copyButtonIcon = <span className={`fa ${iconClass}`} aria-hidden="true"></span>;
     return (
       <div className={`card bg-light ${htmlVisibility}`}>
-        <div
-          className="card-body"
-          data-test="menu-embed-code"
-          dangerouslySetInnerHTML={embedCode}
-        />
+        <div className="copy-button-wrapper" title="Copy to clipboard">
+          <Clipboard
+            option-text={this.getEmbedCode}
+            onSuccess={this.handleCopy}
+            className="btn btn-secondary">
+            {copyButtonIcon}
+          </Clipboard>
+        </div>
+        <div className="card-body" data-test="menu-embed-code">
+          <pre>
+            <code dangerouslySetInnerHTML={embedCode}>
+            </code>
+          </pre>
+        </div>
       </div>
     );
   }

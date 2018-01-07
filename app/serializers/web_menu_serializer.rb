@@ -48,18 +48,10 @@ class WebMenuSerializer
 
   def embed_code
     if @include_embed_code
-      embed_code = MenuEmbedCode.new({
+      MenuEmbedCode.new({
         web_menu: @web_menu,
         menu_url: web_menu_url(@web_menu.id, host: @host, protocol: @protocol)
-      })
-
-      <<~HTML.strip.html_safe
-        <pre>
-          <code>
-  #{embed_code.generate_encoded}
-          </code>
-        </pre>
-      HTML
+      }).generate_encoded
     end
   end
 end
