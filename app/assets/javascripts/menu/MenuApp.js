@@ -6,7 +6,7 @@ import ChosenListGroup from '../shared/ChosenListGroup';
 import Preview from './MenuPreview';
 import Panel from '../shared/Panel';
 import generatePreviewPath from './previewPath';
-import Buttons from './Buttons';
+import Buttons from '../shared/MenuFormButtons';
 import { applyFind } from '../polyfills/Array';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -251,6 +251,7 @@ class MenuApp extends Component {
             />
 
             <Buttons
+              menuType="menu"
               canDestroy={!!canDestroyMenu}
               submitButtonText={menuFormSubmitText}
               cancelEditPath={cancelEditMenuPath}>

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class Buttons extends Component {
+class MenuFormButtons extends Component {
   render () {
     const {
+      menuType,
       canDestroy,
       submitButtonText,
       cancelEditPath,
@@ -14,9 +15,9 @@ class Buttons extends Component {
     if (!!canDestroy) {
       deleteButton = (
         <label
-          htmlFor="menu-form-delete"
+          htmlFor={`${menuType}-form-delete`}
           className="btn btn-danger menu-form-action"
-          data-test="menu-form-delete">
+          data-test={`${menuType}-form-delete`}>
           Delete
         </label>
       );
@@ -29,12 +30,12 @@ class Buttons extends Component {
           name="commit"
           value={submitButtonText}
           className="btn btn-primary menu-form-action"
-          data-test="menu-form-submit"
+          data-test={`${menuType}-form-submit`}
           data-disable-with="Create"
         />
         <a href={cancelEditPath}
           className="btn btn-outline-secondary menu-form-action"
-          data-test="menu-form-cancel">Cancel</a>
+          data-test={`${menuType}-form-cancel`}>Cancel</a>
         {deleteButton}
         {children}
       </div>
@@ -42,10 +43,15 @@ class Buttons extends Component {
   }
 }
 
-Buttons.propTypes = {
+MenuFormButtons.defaultProps = {
+  canDestroy: false
+};
+
+MenuFormButtons.propTypes = {
+  menuType: PropTypes.string.isRequired,
   canDestroy: PropTypes.bool.isRequired,
   submitButtonText: PropTypes.string.isRequired,
   cancelEditPath: PropTypes.string.isRequired
 };
 
-export default Buttons;
+export default MenuFormButtons;

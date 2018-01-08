@@ -13,7 +13,7 @@ import ThemeSelect from './ThemeSelect';
 import FontSelect from './FontSelect';
 import RotationIntervalSelect from './RotationIntervalSelect';
 import OrientationInput from './OrientationInput';
-import Buttons from './Buttons';
+import Buttons from '../shared/MenuFormButtons';
 
 applyFind();
 
@@ -184,8 +184,17 @@ class DigitalDisplayApp extends Component {
     } = this.state;
     const showCustomThemeFields = theme === 'Custom';
     const customThemeFieldClass = showCustomThemeFields ? 'visible' : 'invisible';
-    const totalListCount        = lists.length + listsAvailable.length;
-    const previewPath           = generatePreviewPath(this.props.digitalDisplayMenu, this.state);
+    const totalListCount = lists.length + listsAvailable.length;
+    const previewPath = generatePreviewPath(this.props.digitalDisplayMenu, this.state);
+    let viewDisplayButton;
+    if (this.props.viewDisplayPath) {
+      viewDisplayButton = (
+        <a href={this.props.viewDisplayPath}
+          target="_blank"
+          className="btn btn-success pull-right"
+          data-test="view-digital-display-menu">View</a>
+      )
+    }
 
     return (
       <div className="form-row">
@@ -281,7 +290,9 @@ class DigitalDisplayApp extends Component {
               onDrop={this.addListToDisplay}
             />
 
-            <Buttons {...this.props} />
+            <Buttons {...this.props} menuType="digital-display-menu">
+              {viewDisplayButton}
+            </Buttons>
           </Panel>
         </div>
         <div className="col-sm-6">

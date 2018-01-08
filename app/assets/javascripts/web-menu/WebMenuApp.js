@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Panel from '../shared/Panel';
-import Buttons from './Buttons';
+import Buttons from '../shared/MenuFormButtons';
 import EmbedCode from './EmbedCode';
 import ShowCodeButton from './ShowCodeButton';
 import AvailableListGroup from '../shared/AvailableListGroup';
@@ -150,7 +150,7 @@ class WebMenuApp extends Component {
               onDrop={this.addListToMenu}
             />
 
-            <Buttons {...this.props}>
+            <Buttons {...this.props} menuType="web-menu">
               <ShowCodeButton
                 onClick={this.toggleCodeVisibility}
                 buttonClass={toggleCodeButtonClass}>
