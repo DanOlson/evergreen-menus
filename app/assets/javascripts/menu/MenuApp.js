@@ -6,6 +6,7 @@ import ChosenListGroup from '../shared/ChosenListGroup';
 import Preview from './MenuPreview';
 import Panel from '../shared/Panel';
 import generatePreviewPath from './previewPath';
+import Buttons from './Buttons';
 import { applyFind } from '../polyfills/Array';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -132,52 +133,37 @@ class MenuApp extends Component {
     });
   }
 
-  renderButtons() {
-    let deleteButton, downloadButton;
-    if (!!this.props.canDestroyMenu) {
-      deleteButton = (
-        <label
-          htmlFor="menu-form-delete"
-          className="btn btn-danger menu-form-action"
-          data-test="menu-form-delete">
-          Delete
-        </label>
-      );
-    }
-    if (!!this.props.downloadMenuPath) {
-      downloadButton = (
-        <a href={this.props.downloadMenuPath}
-           className="btn btn-success pull-right"
-           data-test="menu-download-button">Download</a>
-      );
-    }
-    return (
-      <div className="form-group">
-        <input
-          type="submit"
-          name="commit"
-          value={this.props.menuFormSubmitText}
-          className="btn btn-primary menu-form-action"
-          data-test="menu-form-submit"
-          data-disable-with="Create"
-        />
-        <a href={this.props.cancelEditMenuPath}
-           className="btn btn-outline-secondary menu-form-action"
-           data-test="menu-form-cancel">Cancel</a>
-        {deleteButton}
-        {downloadButton}
-      </div>
-    );
-  }
-
   render() {
-    const { lists, listsAvailable, font, fontSize, columns, name, template } = this.state;
-    const fontOptions     = this.renderOptions(this.props.fontOptions);
-    const templateOptions = this.renderOptions(this.props.templateOptions);
+    const {
+      lists,
+      listsAvailable,
+      font,
+      fontSize,
+      columns,
+      name,
+      template
+    } = this.state;
+    const {
+      fontOptions,
+      templateOptions,
+      downloadMenuPath,
+      canDestroyMenu,
+      menuFormSubmitText,
+      cancelEditMenuPath
+    } = this.props;
+    const fontOpts        = this.renderOptions(fontOptions);
+    const templateOpts    = this.renderOptions(templateOptions);
     const totalListCount  = lists.length + listsAvailable.length;
-    const buttons         = this.renderButtons();
     const previewPath     = generatePreviewPath(this.props.menu, this.state);
     const columnsDisabled = template === 'Centered';
+    let downloadButton;
+    if (!!downloadMenuPath) {
+      downloadButton = (
+        <a href={downloadMenuPath}
+          className="btn btn-success pull-right"
+          data-test="menu-download-button">Download</a>
+      );
+    }
     return (
       <div className="form-row">
         <div className="col-sm-6">
@@ -206,7 +192,7 @@ class MenuApp extends Component {
                     className="form-control"
                     defaultValue={template}
                     onChange={this.handleTemplateChange}>
-                    {templateOptions}
+                    {templateOpts}
                   </select>
                 </div>
 
@@ -219,7 +205,7 @@ class MenuApp extends Component {
                     className="form-control"
                     defaultValue={font}
                     onChange={this.handleFontChange}>
-                    {fontOptions}
+                    {fontOpts}
                   </select>
                 </div>
 
@@ -264,9 +250,12 @@ class MenuApp extends Component {
               onDrop={this.addListToMenu}
             />
 
-            <div className="button-wrapper">
-              {buttons}
-            </div>
+            <Buttons
+              canDestroy={!!canDestroyMenu}
+              submitButtonText={menuFormSubmitText}
+              cancelEditPath={cancelEditMenuPath}>
+              {downloadButton}
+            </Buttons>
           </Panel>
         </div>
         <div className="col-sm-6">

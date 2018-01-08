@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Buttons extends Component {
-  render() {
+  render () {
     const {
       canDestroy,
       submitButtonText,
@@ -14,9 +14,9 @@ class Buttons extends Component {
     if (!!canDestroy) {
       deleteButton = (
         <label
-          htmlFor="web-menu-form-delete"
+          htmlFor="menu-form-delete"
           className="btn btn-danger menu-form-action"
-          data-test="web-menu-form-delete">
+          data-test="menu-form-delete">
           Delete
         </label>
       );
@@ -29,12 +29,12 @@ class Buttons extends Component {
           name="commit"
           value={submitButtonText}
           className="btn btn-primary menu-form-action"
-          data-test="web-menu-form-submit"
+          data-test="menu-form-submit"
           data-disable-with="Create"
         />
         <a href={cancelEditPath}
-           className="btn btn-outline-secondary menu-form-action"
-           data-test="web-menu-form-cancel">Cancel</a>
+          className="btn btn-outline-secondary menu-form-action"
+          data-test="menu-form-cancel">Cancel</a>
         {deleteButton}
         {children}
       </div>
@@ -45,7 +45,7 @@ class Buttons extends Component {
 Buttons.propTypes = {
   canDestroy: PropTypes.bool.isRequired,
   submitButtonText: PropTypes.string.isRequired,
-  cancelEditPath: PropTypes.string.isRequired,
+  cancelEditPath: PropTypes.string.isRequired
 };
 
 export default Buttons;
