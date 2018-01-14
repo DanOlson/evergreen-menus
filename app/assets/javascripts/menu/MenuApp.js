@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ColumnsInput from './ColumnsInput';
-import AvailabilityInputs from './AvailabilityInputs';
+import AvailabilityInput from './AvailabilityInput';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import ChosenListGroup from '../shared/ChosenListGroup';
 import Preview from './MenuPreview';
@@ -27,7 +27,8 @@ class MenuApp extends Component {
       numberOfColumns,
       template,
       availabilityStartTime,
-      availabilityEndTime
+      availabilityEndTime,
+      restrictedAvailability
     } = menu;
 
     this.handleMenuNameChange = this.handleMenuNameChange.bind(this);
@@ -35,6 +36,9 @@ class MenuApp extends Component {
     this.handleFontChange     = this.handleFontChange.bind(this);
     this.handleFontSizeChange = this.handleFontSizeChange.bind(this);
     this.handleColumnsChange  = this.handleColumnsChange.bind(this);
+    this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
+    this.handleEndTimeChange  = this.handleEndTimeChange.bind(this);
+    this.handleRestrictedAvailChange = this.handleRestrictedAvailChange.bind(this);
     this.addListToMenu        = this.addListToMenu.bind(this);
     this.removeListFromMenu   = this.removeListFromMenu.bind(this);
     this.onShowPriceChange    = this.onShowPriceChange.bind(this);
@@ -49,7 +53,8 @@ class MenuApp extends Component {
       fontSize,
       numberOfColumns,
       availabilityStartTime,
-      availabilityEndTime
+      availabilityEndTime,
+      restrictedAvailability
     };
   }
 
@@ -138,6 +143,25 @@ class MenuApp extends Component {
     });
   }
 
+  handleStartTimeChange(newStartTime) {
+    this.setState(prevState => {
+      return { availabilityStartTime: newStartTime };
+    });
+  }
+
+  handleEndTimeChange(newEndTime) {
+    this.setState(prevState => {
+      return { availabilityEndTime: newEndTime };
+    });
+  }
+
+  handleRestrictedAvailChange(event) {
+    const { checked } = event.target;
+    this.setState(prevState => {
+      return { restrictedAvailability: checked };
+    });
+  }
+
   renderOptions(choices) {
     return choices.map((option, index) => {
       return <option value={option} key={index}>{option}</option>
@@ -155,7 +179,8 @@ class MenuApp extends Component {
       template,
       restricted,
       availabilityStartTime,
-      availabilityEndTime
+      availabilityEndTime,
+      restrictedAvailability
     } = this.state;
     const {
       fontOptions,
@@ -248,13 +273,45 @@ class MenuApp extends Component {
               </div>
             </div>
 
-            <div className="form-group">
-              <div className="form-row">
-                <AvailabilityInputs
-                  startTime={availabilityStartTime}
-                  endTime={availabilityEndTime}
+            <div className="form-group form-row">
+              <div className="col-sm-3">
+                <input
+                  type="hidden"
+                  name="menu[restricted_availability]"
+                  value="0"
+                />
+                <label htmlFor="menu-restricted-availability">
+                  <span>Restrict <span className="fa fa-clock-o fa-lg" aria-hidden="true"></span></span>
+                </label>
+                <input
+                  type="checkbox"
+                  name="menu[restricted_availability]"
+                  data-test="menu-restricted-availability"
+                  id="menu-restricted-availability"
+                  className="d-block"
+                  value="1"
+                  defaultChecked={restrictedAvailability ? 'checked' : undefined}
+                  onChange={this.handleRestrictedAvailChange}
                 />
               </div>
+
+              <AvailabilityInput
+                show={restrictedAvailability}
+                time={availabilityStartTime}
+                onChange={this.handleStartTimeChange}
+                className="col-sm-4"
+                name="menu[availability_start_time]"
+                labelText="Availability Start"
+              />
+
+              <AvailabilityInput
+                show={restrictedAvailability}
+                time={availabilityEndTime}
+                onChange={this.handleEndTimeChange}
+                className="col-sm-4"
+                name="menu[availability_end_time]"
+                labelText="Availability End"
+              />
             </div>
 
             <AvailableListGroup

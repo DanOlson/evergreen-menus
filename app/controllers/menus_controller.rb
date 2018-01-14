@@ -49,7 +49,14 @@ class MenusController < ApplicationController
   end
 
   def update
-    if @menu.update(menu_params)
+    update_params = menu_params.dup
+    if update_params.delete(:restricted_availability) == '0'
+      # Unrestricted
+      update_params[:availability_start_time] = nil
+      update_params[:availability_end_time] = nil
+    end
+
+    if @menu.update(update_params)
       redirect_to edit_account_establishment_menu_path(@account, @establishment, @menu), notice: 'Menu updated'
     else
       logger.debug("\n\nMenu invalid! #{@menu.errors.full_messages}\n\n")
@@ -74,6 +81,7 @@ class MenusController < ApplicationController
       :number_of_columns,
       :availability_start_time,
       :availability_end_time,
+      :restricted_availability,
       {
         menu_lists_attributes: [
           :id,

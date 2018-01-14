@@ -13,7 +13,8 @@ class MenuSerializer
       fontSize: @menu.font_size,
       numberOfColumns: @menu.number_of_columns,
       availabilityStartTime: @menu.availability_start_time,
-      availabilityEndTime: @menu.availability_end_time
+      availabilityEndTime: @menu.availability_end_time,
+      restrictedAvailability: @menu.restricted_availability?
     }).to_json
   end
 

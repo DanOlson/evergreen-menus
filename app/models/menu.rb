@@ -60,4 +60,8 @@ class Menu < ActiveRecord::Base
   def font_size
     self[:font_size] || DEFAULT_FONT_SIZE
   end
+
+  def restricted_availability?
+    !!availability_start_time
+  end
 end
