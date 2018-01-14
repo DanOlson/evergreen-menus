@@ -9,7 +9,11 @@ class MenuSerializer
     @menu.as_json.merge({
       lists: lists.as_json,
       listsAvailable: available_lists.as_json,
-      previewPath: preview_path
+      previewPath: preview_path,
+      fontSize: @menu.font_size,
+      numberOfColumns: @menu.number_of_columns,
+      availabilityStartTime: @menu.availability_start_time,
+      availabilityEndTime: @menu.availability_end_time
     }).to_json
   end
 

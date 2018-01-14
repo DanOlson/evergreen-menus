@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ColumnsInput from './ColumnsInput';
+import AvailabilityInputs from './AvailabilityInputs';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import ChosenListGroup from '../shared/ChosenListGroup';
 import Preview from './MenuPreview';
@@ -17,9 +18,17 @@ class MenuApp extends Component {
   constructor(props) {
     super(props);
     const { menu } = this.props;
-    const { lists, listsAvailable, name, font, template } = menu;
-    const fontSize = menu.font_size;
-    const columns = menu.number_of_columns;
+    const {
+      lists,
+      listsAvailable,
+      name,
+      font,
+      fontSize,
+      numberOfColumns,
+      template,
+      availabilityStartTime,
+      availabilityEndTime
+    } = menu;
 
     this.handleMenuNameChange = this.handleMenuNameChange.bind(this);
     this.handleTemplateChange = this.handleTemplateChange.bind(this);
@@ -38,7 +47,9 @@ class MenuApp extends Component {
       template,
       font,
       fontSize,
-      columns
+      numberOfColumns,
+      availabilityStartTime,
+      availabilityEndTime
     };
   }
 
@@ -112,9 +123,9 @@ class MenuApp extends Component {
   }
 
   handleColumnsChange(event) {
-    let columns = Number(event.target.value);
+    let numberOfColumns = Number(event.target.value);
     this.setState(prevState => {
-      return { columns };
+      return { numberOfColumns };
     });
   }
 
@@ -139,9 +150,12 @@ class MenuApp extends Component {
       listsAvailable,
       font,
       fontSize,
-      columns,
+      numberOfColumns,
       name,
-      template
+      template,
+      restricted,
+      availabilityStartTime,
+      availabilityEndTime
     } = this.state;
     const {
       fontOptions,
@@ -184,7 +198,7 @@ class MenuApp extends Component {
             <div className="form-group">
               <div className="form-row">
                 <div className="col-sm-3">
-                  <label htmlFor="menu_font">Template</label>
+                  <label htmlFor="menu_template">Template</label>
                   <select
                     id="menu_template"
                     data-test="menu-template"
@@ -227,9 +241,18 @@ class MenuApp extends Component {
                 <ColumnsInput
                   className="col-sm-3"
                   onChange={this.handleColumnsChange}
-                  columns={columns}
+                  columns={numberOfColumns}
                   disabled={columnsDisabled}
                   className="menu-columns-input"
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <div className="form-row">
+                <AvailabilityInputs
+                  startTime={availabilityStartTime}
+                  endTime={availabilityEndTime}
                 />
               </div>
             </div>

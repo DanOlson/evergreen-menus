@@ -72,6 +72,8 @@ class MenusController < ApplicationController
       :font,
       :font_size,
       :number_of_columns,
+      :availability_start_time,
+      :availability_end_time,
       {
         menu_lists_attributes: [
           :id,

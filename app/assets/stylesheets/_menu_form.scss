@@ -1,8 +1,20 @@
 .menu-form {
   @include draggable-list-item;
 
+  @import "~rc-time-picker/assets/index.css";
+
+  .menu-availability-picker .rc-time-picker-input {
+    line-height: 1.5;
+    height: inherit;
+    @include bootstrap-input;
+  }
+
   .menu-preview-wrapper {
     background: transparent url(/images/loading.gif) no-repeat;
     background-position: center;
   }
+}
+
+.rc-time-picker-panel-input {
+  @include bootstrap-input;
 }
