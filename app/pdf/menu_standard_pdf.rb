@@ -1,6 +1,7 @@
 class MenuStandardPdf
   include ActionView::Helpers::NumberHelper
   include Prawn::View
+  TIME_FORMAT = '%l:%M %P'
 
   attr_reader :menu, :lists
 
@@ -42,6 +43,15 @@ class MenuStandardPdf
         style: :bold,
         size: menu.font_size * 1.25
       }
+
+      if menu.restricted_availability?
+        start_time = menu.availability_start_time.strftime(TIME_FORMAT)
+        end_time = menu.availability_end_time.strftime(TIME_FORMAT)
+        text "Available #{start_time} - #{end_time}", {
+          align: :center,
+          size: menu.font_size
+        }
+      end
     end
   end
 
@@ -106,7 +116,7 @@ class MenuStandardPdf
         text: beer.description,
         size: font_size - 2,
       }
-    ]
+    ].reject { |f| f[:text].nil? }
     name_box_width_multiplier = show_price ?  0.6 : 1
     name_box = Prawn::Text::Formatted::Box.new(fragments, {
       at: [bounds.left, current_y_pos],
@@ -117,6 +127,7 @@ class MenuStandardPdf
 
     # dry run the render to pre-calculate the height of the box
     name_box.render(dry_run: true)
+
     descent_amount = name_box.height + 5
     if y - descent_amount < bounds.bottom
       bounds.move_past_bottom

@@ -224,6 +224,49 @@ feature 'menu management' do
     expect(menu_form).to have_download_button
     expect(menu_form).to have_menu_preview
 
+    ###
+    # Restricted availability
+    expect(menu_form).to_not have_availability_start_time_input
+    expect(menu_form).to_not have_availability_end_time_input
+
+    menu_form.restrict_availability = true
+
+    expect(menu_form).to have_availability_start_time_input
+    expect(menu_form).to have_availability_end_time_input
+
+    menu_form.availability_start = {
+      hour: '04',
+      minute: '30',
+      meridiem: 'PM'
+    }
+    menu_form.availability_end = {
+      hour: '11',
+      minute: '00',
+      meridiem: 'PM'
+    }
+    expect(menu_form.availability_start).to eq '04:30 PM'
+    expect(menu_form.availability_end).to eq '11:00 PM'
+    expect(menu_form).to have_preview_content 'Available 4:30 pm - 11:00 pm'
+
+    menu_form.submit
+
+    expect(page).to have_css '[data-test="flash-success"]', text: "Menu updated"
+    expect(menu_form).to have_restricted_availability
+    expect(menu_form.availability_start).to eq '04:30 PM'
+    expect(menu_form.availability_end).to eq '11:00 PM'
+    expect(menu_form).to have_preview_content 'Available 4:30 pm - 11:00 pm'
+
+    menu_form.restrict_availability = false
+    expect(menu_form).to_not have_availability_start_time_input
+    expect(menu_form).to_not have_availability_end_time_input
+
+    menu_form.submit
+
+    expect(menu_form).to_not have_restricted_availability
+    expect(menu_form).to_not have_availability_start_time_input
+    expect(menu_form).to_not have_availability_end_time_input
+    expect(menu_form).to_not have_preview_content 'Available 4:30 pm - 11:00 pm'
+
     menu_form.delete
     expect(page).to have_css '[data-test="flash-success"]', text: "Menu deleted"
   end

@@ -1,6 +1,7 @@
 class MenuBasicPdf
   include ActionView::Helpers::NumberHelper
   include Prawn::View
+  TIME_FORMAT = '%l:%M %P'
 
   attr_reader :menu, :lists
 
@@ -55,6 +56,15 @@ class MenuBasicPdf
   def header
     bounding_box([0, cursor], width: bounds.width) do
       text menu.name, align: :center, size: menu.font_size + 2
+
+      if menu.restricted_availability?
+        start_time = menu.availability_start_time.strftime(TIME_FORMAT)
+        end_time = menu.availability_end_time.strftime(TIME_FORMAT)
+        text "Available #{start_time} - #{end_time}", {
+          align: :center,
+          size: menu.font_size
+        }
+      end
     end
   end
 

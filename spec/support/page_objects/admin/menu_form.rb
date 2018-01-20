@@ -91,11 +91,32 @@ module PageObjects
         end
       end
 
+      class TimePicker < SitePrism::Section
+        element :hours_list, '.rc-time-picker-panel-select:nth-child(1)'
+        element :minutes_list, '.rc-time-picker-panel-select:nth-child(2)'
+        element :meridiem_list, '.rc-time-picker-panel-select:nth-child(3)'
+
+        def hour=(hour)
+          hours_list.find('li', text: hour).click
+        end
+
+        def minute=(minute)
+          minutes_list.find('li', text: minute).click
+        end
+
+        def meridiem=(meridiem)
+          meridiem_list.find('li', text: meridiem).click
+        end
+      end
+
       element :name_input,      '[data-test="menu-name"]'
       element :template_input,  '[data-test="menu-template"]'
       element :font_input,      '[data-test="menu-font"]'
       element :font_size_input, '[data-test="menu-font-size"]'
       elements :columns_inputs, '[data-test^="menu-columns"]'
+      element :restrict_availability_input, '[data-test="menu-restricted-availability"]'
+      element :availability_start_time_input, 'input[name="menu[availability_start_time]"]'
+      element :availability_end_time_input, 'input[name="menu[availability_end_time]"]'
       element :submit_button,   '[data-test="menu-form-submit"]'
       element :cancel_link,     '[data-test="menu-form-cancel"]'
       element :delete_button,   '[data-test="menu-form-delete"]'
@@ -104,6 +125,7 @@ module PageObjects
       section :menu_preview, MenuPreview, '[data-test="menu-preview"]'
       section :lists_available, ListsAvailable, '[data-test="menu-lists-available"]'
       section :lists_selected, ListsSelected, '[data-test="menu-lists-selected"]'
+      section :time_picker, TimePicker, '.rc-time-picker-panel'
 
       def preview_url
         menu_preview.url
@@ -153,6 +175,38 @@ module PageObjects
 
       def has_font_size?(font_size)
         font_size_input.value == String(font_size)
+      end
+
+      def restrict_availability=(state)
+        restrict_availability_input.set state
+      end
+
+      def has_restricted_availability?
+        restrict_availability_input.checked?
+      end
+
+      def availability_start=(hour:, minute:, meridiem:)
+        availability_start_time_input.click
+        time_picker.hour = hour
+        time_picker.minute = minute
+        time_picker.meridiem = meridiem
+        find('[data-test="time-picker-label"]', text: 'Availability Start').click
+      end
+
+      def availability_end=(hour:, minute:, meridiem:)
+        availability_end_time_input.click
+        time_picker.hour = hour
+        time_picker.minute = minute
+        time_picker.meridiem = meridiem
+        find('[data-test="time-picker-label"]', text: 'Availability End').click
+      end
+
+      def availability_start
+        availability_start_time_input.value
+      end
+
+      def availability_end
+        availability_end_time_input.value
       end
 
       def submit

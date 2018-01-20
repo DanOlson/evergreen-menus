@@ -4,7 +4,6 @@ import TimePicker from 'rc-time-picker';
 import moment from 'moment';
 
 const DISPLAY_TIME_FORMAT = 'hh:mm A';
-const SYSTEM_TIME_FORMAT = 'THH:mm';
 
 function noop() { }
 
@@ -20,7 +19,7 @@ class AvailabilityInput extends Component {
   }
 
   handleChange(newValue) {
-    const time = newValue && newValue.format(SYSTEM_TIME_FORMAT);
+    const time = newValue && newValue.format(DISPLAY_TIME_FORMAT);
     this.setState(prevState => {
       return { time };
     });
@@ -34,7 +33,7 @@ class AvailabilityInput extends Component {
 
     return (
       <div className={this.props.className}>
-        <label htmlFor="menu_availability_start_time">{labelText}</label>
+        <label data-test="time-picker-label">{labelText}</label>
         <TimePicker
           format={DISPLAY_TIME_FORMAT}
           className="menu-availability-picker"
@@ -42,7 +41,7 @@ class AvailabilityInput extends Component {
           minuteStep={15}
           use12Hours={true}
           name={name}
-          value={time && moment(time, SYSTEM_TIME_FORMAT)}
+          value={time && moment(time, DISPLAY_TIME_FORMAT)}
           onChange={this.handleChange}
         />
       </div>

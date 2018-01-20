@@ -1,5 +1,6 @@
 class MenuSerializer
   include Rails.application.routes.url_helpers
+  TIME_FORMAT = '%I:%M %p'
 
   def initialize(menu)
     @menu = menu
@@ -12,13 +13,21 @@ class MenuSerializer
       previewPath: preview_path,
       fontSize: @menu.font_size,
       numberOfColumns: @menu.number_of_columns,
-      availabilityStartTime: @menu.availability_start_time,
-      availabilityEndTime: @menu.availability_end_time,
+      availabilityStartTime: availability_start,
+      availabilityEndTime: availability_end,
       restrictedAvailability: @menu.restricted_availability?
     }).to_json
   end
 
   private
+
+  def availability_start
+    restriction = @menu.availability_start_time and restriction.strftime(TIME_FORMAT)
+  end
+
+  def availability_end
+    restriction = @menu.availability_end_time and restriction.strftime(TIME_FORMAT)
+  end
 
   def establishment
     @establishment ||= @menu.establishment

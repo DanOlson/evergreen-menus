@@ -66,7 +66,7 @@ function generatePreviewPath(menu, formState) {
     `menu[number_of_columns]=${numberOfColumns}`,
     `menu[availability_start_time]=${availabilityStartTime}`,
     `menu[availability_end_time]=${availabilityEndTime}`,
-    `menu[restrict_availability]=${restrictedAvailability}`
+    `menu[restricted_availability]=${restrictedAvailability}`
   ].join('&');
   const queryString = buildQueryString(lists, seed);
   if (id) {
