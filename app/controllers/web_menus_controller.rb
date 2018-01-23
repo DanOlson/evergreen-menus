@@ -56,9 +56,12 @@ class WebMenusController < ApplicationController
   private
 
   def web_menu_params
-    params.require(:web_menu).permit(
+    parameters = params.require(:web_menu).permit(
       :id,
       :name,
+      :availability_start_time,
+      :availability_end_time,
+      :restricted_availability,
       {
         web_menu_lists_attributes: [
           :id,
@@ -70,5 +73,12 @@ class WebMenusController < ApplicationController
         ]
       }
     )
+
+    if ['0', 'false'].include?(parameters.delete(:restricted_availability))
+      # Unrestricted
+      parameters[:availability_start_time] = nil
+      parameters[:availability_end_time] = nil
+    end
+    parameters
   end
 end

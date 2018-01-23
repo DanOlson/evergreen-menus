@@ -1,3 +1,5 @@
+require_relative './roles/availability_restrictable'
+
 module PageObjects
   module Admin
     class WebMenuForm < SitePrism::Page
@@ -113,6 +115,7 @@ module PageObjects
           end
         end
 
+        element :availability_restriction_el, '[data-test="availability-restriction"]'
         sections :lists, List, '[data-test="list"]'
 
         ###
@@ -135,18 +138,31 @@ module PageObjects
         def list_named(list_name)
           lists.find { |list| list.title == list_name }
         end
+
+        def has_availability_restriction?(text=nil)
+          if text
+            availability_restriction_el.text.strip.end_with? text
+          else
+            has_availability_restriction_el?
+          end
+        end
       end
 
-      element :name_input,               '[data-test="web-menu-name"]'
-      element :submit_button,            '[data-test="web-menu-form-submit"]'
-      element :cancel_link,              '[data-test="web-menu-form-cancel"]'
-      element :delete_button,            '[data-test="web-menu-form-delete"]'
-      element :toggle_embed_code_button, '[data-test="get-embed-code"]'
-      element :embed_code,               '[data-test="menu-embed-code"]'
+      element :name_input,                    '[data-test="web-menu-name"]'
+      element :restrict_availability_input,   '[data-test="menu-restricted-availability"]'
+      element :availability_end_time_input,   'input[name="web_menu[availability_end_time]"]'
+      element :availability_start_time_input, 'input[name="web_menu[availability_start_time]"]'
+      element :submit_button,                 '[data-test="web-menu-form-submit"]'
+      element :cancel_link,                   '[data-test="web-menu-form-cancel"]'
+      element :delete_button,                 '[data-test="web-menu-form-delete"]'
+      element :toggle_embed_code_button,      '[data-test="get-embed-code"]'
+      element :embed_code,                    '[data-test="menu-embed-code"]'
 
-      section :preview, WebMenuPreview, '[data-test="web-menu-preview"]'
+      section :preview, WebMenuPreview,         '[data-test="web-menu-preview"]'
       section :lists_available, ListsAvailable, '[data-test="menu-lists-available"]'
-      section :lists_selected, ListsSelected, '[data-test="menu-lists-selected"]'
+      section :lists_selected, ListsSelected,   '[data-test="menu-lists-selected"]'
+
+      include AvailabilityRestrictable
 
       def name
         name_input.value

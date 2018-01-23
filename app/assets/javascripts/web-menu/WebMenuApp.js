@@ -5,6 +5,7 @@ import Buttons from '../shared/MenuFormButtons';
 import EmbedCode from './EmbedCode';
 import ShowCodeButton from './ShowCodeButton';
 import AvailableListGroup from '../shared/AvailableListGroup';
+import AvailabilityInput from '../shared/AvailabilityInput';
 import ChosenListGroup from '../shared/ChosenListGroup';
 import Preview from './Preview';
 import generatePreviewPath from './previewPath';
@@ -20,11 +21,17 @@ class WebMenuApp extends Component {
 
     const {
       name,
+      availabilityStartTime,
+      availabilityEndTime,
+      restrictedAvailability,
       lists,
       listsAvailable
     } = props.webMenu;
 
     this.handleNameChange        = this.handleNameChange.bind(this);
+    this.handleStartTimeChange   = this.handleStartTimeChange.bind(this);
+    this.handleEndTimeChange     = this.handleEndTimeChange.bind(this);
+    this.handleRestrictedAvailChange = this.handleRestrictedAvailChange.bind(this);
     this.addListToMenu           = this.addListToMenu.bind(this);
     this.removeListFromMenu      = this.removeListFromMenu.bind(this);
     this.onShowPriceChange       = this.onShowPriceChange.bind(this);
@@ -36,6 +43,9 @@ class WebMenuApp extends Component {
       name,
       lists,
       listsAvailable,
+      availabilityStartTime,
+      availabilityEndTime,
+      restrictedAvailability,
       showEmbedCode: false
     };
   }
@@ -84,6 +94,25 @@ class WebMenuApp extends Component {
     });
   }
 
+  handleStartTimeChange(newStartTime) {
+    this.setState(prevState => {
+      return { availabilityStartTime: newStartTime };
+    });
+  }
+
+  handleEndTimeChange(newEndTime) {
+    this.setState(prevState => {
+      return { availabilityEndTime: newEndTime };
+    });
+  }
+
+  handleRestrictedAvailChange(event) {
+    const { checked } = event.target;
+    this.setState(prevState => {
+      return { restrictedAvailability: checked };
+    });
+  }
+
   onShowPriceChange(listId, showPrice) {
     this.setState(prevState => {
       const { lists, name, font } = prevState;
@@ -111,7 +140,15 @@ class WebMenuApp extends Component {
   }
 
   render() {
-    const { lists, listsAvailable, name, showEmbedCode } = this.state;
+    const {
+      lists,
+      listsAvailable,
+      name,
+      showEmbedCode,
+      availabilityStartTime,
+      availabilityEndTime,
+      restrictedAvailability
+    } = this.state;
     const previewPath = generatePreviewPath(this.props.webMenu, this.state);
     const totalListCount = lists.length + listsAvailable.length;
     const { embedCode } = this.props.webMenu;
@@ -130,6 +167,47 @@ class WebMenuApp extends Component {
                 type="text"
                 defaultValue={name}
                 onChange={this.handleNameChange}
+              />
+            </div>
+
+            <div className="form-group form-row">
+              <div className="col-sm-3">
+                <input
+                  type="hidden"
+                  name="web_menu[restricted_availability]"
+                  value="0"
+                />
+                <label htmlFor="web-menu-restricted-availability">
+                  <span>Restrict <span className="fa fa-clock-o fa-lg" aria-hidden="true"></span></span>
+                </label>
+                <input
+                  type="checkbox"
+                  name="web_menu[restricted_availability]"
+                  data-test="menu-restricted-availability"
+                  id="web-menu-restricted-availability"
+                  className="d-block"
+                  value="1"
+                  defaultChecked={restrictedAvailability ? 'checked' : undefined}
+                  onChange={this.handleRestrictedAvailChange}
+                />
+              </div>
+
+              <AvailabilityInput
+                show={restrictedAvailability}
+                time={availabilityStartTime}
+                onChange={this.handleStartTimeChange}
+                className="col-sm-4"
+                name="web_menu[availability_start_time]"
+                labelText="Availability Start"
+              />
+
+              <AvailabilityInput
+                show={restrictedAvailability}
+                time={availabilityEndTime}
+                onChange={this.handleEndTimeChange}
+                className="col-sm-4"
+                name="web_menu[availability_end_time]"
+                labelText="Availability End"
               />
             </div>
 

@@ -1,5 +1,6 @@
 .web-menu-form {
   @include draggable-list-item;
+  @include time-picker;
 
   .unstyled-warning-text {
     font-weight: 200;

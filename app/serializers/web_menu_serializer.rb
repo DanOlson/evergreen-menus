@@ -1,5 +1,6 @@
 class WebMenuSerializer
   include Rails.application.routes.url_helpers
+  TIME_FORMAT = '%I:%M %p'
 
   def initialize(web_menu, include_embed_code: true, host:, protocol:)
     @web_menu = web_menu
@@ -12,7 +13,10 @@ class WebMenuSerializer
     additional_attrs = {
       lists: lists.as_json,
       listsAvailable: available_lists.as_json,
-      previewPath: preview_path
+      previewPath: preview_path,
+      availabilityStartTime: availability_start,
+      availabilityEndTime: availability_end,
+      restrictedAvailability: @web_menu.restricted_availability?
     }
 
     additional_attrs.merge!(embedCode: embed_code) if @web_menu.persisted?
@@ -20,6 +24,14 @@ class WebMenuSerializer
   end
 
   private
+
+  def availability_start
+    restriction = @web_menu.availability_start_time and restriction.strftime(TIME_FORMAT)
+  end
+
+  def availability_end
+    restriction = @web_menu.availability_end_time and restriction.strftime(TIME_FORMAT)
+  end
 
   def establishment
     @establishment ||= @web_menu.establishment

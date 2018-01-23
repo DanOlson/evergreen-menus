@@ -1,0 +1,7 @@
+@mixin time-picker {
+  .menu-availability-picker .rc-time-picker-input {
+    line-height: 1.5;
+    height: inherit;
+    @include bootstrap-input;
+  }
+}

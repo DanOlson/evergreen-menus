@@ -15,4 +15,8 @@ class WebMenu < ActiveRecord::Base
   accepts_nested_attributes_for :web_menu_lists, allow_destroy: true
 
   validates :name, :establishment, presence: true
+
+  def restricted_availability?
+    !!availability_start_time
+  end
 end

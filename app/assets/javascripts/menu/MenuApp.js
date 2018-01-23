@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ColumnsInput from './ColumnsInput';
-import AvailabilityInput from './AvailabilityInput';
+import AvailabilityInput from '../shared/AvailabilityInput';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import ChosenListGroup from '../shared/ChosenListGroup';
 import Preview from './MenuPreview';
@@ -177,7 +177,6 @@ class MenuApp extends Component {
       numberOfColumns,
       name,
       template,
-      restricted,
       availabilityStartTime,
       availabilityEndTime,
       restrictedAvailability

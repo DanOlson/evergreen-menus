@@ -121,6 +121,52 @@ feature 'digital display menu management' do
     preview_taps_list = web_menu_form.preview.list_named('Taps')
     expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to_not have_price
     expect(preview_taps_list.item_named('Nitro Milk Stout')).to_not have_price
+
+    ###
+    # Restricted availability
+    expect(web_menu_form).to_not have_availability_start_time_input
+    expect(web_menu_form).to_not have_availability_end_time_input
+
+    web_menu_form.restrict_availability = true
+
+    expect(web_menu_form).to have_availability_start_time_input
+    expect(web_menu_form).to have_availability_end_time_input
+
+    web_menu_form.availability_start = {
+      hour: '04',
+      minute: '30',
+      meridiem: 'PM'
+    }
+    web_menu_form.availability_end = {
+      hour: '11',
+      minute: '00',
+      meridiem: 'PM'
+    }
+    expect(web_menu_form.availability_start).to eq '04:30 PM'
+    expect(web_menu_form.availability_end).to eq '11:00 PM'
+    expect(web_menu_form.preview).to have_availability_restriction '4:30 pm - 11:00 pm'
+
+    web_menu_form.submit
+
+    expect(page).to have_css '[data-test="flash-success"]', text: 'Web menu updated'
+    expect(web_menu_form).to have_restricted_availability
+    expect(web_menu_form.availability_start).to eq '04:30 PM'
+    expect(web_menu_form.availability_end).to eq '11:00 PM'
+    expect(web_menu_form.preview).to have_availability_restriction '4:30 pm - 11:00 pm'
+
+    web_menu_form.restrict_availability = false
+    expect(web_menu_form).to_not have_availability_start_time_input
+    expect(web_menu_form).to_not have_availability_end_time_input
+
+    web_menu_form.submit
+
+    expect(web_menu_form).to_not have_restricted_availability
+    expect(web_menu_form).to_not have_availability_start_time_input
+    expect(web_menu_form).to_not have_availability_end_time_input
+    expect(web_menu_form.preview).to_not have_availability_restriction
+
+    ###
+    # TEST DELETE?
   end
 
   scenario 'manager can manage a web menu for their establishments', :js, :admin do

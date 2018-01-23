@@ -2,8 +2,15 @@
 @import 'icons';
 @import 'bootstrap_overrides';
 @import 'chosen_list_item';
+@import 'time_picker';
 @import 'lists';
 @import 'establishments';
 @import 'menu_form';
 @import 'digital_display_menu_form';
 @import 'web_menu_form';
+
+.rc-time-picker-panel-input {
+  @include bootstrap-input;
+}
+
+@import "~rc-time-picker/assets/index.css";

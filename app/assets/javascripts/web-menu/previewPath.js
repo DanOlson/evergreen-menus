@@ -61,9 +61,20 @@ function buildQueryString(lists, base) {
 }
 
 function generatePreviewPath(webMenu, formState) {
-  const { lists, name } = formState;
+  const {
+    lists,
+    name,
+    restrictedAvailability,
+    availabilityStartTime,
+    availabilityEndTime
+  } = formState;
   const { previewPath, id } = webMenu;
-  const seed = `?web_menu[name]=${name}`;
+  const seed = [
+    `?web_menu[name]=${name}`,
+    `web_menu[restricted_availability]=${restrictedAvailability}`,
+    `web_menu[availability_start_time]=${availabilityStartTime}`,
+    `web_menu[availability_end_time]=${availabilityEndTime}`,
+  ].join('&');
   const queryString = buildQueryString(lists, seed);
   if (id) {
     // Menu is already persisted

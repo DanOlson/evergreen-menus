@@ -1,4 +1,11 @@
 <div class="evergreen-menus">
+  <% if @web_menu.restricted_availability? %>
+    <% start_time = @web_menu.availability_start_time.strftime('%l:%M %P') %>
+    <% end_time = @web_menu.availability_end_time.strftime('%l:%M %P') %>
+    <span class="menu-restricted-availability" data-test="availability-restriction">
+      Available <%= start_time %> - <%= end_time %>
+    </span>
+  <% end %>
   <% @web_menu.lists.each do |list| %>
     <%= render partial: "list", locals: { beers: list.beers, show_description: list.show_description_on_menu?, show_price: list.show_price_on_menu?, title: list.name } %>
   <% end %>
