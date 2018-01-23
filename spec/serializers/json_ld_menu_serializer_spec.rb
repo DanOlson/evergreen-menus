@@ -25,6 +25,10 @@ describe JsonLdMenuSerializer do
       expect(parsed_result['mainEntityOfPage']).to eq 'http://farbarmpls.com/menu/'
     end
 
+    it 'excludes offers for menus with unrestricted availability' do
+      expect(parsed_result).to_not have_key 'offers'
+    end
+
     it 'represents each list as a "hasMenuSection"' do
       expect(parsed_result['hasMenuSection'].size).to eq menu.lists.size
     end
@@ -79,6 +83,24 @@ describe JsonLdMenuSerializer do
           end
           expect(menu_item['offers']['price']).to eq item.price
         end
+      end
+    end
+
+    context 'when the menu has restricted availability' do
+      let(:menu) do
+        create :web_menu, :with_lists, {
+          availability_start_time: '07:30 am',
+          availability_end_time: '12:00 pm'
+        }
+      end
+
+      it 'represents availability as an offer' do
+        expected = {
+          '@type' => 'Offer',
+          'availabilityStarts' => 'T07:30',
+          'availabilityEnds' => 'T12:00'
+        }
+        expect(parsed_result['offers']).to eq expected
       end
     end
   end
