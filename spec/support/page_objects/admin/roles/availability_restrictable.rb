@@ -6,6 +6,9 @@ module PageObjects
       class << self
         def included(base)
           base.class_eval do
+            element :availability_start_time_input, 'input[name$="menu[availability_start_time]"]'
+            element :availability_end_time_input, 'input[name$="menu[availability_end_time]"]'
+            element :restrict_availability_input, '[data-test="menu-restricted-availability"]'
             section :time_picker, TimePicker, '.rc-time-picker-panel'
           end
         end

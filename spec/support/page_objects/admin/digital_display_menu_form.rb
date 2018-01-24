@@ -1,65 +1,9 @@
+require_relative './roles/list_selectable'
+
 module PageObjects
   module Admin
     class DigitalDisplayMenuForm < SitePrism::Page
       set_url_matcher %r{/accounts/\d+/establishments/\d+/digital_displays/(new|\d+/edit)}
-
-      class ListsSelected < SitePrism::Section
-        class List < SitePrism::Section
-          element :remove_button, '[data-test="remove-list"]'
-          element :show_price_input, '[data-test="show-price"]'
-          element :show_price_input_label, '[data-test="show-price-label"]'
-          element :name_wrapper, '[data-test="list-name"]'
-          element :badge, '[data-test="list-badge"]'
-
-          def name
-            name_wrapper.text
-          end
-
-          def badge_text
-            badge.text
-          end
-
-          def has_price_shown?
-            show_price_input.checked?
-          end
-
-          def hide_prices
-            uncheck(show_price_input_label.text) if has_price_shown?
-          end
-
-          def show_prices
-            check(show_price_input_label.text) unless has_price_shown?
-          end
-        end
-
-        sections :lists, List, '[data-test="menu-list"]'
-
-        def empty?
-          lists.size == 0
-        end
-      end
-
-      class ListsAvailable < SitePrism::Section
-        class List < SitePrism::Section
-          element :add_button, '[data-test="add-list"]'
-          element :name_wrapper, '[data-test="list-name"]'
-          element :badge, '[data-test="list-badge"]'
-
-          def name
-            name_wrapper.text
-          end
-
-          def badge_text
-            badge.text
-          end
-        end
-
-        sections :lists, List, '[data-test="menu-list"]'
-
-        def empty?
-          lists.size == 0
-        end
-      end
 
       class DigitalDisplayMenuPreview < SitePrism::Section
         class List < SitePrism::Section
@@ -122,7 +66,7 @@ module PageObjects
         end
       end
 
-      element :name_input,          '[data-test="digital-display-menu-name"]'
+      element :name_input,                   '[data-test="digital-display-menu-name"]'
       element :horizontal_orientation_radio, '[data-test=digital-display-menu-horizontal-orientation-true]'
       element :vertical_orientation_radio,   '[data-test=digital-display-menu-horizontal-orientation-false]'
       element :rotation_interval_input, '[data-test="digital-display-menu-rotation-interval"]'
@@ -137,8 +81,8 @@ module PageObjects
       element :view_display_button,     '[data-test="view-digital-display-menu"]'
 
       section :preview, DigitalDisplayMenuPreview, '[data-test="digital-display-menu-preview"]'
-      section :lists_available, ListsAvailable, '[data-test="menu-lists-available"]'
-      section :lists_selected, ListsSelected, '[data-test="menu-lists-selected"]'
+
+      include ListSelectable
 
       def name=(string)
         name_input.set string
@@ -194,38 +138,6 @@ module PageObjects
 
       def visit_digital_display_menu
         view_display_button.click
-      end
-
-      def available_list_named(name)
-        lists_available.lists.find { |list| list.name == name }
-      end
-
-      def has_available_list?(name)
-        !!available_list_named(name)
-      end
-
-      def selected_list_named(name)
-        lists_selected.lists.find { |list| list.name == name }
-      end
-
-      def has_selected_list?(name)
-        !!selected_list_named(name)
-      end
-
-      def select_list(name)
-        available_list_named(name).add_button.click
-      end
-
-      def remove_list(name)
-        selected_list_named(name).remove_button.click
-      end
-
-      def hide_prices(list:)
-        selected_list_named(list).hide_prices
-      end
-
-      def show_prices(list:)
-        selected_list_named(list).show_prices
       end
     end
   end
