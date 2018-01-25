@@ -78,10 +78,11 @@ describe JsonLdMenuSerializer do
         expect(item_offers).to all satisfy { |o| o['priceCurrency'] == 'USD' }
 
         list.beers.each do |item|
-          menu_item = menu_section['hasMenuItem'].find do |i|
+          menu_items = menu_section['hasMenuItem'].select do |i|
             i['name'] == item.name && i['description'] == item.description
           end
-          expect(menu_item['offers']['price']).to eq item.price
+          expect(menu_items).to_not be_empty
+          expect(menu_items).to include satisfy { |i| i['offers']['price'] == item.price }
         end
       end
     end
