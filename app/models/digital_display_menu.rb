@@ -1,4 +1,20 @@
 class DigitalDisplayMenu < ActiveRecord::Base
+  DEFAULT_THEME = 'Standard'
+
+  ###
+  # This probably goes away if/when we begin to represent themes in the database
+  class ThemeType < ActiveModel::Type::Value
+    def cast(value)
+      Theme.find_by_name(value) || Theme.find_by_name(DEFAULT_THEME)
+    end
+
+    def serialize(value)
+      value.name
+    end
+  end
+
+  attribute :theme, ThemeType.new
+
   has_many :digital_display_menu_lists, -> { order('digital_display_menu_lists.position') }, dependent: :destroy
   has_many :lists, -> {
     select(<<-EOF
@@ -28,24 +44,20 @@ class DigitalDisplayMenu < ActiveRecord::Base
     { value: 600000, name: '10 minutes' }
   ]
 
-  def theme
-    self[:theme] || 'Standard'
-  end
-
   def background_color
-    self[:background_hex_color] || '#242424'
+    self[:background_hex_color] || theme.background_color
   end
 
   def text_color
-    self[:text_hex_color] || '#CCC'
+    self[:text_hex_color] || theme.text_color
   end
 
   def list_title_color
-    self[:list_title_hex_color] || text_color
+    self[:list_title_hex_color] || theme.list_title_color
   end
 
   def font
-    self[:font] || 'Convergence'
+    self[:font] || theme.font
   end
 
   def rotation_interval

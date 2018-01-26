@@ -26,7 +26,7 @@ class DigitalDisplayMenuSerializer
       backgroundColor: background_color,
       textColor: text_color,
       listTitleColor: list_title_color,
-      theme: theme
+      theme: theme.name
     }).to_json
   end
 
