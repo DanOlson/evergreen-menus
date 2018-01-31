@@ -37,20 +37,6 @@ NameVirtualHost *:80
   </Directory>
 </VirtualHost>
 
-
-<VirtualHost *:80>
-  ServerName beermapper.ember
-  ServerAlias www.beermapper.ember
-  DocumentRoot /Users/dan/code/beermapper/ember/dist/
-  <Directory /Users/dan/code/beermapper/ember/dist/>
-    Require all granted
-    Options -MultiViews
-  </Directory>
-  <Location /api/v1/>
-    ProxyPass http://beermapper-api.locl/api/v1/
-  </Location>
-</VirtualHost>
-
 <VirtualHost *:80>
   ServerName my-bar.locl
   ServerAlias www.my-bar.locl
@@ -59,22 +45,6 @@ NameVirtualHost *:80
     Require all granted
     Options -MultiViews
   </Directory>
-</VirtualHost>
-
-
-###
-# Beermapper tests
-<VirtualHost *:80>
-  ServerName test.beermapper.ember
-  ServerAlias www.test.beermapper.ember
-  DocumentRoot /Users/dan/code/beermapper/ember/dist/
-  <Directory /Users/dan/code/beermapper/ember/dist/>
-    Require all granted
-    Options -MultiViews
-  </Directory>
-  <Location /api/v1/>
-    ProxyPass http://test.beermapper-api.locl/api/v1/
-  </Location>
 </VirtualHost>
 
 <VirtualHost *:80>
@@ -102,16 +72,20 @@ NameVirtualHost *:80
 ### Configure /etc/hosts
 
 ```
-127.0.0.1 beermapper-api.locl
 127.0.0.1 admin.evergreenmenus.locl
 127.0.0.1 cdn.evergreenmenus.locl
-127.0.0.1 beermapper.ember
-127.0.0.1 test.beermapper-api.locl
 127.0.0.1 admin.test.evergreenmenus.locl
 127.0.0.1 cdn.test.evergreenmenus.locl
-127.0.0.1 test.beermapper.ember
 127.0.0.1 my-bar.locl
 ```
+
+### Setup Beermapper Frontend
+
+Follow the instructions for [setting up Beermapper](https://github.com/DanOlson/beermapper-frontend)
+
+The bits about Apache and hosts file entries are important. You'll also need to install and build:
+
+`~/code/beermapper-frontend $ npm install && bower install && ember build`
 
 ### Restart Apache
 

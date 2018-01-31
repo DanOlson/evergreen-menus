@@ -34,5 +34,4 @@ append :linked_files, "config/database.yml", "config/app_config.yml"
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-after 'deploy:updated', 'deploy:build_dist'
 after 'deploy:updated', 'deploy:assets:precompile'
