@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import BeerInput from './BeerInput';
+import ListItemInputGroup from './ListItemInputGroup';
 import TypeSelect from './TypeSelect';
 import Panel from '../shared/Panel';
 
@@ -49,7 +49,7 @@ class List extends Component {
     event.preventDefault();
     const beers     = this.state.beers;
     const nextAppId = beers.length;
-    const newBeer   = { name: '', appId: nextAppId };
+    const newBeer   = { appId: nextAppId };
     this.setState({ beers: [...beers, newBeer] });
   }
 
@@ -57,14 +57,14 @@ class List extends Component {
     const { listId, typeOptions } = this.props;
     const { name, type } = this.state;
     const inputs = this.state.beers.map((beer, index, array) => {
-      const beerInputProps = {
+      const listItemInputProps = {
         beer,
         listId,
         deleteBeer: this.deleteBeer,
         key: `${beer}-${index}`
       };
 
-      return <BeerInput {...beerInputProps} />;
+      return <ListItemInputGroup {...listItemInputProps} />;
     });
 
     return (
