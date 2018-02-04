@@ -1,4 +1,25 @@
 class Beer < ActiveRecord::Base
+  class LabelsType < ActiveModel::Type::Value
+    DELIMITER = ','
+
+    def cast(values)
+      return unless values
+
+      if values.is_a?(String)
+        # We read it from the DB
+        values.split(DELIMITER).map { |l| Label.new name: l }
+      else
+        values
+      end
+    end
+
+    def serialize(values)
+      values.map(&:name).join(DELIMITER)
+    end
+  end
+
+  attribute :labels, LabelsType.new
+
   belongs_to :establishment
   belongs_to :list
 
