@@ -4,6 +4,7 @@ module PageObjects
       element :name_input, '[data-test^="beer-name-input-"]'
       element :price_input, '[data-test^="beer-price-input-"]'
       element :description_input, '[data-test^="beer-description-input-"]'
+      element :toggle_flyout_button, '[data-test="expand-list-item"]'
       element :remove_button, '[data-test^="remove-beer-"]'
       element :keep_button, '[data-test^="keep-beer-"]'
       element :destroy_flag, '[data-test="marked-for-removal"]', visible: false
@@ -17,7 +18,11 @@ module PageObjects
       end
 
       def description=(description)
+        toggle_flyout_button.click unless has_description_input?
+
         description_input.set description
+
+        toggle_flyout_button.click
       end
 
       def marked_for_removal?

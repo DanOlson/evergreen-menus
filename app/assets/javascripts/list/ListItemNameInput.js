@@ -5,7 +5,7 @@ class ListItemNameInput extends Component {
   render () {
     const { appId, value, className } = this.props;
     return (
-      <div className="col-sm-3 col-xs-8">
+      <div className="col-sm-4 col-xs-8">
         <label htmlFor={`list_beers_attributes_${appId}_name`} className="sr-only">
           Name
         </label>

@@ -5,18 +5,19 @@ class ListItemDescriptionInput extends Component {
   render () {
     const { appId, value } = this.props;
     return (
-      <div className="col-sm-6 col-xs-8">
+      <div className="col-sm-4 col-xs-8">
         <label htmlFor={`list_beers_attributes_${appId}_description`} className="sr-only">
           Description
         </label>
-        <input
+        <textarea
           data-test={`beer-description-input-${appId}`}
           placeholder="Description"
           defaultValue={value}
+          rows="3"
           name={`list[beers_attributes][${appId}][description]`}
           id={`list_beers_attributes_${appId}_description`}
-          className="form-control"
-        />
+          className="form-control">
+        </textarea>
       </div>
     );
   }

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import ListItemInputGroup from './ListItemInputGroup';
 import TypeSelect from './TypeSelect';
 import Panel from '../shared/Panel';
+import { applyAssign } from '../polyfills/Object'
+
+applyAssign();
 
 class List extends Component {
   constructor(props) {
