@@ -50,9 +50,7 @@ class ListsController < ApplicationController
       :id,
       :name,
       :type,
-      :show_price,
-      :show_description,
-      { beers_attributes: [:id, :name, :price, :description, :_destroy] }
+      { beers_attributes: [:id, :name, :price, :description, { labels: [] }, :_destroy] }
     )
   end
 end

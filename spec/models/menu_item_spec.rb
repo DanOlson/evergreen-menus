@@ -14,6 +14,13 @@ describe 'MenuItem' do
       expect(instance.labels.map(&:name)).to eq ['Spicy']
     end
 
+    it 'labels can be assigned from strings' do
+      instance.labels = ['Spicy', 'Vegetarian']
+      expect(instance.labels.map(&:name)).to eq ['Spicy', 'Vegetarian']
+      instance.save && instance.reload
+      expect(instance.labels.map(&:name)).to eq ['Spicy', 'Vegetarian']
+    end
+
     it 'multiple labels can be saved' do
       instance.labels = [
         Label.new(name: 'Spicy'),

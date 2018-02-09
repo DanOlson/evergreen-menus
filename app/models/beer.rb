@@ -7,14 +7,14 @@ class Beer < ActiveRecord::Base
 
       if values.is_a?(String)
         # We read it from the DB
-        values.split(DELIMITER).map { |l| Label.new name: l }
+        values.split(DELIMITER).map { |l| Label.from l }
       else
         values
       end
     end
 
     def serialize(values)
-      values.map(&:name).join(DELIMITER)
+      values && values.map(&:name).join(DELIMITER)
     end
   end
 
@@ -38,6 +38,10 @@ class Beer < ActiveRecord::Base
   # Use links hash, maybe?
   def active_model_serializer
     V1::BeerSerializer
+  end
+
+  def labels=(labels)
+    self[:labels] = labels.map { |l| Label.from l }
   end
 
   def price
