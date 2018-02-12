@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import ListItemInputGroup from './ListItemInputGroup';
 import TypeSelect from './TypeSelect';
 import Panel from '../shared/Panel';
-import { applyAssign } from '../polyfills/Object'
+import { applyAssign } from '../polyfills/Object';
+import { applyIncludes } from '../polyfills/Array';
 
 applyAssign();
+applyIncludes();
 
 class List extends Component {
   constructor(props) {
@@ -57,12 +59,13 @@ class List extends Component {
   }
 
   render() {
-    const { listId, typeOptions } = this.props;
+    const { listId, typeOptions, menuItemLabels } = this.props;
     const { name, type } = this.state;
     const inputs = this.state.beers.map((beer, index, array) => {
       const listItemInputProps = {
         beer,
         listId,
+        menuItemLabels,
         deleteBeer: this.deleteBeer,
         key: `${beer}-${index}`
       };
@@ -118,6 +121,7 @@ List.propTypes = {
   beers: PropTypes.array.isRequired,
   name: PropTypes.string.isRequired,
   typeOptions: PropTypes.array.isRequired,
+  menuItemLabels: PropTypes.array.isRequired,
   listId: PropTypes.number
 }
 

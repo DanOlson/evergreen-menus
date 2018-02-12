@@ -52,12 +52,14 @@ class ListItemInputGroup extends Component {
       name,
       price,
       description,
+      labels,
       showFlyout
     } = this.state;
     const className = markedForRemoval ? 'remove-beer' : '';
+    const { menuItemLabels } = this.props;
 
     return (
-      <div data-test={`beer-input`} className={className}>
+      <div data-test="beer-input" className={className}>
         <div className="form-row">
           <ListItemNameInput appId={appId} value={name} className={className} />
           <ListItemPriceInput appId={appId} value={price} />
@@ -74,7 +76,7 @@ class ListItemInputGroup extends Component {
         </div>
         <Flyout show={showFlyout}>
           <ListItemDescriptionInput appId={appId} value={description} />
-          <ListItemLabelsInput />
+          <ListItemLabelsInput appId={appId} menuItemLabels={menuItemLabels} appliedLabels={labels} />
         </Flyout>
         <div className="form-row">
           <div className="col-sm-10 col-xs-12 beer-separator"></div>
@@ -98,6 +100,7 @@ class ListItemInputGroup extends Component {
 
 ListItemInputGroup.propTypes = {
   beer: PropTypes.object.isRequired,
+  menuItemLabels: PropTypes.array.isRequired,
   deleteBeer: PropTypes.func.isRequired
 }
 

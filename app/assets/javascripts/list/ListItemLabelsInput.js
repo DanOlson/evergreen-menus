@@ -1,34 +1,37 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ListItemLabelInput from './ListItemLabelInput';
 
 class ListItemLabelsInput extends Component {
   render () {
+    const { appId, menuItemLabels, appliedLabels } = this.props
+    const labelInputs = menuItemLabels.map((label, idx) => {
+      const labelProps = {
+        appId,
+        label,
+        checked: appliedLabels.includes(label),
+        key: idx
+      };
+      return <ListItemLabelInput {...labelProps} />
+    })
+
     return (
       <div className="col-sm-4 col-xs-8">
-        <div className="form-check">
-          <input type="hidden" value="0" />
-          <input className="" type="checkbox" value="1" id="spicy" />
-          <label className="form-check-label" htmlFor="spicy">
-            Spicy
-          </label>
-        </div>
-        <div className="form-check">
-          <input type="hidden" value="0" />
-          <input className="" type="checkbox" value="1" id="gf" />
-          <label className="form-check-label" htmlFor="gf">
-            Gluten Free
-          </label>
-        </div>
-        <div className="form-check">
-          <input type="hidden" value="0" />
-          <input className="" type="checkbox" value="1" id="vegan" />
-          <label className="form-check-label" htmlFor="vegan">
-            Vegan
-          </label>
-        </div>
+        <input type="hidden" name={`list[beers_attributes][${appId}][labels][]`} />
+        {labelInputs}
       </div>
-    );
+    )
   }
+}
+
+ListItemLabelsInput.defaultProps = {
+  appliedLabels: []
+}
+
+ListItemLabelsInput.propTypes = {
+  appId: PropTypes.number.isRequired,
+  menuItemLabels: PropTypes.array.isRequired,
+  appliedLabels: PropTypes.array
 }
 
 export default ListItemLabelsInput;

@@ -5,7 +5,7 @@ class Flyout extends Component {
   render () {
     const vis = this.props.show ? '' : 'hidden';
     return (
-      <div className={`flyout form-row ${vis}`}>
+      <div className={`flyout form-row ${vis}`} data-test="menu-item-flyout">
         {this.props.children}
       </div>
     );

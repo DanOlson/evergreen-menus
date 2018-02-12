@@ -522,6 +522,51 @@ feature 'establishment management' do
     expect(page).to have_css "div.alert-success", text: "List deleted"
   end
 
+  scenario 'labels can be applied to list items', :admin, :js do
+    establishment = create :establishment, name: "Wally's", account: user.account
+    login user
+
+    click_link "Wally's"
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    establishment_form.add_list
+
+    form = PageObjects::Admin::ListForm.new
+
+    expect(form).to be_empty
+
+    form.set_name 'Apps'
+    form.list_type = 'Appetizers'
+
+    form.add_beer('Tuna Tartare', {
+      price: '15',
+      description: 'Raw tuna on hard bread',
+      labels: ['Vegetarian']
+    })
+    form.add_beer('Buffalo Wings', {
+      price: '10',
+      description: 'Two and a half chickens worth of delicious bone-in wings',
+      labels: ['Spicy', 'Gluten Free']
+    })
+
+    form.submit
+    expect(page).to have_css "div.alert-success", text: "List created"
+    establishment_form.click_list_named('Apps')
+
+    tuna = form.beer_named('Tuna Tartare')
+    expect(tuna).to have_labels 'Vegetarian'
+
+    wings = form.beer_named('Buffalo Wings')
+    expect(wings).to have_labels 'Spicy', 'Gluten Free'
+
+    wings.labels = []
+
+    form.submit
+    establishment_form.click_list_named('Apps')
+
+    wings = form.beer_named('Buffalo Wings')
+    expect(wings).to have_no_labels
+  end
+
   scenario 'contextual help', :admin, :js do
     login user
     find('[data-test="add-establishment"]').click

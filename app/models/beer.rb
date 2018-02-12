@@ -63,7 +63,8 @@ class Beer < ActiveRecord::Base
       updated_at: updated_at,
       establishment_id: establishment_id,
       price: price,
-      description: description
+      description: description,
+      labels: Array(labels).map(&:name)
     }
   end
 end

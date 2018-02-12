@@ -5,9 +5,11 @@ module PageObjects
       element :price_input, '[data-test^="beer-price-input-"]'
       element :description_input, '[data-test^="beer-description-input-"]'
       element :toggle_flyout_button, '[data-test="expand-list-item"]'
+      element :flyout, '[data-test="menu-item-flyout"]'
       element :remove_button, '[data-test^="remove-beer-"]'
       element :keep_button, '[data-test^="keep-beer-"]'
       element :destroy_flag, '[data-test="marked-for-removal"]', visible: false
+      elements :label_inputs, '[data-test="menu-item-label-input"]'
 
       def name=(name)
         name_input.set name
@@ -23,6 +25,29 @@ module PageObjects
         description_input.set description
 
         toggle_flyout_button.click
+      end
+
+      def labels=(labels)
+        toggle_flyout_button.click unless has_flyout?
+
+        label_inputs.each do |input|
+          input.set labels.include?(input.value)
+        end
+      end
+
+      def has_labels?(*labels)
+        toggle_flyout_button.click unless has_flyout?
+
+        candidates = label_inputs.select do |input|
+          labels.include? input.value
+        end
+
+        candidates.all? &:checked?
+      end
+
+      def has_no_labels?
+        toggle_flyout_button.click unless has_flyout?
+        label_inputs.none? &:checked?
       end
 
       def marked_for_removal?
@@ -67,12 +92,13 @@ module PageObjects
         list_name_input.set list_name
       end
 
-      def add_beer(beer_name, price: nil, description: nil)
+      def add_beer(beer_name, price: nil, description: nil, labels: [])
         add_beer_button.click
         new_beer             = beers.last
         new_beer.name        = beer_name
         new_beer.price       = price
         new_beer.description = description
+        new_beer.labels      = labels
       end
 
       def remove_beer(beer_name)

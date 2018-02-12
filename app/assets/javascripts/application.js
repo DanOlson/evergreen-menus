@@ -20,14 +20,14 @@ function applyConfirm(element) {
 }
 
 (function bootstrap() {
-  const appRoot            = document.getElementById('app-root');
+  const listRoot           = document.getElementById('app-root');
   const menuRoot           = document.getElementById('menu-app-root');
   const webMenuRoot        = document.getElementById('web-menu-app-root');
   const digitalDisplayRoot = document.getElementById('digital-display-app-root');
   const confirmNodes       = document.querySelectorAll('[data-confirm]');
 
-  if (appRoot) {
-    render(<ListApp {...window._EVERGREEN} />, appRoot);
+  if (listRoot) {
+    render(<ListApp {...window._EVERGREEN} />, listRoot);
   }
 
   if (menuRoot) {

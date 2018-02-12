@@ -20,6 +20,15 @@ module ListHelper
     'other'      => COFFEE
   }
 
+  MENU_ITEM_LABELS = [
+    'Gluten Free',
+    'Vegan',
+    'Vegetarian',
+    'Spicy',
+    'Dairy Free',
+    'House Special'
+  ]
+
   def list_type_icon(list)
     icon = ICONS_BY_TYPE.fetch(list.type) { CUTLERY }
     content_tag(:span, nil, {
@@ -40,7 +49,11 @@ module ListHelper
     end.to_json
   end
 
+  def menu_item_labels
+    MENU_ITEM_LABELS.to_json
+  end
+
   def list_json(list)
-    list.as_json.merge(beers: list.beers.as_json).to_json
+    ListSerializer.new(list).call
   end
 end
