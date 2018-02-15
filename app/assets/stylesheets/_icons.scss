@@ -9,6 +9,37 @@
   font-style: normal;
 }
 
+@font-face {
+    font-family: 'Glyphter';
+    src: url('../fonts/Glyphter.eot');
+    src: url('../fonts/Glyphter.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Glyphter.woff') format('woff'),
+         url('../fonts/Glyphter.ttf') format('truetype'),
+         url('../fonts/Glyphter.svg#Glyphter') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+[class*='glyphter-']:before{
+	display: inline-block;
+   font-family: 'Glyphter';
+   font-style: normal;
+   font-weight: normal;
+   line-height: 1;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale
+}
+.glyphter-noun_990484_cc:before{content:'\0041';}
+.glyphter-noun_990478_cc:before{content:'\0042';}
+.glyphter-noun_979963_cc:before{content:'\0043';}
+.glyphter-noun_979958_cc:before{content:'\0044';}
+.glyphter-noun_979946_cc:before{content:'\0045';}
+.glyphter-noun_707489_cc:before{content:'\0046';}
+.glyphter-noun_990477_cc:before{content:'\0047';}
+.glyphter-noun_990480_cc:before{content:'\0048';}
+.glyphter-noun_979944_cc:before{content:'\0049';}
+.glyphter-noun_1266172_cc:before{content:'\004a';}
+.glyphter-noun_40436_cc:before{content:'\004b';}
+
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;

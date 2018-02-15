@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+const iconClassesByLabel = {
+  'Gluten Free': 'glyphter-noun_979958_cc',
+  'Vegan': 'glyphter-noun_990478_cc',
+  'Vegetarian': 'glyphter-noun_40436_cc',
+  'Spicy': 'glyphter-noun_707489_cc',
+  'Dairy Free': 'glyphter-noun_990484_cc',
+  'House Special': 'glyphter-noun_1266172_cc'
+}
+
+function icon(label) {
+  return iconClassesByLabel[label]
+}
+
 class ListItemLabelInput extends Component {
   render() {
     const { appId, label, checked } = this.props
@@ -18,7 +31,7 @@ class ListItemLabelInput extends Component {
           value={label}
         />
         <label className="form-check-label" htmlFor={inputId}>
-          {label}
+          <span className={`fa ${icon(label)}`}></span> {label}
         </label>
       </div>
     )
