@@ -41,7 +41,7 @@ class Beer < ActiveRecord::Base
   end
 
   def labels=(labels)
-    self[:labels] = labels.map { |l| Label.from l }
+    self[:labels] = labels.map { |l| Label.from l }.reject { |l| l.name.empty? }
   end
 
   def price
@@ -64,7 +64,7 @@ class Beer < ActiveRecord::Base
       establishment_id: establishment_id,
       price: price,
       description: description,
-      labels: Array(labels).map(&:name)
+      labels: Array(labels)
     }
   end
 end

@@ -1,37 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const iconClassesByLabel = {
-  'Gluten Free': 'glyphter-noun_979958_cc',
-  'Vegan': 'glyphter-noun_990478_cc',
-  'Vegetarian': 'glyphter-noun_40436_cc',
-  'Spicy': 'glyphter-noun_707489_cc',
-  'Dairy Free': 'glyphter-noun_990484_cc',
-  'House Special': 'glyphter-noun_1266172_cc'
-}
-
-function icon(label) {
-  return iconClassesByLabel[label]
-}
-
 class ListItemLabelInput extends Component {
   render() {
     const { appId, label, checked } = this.props
-    const inputId = `${label}-${appId}`
+    const inputId = `${label.name}-${appId}`
 
     return (
       <div className="form-check">
         <input
           data-test="menu-item-label-input"
-          className=""
           type="checkbox"
           defaultChecked={checked}
           id={inputId}
           name={`list[beers_attributes][${appId}][labels][]`}
-          value={label}
+          value={label.name}
         />
         <label className="form-check-label" htmlFor={inputId}>
-          <span className={`fa ${icon(label)}`}></span> {label}
+          <span className={`fa glyphter-${label.icon}`}></span> {label.name}
         </label>
       </div>
     )
@@ -43,7 +29,7 @@ ListItemLabelInput.defaultProps = {
 
 ListItemLabelInput.propTypes = {
   appId: PropTypes.number.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.object.isRequired,
   checked: PropTypes.bool
 }
 

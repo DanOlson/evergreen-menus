@@ -4,10 +4,10 @@ import ListItemInputGroup from './ListItemInputGroup';
 import TypeSelect from './TypeSelect';
 import Panel from '../shared/Panel';
 import { applyAssign } from '../polyfills/Object';
-import { applyIncludes } from '../polyfills/Array';
+import { applyFind } from '../polyfills/Array';
 
 applyAssign();
-applyIncludes();
+applyFind();
 
 class List extends Component {
   constructor(props) {

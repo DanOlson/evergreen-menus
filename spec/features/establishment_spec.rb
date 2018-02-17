@@ -256,7 +256,7 @@ feature 'establishment management' do
     fill_in 'search-field', with: 'Deschutes'
     click_button 'Search'
 
-    find('div[title="Lebowski"]').trigger('click')
+    find('div[title="Lebowski"]').click
     within('.map-marker') do
       expect(page).to have_link 'Lebowski'
       expect(page).to have_css 'li', text: 'Deschutes Pinedrops'
@@ -317,7 +317,7 @@ feature 'establishment management' do
     fill_in 'search-field', with: 'Deschutes'
     click_button 'Search'
 
-    find('div[title="Lebowski"]').trigger('click')
+    find('div[title="Lebowski"]').click
     within('.map-marker') do
       expect(page).to have_link 'Lebowski'
       expect(page).to have_css 'li', text: 'Deschutes Pinedrops'
@@ -384,7 +384,7 @@ feature 'establishment management' do
     fill_in 'search-field', with: 'Deschutes'
     click_button 'Search'
 
-    find('div[title="Lebowski"]').trigger('click')
+    find('div[title="Lebowski"]').click
     within('.map-marker') do
       expect(page).to have_link 'Lebowski'
       expect(page).to have_css 'li', text: 'Deschutes Pinedrops'

@@ -12,18 +12,30 @@ describe ListSerializer do
         create :menu_item, list: list, name: 'Herp Derp Delicious', labels: ['Gluten Free', 'Vegan']
       end
 
-      it 'represents menu items labels as an array of strings' do
+      it 'represents menu item labels' do
         result = instance.call
         parsed_result = JSON.parse result
 
         general_tsos_chicken = parsed_result['beers'].find { |b| b['name'] == 'General Tso Chicken' }
-        expect(general_tsos_chicken['labels']).to eq ['Spicy']
+        expect(general_tsos_chicken['labels']).to eq [{
+          'name' => 'Spicy',
+          'icon' => 'noun_707489_cc'
+        }]
 
         general_tsos_chicken = parsed_result['beers'].find { |b| b['name'] == 'Vegetable Lo Mein' }
-        expect(general_tsos_chicken['labels']).to eq ['Vegetarian']
+        expect(general_tsos_chicken['labels']).to eq [{
+          'name' => 'Vegetarian',
+          'icon' => 'noun_40436_cc'
+        }]
 
         general_tsos_chicken = parsed_result['beers'].find { |b| b['name'] == 'Herp Derp Delicious' }
-        expect(general_tsos_chicken['labels']).to eq ['Gluten Free', 'Vegan']
+        expect(general_tsos_chicken['labels']).to eq [{
+          'name' => 'Gluten Free',
+          'icon' => 'noun_979958_cc'
+        },{
+          'name' => 'Vegan',
+          'icon' => 'noun_990478_cc'
+        }]
       end
     end
 

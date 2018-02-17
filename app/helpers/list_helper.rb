@@ -27,7 +27,7 @@ module ListHelper
     'Spicy',
     'Dairy Free',
     'House Special'
-  ]
+  ].map { |name| Label.from(name) }
 
   def list_type_icon(list)
     icon = ICONS_BY_TYPE.fetch(list.type) { CUTLERY }

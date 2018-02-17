@@ -6,10 +6,11 @@ class ListItemLabelsInput extends Component {
   render () {
     const { appId, menuItemLabels, appliedLabels } = this.props
     const labelInputs = menuItemLabels.map((label, idx) => {
+      const isChecked = !!appliedLabels.find(l => l.name === label.name)
       const labelProps = {
         appId,
         label,
-        checked: appliedLabels.includes(label),
+        checked: isChecked,
         key: idx
       };
       return <ListItemLabelInput {...labelProps} />
