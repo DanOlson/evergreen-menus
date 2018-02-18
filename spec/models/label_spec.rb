@@ -66,6 +66,53 @@ describe Label do
     end
   end
 
+  describe '#glyph' do
+    let(:instance) { Label.new(name: label_name) }
+    subject { instance.glyph }
+
+    context 'with label named "Gluten Free"' do
+      let(:label_name) { 'Gluten Free' }
+
+      it { is_expected.to eq "\u0044" }
+    end
+
+    context 'with label named "Vegan"' do
+      let(:label_name) { 'Vegan' }
+
+      it { is_expected.to eq "\u0042" }
+    end
+
+    context 'with label named "Vegetarian"' do
+      let(:label_name) { 'Vegetarian' }
+
+      it { is_expected.to eq "\u004b" }
+    end
+
+    context 'with label named "Spicy"' do
+      let(:label_name) { 'Spicy' }
+
+      it { is_expected.to eq "\u0046" }
+    end
+
+    context 'with label named "Dairy Free"' do
+      let(:label_name) { 'Dairy Free' }
+
+      it { is_expected.to eq "\u0041" }
+    end
+
+    context 'with label named "House Special"' do
+      let(:label_name) { 'House Special' }
+
+      it { is_expected.to eq "\u004a" }
+    end
+
+    context 'when there is no icon for the label' do
+      let(:label_name) { 'Cold as ice' }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
   describe '#as_json' do
     context 'when the label has an icon' do
       let(:instance) { Label.new(name: 'Spicy') }

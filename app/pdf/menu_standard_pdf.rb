@@ -18,6 +18,11 @@ class MenuStandardPdf
   end
 
   def generate
+    font_families.update(
+      "glyphter" => {
+        normal: "#{Rails.root}/app/assets/fonts/Glyphter.ttf"
+      }
+    )
     font menu.font
 
     header
@@ -114,9 +119,16 @@ class MenuStandardPdf
       },
       {
         text: beer.description,
-        size: font_size - 2,
+        size: font_size - 2
+      },
+      *Array(beer.labels).map { |label|
+        {
+          text: " #{label.glyph}",
+          size: font_size - 2,
+          font: 'glyphter'
+        }
       }
-    ].reject { |f| f[:text].nil? }
+    ].reject { |f| f.nil? || f[:text].nil? }
     name_box_width_multiplier = show_price ?  0.6 : 1
     name_box = Prawn::Text::Formatted::Box.new(fragments, {
       at: [bounds.left, current_y_pos],

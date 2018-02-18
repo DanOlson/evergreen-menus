@@ -1,11 +1,29 @@
 class Label
-  ICONS_BY_NAME = {
-    'Gluten Free' => 'noun_979958_cc',
-    'Vegan' => 'noun_990478_cc',
-    'Vegetarian' => 'noun_40436_cc',
-    'Spicy' => 'noun_707489_cc',
-    'Dairy Free' => 'noun_990484_cc',
-    'House Special' => 'noun_1266172_cc'
+  ICON_DATA_BY_NAME = {
+    'Gluten Free' => {
+      icon: 'noun_979958_cc',
+      glyph: "\u0044"
+    },
+    'Vegan' => {
+      icon: 'noun_990478_cc',
+      glyph: "\u0042"
+    },
+    'Vegetarian' => {
+      icon: 'noun_40436_cc',
+      glyph: "\u004b"
+    },
+    'Spicy' => {
+      icon: 'noun_707489_cc',
+      glyph: "\u0046"
+    },
+    'Dairy Free' => {
+      icon: 'noun_990484_cc',
+      glyph: "\u0041"
+    },
+    'House Special' => {
+      icon: 'noun_1266172_cc',
+      glyph: "\u004a"
+    }
   }
 
   class << self
@@ -22,7 +40,11 @@ class Label
   end
 
   def icon
-    ICONS_BY_NAME[name]
+    data = ICON_DATA_BY_NAME[name] and data[:icon]
+  end
+
+  def glyph
+    data = ICON_DATA_BY_NAME[name] and data[:glyph]
   end
 
   def as_json(*)
