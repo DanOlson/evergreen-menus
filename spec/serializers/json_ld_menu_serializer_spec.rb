@@ -104,5 +104,55 @@ describe JsonLdMenuSerializer do
         expect(parsed_result['offers']).to eq expected
       end
     end
+
+    describe 'representing dietary restrictions' do
+      let(:menu) do
+        menu = create :menu, name: 'Dinner'
+        list = create :list, name: 'Entrees', establishment: menu.establishment
+        create :menu_item, name: 'some dish', list: list, labels: [label]
+        menu.add_list list
+        menu
+      end
+
+      subject do
+        parsed_result['hasMenuSection'][0]['hasMenuItem'][0]['suitableForDiet']
+      end
+
+      context 'with "Gluten Free" label' do
+        let(:label) { 'Gluten Free' }
+
+        it { is_expected.to eq 'http://schema.org/GlutenFreeDiet' }
+      end
+
+      context 'with "Vegan" label' do
+        let(:label) { 'Vegan' }
+
+        it { is_expected.to eq 'http://schema.org/VeganDiet' }
+      end
+
+      context 'with "Vegetarian" label' do
+        let(:label) { 'Vegetarian' }
+
+        it { is_expected.to eq 'http://schema.org/VegetarianDiet' }
+      end
+
+      context 'with "Dairy Free" label' do
+        let(:label) { 'Dairy Free' }
+
+        it { is_expected.to eq 'http://schema.org/LowLactoseDiet' }
+      end
+
+      context 'with "Spicy" label' do
+        let(:label) { 'Spicy' }
+
+        it { is_expected.to eq nil }
+      end
+
+      context 'with "House Special" label' do
+        let(:label) { 'House Special' }
+
+        it { is_expected.to eq nil }
+      end
+    end
   end
 end

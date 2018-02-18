@@ -7,6 +7,12 @@ class JsonLdMenuSerializer
   LANG_EN = 'English'
   SCHEMA_DOT_ORG = 'http://schema.org'
   SCHEMA_TIME_FORMAT = 'T%H:%M'
+  RESTRICTED_DIETS_BY_LABEL_NAME = {
+    'Gluten Free' => 'GlutenFreeDiet',
+    'Vegan' => 'VeganDiet',
+    'Vegetarian' => 'VegetarianDiet',
+    'Dairy Free' => 'LowLactoseDiet'
+  }
 
   def initialize(menu:, url:)
     @menu = menu
@@ -44,6 +50,7 @@ class JsonLdMenuSerializer
 
   def render_items(list)
     list.beers.map do |item|
+      label = Array(item.labels).first
       {
         '@type': MENU_ITEM_TYPE,
         name: item.name,
@@ -53,8 +60,16 @@ class JsonLdMenuSerializer
           price: item.price,
           priceCurrency: USD
         }
-      }
+      }.merge restricted_diet_for(label)
     end
+  end
+
+  def restricted_diet_for(label)
+    label = Label.from(label)
+    restricted_diet = RESTRICTED_DIETS_BY_LABEL_NAME.fetch(label.name) do
+      return {}
+    end
+    { suitableForDiet: [SCHEMA_DOT_ORG, restricted_diet].join('/') }
   end
 
   def restricted_availability
