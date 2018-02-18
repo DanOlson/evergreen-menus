@@ -118,3 +118,12 @@ webpack --watch
 
 Navigate to http://beermapper.ember
 Navigate to http://admin.beermapper.locl
+
+## Development Workflows
+
+### Adding new menu item icons (dietary restrictions, etc.)
+
+We've been getting icons from [The Noun Project](https://thenounproject.com) and converting them to web fonts with [Glyphter](https://glyphter.com/). Assuming you want to add more, you can download the SVGs, upload them to Glyphter, download the fonts from Glyphter and replace the Glyphter.* files in app/assets/fonts with the newly downloaded replacements. This amounts to a  nuke-and-pave scenario, where you'll lose any icons you don't upload to Glyphter. To mitigate this, all the existing SVGs are in app/assets/images and can be uploaded to Glyphter along with any new SVGs form which you want to make fonts. Lastly, you'll need to edit app/assets/stylesheets/_icons.scss to add new entries from the downloaded CSS file from Glyphter
+
+Current food intolerance icons were from:
+https://thenounproject.com/olguioo/collection/food-intolerances/?i=979944
