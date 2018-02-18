@@ -18,6 +18,11 @@ class MenuCenteredPdf
   end
 
   def generate
+    font_families.update(
+      "glyphter" => {
+        normal: "#{Rails.root}/app/assets/fonts/Glyphter.ttf"
+      }
+    )
     font menu.font
 
     header
@@ -163,11 +168,22 @@ class MenuCenteredPdf
     ]
 
     if beer.description
-      fragments << {
-        text: beer.description + "\n",
+      fragments += [{
+        text: beer.description,
         size: font_size,
         styles: [:italic]
-      }
+      },
+      *Array(beer.labels).map { |label|
+        {
+          text: " #{label.glyph}",
+          size: font_size - 2,
+          font: 'glyphter'
+        }
+      },
+      {
+        text: "\n",
+        size: font_size,
+      }]
     end
 
     if show_price && beer.price
