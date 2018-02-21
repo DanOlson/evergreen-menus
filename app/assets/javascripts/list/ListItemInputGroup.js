@@ -11,7 +11,7 @@ import ToggleFlyoutButton from './ToggleFlyoutButton';
 class ListItemInputGroup extends Component {
   constructor (props) {
     super(props);
-    this.state = Object.assign({ showFlyout: false }, props.beer);
+    this.state = Object.assign({ showFlyout: !props.beer.id }, props.beer);
     this.onRemove = this.onRemove.bind(this);
     this.onKeep = this.onKeep.bind(this);
     this.toggleFlyout = this.toggleFlyout.bind(this);
