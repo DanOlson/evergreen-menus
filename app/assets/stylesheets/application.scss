@@ -1,8 +1,10 @@
 @import 'variables';
 @import 'utils';
 @import 'icons';
-@import 'header';
+@import 'base';
 @import 'bootstrap_overrides';
+
+@import 'header';
 @import 'chosen_list_item';
 @import 'time_picker';
 @import 'lists';
