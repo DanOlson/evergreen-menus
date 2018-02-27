@@ -278,7 +278,7 @@ beers = [
 ]
 
 Establishment.all.each do |est|
-  list = est.lists.create!(name: 'Beers', type: List::TYPE_BEER)
+  list = est.lists.create!(name: 'Beers', type: List::TYPE_DRINK)
   beers.shuffle.take(16).each do |beer_name|
     list.beers.create!({
       name: beer_name.encode,

@@ -1,16 +1,8 @@
 class List < ActiveRecord::Base
   TYPES = [
-    TYPE_BEER = 'beer',
-    TYPE_WINE = 'wine',
-    'spirits',
-    'cocktails',
-    'appetizers',
-    'breakfast',
-    'lunch',
-    TYPE_DINNER = 'dinner',
-    'happy hour',
-    'late night',
-    'other'
+    TYPE_FOOD  = 'food',
+    TYPE_DRINK = 'drink',
+    TYPE_OTHER = 'other'
   ]
 
   class << self
@@ -29,6 +21,6 @@ class List < ActiveRecord::Base
   accepts_nested_attributes_for :beers, allow_destroy: true, reject_if: ->(b) { b[:name].blank? }
 
   def type
-    self[:type] || TYPE_BEER
+    self[:type] || TYPE_FOOD
   end
 end

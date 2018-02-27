@@ -8,7 +8,7 @@ describe "updating an establishment's list" do
         address: '123 Main',
         url: 'http://beermapper.com/foobar'
       })
-      est.lists.create!(name: 'Beers', type: List::TYPE_BEER)
+      est.lists.create!(name: 'Beers', type: List::TYPE_DRINK)
       est
     end
     let(:scraper_model) do
@@ -51,7 +51,7 @@ describe "updating an establishment's list" do
         postal_code: '55424',
         url: 'http://www.edinagrill.com/current-tap-list'
       })
-      est.lists.create!(name: 'Beers', type: List::TYPE_BEER)
+      est.lists.create!(name: 'Beers', type: List::TYPE_DRINK)
       est
     end
     let(:scraper) do

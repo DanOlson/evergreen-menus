@@ -8,7 +8,7 @@ class Establishment < ActiveRecord::Base
   has_many :establishment_staff_assignments
   has_many :staff, through: :establishment_staff_assignments, source: :user
   has_many :lists, dependent: :destroy
-  has_many :beer_lists, -> { where(List.arel_table[:type].eq('beer')) }, source: :list, class_name: 'List'
+  has_many :beer_lists, source: :list, class_name: 'List'
   has_many :beers, through: :beer_lists
   has_many :list_updates
   has_many :menus, dependent: :destroy
