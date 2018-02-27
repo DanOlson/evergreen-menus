@@ -13,7 +13,7 @@ class ListSerializer
       hsh[:beers] = beers.as_json if include_items
 
       if persisted?
-        hsh[:href] = account_establishment_list_path(establishment.account, establishment, @list)
+        hsh[:href] = edit_account_establishment_list_path(establishment.account, establishment, @list)
       end
 
       hsh[:itemCount] = beers.size

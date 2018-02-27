@@ -24,7 +24,7 @@ describe ListSerializer do
         it 'provides a link' do
           result = instance.call
           parsed_result = JSON.parse(result)
-          expected = "/accounts/#{list.establishment.account_id}/establishments/#{list.establishment_id}/lists/#{list.id}"
+          expected = "/accounts/#{list.establishment.account_id}/establishments/#{list.establishment_id}/lists/#{list.id}/edit"
 
           expect(parsed_result['href']).to eq expected
         end
