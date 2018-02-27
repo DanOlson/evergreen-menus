@@ -28,10 +28,6 @@ class List < ActiveRecord::Base
 
   accepts_nested_attributes_for :beers, allow_destroy: true, reject_if: ->(b) { b[:name].blank? }
 
-  def as_json(options=nil)
-    super(options).merge(beerCount: beers.size)
-  end
-
   def type
     self[:type] || TYPE_BEER
   end

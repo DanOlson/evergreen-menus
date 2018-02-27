@@ -19,7 +19,7 @@ class DigitalDisplayMenuSerializer
   def call
     @digital_display_menu.as_json.merge({
       lists: lists.as_json,
-      listsAvailable: available_lists.as_json,
+      listsAvailable: available_lists,
       previewPath: preview_path,
       isHorizontal: horizontal_orientation,
       rotationInterval: rotation_interval,
@@ -47,14 +47,16 @@ class DigitalDisplayMenuSerializer
     @digital_display_menu.digital_display_menu_lists
                          .includes(list: :beers)
                          .map do |ml|
+      list = ListSerializer.new(ml.list).call(as_json: true)
       {
         digital_display_menu_list_id: ml.id,
         show_price_on_menu: ml.show_price_on_menu
-      }.merge(ml.list.as_json)
+      }.merge(list)
     end
   end
 
   def available_lists
-    establishment.lists.includes(:beers) - @digital_display_menu.lists.includes(:beers)
+    available = establishment.lists.includes(:beers) - @digital_display_menu.lists.includes(:beers)
+    available.map { |list| ListSerializer.new(list).call(as_json: true) }
   end
 end

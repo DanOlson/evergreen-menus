@@ -126,7 +126,7 @@ class ChosenListItem extends Component {
       );
     }
 
-    const badgeContent = `${list.beerCount} ${pluralize('item', list.beerCount)}`;
+    const badgeContent = `${list.itemCount} ${pluralize('item', list.itemCount)}`;
 
     const style = {
       opacity: isDragging ? 0 : 1,
@@ -136,7 +136,7 @@ class ChosenListItem extends Component {
       <li className="list-group-item" data-test="menu-list" style={style}>
         <div className="valign-wrapper-w50">
           <RemoveButton onClick={onRemove} listId={list.id} />
-          <span className="list-name" data-test="list-name">{list.name}</span>
+          <a href={list.href} className="list-name" data-test="list-name">{list.name}</a>
         </div>
         <div className="valign-wrapper-w50">
           <ShowPriceInput

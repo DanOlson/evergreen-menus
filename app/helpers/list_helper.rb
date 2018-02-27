@@ -54,6 +54,6 @@ module ListHelper
   end
 
   def list_json(list)
-    ListSerializer.new(list).call
+    ListSerializer.new(list).call(include_items: true)
   end
 end
