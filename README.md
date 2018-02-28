@@ -1,4 +1,4 @@
-# Beer Mapper
+# Evergreen Menus
 
 ## Development setup
 
@@ -25,13 +25,13 @@ passenger-install-apache2-module
 NameVirtualHost *:80
 
 ###
-# Beermapper dev
+# Evergreen dev
 <VirtualHost *:80>
-  ServerName beermapper-api.locl
-  ServerAlias www.beermapper-api.locl admin.evergreenmenus.locl cdn.evergreenmenus.locl
-  DocumentRoot /Users/dan/code/beermapper/public
+  ServerName admin.evergreenmenus.locl
+  ServerAlias cdn.evergreenmenus.locl
+  DocumentRoot /Users/dan/code/evergreen-menus/public
   RailsEnv development
-  <Directory /Users/dan/code/beermapper/public>
+  <Directory /Users/dan/code/evergreen-menus/public>
     Require all granted
     Options -MultiViews
   </Directory>
@@ -40,19 +40,19 @@ NameVirtualHost *:80
 <VirtualHost *:80>
   ServerName my-bar.locl
   ServerAlias www.my-bar.locl
-  DocumentRoot /Users/dan/code/beermapper/third-party-site/public
-  <Directory /Users/dan/code/beermapper/third-party-site/public>
+  DocumentRoot /Users/dan/code/evergreen-menus/third-party-site/public
+  <Directory /Users/dan/code/evergreen-menus/third-party-site/public>
     Require all granted
     Options -MultiViews
   </Directory>
 </VirtualHost>
 
 <VirtualHost *:80>
-  ServerName test.beermapper-api.locl
-  ServerAlias www.test.beermapper-api.locl admin.test.evergreenmenus.locl cdn.test.evergreenmenus.locl
-  DocumentRoot /Users/dan/code/beermapper/public
+  ServerName admin.test.evergreenmenus.locl
+  ServerAlias cdn.test.evergreenmenus.locl
+  DocumentRoot /Users/dan/code/evergreen-menus/public
   RailsEnv test
-  <Directory /Users/dan/code/beermapper/public>
+  <Directory /Users/dan/code/evergreen-menus/public>
     Require all granted
     Options -MultiViews
   </Directory>
@@ -61,8 +61,8 @@ NameVirtualHost *:80
 <VirtualHost *:80>
   ServerName test.my-bar.locl
   ServerAlias www.test.my-bar.locl
-  DocumentRoot /Users/dan/code/beermapper/third-party-site/public-test
-  <Directory /Users/dan/code/beermapper/third-party-site/public-test>
+  DocumentRoot /Users/dan/code/evergreen-menus/third-party-site/public-test
+  <Directory /Users/dan/code/evergreen-menus/third-party-site/public-test>
     Require all granted
     Options -MultiViews
   </Directory>
@@ -78,14 +78,6 @@ NameVirtualHost *:80
 127.0.0.1 cdn.test.evergreenmenus.locl
 127.0.0.1 my-bar.locl
 ```
-
-### Setup Beermapper Frontend
-
-Follow the instructions for [setting up Beermapper](https://github.com/DanOlson/beermapper-frontend)
-
-The bits about Apache and hosts file entries are important. You'll also need to install and build:
-
-`~/code/beermapper-frontend $ npm install && bower install && ember build`
 
 ### Restart Apache
 
@@ -116,8 +108,7 @@ webpack --watch
 
 ### Go
 
-Navigate to http://beermapper.ember
-Navigate to http://admin.beermapper.locl
+Navigate to http://admin.evergreen-menus.locl
 
 ## Development Workflows
 
