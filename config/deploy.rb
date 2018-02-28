@@ -2,7 +2,7 @@
 lock "3.7.1"
 
 set :application, "beermapper"
-set :repo_url, "git@github.com:DanOlson/beermapper.git"
+set :repo_url, "git@github.com:DanOlson/evergreen-menus.git"
 
 set :rvm_ruby_string, 'ruby-2.3.0'
 set :rvm_type,        :system
