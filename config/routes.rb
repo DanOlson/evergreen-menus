@@ -6,20 +6,6 @@ Beermapper::Application.routes.draw do
 
   root to: 'home#index'
 
-  namespace :api do
-    namespace :v1 do
-      resources :establishments, only: [:show, :index, :update, :create] do
-        resources :beers, only: :index
-      end
-
-      resources :establishment_suggestions
-      resources :sessions, only: :create
-      resources :users, only: :show
-      resources :list_updates, only: [:index, :show, :create]
-      resources :scrapers, only: :index
-    end
-  end
-
   resources :web_menus, only: :show
   resources :accounts do
     resources :establishments do

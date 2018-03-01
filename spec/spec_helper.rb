@@ -30,16 +30,7 @@ VCR.configure do |c|
 end
 
 Capybara::Webkit.configure do |config|
-  ###
-  # Beermapper Frontend
-  config.allow_url("maps.googleapis.com")
-  config.allow_url("maps.gstatic.com")
-  config.allow_url("csi.gstatic.com")
   config.allow_url("fonts.googleapis.com")
-  config.allow_url("platform.twitter.com")
-  config.allow_url("syndication.twitter.com")
-  config.allow_url("builds.emberjs.com")
-  config.allow_url("test.beermapper.ember")
   config.allow_url("admin.test.evergreenmenus.locl")
   config.allow_url("cdn.test.evergreenmenus.locl")
   config.allow_url("test.my-bar.locl")
@@ -104,7 +95,4 @@ RSpec.configure do |config|
   config.order = "random"
 
   Capybara.javascript_driver = :webkit
-  Capybara.app_host = ENV.fetch('TEST_APP_HOST') do
-    'http://test.beermapper.ember'
-  end
 end

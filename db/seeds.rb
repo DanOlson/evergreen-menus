@@ -1,9 +1,5 @@
 require Rails.root.join 'db/seeds/role_seeder'
 
-###
-# Stub Geocoder requests
-load Rails.root.join 'spec/support/geocoder.rb'
-
 FactoryGirl.find_definitions if FactoryGirl.factories.none?
 [EstablishmentStaffAssignment, Establishment, UserInvitation, User].each &:destroy_all
 
@@ -36,10 +32,6 @@ bulldog = Establishment.create!({
   account: account,
   url: 'http://thebulldognortheast.com'
 })
-Scraper.create!({
-  establishment: bulldog,
-  scraper_class_name: 'BeerList::Establishments::BulldogNortheast'
-})
 
 macs = Establishment.create!({
   name: "Macs Industrial",
@@ -49,10 +41,6 @@ macs = Establishment.create!({
   postal_code: '55414',
   account: account,
   url: 'http://www.macsindustrial.com/'
-})
-Scraper.create!({
-  establishment: macs,
-  scraper_class_name: 'BeerList::Establishments::MacsIndustrial'
 })
 
 muddy_waters = Establishment.create!({
@@ -64,10 +52,6 @@ muddy_waters = Establishment.create!({
   account: account,
   url: 'http://www.muddywatersmpls.com'
 })
-Scraper.create!({
-  establishment: muddy_waters,
-  scraper_class_name: 'BeerList::Establishments::MuddyWaters'
-})
 
 groveland    = Establishment.create!({
   name: 'Groveland Tap',
@@ -77,10 +61,6 @@ groveland    = Establishment.create!({
   postal_code: '55105',
   account: account,
   url: 'http://www.grovelandtap.com'
-})
-Scraper.create!({
-  establishment: groveland,
-  scraper_class_name: 'BeerList::Establishments::GrovelandTap'
 })
 
 edina_grill    = Establishment.create!({
@@ -92,10 +72,6 @@ edina_grill    = Establishment.create!({
   account: account,
   url: 'http://www.edinagrill.com/current-tap-list'
 })
-Scraper.create!({
-  establishment: edina_grill,
-  scraper_class_name: 'BeerList::Establishments::EdinaGrill'
-})
 
 happy_gnome  = Establishment.create!({
   name: 'Happy Gnome',
@@ -105,10 +81,6 @@ happy_gnome  = Establishment.create!({
   postal_code: '55102',
   account: account,
   url: 'http://thehappygnome.com'
-})
-Scraper.create!({
-  establishment: happy_gnome,
-  scraper_class_name: 'BeerList::Establishments::HappyGnome'
 })
 
 busters    = Establishment.create!({
@@ -120,10 +92,6 @@ busters    = Establishment.create!({
   account: account,
   url: 'http://busterson28th.com/bottles/'
 })
-Scraper.create!({
-  establishment: busters,
-  scraper_class_name: 'BeerList::Establishments::BustersOn28th'
-})
 
 ginger_hop     = Establishment.create!({
   name: "Ginger Hop",
@@ -133,10 +101,6 @@ ginger_hop     = Establishment.create!({
   postal_code: '55414',
   account: account,
   url: 'http://www.gingerhop.com/beer'
-})
-Scraper.create!({
-  establishment: ginger_hop,
-  scraper_class_name: 'BeerList::Establishments::GingerHop'
 })
 
 beers = [

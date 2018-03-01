@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  has_many :api_keys
   has_many :establishment_staff_assignments, dependent: :destroy
   has_many :establishments, through: :establishment_staff_assignments
   has_one :user_invitation, foreign_key: :accepting_user_id, dependent: :destroy

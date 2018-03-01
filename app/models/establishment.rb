@@ -1,7 +1,4 @@
 class Establishment < ActiveRecord::Base
-  geocoded_by :address
-  before_save :geocode, if: ->(e) { e.address_changed? }
-
   validates :name, :address, :url, presence: true
 
   belongs_to :account
@@ -14,7 +11,6 @@ class Establishment < ActiveRecord::Base
   has_many :menus, dependent: :destroy
   has_many :digital_display_menus, dependent: :destroy
   has_many :web_menus, dependent: :destroy
-  has_one :scraper
 
   paginates_per 100
 
@@ -23,10 +19,6 @@ class Establishment < ActiveRecord::Base
   class << self
     def active
       where active: true
-    end
-
-    def with_beer_named_like(name)
-      joins(:beers).where Beer.arel_table[:name].matches("%#{name}%")
     end
   end
 
