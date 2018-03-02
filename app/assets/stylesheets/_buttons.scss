@@ -1,0 +1,32 @@
+.btn-evrgn-delete {
+  color: #fff;
+  background-color: #b65760;
+  border-color: #91464d;
+
+  &:hover {
+    background-color: #92454c;
+  }
+}
+
+.btn-evrgn-primary {
+  color: #fff;
+  background-color: $color-evergreen;
+  border-color: $color-evergreen;
+
+  &:hover {
+    background-color: #46835c;
+    border-color: #46835c;
+  }
+}
+
+.btn-evrgn-outline-primary {
+  color: $color-evergreen;
+  background-color: #fff;
+  border-color: $color-evergreen;
+
+  &:hover {
+    color: #fff;
+    background-color: $color-evergreen;
+    border-color: $color-evergreen;
+  }
+}

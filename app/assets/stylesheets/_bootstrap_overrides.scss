@@ -2,6 +2,22 @@
   cursor: pointer;
 }
 
+.btn-success {
+  background-color: $color-evergreen;
+  border-color: $color-evergreen;
+}
+
+.btn-outline-success {
+  color: $color-evergreen;
+  border-color: $color-evergreen;
+
+  &:hover, &:not([disabled]):not(.disabled).active {
+    color: #fff;
+    background-color: $color-evergreen;
+    border-color: $color-evergreen;
+  }
+}
+
 label {
   font-weight: 700;
 

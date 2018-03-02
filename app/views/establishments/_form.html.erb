@@ -48,10 +48,10 @@
           </div>
         </div>
 
-        <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'establishment-form-submit' } %>
+        <%= f.submit submit_text, class: 'btn btn-evrgn-primary', data: { test: 'establishment-form-submit' } %>
         <%= link_to 'Cancel', account_path(account), class: 'btn btn-outline-secondary', data: { test: 'establishment-form-cancel' } %>
         <% if establishment.persisted? && can?(:destroy, establishment) %>
-          <label for="establishment-form-delete" class="btn btn-danger" data-test="establishment-form-delete">Delete</label>
+          <label for="establishment-form-delete" class="btn btn-evrgn-delete" data-test="establishment-form-delete">Delete</label>
         <% end %>
       <% end %>
     <% end %>

@@ -58,7 +58,7 @@ module EstablishmentsHelper
   end
 
   def add_new_button(account, establishment, type, enabled: true, text: 'Add New')
-    css_classes = %w(btn btn-outline-primary)
+    css_classes = %w(btn btn-evrgn-outline-primary)
     css_classes << 'disabled' unless enabled
     if establishment.persisted?
       href = public_send("new_account_establishment_#{type}_path", account, establishment)

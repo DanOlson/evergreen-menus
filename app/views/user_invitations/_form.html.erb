@@ -33,10 +33,10 @@
     <%= yield f %>
 
     <div class='button-wrapper'>
-      <%= f.submit submit_text, class: 'btn btn-primary', data: { test: 'invitation-submit-button' } %>
+      <%= f.submit submit_text, class: 'btn btn-evrgn-primary', data: { test: 'invitation-submit-button' } %>
       <%= link_to 'Cancel', account_users_path(@account), class: 'btn btn-outline-secondary', data: { test: 'invitation-cancel-link' } %>
       <% if f.object.persisted? && can?(:destroy, @user_invitation) %>
-        <label for="invitation-form-delete" class="btn btn-danger" data-test="invitation-delete-button">Delete</label>
+        <label for="invitation-form-delete" class="btn btn-evrgn-delete" data-test="invitation-delete-button">Delete</label>
       <% end %>
     </div>
   <% end %>

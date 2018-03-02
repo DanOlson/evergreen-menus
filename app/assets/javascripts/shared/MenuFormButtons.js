@@ -16,7 +16,7 @@ class MenuFormButtons extends Component {
       deleteButton = (
         <label
           htmlFor={`${menuType}-form-delete`}
-          className="btn btn-danger menu-form-action"
+          className="btn btn-evrgn-delete menu-form-action"
           data-test={`${menuType}-form-delete`}>
           Delete
         </label>
@@ -29,7 +29,7 @@ class MenuFormButtons extends Component {
           type="submit"
           name="commit"
           value={submitButtonText}
-          className="btn btn-primary menu-form-action"
+          className="btn btn-evrgn-primary menu-form-action"
           data-test={`${menuType}-form-submit`}
           data-disable-with="Create"
         />
