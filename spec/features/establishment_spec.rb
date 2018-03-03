@@ -11,11 +11,6 @@ feature 'establishment management' do
 
     form.set_name 'The Lanes'
     form.set_url 'http://thelanes.com/beer-menu'
-    form.set_street '123 Freemont Ave'
-    form.set_city 'Encino'
-    form.set_state 'California'
-    form.set_postal_code '91316'
-
     form.submit
 
     expect(form).to be_displayed
@@ -32,11 +27,6 @@ feature 'establishment management' do
 
     form.set_name 'Sobchak Security'
     form.set_url 'http://sobsec.com/beer-menu'
-    form.set_street '15 EmPeeAich Ave'
-    form.set_city 'Encino'
-    form.set_state 'California'
-    form.set_postal_code '91316'
-
     form.submit
 
     expect(form).to be_displayed
@@ -406,10 +396,6 @@ feature 'establishment management' do
 
     form.set_name 'The Lanes'
     form.set_url 'http://thelanes.com/beer-menu'
-    form.set_street '123 Freemont Ave'
-    form.set_city 'Encino'
-    form.set_state 'California'
-    form.set_postal_code '91316'
     form.submit
 
     expect(form.lists_panel).to have_help_text

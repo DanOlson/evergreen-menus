@@ -1,127 +1,105 @@
 <% has_lists = establishment.lists.any? %>
 <% breadcrumb :establishment, account, establishment %>
-<div class="row edit-establishment">
-  <div class="establishment-form-left-column col-sm-6">
-    <%= form_for [account, establishment], html: { class: 'establishment-form' } do |f| %>
-      <%= render 'shared/panel', title: 'Establishment Info' do %>
-        <div class="form-group">
-          <%= f.label :name, class: 'col-form-label' %>
-          <div class="">
-            <%= f.text_field :name, class: 'form-control', data: { test: 'establishment-name' } %>
-          </div>
-        </div>
+<div class="edit-establishment">
+  <div class="row">
+    <div class="col-sm-12">
+      <%= form_for [account, establishment], html: { class: 'establishment-form' } do |f| %>
+        <%= render 'shared/panel', title: 'Establishment Info' do %>
+          <div class="row">
+            <div class="form-group col-sm-6">
+              <%= f.label :name, class: 'col-form-label' %>
+              <div class="">
+                <%= f.text_field :name, class: 'form-control', data: { test: 'establishment-name' } %>
+              </div>
+            </div>
 
-        <div class="form-group">
-          <%= f.label :url, class: 'col-form-label' %>
-          <div class="">
-            <%= f.text_field :url, class: 'form-control', data: { test: 'establishment-url' } %>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :street_address, 'Street', class: 'col-form-label' %>
-          <div class="">
-            <%= f.text_field :street_address, class: 'form-control', data: { test: 'establishment-street-address' } %>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :city, class: 'col-form-label' %>
-          <div class="">
-            <%= f.text_field :city, class: 'form-control', data: { test: 'establishment-city' } %>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="form-group col-sm-6">
-            <%= f.label :state, class: 'col-form-label' %>
-            <div class="">
-              <%= f.select :state, options_for_select(state_options, selected: establishment.state), { include_blank: true }, class: 'form-control', data: { test: 'establishment-state' } %>
+            <div class="form-group col-sm-6">
+              <%= f.label :url, class: 'col-form-label' %>
+              <div class="">
+                <%= f.text_field :url, class: 'form-control', data: { test: 'establishment-url' } %>
+              </div>
             </div>
           </div>
 
-          <div class="form-group col-sm-6">
-            <%= f.label :postal_code, 'Postal Code', class: 'col-form-label' %>
-            <div class="">
-              <%= f.text_field :postal_code, maxlength: 5, class: 'form-control', data: { test: 'establishment-postal-code' } %>
-            </div>
-          </div>
-        </div>
-
-        <%= f.submit submit_text, class: 'btn btn-evrgn-primary', data: { test: 'establishment-form-submit' } %>
-        <%= link_to 'Cancel', account_path(account), class: 'btn btn-outline-secondary', data: { test: 'establishment-form-cancel' } %>
-        <% if establishment.persisted? && can?(:destroy, establishment) %>
-          <label for="establishment-form-delete" class="btn btn-evrgn-delete" data-test="establishment-form-delete">Delete</label>
+          <%= f.submit submit_text, class: 'btn btn-evrgn-primary', data: { test: 'establishment-form-submit' } %>
+          <%= link_to 'Cancel', account_path(account), class: 'btn btn-outline-secondary', data: { test: 'establishment-form-cancel' } %>
+          <% if establishment.persisted? && can?(:destroy, establishment) %>
+            <label for="establishment-form-delete" class="btn btn-evrgn-delete" data-test="establishment-form-delete">Delete</label>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
-    <% if establishment.persisted? && can?(:destroy, establishment) %>
-      <%= button_to 'Delete', account_establishment_path(account, establishment), method: :delete, class: 'hidden', id: 'establishment-form-delete', data: { confirm: 'Are you sure you want to delete this establishment?' } %>
-    <% end %>
+      <% if establishment.persisted? && can?(:destroy, establishment) %>
+        <%= button_to 'Delete', account_establishment_path(account, establishment), method: :delete, class: 'hidden', id: 'establishment-form-delete', data: { confirm: 'Are you sure you want to delete this establishment?' } %>
+      <% end %>
+    </div>
   </div>
 
-  <div class="establishment-form-right-column col-sm-6">
-    <%= render 'shared/panel', title: 'Lists', data_test: 'lists', help_type: 'lists' do %>
-      <div
-        class="card contextual-help bg-light <%= has_lists ? 'hidden' : '' %>"
-        data-help="lists"
-        data-test="lists-help-text">
-        <div class="card-body">
-          Lists are groups of food or drink that you serve at your establishment. For example, you might have lists for Appetizers, Entrees, Beer, Wine, etc. Lists can be grouped together into menus. Any edits you make to your lists are automatically reflected on the menus they are a part of.
-        </div>
-      </div>
-      <div class="list-group">
-        <% establishment.lists.order(:name).each do |list| %>
-          <div class="list-group-item" data-test="establishment-list-item">
-            <div class="valign-wrapper-w80">
-              <%= link_to list.name, edit_account_establishment_list_path(account, establishment, list), data: { test: 'establishment-list' } %>
-            </div>
-            <div class="valign-wrapper-w19">
-              <%= list_type_icon(list) %>
-            </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <%= render 'shared/panel', title: 'Lists', data_test: 'lists', help_type: 'lists' do %>
+        <div
+          class="card contextual-help bg-light <%= has_lists ? 'hidden' : '' %>"
+          data-help="lists"
+          data-test="lists-help-text">
+          <div class="card-body">
+            Lists are groups of food or drink that you serve at your establishment. For example, you might have lists for Appetizers, Entrees, Beer, Wine, etc. Lists can be grouped together into menus. Any edits you make to your lists are automatically reflected on the menus they are a part of.
           </div>
-        <% end %>
-      </div>
-      <div class="button-wrapper">
-        <%= add_list_button(account, establishment) %>
-      </div>
-    <% end %>
+        </div>
+        <div class="list-group">
+          <% establishment.lists.order(:name).each do |list| %>
+            <div class="list-group-item" data-test="establishment-list-item">
+              <div class="valign-wrapper-w80">
+                <%= link_to list.name, edit_account_establishment_list_path(account, establishment, list), data: { test: 'establishment-list' } %>
+              </div>
+              <div class="valign-wrapper-w19">
+                <%= list_type_icon(list) %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="button-wrapper">
+          <%= add_list_button(account, establishment) %>
+        </div>
+      <% end %>
+    </div>
 
-    <%= render 'shared/panel', title: 'Menus', data_test: 'menus', help_type: 'menus' do %>
-      <div
-        class="card contextual-help bg-light <%= hide_menus_help?(establishment) ? 'hidden' : '' %>"
-        data-help="menus"
-        data-test="menus-help-text">
-        <div class="card-body">
-          Your lists can be grouped into menus. Embed a menu on your website, design a print menu to place
-          at the tables, or turn an HDTV into a high-impact, in-restuarant menu experience.
+    <div class="col-sm-6">
+      <%= render 'shared/panel', title: 'Menus', data_test: 'menus', help_type: 'menus' do %>
+        <div
+          class="card contextual-help bg-light <%= hide_menus_help?(establishment) ? 'hidden' : '' %>"
+          data-help="menus"
+          data-test="menus-help-text">
+          <div class="card-body">
+            Your lists can be grouped into menus. Embed a menu on your website, design a print menu to place
+            at the tables, or turn an HDTV into a high-impact, in-restuarant menu experience.
+          </div>
         </div>
-      </div>
-      <div class="list-group">
-        <% establishment.web_menus.order(:name).each do |web_menu| %>
-          <div class="list-group-item" data-test="web-menu-list-item">
-            <span class="menu-type-icon fa fa-code" aria-hidden="true" title="Web Menu"></span>
-            <%= link_to web_menu.name, edit_account_establishment_web_menu_path(account, establishment, web_menu), data: { test: 'menu-link' } %>
-          </div>
-        <% end %>
-        <% establishment.menus.order(:name).each do |menu| %>
-          <div class="list-group-item" data-test="menu-list-item">
-            <span class="menu-type-icon fa fa-file-pdf-o" aria-hidden="true" title="Print Menu"></span>
-            <%= link_to menu.name, edit_account_establishment_menu_path(account, establishment, menu), data: { test: 'menu-link' } %>
-          </div>
-        <% end %>
-        <% establishment.digital_display_menus.order(:name).each do |dd_menu| %>
-          <div class="list-group-item" data-test="digital-display-menu-list-item">
-            <span class="menu-type-icon fa fa-tv" aria-hidden="true" title="Digital Display Menu"></span>
-            <%= link_to dd_menu.name, edit_account_establishment_digital_display_menu_path(account, establishment, dd_menu), data: { test: 'menu-link' } %>
-          </div>
-        <% end %>
-      </div>
-      <div class="button-wrapper">
-        <%= add_web_menu_button(account, establishment, enabled: has_lists) %>
-        <%= add_menu_button(account, establishment, enabled: has_lists) %>
-        <%= add_digital_display_menu_button(account, establishment, enabled: has_lists) %>
-      </div>
-    <% end %>
+        <div class="list-group">
+          <% establishment.web_menus.order(:name).each do |web_menu| %>
+            <div class="list-group-item" data-test="web-menu-list-item">
+              <span class="menu-type-icon fa fa-code" aria-hidden="true" title="Web Menu"></span>
+              <%= link_to web_menu.name, edit_account_establishment_web_menu_path(account, establishment, web_menu), data: { test: 'menu-link' } %>
+            </div>
+          <% end %>
+          <% establishment.menus.order(:name).each do |menu| %>
+            <div class="list-group-item" data-test="menu-list-item">
+              <span class="menu-type-icon fa fa-file-pdf-o" aria-hidden="true" title="Print Menu"></span>
+              <%= link_to menu.name, edit_account_establishment_menu_path(account, establishment, menu), data: { test: 'menu-link' } %>
+            </div>
+          <% end %>
+          <% establishment.digital_display_menus.order(:name).each do |dd_menu| %>
+            <div class="list-group-item" data-test="digital-display-menu-list-item">
+              <span class="menu-type-icon fa fa-tv" aria-hidden="true" title="Digital Display Menu"></span>
+              <%= link_to dd_menu.name, edit_account_establishment_digital_display_menu_path(account, establishment, dd_menu), data: { test: 'menu-link' } %>
+            </div>
+          <% end %>
+        </div>
+        <div class="button-wrapper">
+          <%= add_web_menu_button(account, establishment, enabled: has_lists) %>
+          <%= add_menu_button(account, establishment, enabled: has_lists) %>
+          <%= add_digital_display_menu_button(account, establishment, enabled: has_lists) %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
