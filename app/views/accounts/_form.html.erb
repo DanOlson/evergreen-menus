@@ -22,7 +22,7 @@
 
       <div class="button-wrapper">
         <%= f.submit submit_text, class: 'btn btn-evrgn-primary', data: { test: 'account-form-submit' } %>
-        <%= link_to 'Cancel', accounts_path, class: 'btn btn-outline-secondary', data: { test: 'account-form-cancel' } %>
+        <%= link_to 'Cancel', after_sign_in_path_for(current_user), class: 'btn btn-outline-secondary', data: { test: 'account-form-cancel' } %>
         <% if @account.persisted? && can?(:delete, @account) %>
           <label for="account-form-delete" class="btn btn-evrgn-delete" data-test="account-form-delete">Delete</label>
         <% end %>
