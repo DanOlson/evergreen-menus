@@ -2,4 +2,10 @@
   var target = document.getElementById('<%= "evergreen-menu-#{params[:id]}" %>');
 
   target.innerHTML = '<%=j render @web_menu %>';
+
+  var script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.text = '<%= raw @web_menu_json_ld %>';
+  script.setAttribute('data-test', 'json-linked-data');
+  document.querySelector('head').appendChild(script);
 })();
