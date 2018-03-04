@@ -70,6 +70,38 @@ feature 'establishment website', :admin, :js do
     expect(website).to have_schema_dot_org_markup
   end
 
+  scenario 'list item content is escaped' do
+    taps_list.beers.create!({
+      name: "O'Doul's",
+      price: '6.5',
+      description: 'A "beer", in some sense.'
+    })
+
+    establishment_form.add_web_menu
+    menu_form = PageObjects::Admin::WebMenuForm.new
+    expect(menu_form).to be_displayed
+    menu_form.name = 'Beer Menu'
+    menu_form.select_list 'Taps'
+    menu_form.submit
+
+    embed_code = menu_form.get_embed_code
+
+    ThirdPartySiteGenerator.call({
+      establishment: establishment,
+      list_snippets: [embed_code]
+    })
+
+    website = PageObjects::ThirdPartySite::Menu.new
+    website.load
+
+    expect(website).to have_list_named 'Taps'
+
+    tap_names = website.list_named('Taps').menu_items.map { |i| i.name.text }
+    expect(tap_names).to match_array taps_list.beers.map &:name
+
+    expect(website).to have_schema_dot_org_markup
+  end
+
   scenario 'displaying multiple menus' do
     expect(establishment_form).to be_displayed
 

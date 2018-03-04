@@ -5,7 +5,7 @@
 
   var script = document.createElement('script');
   script.type = 'application/ld+json';
-  script.text = '<%= raw @web_menu_json_ld %>';
+  script.text = JSON.stringify(<%= raw @web_menu_json_ld %>);
   script.setAttribute('data-test', 'json-linked-data');
   document.querySelector('head').appendChild(script);
 })();
