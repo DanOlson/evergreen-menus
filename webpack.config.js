@@ -63,18 +63,8 @@ const plugins = [
   }
 ]
 
-if (isProd) {
-  const definePlugin = new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development')
-  });
-  const uglifyPlugin = new webpack.optimize.UglifyJsPlugin({
-    sourceMap: true
-  });
-  plugins.push(definePlugin);
-  plugins.push(uglifyPlugin);
-}
-
 module.exports = {
+  mode: isProd ? 'production' : 'development',
   context: __dirname + '/app/assets',
   entry: {
     application: ['./javascripts/application.js', './stylesheets/application.scss'],

@@ -1,10 +1,11 @@
 {
-  "name": "beermapper-admin",
+  "name": "evergreen-menus",
   "version": "1.0.0",
-  "description": "A tool for keeping your website's beer list up to date",
+  "description": "A tool for keeping your restaurant's menus up to date",
   "main": "index.js",
   "scripts": {
     "test": "test",
+    "build": "webpack",
     "dev": "webpack --watch"
   },
   "repository": {
@@ -19,15 +20,16 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.16.0",
-    "copy-webpack-plugin": "^4.0.1",
+    "copy-webpack-plugin": "^4.4.3",
     "css-loader": "^0.26.1",
-    "extract-text-webpack-plugin": "^2.1.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.5",
     "node-sass": "^4.5.0",
     "sass-loader": "^6.0.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.6.2",
-    "webpack": "^3.5.5"
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.11"
   },
   "dependencies": {
     "core-js": "^2.5.1",
