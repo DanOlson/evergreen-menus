@@ -1,4 +1,4 @@
-function applyConfirm(element) {
+function applyConfirmToForm(element) {
   var message = element.getAttribute('data-confirm');
   if (message) {
     element.form.addEventListener('submit', function submitHandler(event) {
@@ -9,18 +9,22 @@ function applyConfirm(element) {
   }
 }
 
-function bootstrapApplication() {
+function applyConfirm() {
   const confirmNodes = document.querySelectorAll('[data-confirm]');
 
   for (let i = 0; i < confirmNodes.length; i++) {
-    applyConfirm(confirmNodes[i]);
+    applyConfirmToForm(confirmNodes[i]);
   }
 }
 
 (function() {
+  if (document.readyState === 'complete') {
+    applyConfirm()
+  }
+
   document.onreadystatechange = function onReadyChange() {
     if (document.readyState === 'complete') {
-      bootstrapApplication()
+      applyConfirm()
     }
   }
 })();
