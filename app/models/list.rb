@@ -13,6 +13,9 @@ class List < ActiveRecord::Base
 
   belongs_to :establishment
   has_many :beers, -> () { order(:name) }, dependent: :destroy
+  has_many :menu_lists, dependent: :destroy
+  has_many :digital_display_menu_lists, dependent: :destroy
+  has_many :web_menu_lists, dependent: :destroy
 
   validates :name, presence: true
   validates :show_price, :show_description, inclusion: { in: [true, false] }

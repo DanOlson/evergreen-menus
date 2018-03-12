@@ -68,6 +68,10 @@ module.exports = {
   context: __dirname + '/app/assets',
   entry: {
     application: ['./javascripts/application.js', './stylesheets/application.scss'],
+    lists: './javascripts/lists.js',
+    'print-menus': './javascripts/print-menus.js',
+    'web-menus': './javascripts/web-menus.js',
+    'digital-display-menus': './javascripts/digital-display-menus.js',
     digitalDisplay: [
       './stylesheets/digital_display.scss'
     ]
@@ -108,5 +112,17 @@ module.exports = {
     ]
   },
 
-  plugins: plugins
+  plugins: plugins,
+
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all'
+        }
+      }
+    }
+  }
 };

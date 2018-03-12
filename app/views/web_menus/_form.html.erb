@@ -13,3 +13,7 @@
 <% if web_menu.persisted? && can?(:destroy, web_menu) %>
   <%= button_to 'Delete', account_establishment_web_menu_path(account, establishment, web_menu), method: :delete, class: 'hidden', id: 'web-menu-form-delete', data: { confirm: 'Are you sure you want to delete this menu?' } %>
 <% end %>
+
+<%= javascript_include_tag fingerprinted_asset('core-js') %>
+<%= javascript_include_tag fingerprinted_asset(:vendor) %>
+<%= javascript_include_tag fingerprinted_asset('web-menus') %>

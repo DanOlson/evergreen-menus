@@ -2,7 +2,8 @@ class Establishment < ActiveRecord::Base
   validates :name, :address, :url, presence: true
 
   belongs_to :account
-  has_many :establishment_staff_assignments
+  has_many :invitation_establishment_assignments, dependent: :destroy
+  has_many :establishment_staff_assignments, dependent: :destroy
   has_many :staff, through: :establishment_staff_assignments, source: :user
   has_many :lists, dependent: :destroy
   has_many :beer_lists, source: :list, class_name: 'List'
