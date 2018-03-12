@@ -36,7 +36,6 @@
     <%= yield %>
   </div>
   <%= render('layouts/google_analytics') if Rails.env.production? %>
-  <%= javascript_include_tag fingerprinted_asset('core-js') %>
   <%= javascript_include_tag fingerprinted_asset(:application) %>
   <%= content_for :javascripts %>
   <footer>

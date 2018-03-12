@@ -9,10 +9,18 @@ function applyConfirm(element) {
   }
 }
 
-(function bootstrapApplication() {
+function bootstrapApplication() {
   const confirmNodes = document.querySelectorAll('[data-confirm]');
 
   for (let i = 0; i < confirmNodes.length; i++) {
     applyConfirm(confirmNodes[i]);
+  }
+}
+
+(function() {
+  document.onreadystatechange = function onReadyChange() {
+    if (document.readyState === 'complete') {
+      bootstrapApplication()
+    }
   }
 })();
