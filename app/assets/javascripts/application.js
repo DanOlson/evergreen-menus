@@ -17,14 +17,12 @@ function applyConfirm() {
   }
 }
 
-(function() {
+if (document.readyState === 'complete') {
+  applyConfirm()
+}
+
+document.onreadystatechange = function onReadyChange() {
   if (document.readyState === 'complete') {
     applyConfirm()
   }
-
-  document.onreadystatechange = function onReadyChange() {
-    if (document.readyState === 'complete') {
-      applyConfirm()
-    }
-  }
-})();
+}
