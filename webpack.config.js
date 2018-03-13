@@ -67,15 +67,13 @@ module.exports = {
   mode: isProd ? 'production' : 'development',
   context: __dirname + '/app/assets',
   entry: {
-    application: ['./javascripts/application.js', './stylesheets/application.scss'],
+    application: './stylesheets/application.scss',
     lists: './javascripts/lists.js',
     'print-menus': './javascripts/print-menus.js',
     'web-menus': './javascripts/web-menus.js',
     'digital-display-menus': './javascripts/digital-display-menus.js',
     'core-js': './javascripts/core-js.js',
-    digitalDisplay: [
-      './stylesheets/digital_display.scss'
-    ]
+    digitalDisplay: './stylesheets/digital_display.scss'
   },
   output: {
     path: __dirname + '/public',
