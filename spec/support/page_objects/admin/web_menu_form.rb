@@ -83,6 +83,8 @@ module PageObjects
       element :delete_button,            '[data-test="web-menu-form-delete"]'
       element :toggle_embed_code_button, '[data-test="get-embed-code"]'
       element :embed_code,               '[data-test="menu-embed-code"]'
+      element :help_icon,                '[data-test="help-icon"]'
+      element :help_text,                '[data-test="help-text"]'
 
       section :preview, WebMenuPreview,  '[data-test="web-menu-preview"]'
 
@@ -122,6 +124,18 @@ module PageObjects
 
       def hide_embed_code
         toggle_embed_code_button.click if has_embed_code?
+      end
+
+      def show_help_text
+        help_icon.trigger('click') unless has_help_text?
+      end
+
+      def hide_help_text
+        help_icon.trigger('click') if has_help_text?
+      end
+
+      def help_text_content
+        help_text.text
       end
     end
   end

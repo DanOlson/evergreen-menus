@@ -3,19 +3,34 @@ import PropTypes from 'prop-types';
 import Panel from '../shared/Panel';
 
 class Preview extends Component {
-  render() {
-    const panelHeaderElement = (
-      <div className="float-right text-danger">
-        <i
-          className="fa fa-exclamation-triangle help-icon"
-          aria-hidden="true">
-        </i>
-        <span className="unstyled-warning-text">Unstyled</span>
-      </div>
-    );
+  constructor(props) {
+    super(props)
 
+    this.handleToggleHelp = this.handleToggleHelp.bind(this)
+    this.state = {
+      showHelp: false
+    }
+  }
+
+  handleToggleHelp() {
+    this.setState(prevState => {
+      return {
+        showHelp: !prevState.showHelp
+      }
+    })
+  }
+
+  render() {
+    const { showHelp } = this.state
     return (
-      <Panel title="Preview" headerContent={panelHeaderElement}>
+      <Panel title="Preview" onToggleHelp={this.handleToggleHelp}>
+        <div
+          className={`card contextual-help bg-light ${showHelp ? '' : 'hidden'}`}
+          data-test="help-text">
+          <div className="card-body">
+            The preview content shown here is unstyled. The styles from your site will apply to this menu once you add the embed code to your site.
+          </div>
+        </div>
         <div className="web-menu-preview-wrapper">
           <object
             data={this.props.previewPath}

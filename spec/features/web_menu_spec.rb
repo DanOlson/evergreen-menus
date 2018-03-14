@@ -73,6 +73,16 @@ feature 'digital display menu management' do
     expect(preview_taps_list.item_named('Nitro Milk Stout').price).to eq '$6.50'
     expect(preview_bottles_list.item_named('Arrogant Bastard').price).to eq '$7.50'
 
+    # What's up with the preview styles?
+    web_menu_form.show_help_text
+    expect(web_menu_form).to have_help_text
+    expected_help_text = 'The preview content shown here is unstyled. The styles from your site will apply to this menu once you add the embed code to your site.'
+    expect(web_menu_form.help_text_content).to eq expected_help_text
+
+    # Oh, got it.
+    web_menu_form.hide_help_text
+    expect(web_menu_form).to_not have_help_text
+
     # Submit
     web_menu_form.submit
 
