@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20180318015424) do
     t.text     "description"
     t.integer  "list_id"
     t.string   "labels"
-    t.integer  "sort_order"
+    t.integer  "position"
     t.index ["name"], name: "index_beers_on_name", using: :btree
   end
 

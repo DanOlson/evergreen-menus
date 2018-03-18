@@ -39,10 +39,10 @@ class List extends Component {
 
   sortBeers(beers) {
     const sorted = beers.sort((a, b) => {
-      const aName = a.name.toLowerCase();
-      const bName = b.name.toLowerCase();
-      if (aName > bName) return 1;
-      if (aName < bName) return -1;
+      const aPos = a.position;
+      const bPos = b.position;
+      if (aPos > bPos) return 1;
+      if (aPos < bPos) return -1;
       return 0;
     });
     return sorted.map((beer, index) => {
@@ -68,7 +68,8 @@ class List extends Component {
     event.preventDefault();
     const beers     = this.state.beers;
     const nextAppId = beers.length;
-    const newBeer   = { appId: nextAppId };
+    const nextPosition = beers.length - 1;
+    const newBeer   = { appId: nextAppId, position: nextPosition };
     this.setState({ beers: [...beers, newBeer] });
   }
 

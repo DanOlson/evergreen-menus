@@ -136,7 +136,8 @@ class ListItemInputGroup extends Component {
       menuItemLabels,
       connectDragSource,
       connectDropTarget,
-      isDragging
+      isDragging,
+      index
     } = this.props;
 
     const style = {
@@ -172,6 +173,11 @@ class ListItemInputGroup extends Component {
           defaultValue={this.state.id}
           name={`list[beers_attributes][${appId}][id]`}
           id={`list_beers_attributes_${appId}_id`}
+        />
+        <input
+          type="hidden"
+          defaultValue={index}
+          name={`list[beers_attributes][${appId}[position]`}
         />
         <input
           type="hidden"

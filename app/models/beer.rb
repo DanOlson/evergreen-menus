@@ -33,13 +33,6 @@ class Beer < ActiveRecord::Base
     end
   end
 
-  ###
-  # FIXME: Work around this. This is an issue with embedding.
-  # Use links hash, maybe?
-  def active_model_serializer
-    V1::BeerSerializer
-  end
-
   def labels=(labels)
     self[:labels] = labels.map { |l| Label.from l }.reject { |l| l.name.empty? }
   end
@@ -64,6 +57,7 @@ class Beer < ActiveRecord::Base
       establishment_id: establishment_id,
       price: price,
       description: description,
+      position: position,
       labels: Array(labels)
     }
   end
