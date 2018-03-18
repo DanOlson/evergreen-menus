@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import ListItemInputGroup from './ListItemInputGroup';
 import TypeSelect from './TypeSelect';
 import Panel from '../shared/Panel';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import { applyAssign } from '../polyfills/Object';
 import { applyFind } from '../polyfills/Array';
 
@@ -21,6 +23,18 @@ class List extends Component {
     this.deleteBeer       = this.deleteBeer.bind(this);
     this.addBeer          = this.addBeer.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
+    this.reorderItems     = this.reorderItems.bind(this);
+  }
+
+  reorderItems(dragIndex, hoverIndex) {
+    this.setState(prevState => {
+      const items = prevState.beers;
+      const dragItem = items[dragIndex];
+      const newItems = [...items];
+      newItems.splice(dragIndex, 1);
+      newItems.splice(hoverIndex, 0, dragItem);
+      return { beers: newItems };
+    });
   }
 
   sortBeers(beers) {
@@ -66,8 +80,10 @@ class List extends Component {
         beer,
         listId,
         menuItemLabels,
+        index,
+        moveItem: this.reorderItems,
         deleteBeer: this.deleteBeer,
-        key: `${beer}-${index}`
+        key: beer.appId
       };
 
       return <ListItemInputGroup {...listItemInputProps} />;
@@ -125,4 +141,4 @@ List.propTypes = {
   listId: PropTypes.number
 }
 
-export default List;
+export default DragDropContext(HTML5Backend)(List);
