@@ -12,7 +12,7 @@ class List < ActiveRecord::Base
   end
 
   belongs_to :establishment
-  has_many :beers, -> () { order(:name) }, dependent: :destroy
+  has_many :beers, -> () { order(:position) }, dependent: :destroy
   has_many :menu_lists, dependent: :destroy
   has_many :digital_display_menu_lists, dependent: :destroy
   has_many :web_menu_lists, dependent: :destroy
