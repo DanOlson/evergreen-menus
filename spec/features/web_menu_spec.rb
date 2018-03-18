@@ -176,6 +176,17 @@ feature 'digital display menu management' do
     expect(web_menu_form.preview).to_not have_availability_restriction
 
     ###
+    # Warn of unsaved changes if list linked is clicked
+    dismiss_confirm do
+      web_menu_form.selected_list_named('Taps').visit
+    end
+    expect(web_menu_form).to be_displayed
+    dismiss_confirm do
+      web_menu_form.available_list_named('Bottles').visit
+    end
+    expect(web_menu_form).to be_displayed
+
+    ###
     # TEST DELETE?
   end
 

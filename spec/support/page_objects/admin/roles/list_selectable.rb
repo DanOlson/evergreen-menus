@@ -19,6 +19,10 @@ module PageObjects
             badge.text
           end
 
+          def visit
+            name_wrapper.click
+          end
+
           def has_price_shown?
             show_price_input.checked?
           end
@@ -63,6 +67,10 @@ module PageObjects
 
           def badge_text
             badge.text
+          end
+
+          def visit
+            name_wrapper.click
           end
         end
 

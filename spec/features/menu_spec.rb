@@ -207,6 +207,17 @@ feature 'menu management' do
     expect(menu_form).to have_available_list('Specials')
     expect(menu_form.lists_selected.lists.size).to eq 1
 
+    ###
+    # Verify confirm dialog guards against navigating away
+    dismiss_confirm do
+      menu_form.available_list_named('Taps').visit
+    end
+    expect(menu_form).to be_displayed
+    dismiss_confirm do
+      menu_form.selected_list_named('Bottles').visit
+    end
+    expect(menu_form).to be_displayed
+
     menu_form.submit
     expect(page).to have_css '[data-test="flash-success"]', text: "Menu updated"
 

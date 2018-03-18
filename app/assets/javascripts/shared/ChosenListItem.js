@@ -8,6 +8,7 @@ import pluralize from './pluralize';
 import ListTypeIcon from './ListTypeIcon';
 import ShowPriceInput from './ShowPriceInput';
 import ShowDescriptionInput from './ShowDescriptionInput';
+import constants from './constants'
 
 const itemSource = {
   beginDrag(props) {
@@ -87,6 +88,7 @@ class ChosenListItem extends Component {
     super(props);
     this.onShowPriceChange = this.onShowPriceChange.bind(this);
     this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   onShowPriceChange(event) {
@@ -97,6 +99,12 @@ class ChosenListItem extends Component {
   onShowDescriptionChange(event) {
     const { list, onShowDescriptionChange } = this.props;
     onShowDescriptionChange(list.id, event.target.checked);
+  }
+
+  onClick(event) {
+    if (!confirm(constants.CONFIRM_TEXT)) {
+      event.preventDefault()
+    }
   }
 
   render() {
@@ -136,7 +144,13 @@ class ChosenListItem extends Component {
       <li className="list-group-item" data-test="menu-list" style={style}>
         <div className="valign-wrapper-w50">
           <RemoveButton onClick={onRemove} listId={list.id} />
-          <a href={list.href} className="list-name" data-test="list-name">{list.name}</a>
+          <a
+            href={list.href}
+            onClick={this.onClick}
+            className="list-name"
+            data-test="list-name">
+            {list.name}
+          </a>
         </div>
         <div className="valign-wrapper-w50">
           <ShowPriceInput

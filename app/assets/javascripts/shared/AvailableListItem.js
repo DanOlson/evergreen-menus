@@ -5,10 +5,18 @@ import { DragSource } from 'react-dnd';
 import itemTypes from './item-types';
 import pluralize from './pluralize';
 import ListTypeIcon from './ListTypeIcon';
+import constants from './constants';
 
 class AvailableListItem extends Component {
   constructor(props) {
     super(props);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick(event) {
+    if (!confirm(constants.CONFIRM_TEXT)) {
+      event.preventDefault()
+    }
   }
 
   render() {
@@ -55,7 +63,13 @@ class AvailableListItem extends Component {
       <li className="list-group-item" data-test="menu-list" style={style}>
         <div className="valign-wrapper-w60">
           <AddButton onClick={onAdd} listId={list.id} />
-          <a href={list.href} className="list-name" data-test="list-name">{list.name}</a>
+          <a
+            href={list.href}
+            onClick={this.onClick}
+            className="list-name"
+            data-test="list-name">
+            {list.name}
+          </a>
         </div>
         <div className="valign-wrapper-w40">
           <ListTypeIcon listType={list.type} />

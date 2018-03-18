@@ -133,6 +133,16 @@ feature 'digital display menu management' do
     expect(preview_taps_list.beer_named('Fulton Sweet Child of Vine')).to_not have_price
     expect(preview_taps_list.beer_named('Nitro Milk Stout')).to_not have_price
 
+    # Verify confirm dialog guards against accidental navigation
+    dismiss_confirm do
+      display_form.available_list_named('Bottles').visit
+    end
+    expect(display_form).to be_displayed
+    dismiss_confirm do
+      display_form.selected_list_named('Taps').visit
+    end
+    expect(display_form).to be_displayed
+
     # Submit new changes
     display_form.submit
 
