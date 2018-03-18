@@ -96,7 +96,7 @@ class MenuBasicPdf
   def render_list(list:)
     list_heading list: list
 
-    beers = Beer.where(list: list)
+    beers = Beer.where(list: list).order(:position)
 
     beers.each do |beer|
       menu_item beer, show_price: list.show_price_on_menu?
