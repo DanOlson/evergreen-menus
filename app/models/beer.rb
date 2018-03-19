@@ -49,16 +49,9 @@ class Beer < ActiveRecord::Base
   end
 
   def as_json(*)
-    {
-      id: id,
-      name: name,
-      created_at: created_at,
-      updated_at: updated_at,
-      establishment_id: establishment_id,
-      price: price,
-      description: description,
-      position: position,
-      labels: Array(labels)
-    }
+    super().merge({
+      "price" => price,
+      "labels" => Array(labels)
+    })
   end
 end

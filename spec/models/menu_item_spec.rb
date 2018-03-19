@@ -38,4 +38,35 @@ describe 'MenuItem' do
       expect(instance.labels.map(&:name)).to eq ['Spicy', 'Gluten Free', 'Vegan']
     end
   end
+
+  describe '#as_json' do
+    let(:timestamp) { Time.now }
+    let(:instance) do
+      Beer.new(
+        id: 15,
+        name: 'Coors',
+        created_at: timestamp,
+        updated_at: timestamp,
+        establishment_id: 1,
+        price: '3',
+        description: 'sucks',
+        position: 0
+      )
+    end
+
+    it 'represents the expected properties' do
+      actual = instance.as_json
+      expect(actual).to match hash_including({
+        'id' => 15,
+        'name' => 'Coors',
+        'created_at' => timestamp,
+        'updated_at' => timestamp,
+        'establishment_id' => 1,
+        'price' => 3.0,
+        'description' => 'sucks',
+        'position' => 0,
+        'labels' => []
+      })
+    end
+  end
 end
