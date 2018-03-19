@@ -148,8 +148,8 @@ feature 'establishment management' do
     beers = establishment.beers.order(:created_at).map { |b| [b.name, b.price_in_cents, b.description] }
     expect(beers).to eq([
       ['Bear Republic Racer 5', 550, 'A crowd favorite'],
-      ['Deschutes Fresh Squeezed', 600, 'The biggest IPA this side of the Mississippi'],
-      ['Indeed Day Tripper', 500, 'The gold standard']
+      ['Indeed Day Tripper', 500, 'The gold standard'],
+      ['Deschutes Fresh Squeezed', 600, 'The biggest IPA this side of the Mississippi']
     ])
 
     form.remove_beer 'Bear Republic Racer 5'
