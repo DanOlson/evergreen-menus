@@ -17,6 +17,7 @@ describe 'lists' do
               name: 'Ice Cream',
               price: '6.50',
               description: 'A chilly treat',
+              position: 0,
               labels: ['Gluten Free', 'Vegetarian']
             }
           ]

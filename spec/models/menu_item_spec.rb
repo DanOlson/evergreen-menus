@@ -69,4 +69,11 @@ describe 'MenuItem' do
       })
     end
   end
+
+  describe '#position' do
+    it 'requires position' do
+      b = Beer.new and b.valid?
+      expect(b.errors[:position]).to eq ["can't be blank"]
+    end
+  end
 end

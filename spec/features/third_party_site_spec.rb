@@ -14,11 +14,12 @@ feature 'establishment website', :admin, :js do
   end
 
   def create_beers(list)
-    5.times do
+    5.times do |t|
       list.beers.create!({
         name: Faker::Beer.name.strip,
         price: '6.5',
-        description: Faker::Beer.style
+        description: Faker::Beer.style,
+        position: t
       })
     end
   end
@@ -74,7 +75,8 @@ feature 'establishment website', :admin, :js do
     taps_list.beers.create!({
       name: "O'Doul's",
       price: '6.5',
-      description: 'A "beer", in some sense.'
+      description: 'A "beer", in some sense.',
+      position: 5
     })
 
     establishment_form.add_web_menu

@@ -10,18 +10,21 @@ feature 'digital display menu management' do
     })
     taps_list.beers.create!(
       name: 'Fulton Sweet Child of Vine',
-      price: '5'
+      price: '5',
+      position: 0
     )
     taps_list.beers.create!(
       name: 'Nitro Milk Stout',
-      price: '6.50'
+      price: '6.50',
+      position: 1
     )
     bottles_list = establishment.lists.create!({
       name: 'Bottles'
     })
     bottles_list.beers.create!(
       name: 'Arrogant Bastard',
-      price: '7.50'
+      price: '7.50',
+      position: 0
     )
   end
 

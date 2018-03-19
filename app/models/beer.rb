@@ -23,6 +23,8 @@ class Beer < ActiveRecord::Base
   belongs_to :establishment
   belongs_to :list
 
+  validates :position, presence: true
+
   class << self
     def at_establishment(establishment_id)
       where establishment_id: establishment_id
