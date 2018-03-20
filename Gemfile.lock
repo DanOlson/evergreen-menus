@@ -122,7 +122,6 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    logvisible (0.0.1)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -137,7 +136,6 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (4.0.1)
     netrc (0.11.0)
-    newrelic_rpm (3.15.2.317)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
@@ -271,15 +269,12 @@ DEPENDENCIES
   gretel (~> 3.0.9)!
   kaminari (~> 0.15.1)
   launchy (~> 2.4.3)
-  logvisible
   mailgun-ruby (~> 1.1.6)
-  newrelic_rpm
   pdf-reader (~> 2.0)
   pg (~> 0.18.0)
   prawn (~> 2.2)
   pry-rails (~> 0.3.2)
   rails (>= 5.0.0.1, < 5.1)
-  responders (~> 2.1.1)
   rspec-rails (~> 3.5.0)
   sdoc
   site_prism (~> 2.9)
