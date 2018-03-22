@@ -6,6 +6,7 @@ Beermapper::Application.routes.draw do
 
   root to: 'home#index'
 
+  get 'amp/lists/:id' => 'amp_lists#show'
   resources :web_menus, only: :show
   resources :accounts do
     resources :establishments do
