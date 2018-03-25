@@ -27,12 +27,12 @@ class EmbedCode extends Component {
 
   render () {
     const embedCode = { __html: this.props.embedCode };
-    const { targetElement } = this.props;
+    const { targetElement, dataTest } = this.props;
     const title = `Place this code into your HTML's ${targetElement} tag`
     const iconClass = this.state.isCopied ? 'fa-thumbs-o-up fa-lg' : 'fa-clipboard';
     const copyButtonIcon = <span className={`fa ${iconClass}`} aria-hidden="true"></span>;
     return (
-      <div className="card bg-light">
+      <div className="card bg-light" data-test={dataTest}>
         <div className="card-header">
           <div className="card-title embed-code-title">{title}</div>
           <div className="copy-button-wrapper" title="Copy to clipboard">
@@ -57,13 +57,15 @@ class EmbedCode extends Component {
 
 EmbedCode.defaultProps = {
   show: false,
-  targetElement: 'body'
+  targetElement: 'body',
+  dataTest: 'embed-code-panel'
 };
 
 EmbedCode.propTypes = {
   show: PropTypes.bool,
   targetElement: PropTypes.string,
-  embedCode: PropTypes.string.isRequired
+  embedCode: PropTypes.string.isRequired,
+  dataTest: PropTypes.string
 };
 
 export default EmbedCode;

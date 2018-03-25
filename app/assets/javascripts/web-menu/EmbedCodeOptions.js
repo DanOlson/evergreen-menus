@@ -28,13 +28,18 @@ class EmbedCodeOptions extends Component {
     } = this.props
     const htmlVisibility = show ? 'show' : 'hidden'
     const { showAmp } = this.state
-    const embedCode = showAmp ? ampBodyCode : canonicalCode
+    let bodyEmbedCode
+    if (showAmp) {
+      bodyEmbedCode = <EmbedCode embedCode={ampBodyCode} dataTest="amp-embed-code" />
+    } else {
+      bodyEmbedCode = <EmbedCode embedCode={canonicalCode} dataTest="canonical-embed-code" />
+    }
     let headEmbedCode
     if (showAmp) {
-      headEmbedCode = <EmbedCode embedCode={ampHeadCode} targetElement="head" />
+      headEmbedCode = <EmbedCode embedCode={ampHeadCode} targetElement="head" dataTest="amp-head-embed-code" />
     }
     return (
-      <div className={htmlVisibility}>
+      <div className={htmlVisibility} data-test="embed-code-options">
         <div className="embed-code-choices">
           <div className="form-check form-check-inline mr-2">
             <label className="form-check-label">
@@ -65,7 +70,7 @@ class EmbedCodeOptions extends Component {
         </div>
 
         {headEmbedCode}
-        <EmbedCode embedCode={embedCode} />
+        {bodyEmbedCode}
       </div>
     )
   }

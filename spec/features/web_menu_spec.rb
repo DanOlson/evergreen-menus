@@ -200,8 +200,23 @@ feature 'digital display menu management' do
 
     web_menu_form = PageObjects::Admin::WebMenuForm.new
     expect(web_menu_form).to have_toggle_embed_code_button
-    web_menu_form.show_embed_code
-    expect(web_menu_form).to have_embed_code
+    web_menu_form.show_embed_code_options
+
+    expect(web_menu_form).to have_canonical_embed_code
+    expect(web_menu_form).to_not have_amp_head_embed_code
+    expect(web_menu_form).to_not have_amp_body_embed_code
+
+    web_menu_form.show_amp_embed_code
+
+    expect(web_menu_form).to have_amp_head_embed_code
+    expect(web_menu_form).to have_amp_body_embed_code
+    expect(web_menu_form).to_not have_canonical_embed_code
+
+    web_menu_form.show_canonical_embed_code
+
+    expect(web_menu_form).to have_canonical_embed_code
+    expect(web_menu_form).to_not have_amp_head_embed_code
+    expect(web_menu_form).to_not have_amp_body_embed_code
   end
 
   scenario 'staff with establishment access can manage a web menu', :js, :admin do
