@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Panel from '../shared/Panel';
 import Buttons from '../shared/MenuFormButtons';
-import EmbedCode from './EmbedCode';
+import EmbedCodeOptions from './EmbedCodeOptions';
 import ShowCodeButton from './ShowCodeButton';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import AvailabilityInput from '../shared/AvailabilityInput';
@@ -151,7 +151,7 @@ class WebMenuApp extends Component {
     } = this.state;
     const previewPath = generatePreviewPath(this.props.webMenu, this.state);
     const totalListCount = lists.length + listsAvailable.length;
-    const { embedCode } = this.props.webMenu;
+    const { embedCode, ampEmbedCode, ampHeadEmbedCode } = this.props.webMenu;
     const toggleCodeButtonClass = embedCode ? (showEmbedCode ? 'active' : '') : 'hidden';
     return (
       <div className="form-row">
@@ -236,7 +236,11 @@ class WebMenuApp extends Component {
               </ShowCodeButton>
             </Buttons>
 
-            <EmbedCode embedCode={embedCode} show={showEmbedCode} />
+            <EmbedCodeOptions
+              canonicalCode={embedCode}
+              ampBodyCode={ampEmbedCode}
+              ampHeadCode={ampHeadEmbedCode}
+              show={showEmbedCode} />
           </Panel>
         </div>
         <div className="col-sm-6">

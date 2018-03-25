@@ -19,7 +19,11 @@ class WebMenuSerializer
       restrictedAvailability: @web_menu.restricted_availability?
     }
 
-    additional_attrs.merge!(embedCode: embed_code) if @web_menu.persisted?
+    additional_attrs.merge!(
+      embedCode: embed_code,
+      ampEmbedCode: amp_embed_code,
+      ampHeadEmbedCode: amp_head_embed_code
+    ) if @web_menu.persisted?
     @web_menu.as_json.merge(additional_attrs).to_json
   end
 
@@ -66,6 +70,22 @@ class WebMenuSerializer
         web_menu: @web_menu,
         menu_url: web_menu_url(@web_menu.id, host: @host, protocol: @protocol)
       }).generate_encoded
+    end
+  end
+
+  def amp_embed_code
+    if @include_embed_code
+      AmpMenuEmbedCode.new(@web_menu, {
+        base_url: @host
+      }).generate_encoded
+    end
+  end
+
+  def amp_head_embed_code
+    if @include_embed_code
+      AmpMenuEmbedCode.new(@web_menu, {
+        base_url: @host
+      }).generate_head_encoded
     end
   end
 end

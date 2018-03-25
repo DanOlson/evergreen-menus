@@ -27,18 +27,22 @@ class EmbedCode extends Component {
 
   render () {
     const embedCode = { __html: this.props.embedCode };
-    const htmlVisibility = this.props.show ? 'show' : 'hidden';
+    const { targetElement } = this.props;
+    const title = `Place this code into your HTML's ${targetElement} tag`
     const iconClass = this.state.isCopied ? 'fa-thumbs-o-up fa-lg' : 'fa-clipboard';
     const copyButtonIcon = <span className={`fa ${iconClass}`} aria-hidden="true"></span>;
     return (
-      <div className={`card bg-light ${htmlVisibility}`}>
-        <div className="copy-button-wrapper" title="Copy to clipboard">
-          <Clipboard
-            option-text={this.getEmbedCode}
-            onSuccess={this.handleCopy}
-            className="btn btn-secondary">
-            {copyButtonIcon}
-          </Clipboard>
+      <div className="card bg-light">
+        <div className="card-header">
+          <div className="card-title embed-code-title">{title}</div>
+          <div className="copy-button-wrapper" title="Copy to clipboard">
+            <Clipboard
+              option-text={this.getEmbedCode}
+              onSuccess={this.handleCopy}
+              className="btn btn-secondary">
+              {copyButtonIcon}
+            </Clipboard>
+          </div>
         </div>
         <div className="card-body" data-test="menu-embed-code">
           <pre>
@@ -52,12 +56,14 @@ class EmbedCode extends Component {
 }
 
 EmbedCode.defaultProps = {
-  show: false
+  show: false,
+  targetElement: 'body'
 };
 
 EmbedCode.propTypes = {
   show: PropTypes.bool,
-  embedCode: PropTypes.string
+  targetElement: PropTypes.string,
+  embedCode: PropTypes.string.isRequired
 };
 
 export default EmbedCode;

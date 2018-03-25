@@ -26,32 +26,38 @@ describe AmpMenuEmbedCode do
     )
   end
 
-  describe '#generate' do
-    let(:instance) do
-      AmpMenuEmbedCode.new(web_menu, base_url: 'https://test.evergreenmenus.com')
-    end
+  let(:instance) do
+    AmpMenuEmbedCode.new(web_menu, {
+      base_url: 'test.evergreenmenus.com',
+      # json_ld_url: "https://test.evergreenmenus.com/web_menus/#{web_menu.id}/json_ld.js"
+    })
+  end
 
+  describe '#generate' do
     it 'creates the expected code' do
       expected = <<~HTML.strip
-        <div class="evergreen-menu">
-          <div class="evergreen-menu-list" data-test="list">
-            <h3 class="evergreen-menu-title" data-test="list-title">Dinner</h3>
+        <div class="evergreen-menu" itemscope itemtype="http://schema.org/Menu">
+          <div class="evergreen-menu-list" data-test="list" itemprop="hasMenuSection" itemscope itemtype="http://schema.org/MenuSection">
+            <h3 class="evergreen-menu-title" data-test="list-title" itemprop="name">Dinner</h3>
             <amp-list src="https://test.evergreenmenus.com/amp/lists/#{dinner.id}.json" layout="responsive" width="3" height="2">
               <template type="amp-mustache">
-                <div class="evergreen-menu-item">
-                  <span class="evergreen-menu-item-name" data-test="list-item-name">{{name}}</span>
-                  <span class="evergreen-menu-item-price" data-test="list-item-price">{{price}}</span>
-                  <div class="evergreen-menu-item-description" data-test="list-item-description">{{description}}</div>
+                <div class="evergreen-menu-item" itemprop="hasMenuItem" itemscope itemtype="http://schema.org/MenuItem">
+                  <span class="evergreen-menu-item-name" data-test="list-item-name" itemprop="name">{{name}}</span>
+                  <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                    <meta itemprop="priceCurrency" content="USD" />
+                    <span class="evergreen-menu-item-price" data-test="list-item-price" itemprop="price" content="{{price}}">{{price}}</span>
+                  </span>
+                  <div class="evergreen-menu-item-description" data-test="list-item-description" itemprop="description">{{description}}</div>
                 </div>
               </template>
             </amp-list>
           </div>
-          <div class="evergreen-menu-list" data-test="list">
-            <h3 class="evergreen-menu-title" data-test="list-title">Coming Soon</h3>
+          <div class="evergreen-menu-list" data-test="list" itemprop="hasMenuSection" itemscope itemtype="http://schema.org/MenuSection">
+            <h3 class="evergreen-menu-title" data-test="list-title" itemprop="name">Coming Soon</h3>
             <amp-list src="https://test.evergreenmenus.com/amp/lists/#{coming_soon.id}.json" layout="responsive" width="3" height="2">
               <template type="amp-mustache">
-                <div class="evergreen-menu-item">
-                  <span class="evergreen-menu-item-name" data-test="list-item-name">{{name}}</span>
+                <div class="evergreen-menu-item" itemprop="hasMenuItem" itemscope itemtype="http://schema.org/MenuItem">
+                  <span class="evergreen-menu-item-name" data-test="list-item-name" itemprop="name">{{name}}</span>
                 </div>
               </template>
             </amp-list>
@@ -60,6 +66,17 @@ describe AmpMenuEmbedCode do
       HTML
 
       expect(instance.generate).to eq expected
+    end
+  end
+
+  describe '#generate_head' do
+    it 'creates the expected code' do
+      expected = <<~HTML.strip
+        <script async custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js"></script>
+        <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.1.js"></script>
+      HTML
+
+      expect(instance.generate_head).to eq expected
     end
   end
 end
