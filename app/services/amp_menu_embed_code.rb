@@ -17,6 +17,7 @@ class AmpMenuEmbedCode
             <% if list.show_price_on_menu? %>
               <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                 <meta itemprop="priceCurrency" content="USD" />
+                &nbsp;&mdash;&nbsp;
                 <span class="evergreen-menu-item-price" data-test="list-item-price" itemprop="price" content="{{price}}">{{price}}</span>
               </span>
             <% end %>

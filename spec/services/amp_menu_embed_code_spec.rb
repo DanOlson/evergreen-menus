@@ -45,6 +45,7 @@ describe AmpMenuEmbedCode do
                   <span class="evergreen-menu-item-name" data-test="list-item-name" itemprop="name">{{name}}</span>
                   <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                     <meta itemprop="priceCurrency" content="USD" />
+                    &nbsp;&mdash;&nbsp;
                     <span class="evergreen-menu-item-price" data-test="list-item-price" itemprop="price" content="{{price}}">{{price}}</span>
                   </span>
                   <div class="evergreen-menu-item-description" data-test="list-item-description" itemprop="description">{{description}}</div>
