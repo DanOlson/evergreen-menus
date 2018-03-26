@@ -23,7 +23,7 @@ class Preview extends Component {
   render() {
     const { showHelp } = this.state
     return (
-      <Panel title="Preview" onToggleHelp={this.handleToggleHelp}>
+      <Panel className="sticky-top" title="Preview" onToggleHelp={this.handleToggleHelp}>
         <div
           className={`card contextual-help bg-light ${showHelp ? '' : 'hidden'}`}
           data-test="help-text">
@@ -31,7 +31,7 @@ class Preview extends Component {
             The preview content shown here is unstyled. The styles from your site will apply to this menu once you add the embed code to your site.
           </div>
         </div>
-        <div className="web-menu-preview-wrapper">
+        <div className="menu-preview-wrapper">
           <object
             data={this.props.previewPath}
             type="text/html"

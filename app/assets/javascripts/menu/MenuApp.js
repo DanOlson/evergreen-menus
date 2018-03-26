@@ -339,9 +339,7 @@ class MenuApp extends Component {
           </Panel>
         </div>
         <div className="col-sm-6">
-          <Panel title='Preview' dataTest="menu-preview">
-            <Preview previewPath={previewPath} />
-          </Panel>
+          <Preview previewPath={previewPath} />
         </div>
       </div>
     );
