@@ -60,7 +60,7 @@ class AvailableListItem extends Component {
     }
 
     return connectDragSource(
-      <li className="list-group-item" data-test="menu-list" style={style}>
+      <li className="list-group-item list-group-item-action" data-test="menu-list" style={style}>
         <div className="valign-wrapper-w60">
           <AddButton onClick={onAdd} listId={list.id} />
           <a
