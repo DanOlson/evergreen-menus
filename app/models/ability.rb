@@ -25,7 +25,7 @@ class Ability
     can :update, Establishment, establishment_staff_assignments: { user_id: user.id }
     can :show,   Account, id: user.account_id
 
-    cannot :view_snippet, WebMenu
+    can :view_snippet, WebMenu
   end
 
   def manager_abilities(user)

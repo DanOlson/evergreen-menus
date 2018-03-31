@@ -224,8 +224,8 @@ feature 'digital display menu management' do
     staff.establishments << establishment
 
     run_test staff
-    web_menu_form = PageObjects::Admin::WebMenuForm.new
-    expect(web_menu_form).to_not have_toggle_embed_code_button
+    # web_menu_form = PageObjects::Admin::WebMenuForm.new
+    # expect(web_menu_form).to_not have_toggle_embed_code_button
   end
 
   scenario 'staff without access cannot access web menu', :js, :admin do
