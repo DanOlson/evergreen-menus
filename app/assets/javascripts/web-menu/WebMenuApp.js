@@ -51,8 +51,6 @@ class WebMenuApp extends Component {
   }
 
   moveChosenList(dragIndex, hoverIndex) {
-    const { lists } = this.state;
-    const dragList = lists[dragIndex];
     this.setState(prevState => {
       const { lists } = prevState;
       const dragList = lists[dragIndex];
