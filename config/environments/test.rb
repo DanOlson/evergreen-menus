@@ -1,3 +1,8 @@
+environment_url_options = {
+  host: 'admin.evergreenmenus.locl',
+  protocol: 'http'
+}
+
 Beermapper::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -23,13 +28,12 @@ Beermapper::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  # config.default_url_options = environment_url_options
+
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = true
 
-  config.action_mailer.default_url_options = {
-    host: 'admin.evergreenmenus.locl',
-    protocol: 'http'
-  }
+  config.action_mailer.default_url_options = environment_url_options
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
@@ -45,3 +49,5 @@ Beermapper::Application.configure do
 
   # config.log_level = :debug
 end
+
+Rails.application.routes.default_url_options.merge!(environment_url_options)

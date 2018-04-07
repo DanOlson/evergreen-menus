@@ -1,3 +1,8 @@
+environment_url_options = {
+  host: 'admin.evergreenmenus.com',
+  protocol: 'https'
+}
+
 Beermapper::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -67,10 +72,7 @@ Beermapper::Application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = {
-    host: 'admin.evergreenmenus.com',
-    protocol: 'https'
-  }
+  config.action_mailer.default_url_options = environment_url_options
   config.action_mailer.delivery_method = :mailgun
 
   ###
@@ -95,3 +97,5 @@ Beermapper::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 end
+
+Rails.application.routes.default_url_options.merge!(environment_url_options)

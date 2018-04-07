@@ -1,3 +1,8 @@
+environment_url_options = {
+  host: 'admin.evergreenmenus.locl.com',
+  protocol: 'http'
+}
+
 Beermapper::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -16,10 +21,7 @@ Beermapper::Application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.default_url_options = {
-    host: 'admin.beermapper.locl',
-    protocol: 'https'
-  }
+  config.action_mailer.default_url_options = environment_url_options
 
   ###
   # Uncomment for local testing. Must add Mailgun api_key
@@ -42,3 +44,5 @@ Beermapper::Application.configure do
   config.assets.compile = false
   config.assets.quiet = true
 end
+
+Rails.application.routes.default_url_options.merge!(environment_url_options)
