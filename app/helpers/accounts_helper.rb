@@ -9,7 +9,7 @@ module AccountsHelper
       button_to 'Disconnect Google My Business',
                 oauth_google_revoke_path,
                 method: :delete,
-                class: 'btn btn-danger',
+                class: 'btn btn-evrgn-delete',
                 data: {
                   test: 'disconnect-google-button',
                   confirm: 'Really disconnect your account from Google?'
