@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180318015424) do
+ActiveRecord::Schema.define(version: 20180407035810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,15 @@ ActiveRecord::Schema.define(version: 20180318015424) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["access_token"], name: "index_api_keys_on_access_token", unique: true, using: :btree
+  end
+
+  create_table "auth_tokens", force: :cascade do |t|
+    t.integer  "account_id", null: false
+    t.string   "provider",   null: false
+    t.json     "token_data", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_auth_tokens_on_account_id", using: :btree
   end
 
   create_table "beer_establishments", force: :cascade do |t|

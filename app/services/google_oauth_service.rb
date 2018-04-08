@@ -13,12 +13,32 @@ class GoogleOauthService
     @client.authorization_uri.to_s
   end
 
-  def exchange(code)
+  def exchange(code:, account:)
     @client.code = code
-    @client.fetch_access_token!
+    access_token = @client.fetch_access_token!
+    AuthToken.google.for_account(account).create!({
+      token_data: access_token
+    })
+    access_token
+  end
+
+  def fetch_token(account)
+    auth_token = AuthToken.google.for_account(account).first or return
+    if token_expired? auth_token
+      access_token = @client.fetch_access_token!
+      auth_token.update!(token_data: access_token)
+      access_token
+    else
+      auth_token.token_data.symbolize_keys
+    end
   end
 
   private
+
+  def token_expired?(auth_token)
+    valid_until = auth_token.updated_at + auth_token.token_data['expires_in'].seconds
+    Time.now > valid_until
+  end
 
   def default_client
     Signet::OAuth2::Client.new({

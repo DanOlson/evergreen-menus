@@ -45,13 +45,112 @@ describe GoogleOauthService do
   end
 
   describe '#exchange' do
+    let(:mock_token) do
+      {
+        access_token: 'asdf',
+        refresh_token: 'qwer',
+        expires_in: 3600,
+        token_type: 'Bearer'
+      }
+    end
+    let(:mock_client) do
+      double('MockSignetClient', :code= => nil, fetch_access_token!: mock_token)
+    end
+    let(:account) { create :account }
+    let(:service) { GoogleOauthService.new mock_client }
+
     it 'exchanges code for tokens' do
-      mock_token = { access_token: 'asdf', refresh_token: 'qwer' }
-      client = double('MockSignetClient', :code= => nil, fetch_access_token!: mock_token)
-      service = GoogleOauthService.new client
-      result = service.exchange('foo')
-      expect(client).to have_received(:code=).with('foo')
+      result = service.exchange code: 'foo', account: account
+      expect(mock_client).to have_received(:code=).with('foo')
       expect(result).to eq mock_token
+    end
+
+    it 'saves the token data to the database' do
+      expect {
+        service.exchange code: 'foo', account: account
+      }.to change(AuthToken, :count).by 1
+
+      token_data = AuthToken.find_by({
+        provider: AuthToken::Providers::GOOGLE,
+        account: account
+      }).token_data
+      expect(token_data).to eq mock_token.stringify_keys
+    end
+  end
+
+  describe '#fetch_token' do
+    let(:mock_token) do
+      {
+        access_token: 'asdf',
+        refresh_token: 'qwer',
+        expires_in: 3600,
+        token_type: 'Bearer'
+      }
+    end
+    let(:mock_client) do
+      double('MockSignetClient')
+    end
+    let(:account) { create :account }
+    let(:service) { GoogleOauthService.new mock_client }
+
+    context 'when there is no token' do
+      it 'returns nil' do
+        expect(service.fetch_token(account)).to be_nil
+      end
+    end
+
+    context 'when the saved token has not yet expired' do
+      let(:now) { Time.zone.now }
+
+      before do
+        AuthToken.create!({
+          provider: AuthToken::Providers::GOOGLE,
+          account: account,
+          token_data: mock_token,
+          created_at: now,
+          updated_at: now
+        })
+      end
+
+      it 'returns the saved data' do
+        token = service.fetch_token account
+        expect(token).to eq mock_token
+      end
+    end
+
+    context 'when the saved token has expired' do
+      let(:now) { Time.zone.now - 3601.seconds }
+      let(:fresh_token) do
+        {
+          access_token: 'muchnewerandbetteraccesstoken',
+          refresh_token: 'qwer',
+          expires_in: 3600,
+          token_type: 'Bearer'
+        }
+      end
+
+      before do
+        AuthToken.create!({
+          provider: AuthToken::Providers::GOOGLE,
+          account: account,
+          token_data: mock_token,
+          created_at: now,
+          updated_at: now
+        })
+      end
+
+      it 'fetches a new token, saves it, and returns it' do
+        expect(mock_client).to receive(:fetch_access_token!) { fresh_token }
+
+        token = service.fetch_token account
+        expect(token).to eq fresh_token
+
+        saved_token_data = AuthToken.find_by({
+          provider: AuthToken::Providers::GOOGLE,
+          account: account
+        }).token_data
+        expect(saved_token_data).to eq fresh_token.stringify_keys
+      end
     end
   end
 end

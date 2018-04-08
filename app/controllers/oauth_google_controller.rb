@@ -6,9 +6,7 @@ class OauthGoogleController < ApplicationController
 
   def callback
     service = GoogleOauthService.new
-    access_token = service.exchange params[:code]
-    render json: access_token
-    # store the token and redirect
-    # redirect_to after_sign_in_path_for(current_user), notice: 'Successfully linked with Google!'
+    service.exchange code: params[:code], account: current_user.account
+    redirect_to after_sign_in_path_for(current_user), notice: 'Successfully linked with Google!'
   end
 end
