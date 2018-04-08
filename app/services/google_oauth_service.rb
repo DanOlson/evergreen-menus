@@ -49,8 +49,8 @@ class GoogleOauthService
     Signet::OAuth2::Client.new({
       authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
-      client_id: APP_CONFIG[:google][:client_id],
-      client_secret: APP_CONFIG[:google][:client_secret],
+      client_id: ENV.fetch('GOOGLE_CLIENT_ID') { APP_CONFIG[:google][:client_id] },
+      client_secret: ENV.fetch('GOOGLE_CLIENT_SECRET') { APP_CONFIG[:google][:client_secret] },
       scope: 'https://www.googleapis.com/auth/plus.business.manage',
       redirect_uri: oauth_google_callback_url
     })
