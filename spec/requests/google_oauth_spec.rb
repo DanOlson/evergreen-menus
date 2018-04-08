@@ -10,8 +10,7 @@ describe 'Google OAuth' do
 
   describe 'GET to /oauth/google/authorize' do
     it 'redirects to the right place' do
-      referer = "http://admin.evergreenmenus.locl.com/accounts/#{account.id}"
-      get '/oauth/google/authorize', headers: { 'HTTP_REFERER' => referer }
+      get '/oauth/google/authorize'
 
       expect(response).to have_http_status :redirect
       location = response.headers['Location']
@@ -24,6 +23,29 @@ describe 'Google OAuth' do
       expect(params['redirect_uri']).to end_with '/oauth/google/callback'
       expect(params['response_type']).to eq 'code'
       expect(params['scope']).to eq 'https://www.googleapis.com/auth/plus.business.manage'
+    end
+  end
+
+  describe 'DELETE to /oauth/google/revoke' do
+    before do
+      AuthToken.google.for_account(account).create!({
+        token_data: {
+          access_token: 'asdf',
+          refresh_token: 'qwer',
+          expires_in: 3600,
+          token_type: 'Bearer'
+        }
+      })
+    end
+
+    it 'deletes tokens and redirects back' do
+      expect(AuthToken.google.for_account(account).exists?).to eq true
+
+      delete '/oauth/google/revoke'
+
+      expect(response).to have_http_status :redirect
+      expect(response['Location']).to eq account_url(account)
+      expect(AuthToken.google.for_account(account).exists?).to eq false
     end
   end
 end

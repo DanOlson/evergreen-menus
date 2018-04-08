@@ -31,12 +31,10 @@ end
 
 Capybara::Webkit.configure do |config|
   config.allow_url("fonts.googleapis.com")
-  config.allow_url("admin.test.evergreenmenus.locl")
-  config.allow_url("cdn.test.evergreenmenus.locl")
+  config.allow_url("admin.test.evergreenmenus.com")
+  config.allow_url("cdn.test.evergreenmenus.com")
   config.allow_url("test.my-bar.locl")
-  config.allow_url("test.beermapper-api.locl")
-  ###
-  # Beermapper Admin
+  # config.allow_url("test.beermapper-api.locl")
   config.allow_url("maxcdn.bootstrapcdn.com")
 end
 
@@ -76,7 +74,7 @@ RSpec.configure do |config|
 
   config.around(:each, admin: true) do |example|
     old_app_host = Capybara.app_host
-    Capybara.app_host = 'http://admin.test.evergreenmenus.locl'
+    Capybara.app_host = 'http://admin.test.evergreenmenus.com'
     example.run
     Capybara.app_host = old_app_host
   end

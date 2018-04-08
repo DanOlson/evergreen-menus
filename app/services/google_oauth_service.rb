@@ -33,6 +33,11 @@ class GoogleOauthService
     end
   end
 
+  def revoke(account)
+    AuthToken.google.for_account(account).delete_all
+    nil
+  end
+
   private
 
   def token_expired?(auth_token)
@@ -42,12 +47,12 @@ class GoogleOauthService
 
   def default_client
     Signet::OAuth2::Client.new({
-        authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
-        token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
-        client_id: APP_CONFIG.fetch(:google_client_id),
-        client_secret: APP_CONFIG.fetch(:google_client_secret),
-        scope: 'https://www.googleapis.com/auth/plus.business.manage',
-        redirect_uri: oauth_google_callback_url
-      })
+      authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
+      token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
+      client_id: APP_CONFIG.fetch(:google_client_id),
+      client_secret: APP_CONFIG.fetch(:google_client_secret),
+      scope: 'https://www.googleapis.com/auth/plus.business.manage',
+      redirect_uri: oauth_google_callback_url
+    })
   end
 end

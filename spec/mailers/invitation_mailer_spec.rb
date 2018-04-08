@@ -46,7 +46,7 @@ describe InvitationMailer, type: :mailer do
     end
 
     it 'sends an email that includes a registration url' do
-      expect(email.text_part.decoded).to match(%r{admin.evergreenmenus.locl/register/.+})
+      expect(email.text_part.decoded).to match(%r{admin.test.evergreenmenus.com/register/.+})
     end
   end
 end

@@ -1,12 +1,23 @@
 class OauthGoogleController < ApplicationController
+  delegate :account, to: :current_user
+
   def authorize
-    service = GoogleOauthService.new
     redirect_to service.authorization_uri
   end
 
   def callback
-    service = GoogleOauthService.new
-    service.exchange code: params[:code], account: current_user.account
-    redirect_to after_sign_in_path_for(current_user), notice: 'Successfully linked with Google!'
+    service.exchange code: params[:code], account: account
+    redirect_to account_path(account), notice: 'Your account is connected with Google!'
+  end
+
+  def revoke
+    service.revoke account
+    redirect_to account_path(account), notice: 'You have disconnected your account from Google'
+  end
+
+  private
+
+  def service
+    GoogleOauthService.new
   end
 end

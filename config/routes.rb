@@ -8,6 +8,8 @@ Beermapper::Application.routes.draw do
 
   get 'oauth/google/authorize' => 'oauth_google#authorize'
   get 'oauth/google/callback' => 'oauth_google#callback'
+  delete 'oauth/google/revoke' => 'oauth_google#revoke'
+
   get 'amp/lists/:id' => 'amp_lists#show'
   resources :web_menus, only: :show
   resources :accounts do

@@ -330,4 +330,21 @@ feature 'account management' do
       expect(page).to have_css '[data-test="flash-success"]', text: 'Signed in successfully.'
     end
   end
+
+  scenario 'manager has access to Web Integrations' do
+    manager = create :user, :manager, account: account
+    login manager
+
+    account_details = PageObjects::Admin::AccountDetails.new
+    expect(account_details).to be_displayed
+    expect(account_details).to have_web_integrations
+  end
+
+  scenario 'staff has no access to Web Integrations' do
+    login user
+
+    account_details = PageObjects::Admin::AccountDetails.new
+    expect(account_details).to be_displayed
+    expect(account_details).to_not have_web_integrations
+  end
 end

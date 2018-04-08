@@ -18,3 +18,9 @@
     <% end %>
   </div>
 <% end %>
+
+<% if can?(:view_web_integrations, @account)  %>
+  <%= render 'shared/panel', title: 'Web Integrations', data_test: 'account-integrations' do %>
+    <%= google_my_business_link @account %>
+  <% end %>
+<% end %>

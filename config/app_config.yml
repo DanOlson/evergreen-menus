@@ -4,11 +4,11 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  web_menu_host: 'cdn.evergreenmenus.locl'
+  web_menu_host: 'cdn.local.evergreenmenus.com'
 
 test:
   <<: *defaults
-  web_menu_host: 'cdn.test.evergreenmenus.locl'
+  web_menu_host: 'cdn.test.evergreenmenus.com'
 
 production:
   <<: *defaults

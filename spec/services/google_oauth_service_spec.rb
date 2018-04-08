@@ -32,7 +32,7 @@ describe GoogleOauthService do
     end
 
     it 'has the correct redirect_uri' do
-      expect(String(client.redirect_uri)).to eq 'http://admin.evergreenmenus.locl/oauth/google/callback'
+      expect(String(client.redirect_uri)).to eq 'http://admin.test.evergreenmenus.com/oauth/google/callback'
     end
 
     it 'has a client_id' do
@@ -70,10 +70,7 @@ describe GoogleOauthService do
         service.exchange code: 'foo', account: account
       }.to change(AuthToken, :count).by 1
 
-      token_data = AuthToken.find_by({
-        provider: AuthToken::Providers::GOOGLE,
-        account: account
-      }).token_data
+      token_data = AuthToken.google.for_account(account).first.token_data
       expect(token_data).to eq mock_token.stringify_keys
     end
   end
@@ -103,9 +100,7 @@ describe GoogleOauthService do
       let(:now) { Time.zone.now }
 
       before do
-        AuthToken.create!({
-          provider: AuthToken::Providers::GOOGLE,
-          account: account,
+        AuthToken.google.for_account(account).create!({
           token_data: mock_token,
           created_at: now,
           updated_at: now
@@ -130,9 +125,7 @@ describe GoogleOauthService do
       end
 
       before do
-        AuthToken.create!({
-          provider: AuthToken::Providers::GOOGLE,
-          account: account,
+        AuthToken.google.for_account(account).create!({
           token_data: mock_token,
           created_at: now,
           updated_at: now
@@ -145,11 +138,41 @@ describe GoogleOauthService do
         token = service.fetch_token account
         expect(token).to eq fresh_token
 
-        saved_token_data = AuthToken.find_by({
-          provider: AuthToken::Providers::GOOGLE,
-          account: account
-        }).token_data
-        expect(saved_token_data).to eq fresh_token.stringify_keys
+        saved_token = AuthToken.google.for_account(account).first
+        expect(saved_token.token_data).to eq fresh_token.stringify_keys
+      end
+    end
+  end
+
+  describe '#revoke' do
+    let(:account) { create :account }
+    let(:service) { GoogleOauthService.new }
+
+    context 'when there is a token' do
+      before do
+        AuthToken.google.for_account(account).create!({
+          token_data: {
+            access_token: 'asdf',
+            refresh_token: 'q432423',
+            expires_in: 3600,
+            token_type: 'Bearer'
+          }
+        })
+      end
+
+      it 'deletes the token' do
+        expect {
+          service.revoke account
+        }.to change(AuthToken, :count).by -1
+        expect(AuthToken.google.for_account(account).exists?).to eq false
+      end
+    end
+
+    context 'when there is no token' do
+      it 'deletes no tokens' do
+        expect {
+          service.revoke account
+        }.to_not change AuthToken, :count
       end
     end
   end

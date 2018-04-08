@@ -1,5 +1,5 @@
 environment_url_options = {
-  host: 'admin.evergreenmenus.locl.com',
+  host: 'admin.local.evergreenmenus.com',
   protocol: 'http'
 }
 

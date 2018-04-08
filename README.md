@@ -27,8 +27,8 @@ NameVirtualHost *:80
 ###
 # Evergreen dev
 <VirtualHost *:80>
-  ServerName admin.evergreenmenus.locl
-  ServerAlias cdn.evergreenmenus.locl
+  ServerName admin.local.evergreenmenus.com
+  ServerAlias cdn.local.evergreenmenus.com
   DocumentRoot /Users/dan/code/evergreen-menus/public
   RailsEnv development
   <Directory /Users/dan/code/evergreen-menus/public>
@@ -48,8 +48,8 @@ NameVirtualHost *:80
 </VirtualHost>
 
 <VirtualHost *:80>
-  ServerName admin.test.evergreenmenus.locl
-  ServerAlias cdn.test.evergreenmenus.locl
+  ServerName admin.test.evergreenmenus.com
+  ServerAlias cdn.test.evergreenmenus.com
   DocumentRoot /Users/dan/code/evergreen-menus/public
   RailsEnv test
   <Directory /Users/dan/code/evergreen-menus/public>
@@ -72,10 +72,10 @@ NameVirtualHost *:80
 ### Configure /etc/hosts
 
 ```
-127.0.0.1 admin.evergreenmenus.locl
-127.0.0.1 cdn.evergreenmenus.locl
-127.0.0.1 admin.test.evergreenmenus.locl
-127.0.0.1 cdn.test.evergreenmenus.locl
+127.0.0.1 admin.local.evergreenmenus.com
+127.0.0.1 cdn.local.evergreenmenus.com
+127.0.0.1 admin.test.evergreenmenus.com
+127.0.0.1 cdn.test.evergreenmenus.com
 127.0.0.1 my-bar.locl
 ```
 
