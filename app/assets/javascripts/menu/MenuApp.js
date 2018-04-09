@@ -59,10 +59,9 @@ class MenuApp extends Component {
   }
 
   moveChosenList(dragIndex, hoverIndex) {
-    const { lists } = this.state;
-    const dragList = lists[dragIndex];
-
     this.setState(prevState => {
+      const { lists } = prevState;
+      const dragList = lists[dragIndex];
       const newLists = [...lists];
       newLists.splice(dragIndex, 1);
       newLists.splice(hoverIndex, 0, dragList);
