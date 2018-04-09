@@ -38,9 +38,11 @@
   <%= render('layouts/google_analytics') if Rails.env.production? %>
   <%= content_for :javascripts %>
   <footer>
-    <div class="evergreen-copyright">
+    <span>
       &copy;<%= Date.today.year %> Evergreen Solutions, LLC
-    </div>
+      <%= link_to 'Terms and Conditions', terms_path, data: { test: 'terms-link' } %>
+      <%= link_to 'Privacy Policy', privacy_path, data: { test: 'privacy-link' }  %>
+    </span>
   </footer>
   <script>
     function applyConfirmToForm(element) {
