@@ -47,10 +47,10 @@ describe GoogleOauthService do
   describe '#exchange' do
     let(:mock_token) do
       {
-        access_token: 'asdf',
-        refresh_token: 'qwer',
-        expires_in: 3600,
-        token_type: 'Bearer'
+        'access_token' => 'a-mock-access-token',
+        'refresh_token' => 'the-mock-refresh-token',
+        'expires_in' => 3600,
+        'token_type' => 'Bearer'
       }
     end
     let(:mock_client) do
@@ -70,18 +70,21 @@ describe GoogleOauthService do
         service.exchange code: 'foo', account: account
       }.to change(AuthToken, :count).by 1
 
-      token_data = AuthToken.google.for_account(account).first.token_data
+      auth_token = AuthToken.google.for_account(account).first
+      token_data = auth_token.token_data
       expect(token_data).to eq mock_token.stringify_keys
+      expect(auth_token.access_token).to eq 'a-mock-access-token'
+      expect(auth_token.refresh_token).to eq 'the-mock-refresh-token'
+      expect(auth_token.expires_at).to be_within(1.second).of(Time.now + 1.hour)
     end
   end
 
   describe '#fetch_token' do
     let(:mock_token) do
       {
-        access_token: 'asdf',
-        refresh_token: 'qwer',
-        expires_in: 3600,
-        token_type: 'Bearer'
+        'access_token' => 'a-mock-access-token',
+        'expires_in' => 3600,
+        'token_type' => 'Bearer'
       }
     end
     let(:mock_client) do
@@ -102,6 +105,9 @@ describe GoogleOauthService do
       before do
         AuthToken.google.for_account(account).create!({
           token_data: mock_token,
+          access_token: 'a-mock-access-token',
+          refresh_token: 'the-mock-refresh-token',
+          expires_at: now + 3600.seconds,
           created_at: now,
           updated_at: now
         })
@@ -114,32 +120,39 @@ describe GoogleOauthService do
     end
 
     context 'when the saved token has expired' do
-      let(:now) { Time.zone.now - 3601.seconds }
+      let(:now) { Time.zone.now - 1.second }
+      let(:refresh_time) { now - 3601.seconds }
       let(:fresh_token) do
         {
-          access_token: 'muchnewerandbetteraccesstoken',
-          refresh_token: 'qwer',
-          expires_in: 3600,
-          token_type: 'Bearer'
+          'access_token' => 'muchnewerandbetteraccesstoken',
+          'expires_in' => 3600,
+          'token_type' => 'Bearer'
         }
       end
 
       before do
         AuthToken.google.for_account(account).create!({
           token_data: mock_token,
-          created_at: now,
-          updated_at: now
+          access_token: 'a-mock-access-token',
+          refresh_token: 'the-mock-refresh-token',
+          expires_at: now,
+          created_at: refresh_time,
+          updated_at: refresh_time
         })
       end
 
       it 'fetches a new token, saves it, and returns it' do
+        expect(mock_client).to receive(:refresh_token=).with 'the-mock-refresh-token'
         expect(mock_client).to receive(:fetch_access_token!) { fresh_token }
 
         token = service.fetch_token account
         expect(token).to eq fresh_token
 
-        saved_token = AuthToken.google.for_account(account).first
-        expect(saved_token.token_data).to eq fresh_token.stringify_keys
+        updated_token = AuthToken.google.for_account(account).first
+        expect(updated_token.token_data).to eq fresh_token
+        expect(updated_token.access_token).to eq 'muchnewerandbetteraccesstoken'
+        expect(updated_token.refresh_token).to eq 'the-mock-refresh-token'
+        expect(updated_token.expires_at).to be_within(1.second).of(Time.now + 1.hour)
       end
     end
   end

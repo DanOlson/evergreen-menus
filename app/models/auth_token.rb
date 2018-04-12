@@ -16,4 +16,8 @@ class AuthToken < ActiveRecord::Base
       where(account: account)
     end
   end
+
+  def expired?
+    Time.now > expires_at
+  end
 end

@@ -15,21 +15,29 @@ class GoogleOauthService
 
   def exchange(code:, account:)
     @client.code = code
-    access_token = @client.fetch_access_token!
-    AuthToken.google.for_account(account).create!({
-      token_data: access_token
-    })
-    access_token
+    with_new_token do |token_data|
+      AuthToken.google.for_account(account).create!({
+        access_token: token_data['access_token'],
+        refresh_token: token_data['refresh_token'],
+        expires_at: Time.now + token_data['expires_in'].seconds,
+        token_data: token_data
+      })
+    end
   end
 
   def fetch_token(account)
     auth_token = AuthToken.google.for_account(account).first or return
-    if token_expired? auth_token
-      access_token = @client.fetch_access_token!
-      auth_token.update!(token_data: access_token)
-      access_token
+    if auth_token.expired?
+      @client.refresh_token = auth_token.refresh_token
+      with_new_token do |token_data|
+        auth_token.update!({
+          token_data: token_data,
+          access_token: token_data['access_token'],
+          expires_at: Time.now + token_data['expires_in'].seconds
+        })
+      end
     else
-      auth_token.token_data.symbolize_keys
+      auth_token.token_data
     end
   end
 
@@ -40,9 +48,10 @@ class GoogleOauthService
 
   private
 
-  def token_expired?(auth_token)
-    valid_until = auth_token.updated_at + auth_token.token_data['expires_in'].seconds
-    Time.now > valid_until
+  def with_new_token
+    token_data = @client.fetch_access_token!
+    yield token_data
+    token_data
   end
 
   def default_client

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180407035810) do
+ActiveRecord::Schema.define(version: 20180412021606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,11 +32,15 @@ ActiveRecord::Schema.define(version: 20180407035810) do
   end
 
   create_table "auth_tokens", force: :cascade do |t|
-    t.integer  "account_id", null: false
-    t.string   "provider",   null: false
-    t.json     "token_data", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "account_id",       null: false
+    t.string   "provider",         null: false
+    t.json     "token_data",       null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "establishment_id"
+    t.string   "access_token"
+    t.string   "refresh_token"
+    t.datetime "expires_at"
     t.index ["account_id"], name: "index_auth_tokens_on_account_id", using: :btree
   end
 
@@ -231,6 +235,7 @@ ActiveRecord::Schema.define(version: 20180407035810) do
     t.time     "availability_end_time"
   end
 
+  add_foreign_key "auth_tokens", "establishments"
   add_foreign_key "beers", "lists"
   add_foreign_key "digital_display_menu_lists", "digital_display_menus"
   add_foreign_key "digital_display_menu_lists", "lists"

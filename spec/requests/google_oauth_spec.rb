@@ -26,6 +26,16 @@ describe 'Google OAuth' do
     end
   end
 
+  describe 'GET to /oauth/google/callback when access was denied' do
+    it 'redirects to the right place' do
+      get 'oauth/google/callback?error=access_denied#'
+
+      expect(response).to have_http_status :redirect
+      location = response.headers['Location']
+      expect(location).to eq account_path(account)
+    end
+  end
+
   describe 'DELETE to /oauth/google/revoke' do
     before do
       AuthToken.google.for_account(account).create!({
