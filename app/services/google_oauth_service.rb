@@ -15,30 +15,29 @@ class GoogleOauthService
 
   def exchange(code:, account:)
     @client.code = code
-    with_new_token do |token_data|
-      AuthToken.google.for_account(account).create!({
-        access_token: token_data['access_token'],
-        refresh_token: token_data['refresh_token'],
-        expires_at: Time.now + token_data['expires_in'].seconds,
-        token_data: token_data
-      })
-    end
+    token_data = @client.fetch_access_token!
+    AuthToken.google.for_account(account).create!({
+      access_token: token_data['access_token'],
+      refresh_token: token_data['refresh_token'],
+      expires_at: Time.now + token_data['expires_in'].seconds,
+      token_data: token_data
+    })
+    nil # Avoid exposing the refresh_token
   end
 
   def fetch_token(account)
     auth_token = AuthToken.google.for_account(account).first or return
     if auth_token.expired?
       @client.refresh_token = auth_token.refresh_token
-      with_new_token do |token_data|
-        auth_token.update!({
-          token_data: token_data,
-          access_token: token_data['access_token'],
-          expires_at: Time.now + token_data['expires_in'].seconds
-        })
-      end
-    else
-      auth_token.token_data
+      token_data = @client.fetch_access_token!
+      auth_token.update!({
+        token_data: token_data,
+        access_token: token_data['access_token'],
+        expires_at: Time.now + token_data['expires_in'].seconds
+      })
     end
+
+    auth_token.access_token
   end
 
   def revoke(account)
@@ -47,12 +46,6 @@ class GoogleOauthService
   end
 
   private
-
-  def with_new_token
-    token_data = @client.fetch_access_token!
-    yield token_data
-    token_data
-  end
 
   def default_client
     Signet::OAuth2::Client.new({

@@ -62,7 +62,11 @@ describe GoogleOauthService do
     it 'exchanges code for tokens' do
       result = service.exchange code: 'foo', account: account
       expect(mock_client).to have_received(:code=).with('foo')
-      expect(result).to eq mock_token
+      expect(result).to eq nil
+      auth_token = AuthToken.google.for_account(account).first
+      expect(auth_token.access_token).to eq 'a-mock-access-token'
+      expect(auth_token.refresh_token).to eq 'the-mock-refresh-token'
+      expect(auth_token.expires_at).to be_within(1.minute).of(Time.now + 1.hour)
     end
 
     it 'saves the token data to the database' do
@@ -115,7 +119,7 @@ describe GoogleOauthService do
 
       it 'returns the saved data' do
         token = service.fetch_token account
-        expect(token).to eq mock_token
+        expect(token).to eq 'a-mock-access-token'
       end
     end
 
@@ -146,7 +150,7 @@ describe GoogleOauthService do
         expect(mock_client).to receive(:fetch_access_token!) { fresh_token }
 
         token = service.fetch_token account
-        expect(token).to eq fresh_token
+        expect(token).to eq 'muchnewerandbetteraccesstoken'
 
         updated_token = AuthToken.google.for_account(account).first
         expect(updated_token.token_data).to eq fresh_token
