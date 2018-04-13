@@ -6,8 +6,12 @@ class OauthGoogleController < ApplicationController
   end
 
   def callback
-    service.exchange code: params[:code], account: account
-    redirect_to account_path(account), notice: 'Your account is connected with Google!'
+    if params[:error]
+      redirect_to account_path(account), alert: 'Access denied'
+    else
+      service.exchange code: params[:code], account: account
+      redirect_to account_path(account), notice: 'Your account is connected with Google!'
+    end
   end
 
   def revoke

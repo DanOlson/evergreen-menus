@@ -28,11 +28,11 @@ describe 'Google OAuth' do
 
   describe 'GET to /oauth/google/callback when access was denied' do
     it 'redirects to the right place' do
-      get 'oauth/google/callback?error=access_denied#'
+      get '/oauth/google/callback?error=access_denied#'
 
       expect(response).to have_http_status :redirect
       location = response.headers['Location']
-      expect(location).to eq account_path(account)
+      expect(URI(location).path).to eq account_path(account)
     end
   end
 
