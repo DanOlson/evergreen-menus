@@ -1,0 +1,124 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://mybusiness.googleapis.com/v4/accounts/111337701469104826106/locations/17679890243424107126
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - mybusiness.googleapis.com
+      Authorization:
+      - Bearer mock-access-token
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sat, 14 Apr 2018 22:29:25 GMT
+      Server:
+      - ESF
+      Cache-Control:
+      - private
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - hq=":443"; ma=2592000; quic=51303432; quic=51303431; quic=51303339; quic=51303335,quic=":443";
+        ma=2592000; v="42,41,39,35"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJuYW1lIjogImFjY291bnRzLzExMTMzNzcwMTQ2OTEwNDgyNjEwNi9s
+        b2NhdGlvbnMvMTc2Nzk4OTAyNDM0MjQxMDcxMjYiLAogICJsb2NhdGlvbk5h
+        bWUiOiAiRmFyYmFyIiwKICAicHJpbWFyeUNhdGVnb3J5IjogewogICAgImRp
+        c3BsYXlOYW1lIjogIlJlc3RhdXJhbnQiLAogICAgImNhdGVnb3J5SWQiOiAi
+        Z2NpZDpyZXN0YXVyYW50IgogIH0sCiAgIndlYnNpdGVVcmwiOiAiaHR0cDov
+        L2ZhcmJhcm1wbHMuY29tIiwKICAibG9jYXRpb25LZXkiOiB7CiAgICAicmVx
+        dWVzdElkIjogImEwM2Y4YjU0LWQzZmUtNGI3MS04YWYyLTRhMGZjNGVmMmZm
+        NSIKICB9LAogICJsYXRsbmciOiB7CiAgICAibGF0aXR1ZGUiOiA0NS4wNDAx
+        MzUyLAogICAgImxvbmdpdHVkZSI6IC05My4zMTUyODQyCiAgfSwKICAib3Bl
+        bkluZm8iOiB7CiAgICAic3RhdHVzIjogIk9QRU4iLAogICAgImNhblJlb3Bl
+        biI6IHRydWUKICB9LAogICJsb2NhdGlvblN0YXRlIjogewogICAgImNhblVw
+        ZGF0ZSI6IHRydWUsCiAgICAiY2FuRGVsZXRlIjogdHJ1ZSwKICAgICJpc0Rp
+        c2Nvbm5lY3RlZCI6IHRydWUKICB9LAogICJtZXRhZGF0YSI6IHt9LAogICJs
+        YW5ndWFnZUNvZGUiOiAiZW4iLAogICJwcmljZUxpc3RzIjogWwogICAgewog
+        ICAgICAicHJpY2VMaXN0SWQiOiAiRGlubmVyIiwKICAgICAgImxhYmVscyI6
+        IFsKICAgICAgICB7CiAgICAgICAgICAiZGlzcGxheU5hbWUiOiAiRGlubmVy
+        IgogICAgICAgIH0KICAgICAgXSwKICAgICAgInNlY3Rpb25zIjogWwogICAg
+        ICAgIHsKICAgICAgICAgICJzZWN0aW9uSWQiOiAic291cHNfYW5kX3NhbGFk
+        cyIsCiAgICAgICAgICAibGFiZWxzIjogWwogICAgICAgICAgICB7CiAgICAg
+        ICAgICAgICAgImRpc3BsYXlOYW1lIjogIlNvdXBzIGFuZCBTYWxhZHMiCiAg
+        ICAgICAgICAgIH0KICAgICAgICAgIF0sCiAgICAgICAgICAiaXRlbXMiOiBb
+        CiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAiaXRlbUlkIjogImJlZXJf
+        Y2hlZXNlIiwKICAgICAgICAgICAgICAibGFiZWxzIjogWwogICAgICAgICAg
+        ICAgICAgewogICAgICAgICAgICAgICAgICAiZGlzcGxheU5hbWUiOiAiQmVl
+        ciBDaGVlc2UgU291cCIsCiAgICAgICAgICAgICAgICAgICJkZXNjcmlwdGlv
+        biI6ICJUaGUgY3JlYW15IGNsYXNzaWMiCiAgICAgICAgICAgICAgICB9CiAg
+        ICAgICAgICAgICAgXSwKICAgICAgICAgICAgICAicHJpY2UiOiB7CiAgICAg
+        ICAgICAgICAgICAiY3VycmVuY3lDb2RlIjogIlVTRCIsCiAgICAgICAgICAg
+        ICAgICAidW5pdHMiOiAiNyIKICAgICAgICAgICAgICB9CiAgICAgICAgICAg
+        IH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAiaXRlbUlkIjogImNh
+        ZXNhcl9zYWxhZCIsCiAgICAgICAgICAgICAgImxhYmVscyI6IFsKICAgICAg
+        ICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgImRpc3BsYXlOYW1lIjog
+        IkNhZXNhciBTYWxhZCIsCiAgICAgICAgICAgICAgICAgICJkZXNjcmlwdGlv
+        biI6ICJMZWFmeSwgcm9tYWluZSBsZXR0dWNlIHRvcHBlZCB3aXRoIHBhcm1l
+        c2FuIGNoZWVzZSBhbmQgY3JlYW15IGNhZXNhciBkcmVzc2luZyIKICAgICAg
+        ICAgICAgICAgIH0KICAgICAgICAgICAgICBdLAogICAgICAgICAgICAgICJw
+        cmljZSI6IHsKICAgICAgICAgICAgICAgICJjdXJyZW5jeUNvZGUiOiAiVVNE
+        IiwKICAgICAgICAgICAgICAgICJ1bml0cyI6ICIxMSIsCiAgICAgICAgICAg
+        ICAgICAibmFub3MiOiA1MDAwMDAwMDAKICAgICAgICAgICAgICB9CiAgICAg
+        ICAgICAgIH0KICAgICAgICAgIF0KICAgICAgICB9LAogICAgICAgIHsKICAg
+        ICAgICAgICJzZWN0aW9uSWQiOiAiYXBwZXRpemVyc19tZW51IiwKICAgICAg
+        ICAgICJsYWJlbHMiOiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAi
+        ZGlzcGxheU5hbWUiOiAiQXBwZXRpemVycyIsCiAgICAgICAgICAgICAgImRl
+        c2NyaXB0aW9uIjogIkFwcGV0aXplcnMiLAogICAgICAgICAgICAgICJsYW5n
+        dWFnZUNvZGUiOiAiZW4iCiAgICAgICAgICAgIH0KICAgICAgICAgIF0sCiAg
+        ICAgICAgICAiaXRlbXMiOiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAg
+        ICAiaXRlbUlkIjogIndpbmdzIiwKICAgICAgICAgICAgICAibGFiZWxzIjog
+        WwogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAiZGlzcGxh
+        eU5hbWUiOiAiV2luZ3MiLAogICAgICAgICAgICAgICAgICAiZGVzY3JpcHRp
+        b24iOiAiRGVsaWNpb3VzIGJvbmUtaW4gd2luZ3MiLAogICAgICAgICAgICAg
+        ICAgICAibGFuZ3VhZ2VDb2RlIjogImVuIgogICAgICAgICAgICAgICAgfQog
+        ICAgICAgICAgICAgIF0sCiAgICAgICAgICAgICAgInByaWNlIjogewogICAg
+        ICAgICAgICAgICAgImN1cnJlbmN5Q29kZSI6ICJVU0QiLAogICAgICAgICAg
+        ICAgICAgInVuaXRzIjogIjEyIiwKICAgICAgICAgICAgICAgICJuYW5vcyI6
+        IDE5OTk5OTk5OQogICAgICAgICAgICAgIH0KICAgICAgICAgICAgfSwKICAg
+        ICAgICAgICAgewogICAgICAgICAgICAgICJpdGVtSWQiOiAiZnJpZXMiLAog
+        ICAgICAgICAgICAgICJsYWJlbHMiOiBbCiAgICAgICAgICAgICAgICB7CiAg
+        ICAgICAgICAgICAgICAgICJkaXNwbGF5TmFtZSI6ICJGcmVuY2ggRnJpZXMi
+        LAogICAgICAgICAgICAgICAgICAiZGVzY3JpcHRpb24iOiAiRnJpZXMgd2l0
+        aCBCw6lhcm5haXNlIHNhdWNlIiwKICAgICAgICAgICAgICAgICAgImxhbmd1
+        YWdlQ29kZSI6ICJlbiIKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAg
+        ICBdLAogICAgICAgICAgICAgICJwcmljZSI6IHsKICAgICAgICAgICAgICAg
+        ICJjdXJyZW5jeUNvZGUiOiAiVVNEIiwKICAgICAgICAgICAgICAgICJ1bml0
+        cyI6ICI4IiwKICAgICAgICAgICAgICAgICJuYW5vcyI6IDUwMDAwMDAwMAog
+        ICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQogICAgICAgICAgXQogICAg
+        ICAgIH0KICAgICAgXQogICAgfQogIF0sCiAgImFkZHJlc3MiOiB7CiAgICAi
+        cmVnaW9uQ29kZSI6ICJVUyIsCiAgICAibGFuZ3VhZ2VDb2RlIjogImVuIiwK
+        ICAgICJwb3N0YWxDb2RlIjogIjU1NDI5IiwKICAgICJhZG1pbmlzdHJhdGl2
+        ZUFyZWEiOiAiTU4iLAogICAgImxvY2FsaXR5IjogIk1pbm5lYXBvbGlzIiwK
+        ICAgICJhZGRyZXNzTGluZXMiOiBbCiAgICAgICIxMjMgRmFrZSBTdCIKICAg
+        IF0KICB9Cn0K
+    http_version:
+  recorded_at: Sat, 14 Apr 2018 22:29:25 GMT
+recorded_with: VCR 3.0.3

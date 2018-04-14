@@ -34,7 +34,6 @@ Capybara::Webkit.configure do |config|
   config.allow_url("admin.test.evergreenmenus.com")
   config.allow_url("cdn.test.evergreenmenus.com")
   config.allow_url("test.my-bar.locl")
-  # config.allow_url("test.beermapper-api.locl")
   config.allow_url("maxcdn.bootstrapcdn.com")
 end
 

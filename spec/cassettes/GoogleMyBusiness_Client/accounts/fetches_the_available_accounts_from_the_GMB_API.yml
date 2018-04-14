@@ -1,0 +1,75 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://mybusiness.googleapis.com/v4/accounts
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - mybusiness.googleapis.com
+      Authorization:
+      - Bearer mock-access-token
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sat, 14 Apr 2018 19:46:08 GMT
+      Server:
+      - ESF
+      Cache-Control:
+      - private
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - hq=":443"; ma=2592000; quic=51303432; quic=51303431; quic=51303339; quic=51303335,quic=":443";
+        ma=2592000; v="42,41,39,35"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "accounts": [
+            {
+              "name": "accounts/117056520034954462844",
+              "accountName": "Dan Olson",
+              "type": "PERSONAL",
+              "state": {
+                "status": "UNVERIFIED"
+              }
+            },
+            {
+              "name": "accounts/111337701469104826106",
+              "accountName": "Farbar Group",
+              "type": "LOCATION_GROUP",
+              "role": "OWNER",
+              "state": {
+                "status": "UNVERIFIED"
+              },
+              "permissionLevel": "OWNER_LEVEL"
+            }
+          ]
+        }
+    http_version:
+  recorded_at: Sat, 14 Apr 2018 19:46:08 GMT
+recorded_with: VCR 3.0.3
