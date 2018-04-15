@@ -7,9 +7,12 @@ module GoogleMyBusiness
 
     GMB_BASE_URL = 'https://mybusiness.googleapis.com'
 
-    def initialize(account:, oauth_service: default_oauth_service)
+    def initialize(account:,
+                   oauth_service: default_oauth_service,
+                   logger: default_logger)
       @account = account
       @oauth_service = oauth_service
+      @logger = logger
     end
 
     def accounts
@@ -32,7 +35,10 @@ module GoogleMyBusiness
           request = Net::HTTP::Get.new uri
           request['Authorization'] = "Bearer #{token}"
 
-          http.request request
+          @logger.info "Fetching Google My Business accounts for account #{account.name} with id: #{account.id}"
+          response = http.request request
+          @logger.info "Received #{response.code} from Google My Business API"
+          response
         end
       end
     end
@@ -55,6 +61,10 @@ module GoogleMyBusiness
 
     def default_oauth_service
       GoogleOauthService.new
+    end
+
+    def default_logger
+      Rails.logger
     end
   end
 end
