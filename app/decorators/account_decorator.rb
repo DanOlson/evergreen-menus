@@ -12,6 +12,10 @@ class AccountDecorator < ApplicationDecorator
     google_my_business_service.accounts
   end
 
+  def google_my_business_locations
+    google_my_business_service.locations
+  end
+
   private
 
   def default_gmb_service

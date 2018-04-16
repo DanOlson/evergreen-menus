@@ -35,7 +35,7 @@ module GoogleMyBusiness
           request = Net::HTTP::Get.new uri
           request['Authorization'] = "Bearer #{token}"
 
-          @logger.info "Fetching Google My Business accounts for account #{account.name} with id: #{account.id}"
+          @logger.info "Calling Google My Business for #{uri} on behalf of account #{account.name} with id: #{account.id}"
           response = http.request request
           @logger.info "Received #{response.code} from Google My Business API"
           response

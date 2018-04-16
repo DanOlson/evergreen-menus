@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180415215656) do
+ActiveRecord::Schema.define(version: 20180416025407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,15 +107,16 @@ ActiveRecord::Schema.define(version: 20180415215656) do
     t.string   "address"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "latitude",       precision: 9, scale: 6
-    t.decimal  "longitude",      precision: 9, scale: 6
+    t.decimal  "latitude",                       precision: 9, scale: 6
+    t.decimal  "longitude",                      precision: 9, scale: 6
     t.string   "url"
-    t.boolean  "active",                                 default: true
+    t.boolean  "active",                                                 default: true
     t.integer  "account_id"
     t.string   "street_address"
     t.string   "city"
     t.string   "state"
     t.string   "postal_code"
+    t.string   "google_my_business_location_id"
   end
 
   create_table "invitation_establishment_assignments", force: :cascade do |t|

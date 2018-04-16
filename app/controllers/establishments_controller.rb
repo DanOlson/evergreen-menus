@@ -19,6 +19,7 @@ class EstablishmentsController < ApplicationController
   end
 
   def edit
+    @account = @account.decorate
   end
 
   def show
@@ -50,7 +51,8 @@ class EstablishmentsController < ApplicationController
       :street_address,
       :city,
       :state,
-      :postal_code
+      :postal_code,
+      :google_my_business_location_id
     )
   end
 end

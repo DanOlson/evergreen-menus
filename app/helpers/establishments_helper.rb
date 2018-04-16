@@ -49,4 +49,10 @@ module EstablishmentsHelper
     establishment.web_menus.any? ||
     establishment.digital_display_menus.any?
   end
+
+  def google_my_business_location_opts(account)
+    account.google_my_business_locations.map do |loc|
+      [loc.location_name, loc.name]
+    end
+  end
 end
