@@ -1,6 +1,6 @@
 module AccountsHelper
   def google_my_business_link(account)
-    if !AuthToken.google.for_account(account).exists?
+    if !account.google_my_business_enabled?
       link_to 'Connect Google My Business',
               oauth_google_authorize_path,
               class: 'btn btn-success',
@@ -14,6 +14,12 @@ module AccountsHelper
                   test: 'disconnect-google-button',
                   confirm: 'Really disconnect your account from Google?'
                 }
+    end
+  end
+
+  def google_my_business_account_opts(account)
+    account.google_my_business_accounts.map do |acct|
+      [acct.account_name, acct.name]
     end
   end
 end

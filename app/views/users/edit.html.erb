@@ -1,7 +1,7 @@
 <%= render 'shared/panel', title: "#{@user.first_name} #{@user.last_name}" do %>
   <%= form_for [@account, @user] do |f| %>
     <div class="form-group">
-    <%= f.label :role, class: 'control-label' %>
+      <%= f.label :role, class: 'control-label' %>
       <%= f.select :role_id, options_for_select(role_options, selected: @user.role_id), {}, class: 'form-control js-role-select', data: { test: 'staff-role-select' } %>
     </div>
 

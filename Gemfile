@@ -9,6 +9,7 @@ gem 'cancancan',    '~> 1.15.0'
 gem 'prawn',        '~> 2.2'
 gem 'mailgun-ruby', '~> 1.1.6'
 gem 'signet',       '~> 0.8.1'
+gem 'draper',       '~> 3.0.1'
 gem 'gretel',       '~> 3.0.9', github: 'DanOlson/gretel', branch: 'master'
 
 group :development, :test do

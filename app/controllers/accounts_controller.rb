@@ -5,6 +5,7 @@ class AccountsController < ApplicationController
   end
 
   def edit
+    @account = @account.decorate
   end
 
   def create
@@ -44,6 +45,10 @@ class AccountsController < ApplicationController
   private
 
   def account_params
-    params.require(:account).permit(:name, :active)
+    params.require(:account).permit(
+      :name,
+      :active,
+      :google_my_business_account_id
+    )
   end
 end
