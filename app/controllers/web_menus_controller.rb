@@ -62,6 +62,7 @@ class WebMenusController < ApplicationController
       :availability_start_time,
       :availability_end_time,
       :restricted_availability,
+      :sync_to_google,
       {
         web_menu_lists_attributes: [
           :id,

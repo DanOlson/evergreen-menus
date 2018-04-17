@@ -26,6 +26,8 @@ class EmbedCodeOptions extends Component {
       ampBodyCode,
       ampHeadCode
     } = this.props
+    if (!canonicalCode) return null
+
     const htmlVisibility = show ? 'show' : 'hidden'
     const { showAmp } = this.state
     let bodyEmbedCode
@@ -78,9 +80,9 @@ class EmbedCodeOptions extends Component {
 
 EmbedCodeOptions.propTypes = {
   show: PropTypes.bool,
-  canonicalCode: PropTypes.string.isRequired,
-  ampBodyCode: PropTypes.string.isRequired,
-  ampHeadCode: PropTypes.string.isRequired
+  canonicalCode: PropTypes.string,
+  ampBodyCode: PropTypes.string,
+  ampHeadCode: PropTypes.string
 }
 
 EmbedCodeOptions.defaultProps = {

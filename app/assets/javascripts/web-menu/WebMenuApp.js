@@ -4,6 +4,7 @@ import Panel from '../shared/Panel';
 import Buttons from '../shared/MenuFormButtons';
 import EmbedCodeOptions from './EmbedCodeOptions';
 import ShowCodeButton from './ShowCodeButton';
+import SyncToGoogleInput from './SyncToGoogleInput';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import AvailabilityInput from '../shared/AvailabilityInput';
 import ChosenListGroup from '../shared/ChosenListGroup';
@@ -25,7 +26,9 @@ class WebMenuApp extends Component {
       availabilityEndTime,
       restrictedAvailability,
       lists,
-      listsAvailable
+      listsAvailable,
+      showSyncToGoogleInput,
+      syncToGoogle
     } = props.webMenu;
 
     this.handleNameChange        = this.handleNameChange.bind(this);
@@ -149,8 +152,9 @@ class WebMenuApp extends Component {
     } = this.state;
     const previewPath = generatePreviewPath(this.props.webMenu, this.state);
     const totalListCount = lists.length + listsAvailable.length;
-    const { embedCode, ampEmbedCode, ampHeadEmbedCode } = this.props.webMenu;
+    const { embedCode, ampEmbedCode, ampHeadEmbedCode, syncToGoogle, showSyncToGoogleInput } = this.props.webMenu;
     const toggleCodeButtonClass = embedCode ? (showEmbedCode ? 'active' : '') : 'hidden';
+
     return (
       <div className="form-row">
         <div className="col-sm-6">
@@ -209,6 +213,10 @@ class WebMenuApp extends Component {
               />
             </div>
 
+            <div className="form-group form-row">
+              <SyncToGoogleInput show={showSyncToGoogleInput} checked={syncToGoogle} />
+            </div>
+
             <AvailableListGroup
               totalListCount={totalListCount}
               lists={listsAvailable}
@@ -238,7 +246,8 @@ class WebMenuApp extends Component {
               canonicalCode={embedCode}
               ampBodyCode={ampEmbedCode}
               ampHeadCode={ampHeadEmbedCode}
-              show={showEmbedCode} />
+              show={showEmbedCode}
+            />
           </Panel>
         </div>
         <div className="col-sm-6">
