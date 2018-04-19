@@ -28,8 +28,7 @@ describe AmpMenuEmbedCode do
 
   let(:instance) do
     AmpMenuEmbedCode.new(web_menu, {
-      base_url: 'test.evergreenmenus.com',
-      # json_ld_url: "https://test.evergreenmenus.com/web_menus/#{web_menu.id}/json_ld.js"
+      base_url: 'test.evergreenmenus.com'
     })
   end
 
