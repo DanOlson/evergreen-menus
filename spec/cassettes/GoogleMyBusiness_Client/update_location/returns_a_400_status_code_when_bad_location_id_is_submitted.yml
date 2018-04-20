@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: patch
+    uri: https://mybusiness.googleapis.com/v4/accounts/111337701469104826106/locations/herp-derp?updateMask=priceLists
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "priceLists": [
+            {
+              "priceListId": "Zerts",
+              "labels": [
+                {
+                  "displayName": "Desserts"
+                }
+              ]
+            }
+          ]
+        }
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - mybusiness.googleapis.com
+      Authorization:
+      - Bearer mock-access-token
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Fri, 20 Apr 2018 01:43:00 GMT
+      Server:
+      - ESF
+      Cache-Control:
+      - private
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - hq=":443"; ma=2592000; quic=51303433; quic=51303432; quic=51303431; quic=51303339;
+        quic=51303335,quic=":443"; ma=2592000; v="43,42,41,39,35"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "error": {
+            "code": 400,
+            "message": "Request contains an invalid argument.",
+            "status": "INVALID_ARGUMENT"
+          }
+        }
+    http_version:
+  recorded_at: Fri, 20 Apr 2018 01:43:00 GMT
+recorded_with: VCR 3.0.3

@@ -27,15 +27,31 @@ module GoogleMyBusiness
       issue_get location_uri(account_id, location_id)
     end
 
+    def update_location(account_id:, location_id:, body:)
+      uri = location_uri account_id, location_id
+      uri.query = 'updateMask=priceLists'
+      request = Net::HTTP::Patch.new uri
+      request.content_type = 'application/json'
+      request.body = body
+
+      @logger.info "Updating Google My Business location #{uri} on behalf of account #{account.name}"
+      issue_request request
+    end
+
     private
 
     def issue_get(uri)
+      request = Net::HTTP::Get.new uri
+      @logger.info "Calling Google My Business for #{uri} on behalf of account #{account.name} with id: #{account.id}"
+      issue_request request
+    end
+
+    def issue_request(request)
+      uri = request.uri
       with_access_token do |token|
         Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
-          request = Net::HTTP::Get.new uri
           request['Authorization'] = "Bearer #{token}"
 
-          @logger.info "Calling Google My Business for #{uri} on behalf of account #{account.name} with id: #{account.id}"
           response = http.request request
           @logger.info "Received #{response.code} from Google My Business API"
           response

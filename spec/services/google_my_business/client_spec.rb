@@ -64,5 +64,93 @@ module GoogleMyBusiness
         expect(location['priceLists'].size).to eq 1
       end
     end
+
+    describe 'update_location', :vcr do
+      it 'sends a PATCH with the given payload to the GMB location API' do
+        response = instance.update_location({
+          account_id: '111337701469104826106',
+          location_id: '17679890243424107126',
+          body: '{
+            "priceLists": [
+              {
+                "priceListId": "Zerts",
+                "labels": [
+                  {
+                    "displayName": "Desserts"
+                  }
+                ],
+                "sections": [
+                  {
+                    "sectionId": "cakes",
+                    "labels": [
+                      {
+                        "displayName": "Cakes"
+                      }
+                    ],
+                    "items": [
+                      {
+                        "itemId": "german_chocolate",
+                        "labels": [
+                          {
+                            "displayName": "German Chocolate Cake",
+                            "description": "A chocolate classic"
+                          }
+                        ],
+                        "price": {
+                          "currencyCode": "USD",
+                          "units": "7",
+                          "nanos": "000000000"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }'
+        })
+        expect(response.code).to eq '200'
+      end
+
+      it 'returns a 400 status code when bad location_id is submitted' do
+        response = instance.update_location({
+          account_id: '111337701469104826106',
+          location_id: 'herp-derp',
+          body: '{
+            "priceLists": [
+              {
+                "priceListId": "Zerts",
+                "labels": [
+                  {
+                    "displayName": "Desserts"
+                  }
+                ]
+              }
+            ]
+          }'
+        })
+        expect(response.code).to eq '400'
+      end
+
+      it 'returns a 401 status code when unauthorized' do
+        response = instance.update_location({
+          account_id: '111337701469104826106',
+          location_id: '17679890243424107126',
+          body: '{
+            "priceLists": [
+              {
+                "priceListId": "Zerts",
+                "labels": [
+                  {
+                    "displayName": "Desserts"
+                  }
+                ]
+              }
+            ]
+          }'
+        })
+        expect(response.code).to eq '401'
+      end
+    end
   end
 end

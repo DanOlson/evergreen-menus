@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module GoogleMyBusiness
   describe WebMenuSerializer do
-    let(:instance) { WebMenuSerializer.new web_menu }
+    let(:instance) { WebMenuSerializer.new }
     let(:web_menu) { create :web_menu, name: 'Happy Hour' }
     let(:appetizers) { create :list, name: 'Appetizers', establishment: web_menu.establishment }
     let(:tap_beer) { create :list, name: 'Tap Beer', establishment: web_menu.establishment }
@@ -121,7 +121,7 @@ module GoogleMyBusiness
             }
           JSON
 
-          expect(instance.call).to be_json_eql expected
+          expect(instance.call(web_menu)).to be_json_eql expected
         end
       end
 
@@ -215,7 +215,7 @@ module GoogleMyBusiness
             }
           JSON
 
-          expect(instance.call).to be_json_eql expected
+          expect(instance.call(web_menu)).to be_json_eql expected
         end
       end
 
@@ -293,7 +293,7 @@ module GoogleMyBusiness
             }
           JSON
 
-          expect(instance.call).to be_json_eql expected
+          expect(instance.call(web_menu)).to be_json_eql expected
         end
       end
     end
