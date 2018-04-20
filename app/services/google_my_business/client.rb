@@ -32,7 +32,7 @@ module GoogleMyBusiness
       uri.query = 'updateMask=priceLists'
       request = Net::HTTP::Patch.new uri
       request.content_type = 'application/json'
-      request.body = body
+      request.body = JSON.generate body
 
       @logger.info "Updating Google My Business location #{uri} on behalf of account #{account.name}"
       issue_request request

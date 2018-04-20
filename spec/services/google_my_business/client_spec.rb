@@ -70,36 +70,36 @@ module GoogleMyBusiness
         response = instance.update_location({
           account_id: '111337701469104826106',
           location_id: '17679890243424107126',
-          body: '{
-            "priceLists": [
+          body: {
+            priceLists: [
               {
-                "priceListId": "Zerts",
-                "labels": [
+                priceListId: "Zerts",
+                labels: [
                   {
-                    "displayName": "Desserts"
+                    displayName: "Desserts"
                   }
                 ],
-                "sections": [
+                sections: [
                   {
-                    "sectionId": "cakes",
-                    "labels": [
+                    sectionId: "cakes",
+                    labels: [
                       {
-                        "displayName": "Cakes"
+                        displayName: "Cakes"
                       }
                     ],
-                    "items": [
+                    items: [
                       {
-                        "itemId": "german_chocolate",
-                        "labels": [
+                        itemId: "german_chocolate",
+                        labels: [
                           {
-                            "displayName": "German Chocolate Cake",
-                            "description": "A chocolate classic"
+                            displayName: "German Chocolate Cake",
+                            description: "A chocolate classic"
                           }
                         ],
-                        "price": {
-                          "currencyCode": "USD",
-                          "units": "7",
-                          "nanos": "000000000"
+                        price: {
+                          currencyCode: "USD",
+                          units: "7",
+                          nanos: "000000000"
                         }
                       }
                     ]
@@ -107,7 +107,7 @@ module GoogleMyBusiness
                 ]
               }
             ]
-          }'
+          }
         })
         expect(response.code).to eq '200'
       end
@@ -116,18 +116,18 @@ module GoogleMyBusiness
         response = instance.update_location({
           account_id: '111337701469104826106',
           location_id: 'herp-derp',
-          body: '{
-            "priceLists": [
+          body: {
+            priceLists: [
               {
-                "priceListId": "Zerts",
-                "labels": [
+                priceListId: "Zerts",
+                labels: [
                   {
-                    "displayName": "Desserts"
+                    displayName: "Desserts"
                   }
                 ]
               }
             ]
-          }'
+          }
         })
         expect(response.code).to eq '400'
       end
@@ -136,18 +136,18 @@ module GoogleMyBusiness
         response = instance.update_location({
           account_id: '111337701469104826106',
           location_id: '17679890243424107126',
-          body: '{
-            "priceLists": [
+          body: {
+            priceLists: [
               {
-                "priceListId": "Zerts",
-                "labels": [
+                priceListId: "Zerts",
+                labels: [
                   {
-                    "displayName": "Desserts"
+                    displayName: "Desserts"
                   }
                 ]
               }
             ]
-          }'
+          }
         })
         expect(response.code).to eq '401'
       end

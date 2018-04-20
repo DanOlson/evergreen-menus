@@ -121,7 +121,8 @@ module GoogleMyBusiness
             }
           JSON
 
-          expect(instance.call(web_menu)).to be_json_eql expected
+          serialized = JSON.generate instance.call(web_menu)
+          expect(serialized).to be_json_eql expected
         end
       end
 
@@ -215,7 +216,8 @@ module GoogleMyBusiness
             }
           JSON
 
-          expect(instance.call(web_menu)).to be_json_eql expected
+          serialized = JSON.generate instance.call(web_menu)
+          expect(serialized).to be_json_eql expected
         end
       end
 
@@ -293,7 +295,8 @@ module GoogleMyBusiness
             }
           JSON
 
-          expect(instance.call(web_menu)).to be_json_eql expected
+          serialized = JSON.generate instance.call(web_menu)
+          expect(serialized).to be_json_eql expected
         end
       end
     end

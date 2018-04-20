@@ -1,7 +1,7 @@
 module GoogleMyBusiness
   class WebMenuSerializer
     def call(web_menu)
-      JSON.generate generate_price_list(web_menu)
+      generate_price_list(web_menu)
     end
 
     private
