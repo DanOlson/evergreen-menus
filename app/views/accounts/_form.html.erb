@@ -12,7 +12,7 @@
       <% if @account.google_my_business_enabled? %>
         <div class="form-group">
           <%= f.label :google_my_business_account_id, 'Google My Business Account', class: 'control-label' %>
-          <%= f.select :google_my_business_account_id, options_for_select(google_my_business_account_opts(@account), selected: @account.google_my_business_account_id), {}, class: 'form-control', data: { test: 'gmb-account-select' } %>
+          <%= f.select :google_my_business_account_id, options_for_select(google_my_business_account_opts(@account), selected: @account.google_my_business_account_id), { include_blank: true }, class: 'form-control', data: { test: 'gmb-account-select' } %>
         </div>
       <% end %>
 

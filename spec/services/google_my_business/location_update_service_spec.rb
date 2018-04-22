@@ -24,7 +24,6 @@ module GoogleMyBusiness
     end
 
     describe '#call' do
-      let(:establishment) { create :establishment, google_my_business_location_id: 'accounts/asdf/locations/1234' }
       let!(:lunch_menu) do
         create :web_menu, {
           name: 'Lunch',
@@ -56,26 +55,77 @@ module GoogleMyBusiness
         )
       end
 
-      it 'serializes the menus flagged as synced to Google' do
-        instance.call
-        expect(mock_menu_serializer).to have_received(:call).with lunch_menu
-        expect(mock_menu_serializer).to have_received(:call).with dinner_menu
-        expect(mock_menu_serializer).to_not have_received(:call).with happy_hour_menu
+      shared_examples_for 'noop' do
+        it 'does not serialize the menus' do
+          instance.call
+          expect(mock_menu_serializer).to_not have_received(:call)
+        end
+
+        it 'does not call the client' do
+          instance.call
+
+          expect(mock_client).to_not have_received(:update_location)
+        end
       end
 
-      it 'calls the client with the expected parameters' do
-        ###
-        # Stub the serializer to simply return the menu name
-        allow(mock_menu_serializer).to receive(:call) { |menu| menu.name }
-        expected = {
-          account_id: 'asdf',
-          location_id: '1234',
-          body: { priceLists: ['Lunch', 'Dinner'] }
-        }
+      context 'when there is an auth token for the account' do
+        before do
+          AuthToken.google.for_account(account).create!({
+            token_data: '{"access_token":"foo","refresh_token":"bar"}',
+            access_token: 'foo',
+            refresh_token: 'bar'
+          })
+        end
 
-        instance.call
+        context 'and the account has a google_my_business_account_id ' do
+          let(:account) { create :account, google_my_business_account_id: 'asdf' }
 
-        expect(mock_client).to have_received(:update_location).with expected
+          context 'and the establishment has a google_my_business_location_id' do
+            let(:establishment) { create :establishment, account: account, google_my_business_location_id: 'accounts/asdf/locations/1234' }
+
+            it 'serializes the menus flagged as synced to Google' do
+              instance.call
+              expect(mock_menu_serializer).to have_received(:call).with lunch_menu
+              expect(mock_menu_serializer).to have_received(:call).with dinner_menu
+              expect(mock_menu_serializer).to_not have_received(:call).with happy_hour_menu
+            end
+
+            it 'calls the client with the expected parameters' do
+              ###
+              # Stub the serializer to simply return the menu name
+              allow(mock_menu_serializer).to receive(:call) { |menu| menu.name }
+              expected = {
+                account_id: 'asdf',
+                location_id: '1234',
+                body: { priceLists: ['Lunch', 'Dinner'] }
+              }
+
+              instance.call
+
+              expect(mock_client).to have_received(:update_location).with expected
+            end
+          end
+
+          context 'and the establishment does not have a google_my_business_location_id' do
+            let(:establishment) { create :establishment, account: account, google_my_business_location_id: nil }
+
+            it_behaves_like 'noop'
+          end
+        end
+
+        context 'and the account does not have a google_my_business_account_id' do
+          let(:account) { create :account, google_my_business_account_id: nil }
+          let(:establishment) { create :establishment, account: account, google_my_business_location_id: 'accounts/asdf/locations/1234' }
+
+          it_behaves_like 'noop'
+        end
+      end
+
+      context 'when there is not an auth token for the account' do
+        let(:account) { create :account, google_my_business_account_id: 'asdf' }
+        let(:establishment) { create :establishment, account: account, google_my_business_location_id: 'accounts/asdf/locations/1234' }
+
+        it_behaves_like 'noop'
       end
     end
   end
