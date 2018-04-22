@@ -5,6 +5,7 @@ class Account < ActiveRecord::Base
   has_many :users
   has_many :establishments
   has_many :user_invitations
+  accepts_nested_attributes_for :establishments
 
   def google_my_business_enabled?
     AuthToken.google.for_account(self).exists?

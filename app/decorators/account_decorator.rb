@@ -9,11 +9,11 @@ class AccountDecorator < ApplicationDecorator
   end
 
   def google_my_business_accounts
-    google_my_business_service.accounts
+    @google_my_business_accounts ||= google_my_business_service.accounts
   end
 
   def google_my_business_locations
-    google_my_business_service.locations
+    @google_my_business_locations ||= google_my_business_service.locations
   end
 
   private

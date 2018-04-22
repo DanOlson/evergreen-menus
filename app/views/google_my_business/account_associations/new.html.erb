@@ -1,0 +1,21 @@
+<% breadcrumb :account, @account %>
+<%= render 'shared/panel', title: 'Associate Google My Business Account', data_test: 'associate-google-my-business-account-form' do %>
+  <%= form_for @account, url: account_google_my_business_account_associations_path, method: :post do |f| %>
+    <div class="col-sm-6">
+      <% if @account.google_my_business_enabled? %>
+        <div class="form-group">
+          <%= f.label :google_my_business_account_id, 'Google My Business Account', class: 'control-label' %>
+          <%= f.select :google_my_business_account_id, options_for_select(google_my_business_account_opts(@account), selected: @account.google_my_business_account_id), { include_blank: true }, class: 'form-control', data: { test: 'gmb-account-select' }, aria: { describedby: 'gmb-acct-id-explanation' } %>
+        </div>
+        <span id="gmb-acct-id-explanation" class="form-text text-muted">
+          Please select the Google My Business account that represents <%= @account.name %>
+        </span>
+      <% end %>
+
+      <div class="button-wrapper">
+        <%= f.submit 'Submit', class: 'btn btn-evrgn-primary', data: { test: 'account-form-submit' } %>
+        <%= link_to 'Cancel', after_sign_in_path_for(current_user), class: 'btn btn-outline-secondary', data: { test: 'account-form-cancel' } %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

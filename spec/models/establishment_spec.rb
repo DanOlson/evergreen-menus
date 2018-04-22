@@ -21,5 +21,13 @@ describe Establishment do
       expect(establishment1).to be_valid
       expect(establishment2).to be_valid
     end
+
+    it 'allows empty string' do
+      establishment1 = create :establishment, google_my_business_location_id: ''
+      establishment2 = build :establishment, google_my_business_location_id: ''
+
+      expect(establishment1).to be_valid
+      expect(establishment2).to be_valid
+    end
   end
 end

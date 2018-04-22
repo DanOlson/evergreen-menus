@@ -28,6 +28,11 @@ Beermapper::Application.routes.draw do
 
     resources :users, path: '/staff'
     resources :user_invitations
+
+    namespace 'google_my_business' do
+      resources :account_associations, only: [:new, :create]
+      resources :establishment_associations, only: [:new, :create]
+    end
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

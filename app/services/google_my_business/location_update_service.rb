@@ -23,8 +23,8 @@ module GoogleMyBusiness
 
     def gmb_enabled?
       @account.google_my_business_enabled? &&
-      !!@account.google_my_business_account_id &&
-      !!@establishment.google_my_business_location_id
+      @account.google_my_business_account_id.present? &&
+      @establishment.google_my_business_location_id.present?
     end
 
     def request_body

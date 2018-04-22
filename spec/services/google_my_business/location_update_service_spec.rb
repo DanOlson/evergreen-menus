@@ -111,6 +111,12 @@ module GoogleMyBusiness
 
             it_behaves_like 'noop'
           end
+
+          context 'and the establishment has an empty google_my_business_location_id' do
+            let(:establishment) { create :establishment, account: account, google_my_business_location_id: '' }
+
+            it_behaves_like 'noop'
+          end
         end
 
         context 'and the account does not have a google_my_business_account_id' do
