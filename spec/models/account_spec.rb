@@ -24,4 +24,26 @@ describe Account do
       it { is_expected.to eq false }
     end
   end
+
+  describe 'google_my_business_account_id' do
+    it 'enforces uniqueness' do
+      account1 = create :account, google_my_business_account_id: 'foo'
+      account2 = build :account
+
+      expect(account1).to be_valid
+      expect(account2).to be_valid
+
+      account2.google_my_business_account_id = 'foo'
+      expect(account2).to_not be_valid
+      expect(account2.errors[:google_my_business_account_id]).to eq ['has already been taken']
+    end
+
+    it 'allows null' do
+      account1 = create :account, google_my_business_account_id: nil
+      account2 = build :account, google_my_business_account_id: nil
+
+      expect(account1).to be_valid
+      expect(account2).to be_valid
+    end
+  end
 end

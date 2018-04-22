@@ -1,6 +1,6 @@
 class Establishment < ActiveRecord::Base
   validates :name, :address, :url, presence: true
-
+  validates :google_my_business_location_id, uniqueness: true, allow_nil: true
   belongs_to :account
   has_many :invitation_establishment_assignments, dependent: :destroy
   has_many :establishment_staff_assignments, dependent: :destroy
