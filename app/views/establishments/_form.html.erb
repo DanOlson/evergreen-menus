@@ -21,17 +21,6 @@
             </div>
           </div>
 
-          <% if account.google_my_business_enabled? && can?(:view_web_integrations, account.object) %>
-            <div class="row">
-              <div class="form-group col-sm-6">
-                <%= f.label :google_my_business_location_id, 'Google My Business Location', class: 'col-form-control' %>
-                <div class="">
-                  <%= f.select :google_my_business_location_id, options_for_select(google_my_business_location_opts(account), selected: establishment.google_my_business_location_id), { include_blank: true }, class: 'form-control', data: { test: 'gmb-location-select' } %>
-                </div>
-              </div>
-            </div>
-          <% end %>
-
           <%= f.submit submit_text, class: 'btn btn-evrgn-primary', data: { test: 'establishment-form-submit' } %>
           <%= link_to 'Cancel', account_path(account), class: 'btn btn-outline-secondary', data: { test: 'establishment-form-cancel' } %>
           <% if establishment.persisted? && can?(:destroy, establishment) %>
