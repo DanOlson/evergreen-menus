@@ -1,0 +1,41 @@
+GETTING STARTED:
+In this article, we will walk you through the simple steps of setting up your Digital Display Menus in your establishment.    To display your Digital Display Menu using your Evergreen Menus system, you will need a compatible dongle, a display monitor, a keyboard and mouse and your Evergreen Menu’s Digital Display Menu link.  (anchor each item to the following applicable section). Below is a brief explanation of each, followed by the simple steps for setup.
+
+
+COMPATIBLE DONGLE:
+Evergreen Menus Digital Displays work with any dongle that provides an internet browser when plugged into a monitor.  Based on our research, we recommend either of the following options due to their simplicity and capabilities:
+
+Chromebit: This simple dongle uses an HDMI port to plug into your monitor and allows you to display your menu content on Google Chrome’s internet browser.  This option does require a Google/Gmail account as it runs through Google tools.  Chromebit is available through most major retailers and has a sticker price of about $85.
+Quantum Access Lan PC Stick: This PC stick connects to a monitor via the HDMI output and allows you to connect to the internet via Wi-Fi or an Ethernet connection.  Quantum Access Lan is loaded with Windows tools and is available through most major retailers for about $100.
+
+With either dongle, please spend a few minutes plugging it into the monitor you will be using in your restaurant and setting it up.  With Chromebit this will require using your google account and is fairly plug and play.  With the Quantum Access Lan you will want to install your internet browser of choice.
+
+
+DISPLAY MONITOR(S):
+Any TV or computer monitor that can be mounted and has an HDMI port will work.  When choosing the best monitor(s) for your establishment please consider:
+
+Using an LED monitor.  LED monitors are far more energy efficient than LCD models and are lighter making these monitors preferable for mounting. Additionally, LED monitors will offer a better display overall with sharper images, better contrast and brighter colors than LCD monitors making your menus optimal for viewing.
+Commercial Grade monitors are specifically designed for the durability of restaurant use and will withstand the wear and tear of temperature variances, potential spills and long hours of continuous use better than consumer grade monitors.
+If your displays will be outside, be sure to utilize weather-resistant housings.
+When you are determining the size of monitor to utilize keep in mind the average number of items on your digital display menu lists, the size of font you wish to use, the size of your establishment and the distance your patrons will be standing from the monitors when viewing the menus on display.
+
+
+KEYBOARD AND MOUSE:
+Any keyboard and mouse will work however, we recommend investing in a wireless option for optimal use.  This reduces the dependency on long cords to your mounted monitors when making updates to your digital displays.  Many options are available through major retailers for under $20.
+
+
+
+EVERGREEN MENUS DIGITAL DISPLAY MENU LINK(S):
+There are two ways to obtain your digital display menu link(s);
+
+Option A - Directly from your Evergreen Menus Admin Account: When logged into your Evergreen Menus account, select your establishment > From the Menus section select the Menu you wish to display (mush have the monitor icon next to it -indicating it is a Digital Display Menu) > from the bottom of this page click the green “View” button > you are now viewing the selected digital display menu in a new browser tab > copy the weblink address in your browser (looks like: https://admin.evergreenmenus.com/accounts/2/establishments/70/digital_displays/1)
+Option B - Email: When logged into your Evergreen Menus account, select your establishment > From the Menus section select the Menu you wish to display (mush have the monitor icon next to it -indicating it is a Digital Display Menu) > from the bottom of this page click the green “Email the Link” button > an email is now sent to the email address associated with your Evergreen Menus admin account subject line “Your Evergreen Menus DDM” > open this email and copy the link found within the body of the email (looks like: https://admin.evergreenmenus.com/accounts/2/establishments/70/digital_displays/1)
+
+
+Have everything you need?
+Setting up your Digital Displays is super easy:
+
+Plug your selected dongle into the monitor and open the browser window (on a Chromebit this will be Chrome, on the Quantum Access Lan this will be the browser of your choice).
+Paste the Evergreen Menus Digital Display Menu link you copied. (looks like: https://admin.evergreenmenus.com/accounts/2/establishments/70/digital_displays/1)
+
+With these simple steps your digital display menus are up and ready for viewing by your customers!  if you make any updates within your evergreen menus account to the digital display menus you are showcasing, your menus will be automatically updated on your monitors.
