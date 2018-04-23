@@ -29,6 +29,7 @@ class ListsController < ApplicationController
 
   def update
     if @list.update list_params
+      GoogleMyBusiness::LocationUpdateService.new(establishment: @establishment).call
       redirect_to edit_account_establishment_path(@account, @establishment), notice: 'List updated'
     else
       errors = @list.errors.full_messages
