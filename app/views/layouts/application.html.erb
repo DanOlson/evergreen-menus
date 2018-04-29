@@ -57,20 +57,33 @@
     }
 
     function applyConfirm() {
-      const confirmNodes = document.querySelectorAll('[data-confirm]');
+      var confirmNodes = document.querySelectorAll('[data-confirm]');
 
       for (var i = 0; i < confirmNodes.length; i++) {
         applyConfirmToForm(confirmNodes[i]);
       }
     }
 
+    function applySingleSubmitRestriction() {
+      var forms = document.querySelectorAll('form');
+      for (var i = 0; i < forms.length; i++) {
+        var form = forms[i];
+        form.addEventListener('submit', function disableSubmit(event) {
+          var button = event.target.querySelector('input[type="submit"]');
+          button.disabled = true;
+        })
+      }
+    }
+
     if (document.readyState === 'complete') {
       applyConfirm()
+      applySingleSubmitRestriction()
     }
 
     document.onreadystatechange = function onReadyChange() {
       if (document.readyState === 'complete') {
         applyConfirm()
+        applySingleSubmitRestriction()
       }
     }
   </script>
