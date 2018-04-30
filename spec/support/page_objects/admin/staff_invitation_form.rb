@@ -1,10 +1,13 @@
 module PageObjects
   module Admin
     class StaffInvitationForm < SitePrism::Page
+      set_url '/accounts{/account_id}/user_invitations/new'
+
       element :first_name_input, '[data-test="invitation-first-name"]'
       element :last_name_input,  '[data-test="invitation-last-name"]'
       element :email_input,      '[data-test="invitation-email"]'
-      elements :establishments,  '[data-test="invitation-establishment-access"]'
+      element :role_input,       '[data-test="invitation-role-select"]'
+      elements :establishments,  '[data-test="establishment-access"]'
       element :submit_button,    '[data-test="invitation-submit-button"]'
       element :delete_button,    '[data-test="invitation-delete-button"]'
       element :cancel_link,      '[data-test="invitation-cancel-link"]'
@@ -19,6 +22,14 @@ module PageObjects
 
       def email=(email)
         email_input.set email
+      end
+
+      def role=(role_name)
+        role_input.select role_name
+      end
+
+      def role
+        role_input.find('option[selected]').text
       end
 
       def grant_establishment_access(establishment)

@@ -44,6 +44,59 @@ feature 'account management' do
     expect(account_list).to_not have_account_named 'Lebowski, Incorporated'
   end
 
+  scenario 'admin can invite manager' do
+    ActionMailer::Base.deliveries.clear
+    admin = create :user, :admin
+    login admin
+
+    invitation_form = PageObjects::Admin::StaffInvitationForm.new
+    invitation_form.load(account_id: account.id)
+    expect(invitation_form).to be_displayed
+
+    expect(invitation_form).to have_role_input
+
+    invitation_form.first_name = 'Donny'
+    invitation_form.last_name  = 'Kerabatsos'
+    invitation_form.email      = 'donny@lebowski.me'
+    invitation_form.role       = 'manager'
+
+    invitation_form.submit
+
+    expect(page).to have_content "Invitation sent to donny@lebowski.me"
+
+    expect(ActionMailer::Base.deliveries.size).to eq 1
+
+    staff_list = PageObjects::Admin::StaffList.new
+    staff_list.invitation_to('Donny Kerabatsos').click
+
+    expect(invitation_form.role).to eq 'manager'
+
+    logout
+
+    invitation = ActionMailer::Base.deliveries.last
+    message = invitation.text_part.decoded
+    registration_link = message.match(/link:\s(.*)$/).captures.first
+    expect(registration_link).to start_with 'http'
+
+    visit URI(registration_link).path
+
+    fill_in 'Password', with: 'myPassword123'
+    fill_in 'Password confirmation', with: 'myPassword123'
+    click_button 'Register'
+
+    logout
+
+    login admin
+
+    staff_list.load(account_id: account.id)
+    staff_list.member_named('Donny Kerabatsos').click
+
+    staff_form = PageObjects::Admin::StaffForm.new
+    expect(staff_form).to be_displayed
+    expect(staff_form.name).to eq 'Donny Kerabatsos'
+    expect(staff_form.role).to eq 'manager'
+  end
+
   scenario 'manager can edit their account, but cannot activate, deactivate or delete it' do
     manager = create :user, :manager, account: account
     login manager

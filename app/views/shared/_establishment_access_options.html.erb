@@ -1,0 +1,39 @@
+<div class="form-group js-establishment-checkboxes">
+  <label>Establishments</label>
+  <% establishments.each_with_index do |establishment, index| %>
+    <div class="form-check">
+      <label class="form-check-label" data-test="establishment-access">
+        <%= check_box_tag "#{form_object.model_name.param_key}[establishment_ids][]", establishment.id, form_object.establishment_ids.include?(establishment.id), class: 'form-check-input js-establishment-checkbox' %>
+
+        <%= establishment.name %>
+      </label>
+    </div>
+  <% end %>
+</div>
+
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    var select = document.getElementsByClassName('js-role-select')[0];
+    var checkboxWrapper = document.getElementsByClassName('js-establishment-checkboxes')[0];
+    var checkboxes = checkboxWrapper.querySelectorAll('.js-establishment-checkbox');
+    var managerId = <%= Role.manager.id %>;
+
+    select.addEventListener('change', handleChange, false);
+    select.dispatchEvent(new Event('change'));
+
+    function handleChange(event) {
+      var targetValue = parseInt(event.target.value, 10);
+      if (targetValue === managerId) {
+        checkboxWrapper.classList.add('hidden');
+        for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].setAttribute('disabled', 'disabled');
+        }
+      } else {
+        for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].disabled = false;
+        }
+        checkboxWrapper.classList.remove('hidden');
+      }
+    }
+  </script>
+<% end %>

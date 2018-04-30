@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180416222328) do
+ActiveRecord::Schema.define(version: 20180429134515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(version: 20180416222328) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.integer  "accepting_user_id"
+    t.integer  "role_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -253,6 +254,7 @@ ActiveRecord::Schema.define(version: 20180416222328) do
   add_foreign_key "menu_lists", "menus"
   add_foreign_key "menus", "establishments"
   add_foreign_key "user_invitations", "accounts"
+  add_foreign_key "user_invitations", "roles"
   add_foreign_key "user_invitations", "users", column: "accepting_user_id"
   add_foreign_key "user_invitations", "users", column: "inviting_user_id"
   add_foreign_key "users", "accounts"

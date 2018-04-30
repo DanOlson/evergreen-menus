@@ -3,20 +3,15 @@
     <div class="form-group">
       <%= f.label :role, class: 'control-label' %>
       <%= f.select :role_id, options_for_select(role_options, selected: @user.role_id), {}, class: 'form-control js-role-select', data: { test: 'staff-role-select' } %>
+      <small class="form-text text-muted">
+        Manager can perform all operations for the account. Staff access is limited to chosen establishments.
+      </small>
     </div>
 
-    <div class="form-group js-establishment-checkboxes">
-      <label>Establishments</label>
-      <% @account.establishments.each_with_index do |establishment, index| %>
-        <div class="form-check">
-          <label class="form-check-label">
-            <%= check_box_tag 'user[establishment_ids][]', establishment.id, @user.establishments.include?(establishment), class: 'form-check-input js-establishment-checkbox', data: { test: 'establishment-access' } %>
-
-            <%= establishment.name %>
-          </label>
-        </div>
-      <% end %>
-    </div>
+    <%= render partial: 'shared/establishment_access_options', locals: {
+      establishments: @account.establishments,
+      form_object: f.object
+    } %>
 
     <div class="form-group">
       <%= f.submit 'Update', class: 'btn btn-evrgn-primary', data: { test: 'staff-form-submit' } %>
@@ -25,31 +20,4 @@
     </div>
   <% end %>
   <%= button_to 'Delete', account_user_path(@account, @user), method: :delete, class: 'hidden', id: 'staff-form-delete', data: { confirm: 'Are you sure you want to delete this staff member?' } %>
-<% end %>
-
-<% content_for :javascripts do %>
-  <script type="text/javascript">
-    var select = document.getElementsByClassName('js-role-select')[0];
-    var checkboxWrapper = document.getElementsByClassName('js-establishment-checkboxes')[0];
-    var checkboxes = checkboxWrapper.querySelectorAll('.js-establishment-checkbox');
-    var managerId = <%= Role.manager.id %>;
-
-    select.addEventListener('change', handleChange, false);
-    select.dispatchEvent(new Event('change'));
-
-    function handleChange(event) {
-      var targetValue = parseInt(event.target.value, 10);
-      if (targetValue === managerId) {
-        checkboxWrapper.classList.add('hidden');
-        for (var i = 0; i < checkboxes.length; i++) {
-          checkboxes[i].setAttribute('disabled', 'disabled');
-        }
-      } else {
-        for (var i = 0; i < checkboxes.length; i++) {
-          checkboxes[i].disabled = false;
-        }
-        checkboxWrapper.classList.remove('hidden');
-      }
-    }
-  </script>
 <% end %>

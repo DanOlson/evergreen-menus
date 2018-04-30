@@ -6,6 +6,7 @@ class UserInvitationForm
     last_name
     email
     account
+    role_id
     establishment_ids
     inviting_user
     invite_another
@@ -39,6 +40,7 @@ class UserInvitationForm
       first_name: first_name,
       last_name: last_name,
       email: email,
+      role_id: role_id,
       account: account,
       establishment_ids: establishment_ids,
       inviting_user: inviting_user
@@ -47,6 +49,10 @@ class UserInvitationForm
 
   def establishment_ids
     @establishment_ids || []
+  end
+
+  def model_name
+    to_model.model_name
   end
 
   private

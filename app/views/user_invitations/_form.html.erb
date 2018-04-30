@@ -15,24 +15,22 @@
       <%= f.email_field :email, required: true, disabled: f.object.persisted?, class: "form-control", data: { test: 'invitation-email' } %>
     </div>
 
-    <div class="form-group">
-      <label>Establishments</label>
-      <div class="">
-        <% @account.establishments.each_with_index do |establishment, index| %>
-          <div class="form-check">
-            <label class="form-check-label" data-test="invitation-establishment-access">
-              <%= check_box_tag 'user_invitation[establishment_ids][]', establishment.id, f.object.establishment_ids.include?(establishment.id) %>
-
-              <%= establishment.name %>
-            </label>
-          </div>
-        <% end %>
-      </div>
+    <div class='form-group'>
+      <%= f.label :role %>
+      <%= f.select :role_id, options_for_select(role_options, selected: @user_invitation.role_id || Role.staff.id), {}, class: 'form-control js-role-select', data: { test: 'invitation-role-select' } %>
+      <small class="form-text text-muted">
+        Manager can perform all operations for the account. Staff access is limited to chosen establishments.
+      </small>
     </div>
+
+    <%= render partial: 'shared/establishment_access_options', locals: {
+      establishments: @account.establishments,
+      form_object: f.object
+    } %>
 
     <%= yield f %>
 
-    <div class='button-wrapper'>
+    <div class="button-wrapper">
       <%= f.submit submit_text, class: 'btn btn-evrgn-primary', data: { test: 'invitation-submit-button' } %>
       <%= link_to 'Cancel', account_users_path(@account), class: 'btn btn-outline-secondary', data: { test: 'invitation-cancel-link' } %>
       <% if f.object.persisted? && can?(:destroy, @user_invitation) %>

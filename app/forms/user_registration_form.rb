@@ -10,6 +10,8 @@ class UserRegistrationForm
     password_confirmation
     account
     account_id
+    role
+    role_id
     user_invitation
     user_invitation_id
   )
@@ -32,6 +34,7 @@ class UserRegistrationForm
         last_name: invitation.last_name,
         email: invitation.email,
         account: invitation.account,
+        role: invitation.role,
         user_invitation_id: invitation.id
       })
     end
@@ -60,6 +63,14 @@ class UserRegistrationForm
     @account_id ||= user_invitation && user_invitation.account_id
   end
 
+  def role
+    @role ||= role_id ? Role.find_by(id: role_id) : Role.staff
+  end
+
+  def role_id
+    @role_id ||= user_invitation && user_invitation.role_id
+  end
+
   def username
     @username ||= email
   end
@@ -81,7 +92,7 @@ class UserRegistrationForm
       password: password,
       password_confirmation: password_confirmation,
       account: account,
-      role: Role.staff,
+      role: role,
       establishment_ids: user_invitation.establishment_ids
     })
   end
