@@ -164,5 +164,194 @@ module GoogleMyBusiness
         end
       end
     end
+
+    describe '#location' do
+      let(:mock_client) { double(Client, location: location_response) }
+      let(:location_response) do
+        double(Net::HTTPResponse, {
+          code: '200',
+          body: <<~JSON
+            {
+              "name": "accounts/111337701469104826106/locations/17679890243424107126",
+              "locationName": "Farbar",
+              "primaryCategory": {
+                "displayName": "Restaurant",
+                "categoryId": "gcid:restaurant"
+              },
+              "websiteUrl": "http://farbarmpls.com",
+              "locationKey": {
+                "requestId": "a03f8b54-d3fe-4b71-8af2-4a0fc4ef2ff5"
+              },
+              "latlng": {
+                "latitude": 45.0401352,
+                "longitude": -93.3152842
+              },
+              "openInfo": {
+                "status": "OPEN",
+                "canReopen": true
+              },
+              "locationState": {
+                "canUpdate": true,
+                "canDelete": true,
+                "isDisconnected": true
+              },
+              "metadata": {},
+              "languageCode": "en",
+              "priceLists": [
+                {
+                  "priceListId": "Dinner",
+                  "labels": [
+                    {
+                      "displayName": "Dinner"
+                    }
+                  ],
+                  "sections": [
+                    {
+                      "sectionId": "pasta",
+                      "labels": [
+                        {
+                          "displayName": "Pasta"
+                        }
+                      ],
+                      "items": [
+                        {
+                          "itemId": "11559",
+                          "labels": [
+                            {
+                              "displayName": "Chicken Florentine Pasta",
+                              "description": "Pasta with spinach, tomato, artichoke, garlic, red onion, parmesan and mozzarella"
+                            }
+                          ],
+                          "price": {
+                            "currencyCode": "USD",
+                            "units": "16"
+                          }
+                        },
+                        {
+                          "itemId": "11560",
+                          "labels": [
+                            {
+                              "displayName": "Mushroom Fettuccine",
+                              "description": "sautéed fresh garlic, mushrooms with sherry then tossed in mornay sauce, mixed with fettuccini pasta finished with bias cut asparagus tossed in lemon oil. Add Chicken or Shrimp upon request"
+                            }
+                          ],
+                          "price": {
+                            "currencyCode": "USD",
+                            "units": "14"
+                          }
+                        },
+                        {
+                          "itemId": "11561",
+                          "labels": [
+                            {
+                              "displayName": "Angel Hair Shrimp",
+                              "description": "Large shrimp sautéed with lemon, garlic, herbs and fresh basil on top of angel hair pasta with a white wine sauce."
+                            }
+                          ],
+                          "price": {
+                            "currencyCode": "USD",
+                            "units": "15"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          JSON
+        })
+      end
+
+      context 'when the account is not associated to a GMB account' do
+        it 'raises an error' do
+          expect {
+            instance.location('account/123/location/234')
+          }.to raise_error(GoogleMyBusiness::MissingAccountAssociationException)
+        end
+      end
+
+      context 'when the account is associated to a GMB account' do
+        let(:account) { build_stubbed :account, google_my_business_account_id: 'account/12345' }
+
+        it 'calls the client with the numeric portion of the account id' do
+          instance.location 'account/12345/location/234'
+          expect(mock_client).to have_received(:location).with '12345', '234'
+        end
+
+        context 'when the call to GMB API is successful' do
+          it 'returns the Location' do
+            location = instance.location('account/12345/location/98765')
+            expect(location).to be_a Location
+
+            expect(location.name).to eq 'accounts/111337701469104826106/locations/17679890243424107126'
+            expect(location.location_name).to eq 'Farbar'
+            expect(location.price_list).to_not be_nil
+          end
+        end
+
+        context 'when the call to GMB API is unauthorized' do
+          let(:location_response) do
+            double(Net::HTTPResponse, {
+              code: '401',
+              body: <<~JSON
+                {
+                  "error": {
+                    "code": 401,
+                    "message": "Request had invalid authentication credentials.",
+                    "status": "UNAUTHENTICATED"
+                  }
+                }
+              JSON
+            })
+          end
+
+          it 'raises a RequestFailedException' do
+            expect {
+              instance.location 'account/12345/location/234'
+            }.to raise_error(GoogleMyBusiness::RequestFailedException)
+          end
+
+          it 'puts the response in the exception' do
+            begin
+              instance.location 'account/12345/location/234'
+            rescue GoogleMyBusiness::RequestFailedException => e
+              expect(e.response).to eq location_response
+            end
+          end
+        end
+
+        context 'when the call to GMB API is not found' do
+          let(:location_response) do
+            double(Net::HTTPResponse, {
+              code: '404',
+              body: <<~JSON
+                {
+                  "error": {
+                    "code": 404,
+                    "message": "Request entity was not found.",
+                    "status": "NOT_FOUND"
+                  }
+                }
+              JSON
+            })
+          end
+
+          it 'raises a RequestFailedException' do
+            expect {
+              instance.location 'account/12345/location/234'
+            }.to raise_error(GoogleMyBusiness::RequestFailedException)
+          end
+
+          it 'puts the response in the exception' do
+            begin
+              instance.location 'account/12345/location/234'
+            rescue GoogleMyBusiness::RequestFailedException => e
+              expect(e.response).to eq location_response
+            end
+          end
+        end
+      end
+    end
   end
 end

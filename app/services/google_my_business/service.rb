@@ -22,6 +22,18 @@ module GoogleMyBusiness
       Array(locations).map { |l| GoogleMyBusiness::Location.new l }
     end
 
+    def location(location_id)
+      acct_id = account.google_my_business_account_id
+      raise MissingAccountAssociationException unless acct_id
+      response = client.location acct_id.split('/').last, location_id.split('/').last
+      if response.code == '200'
+        location = JSON.parse(response.body)
+        GoogleMyBusiness::Location.new location
+      else
+        raise RequestFailedException.new(response)
+      end
+    end
+
     private
 
     def default_client
