@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module GoogleMyBusiness
-  describe BootstrapGoogleMenu do
+  describe MenuBootstrapper do
     let(:location_id) { '/accounts/123/locations/456' }
     let(:establishment) do
       create :establishment, google_my_business_location_id: location_id
@@ -10,7 +10,7 @@ module GoogleMyBusiness
 
     describe 'initialization' do
       it 'uses a correctly configured Service by default' do
-        instance = BootstrapGoogleMenu.new(
+        instance = MenuBootstrapper.new(
           establishment: establishment,
           gmb_location_id: location_id
         )
@@ -25,7 +25,7 @@ module GoogleMyBusiness
         double Service
       end
       let(:instance) do
-        BootstrapGoogleMenu.new(
+        MenuBootstrapper.new(
           establishment: establishment,
           gmb_location_id: location_id,
           gmb_service: mock_gmb_service,

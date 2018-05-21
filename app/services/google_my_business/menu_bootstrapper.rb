@@ -1,5 +1,5 @@
 module GoogleMyBusiness
-  class BootstrapGoogleMenu
+  class MenuBootstrapper
     class << self
       def call(establishment:, gmb_location_id:)
         new(

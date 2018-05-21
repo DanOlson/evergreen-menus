@@ -9,10 +9,11 @@ module GoogleMyBusiness
 
     def create
       authorize! :manage, :google_my_business
-      @account = @account.decorate
       if @account.update account_params
+        EstablishmentBootstrapper.new(@account).bootstrap_menus
         redirect_to account_path(@account), notice: 'Google My Business onboarding is complete!'
       else
+        @account = @account.decorate
         render :new, alert: @account.errors.full_messages.join("\n")
       end
     end
