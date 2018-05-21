@@ -33,29 +33,39 @@ module GoogleMyBusiness
       price_list = location.price_list
       ActiveRecord::Base.transaction do
         menu = establishment.create_google_menu!(name: price_list.name)
-        price_list.sections.each_with_index do |section, idx|
+        seed = { lists: [], google_menu_lists: [] }
+        data = price_list.sections.each_with_index.inject(seed) do |acc, (section, idx)|
           list = establishment.lists.where(name: section.name).first
           if !list
-            list = establishment.lists.create!({
-              name: section.name
+            list = List.new({
+              establishment: establishment,
+              name: section.name,
+              beers: section.items.each_with_index.map do |item, idx|
+                Beer.new({
+                  name: item.name,
+                  description: item.description,
+                  price: item.price,
+                  position: idx
+                })
+              end
             })
-            section.items.each_with_index do |item, idx|
-              list.beers.create!({
-                name: item.name,
-                description: item.description,
-                price: item.price,
-                position: idx
-              })
-            end
+
+            acc[:lists] << list
           end
 
-          menu.google_menu_lists.create!({
+          google_menu_list = menu.google_menu_lists.new({
             list: list,
             position: idx,
             show_price_on_menu: true,
             show_description_on_menu: true
           })
+
+          acc[:google_menu_lists] << google_menu_list
+          acc
         end
+
+        List.import data[:lists], recursive: true
+        GoogleMenuList.import data[:google_menu_lists]
       end
     end
 

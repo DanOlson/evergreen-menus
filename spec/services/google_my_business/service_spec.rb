@@ -351,6 +351,44 @@ module GoogleMyBusiness
             end
           end
         end
+
+        context 'when the given location_id is nil' do
+          let(:location_id) { nil }
+
+          it 'raises a RequestFailedException' do
+            expect {
+              instance.location location_id
+            }.to raise_error(GoogleMyBusiness::RequestFailedException)
+          end
+
+          it 'reports 404' do
+            begin
+              instance.location location_id
+            rescue => e
+              expect(e.response.code).to eq '404'
+              expect(e.message).to eq "location_id #{location_id} not found"
+            end
+          end
+        end
+
+        context 'when the given location_id is an empty string' do
+          let(:location_id) { '' }
+
+          it 'raises a RequestFailedException' do
+            expect {
+              instance.location location_id
+            }.to raise_error(GoogleMyBusiness::RequestFailedException)
+          end
+
+          it 'reports 404' do
+            begin
+              instance.location location_id
+            rescue => e
+              expect(e.response.code).to eq '404'
+              expect(e.message).to eq "location_id #{location_id} not found"
+            end
+          end
+        end
       end
     end
   end

@@ -23,6 +23,7 @@ module GoogleMyBusiness
     end
 
     def location(location_id)
+      validate_location_id location_id
       acct_id = account.google_my_business_account_id
       raise MissingAccountAssociationException unless acct_id
       response = client.location acct_id.split('/').last, location_id.split('/').last
@@ -38,6 +39,16 @@ module GoogleMyBusiness
 
     def default_client
       Client.new account: @account
+    end
+
+    def validate_location_id(location_id)
+      if location_id.blank?
+        raise RequestFailedException.new(bad_location_response(location_id))
+      end
+    end
+
+    def bad_location_response(location_id)
+      OpenStruct.new code: '404', body: %({"error":{"message":"location_id #{location_id} not found"}})
     end
   end
 end
