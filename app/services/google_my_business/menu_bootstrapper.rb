@@ -34,16 +34,19 @@ module GoogleMyBusiness
       ActiveRecord::Base.transaction do
         menu = establishment.create_google_menu!(name: price_list.name)
         price_list.sections.each_with_index do |section, idx|
-          list = establishment.lists.create!({
-            name: section.name
-          })
-          section.items.each_with_index do |item, idx|
-            list.beers.create!({
-              name: item.name,
-              description: item.description,
-              price: item.price,
-              position: idx
+          list = establishment.lists.where(name: section.name).first
+          if !list
+            list = establishment.lists.create!({
+              name: section.name
             })
+            section.items.each_with_index do |item, idx|
+              list.beers.create!({
+                name: item.name,
+                description: item.description,
+                price: item.price,
+                position: idx
+              })
+            end
           end
 
           menu.google_menu_lists.create!({

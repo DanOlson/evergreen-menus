@@ -128,6 +128,30 @@ module GoogleMyBusiness
             expect(mac_and_cheese.description).to eq 'Classic homemade mac and cheese topped with breadcrumbs'
             expect(mac_and_cheese.price).to eq 9
           end
+
+          context 'but one of the lists on the GMB location already exists' do
+            before do
+              pasta = create(:list, name: 'Pasta', establishment: establishment)
+              create(:menu_item, name: 'Spaghetti', price: '8', description: 'Basic Spaghetti', list: pasta)
+              create(:menu_item, name: 'Ravioli', price: '8', description: 'Basic Ravioli', list: pasta)
+              expect(pasta.beers.size).to eq 2
+            end
+
+            it 'does not change the existing list' do
+              instance.call
+              list = establishment.google_menu.lists.first
+              expect(list.beers.size).to eq 2
+
+              spaghetti, ravoili = list.beers
+              expect(spaghetti.name).to eq 'Spaghetti'
+              expect(spaghetti.description).to eq 'Basic Spaghetti'
+              expect(spaghetti.price).to eq 8
+
+              expect(ravoili.name).to eq 'Ravioli'
+              expect(ravoili.description).to eq 'Basic Ravioli'
+              expect(ravoili.price).to eq 8
+            end
+          end
         end
 
         context 'and a GoogleMenu already exists for the establishment' do
