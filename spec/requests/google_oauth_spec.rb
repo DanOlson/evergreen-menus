@@ -57,5 +57,20 @@ describe 'Google OAuth' do
       expect(response['Location']).to eq account_url(account)
       expect(AuthToken.google.for_account(account).exists?).to eq false
     end
+
+    context 'when there is a GoogleMenu' do
+      let(:establishment) { create :establishment, account: account }
+      before do
+        create :google_menu, establishment: establishment
+      end
+
+      it 'deletes the menu' do
+        expect(GoogleMenu.where(establishment: establishment).exists?).to eq true
+
+        delete '/oauth/google/revoke'
+
+        expect(GoogleMenu.where(establishment: establishment).exists?).to eq false
+      end
+    end
   end
 end

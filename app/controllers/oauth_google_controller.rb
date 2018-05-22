@@ -16,6 +16,7 @@ class OauthGoogleController < ApplicationController
 
   def revoke
     service.revoke account
+    establishment_bootstrapper.purge_menus
     redirect_to account_path(account), notice: 'You have disconnected your account from Google'
   end
 
@@ -23,5 +24,9 @@ class OauthGoogleController < ApplicationController
 
   def service
     GoogleOauthService.new
+  end
+
+  def establishment_bootstrapper
+    GoogleMyBusiness::EstablishmentBootstrapper.new account
   end
 end

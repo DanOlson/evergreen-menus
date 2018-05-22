@@ -156,9 +156,7 @@ module GoogleMyBusiness
 
         context 'and a GoogleMenu already exists for the establishment' do
           before do
-            menu = establishment.create_google_menu!(name: 'Menu')
-            list = create :list, :with_items, item_count: 3
-            menu.google_menu_lists.create!(list: list, position: 0)
+            create :google_menu, name: 'Menu', establishment: establishment
           end
 
           it 'does not create a new GoogleMenu' do
