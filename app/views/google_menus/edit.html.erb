@@ -1,0 +1,15 @@
+<script>
+  window._EVERGREEN = {
+    menu: <%= raw google_menu_json @google_menu %>,
+    cancelEditPath: "<%= edit_account_establishment_path(@account, @establishment) %>",
+    submitButtonText: 'Update'
+  };
+</script>
+<% breadcrumb :google_menu, @account, @establishment, @google_menu %>
+<%= form_for [@account, @establishment, @google_menu], html: { class: 'google-menu-form' } do |f| %>
+  <div id="google-menu-app-root"></div>
+<% end %>
+
+<%= javascript_include_tag fingerprinted_asset('core-js') %>
+<%= javascript_include_tag fingerprinted_asset(:vendor) %>
+<%= javascript_include_tag fingerprinted_asset('google-menu') %>

@@ -258,4 +258,15 @@ class WebMenuApp extends Component {
   }
 }
 
+WebMenuApp.defaultProps = {
+  canDestroy: false
+};
+
+WebMenuApp.propTypes = {
+  webMenu: PropTypes.object.isRequired,
+  cancelEditPath: PropTypes.string.isRequired,
+  submitButtonText: PropTypes.string.isRequired,
+  canDestroy: PropTypes.bool
+};
+
 export default DragDropContext(HTML5Backend)(WebMenuApp);

@@ -63,7 +63,7 @@ feature 'establishment management' do
     expect(form).to_not have_delete_button
   end
 
-  scenario "editing an establishment's beer list", :js, :admin do
+  scenario "editing a list", :js, :admin do
     establishment = create :establishment, account: user.account
     login user
 
@@ -113,7 +113,7 @@ feature 'establishment management' do
     expect(form.beers.size).to eq 2
   end
 
-  scenario "an establishment's beer list can have prices and descriptions", :js, :admin do
+  scenario "a list can have prices and descriptions", :js, :admin do
     establishment = create :establishment, account: user.account
     login user
 
@@ -161,7 +161,7 @@ feature 'establishment management' do
     expect(all('[data-test="beer-input"]').size).to eq 2
   end
 
-  scenario 'beers can be removed and unremoved from the beer list', :js, :admin do
+  scenario 'items can be removed and unremoved from the list', :js, :admin do
     establishment = create :establishment, account: user.account
     login user
 
@@ -204,7 +204,7 @@ feature 'establishment management' do
     expect(form).to have_beer_named 'Indeed Day Tripper'
   end
 
-  scenario 'unsaved beers can be deleted from the UI', :js, :admin do
+  scenario 'unsaved items can be deleted from the UI', :js, :admin do
     establishment = create :establishment, account: user.account
     login user
 
@@ -221,7 +221,7 @@ feature 'establishment management' do
     expect(form.beers.size).to eq 0
   end
 
-  scenario "beers added to an establishment's list show up on the establishment's website", :admin, :js do
+  scenario "items added to a list show up on the establishment's website", :admin, :js do
     establishment = create :establishment, name: "The Lanes", account: user.account
 
     login user
@@ -450,5 +450,18 @@ feature 'establishment management' do
     expect(form.menus_panel).to have_help_text
     form.toggle_menus_help
     expect(form.menus_panel).to have_no_help_text
+  end
+
+  scenario 'Google Menu appears in menu list when it exists' do
+    establishment = create :establishment, account: user.account
+    create :google_menu, name: 'My Google Menu', establishment: establishment
+    login user
+
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    establishment_form.load({
+      account_id: establishment.account_id,
+      establishment_id: establishment.id
+    })
+    expect(establishment_form).to have_google_menu
   end
 end

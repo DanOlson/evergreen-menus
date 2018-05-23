@@ -49,7 +49,7 @@ MenuFormButtons.defaultProps = {
 
 MenuFormButtons.propTypes = {
   menuType: PropTypes.string.isRequired,
-  canDestroy: PropTypes.bool.isRequired,
+  canDestroy: PropTypes.bool,
   submitButtonText: PropTypes.string.isRequired,
   cancelEditPath: PropTypes.string.isRequired
 };

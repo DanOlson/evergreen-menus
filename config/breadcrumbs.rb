@@ -50,6 +50,12 @@ crumb :web_menu do |account, establishment, web_menu|
   parent :establishment, account, establishment
 end
 
+crumb :google_menu do |account, establishment, google_menu|
+  path = edit_account_establishment_google_menu_path(account, establishment, google_menu)
+  link 'Google Menu', path
+  parent :establishment, account, establishment
+end
+
 crumb :digital_display_menu do |account, establishment, digital_display_menu|
   if digital_display_menu.persisted?
     path = edit_account_establishment_digital_display_menu_path(

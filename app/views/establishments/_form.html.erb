@@ -93,6 +93,12 @@
               <%= link_to dd_menu.name, edit_account_establishment_digital_display_menu_path(account, establishment, dd_menu), data: { test: 'menu-link' } %>
             </div>
           <% end %>
+          <% if google_menu = establishment.google_menu %>
+            <div class="list-group-item" data-test="google-menu-list-item">
+              <span class="menu-type-icon fa fa-google" aria-hidden="true" title="Google Menu"></span>
+              <%= link_to google_menu.name, edit_account_establishment_google_menu_path(account, establishment, google_menu), data: { test: 'menu-link' } %>
+            </div>
+          <% end %>
         </div>
         <div class="button-wrapper">
           <%= add_web_menu_button(account, establishment, enabled: has_lists) %>

@@ -43,6 +43,7 @@ module PageObjects
         sections :print_menus, Menu, '[data-test="menu-list-item"]'
         sections :web_menus, Menu, '[data-test="web-menu-list-item"]'
         sections :digital_display_menus, Menu, '[data-test="digital-display-menu-list-item"]'
+        section :google_menu, Menu, '[data-test="google-menu-list-item"]'
 
         def add_print_menu
           add_print_menu_button.click
@@ -126,6 +127,10 @@ module PageObjects
 
       def menu_count
         menus.size
+      end
+
+      def has_google_menu?
+        menus_panel.has_google_menu?
       end
 
       def has_menu_named?(menu_name)
