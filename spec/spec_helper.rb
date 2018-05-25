@@ -25,7 +25,8 @@ VCR.configure do |c|
     # Requests for testing PDF and display previews
     req.uri['menu_preview.pdf'] ||
     req.uri['/digital_display_menu_preview?'] ||
-    req.uri['/web_menu_preview?']
+    req.uri['/web_menu_preview?'] ||
+    req.uri['/google_menu_preview?']
   end
 end
 

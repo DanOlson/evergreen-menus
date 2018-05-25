@@ -133,6 +133,10 @@ module PageObjects
         menus_panel.has_google_menu?
       end
 
+      def google_menu
+        menus_panel.google_menu
+      end
+
       def has_menu_named?(menu_name)
         !!menu_named(menu_name)
       end
