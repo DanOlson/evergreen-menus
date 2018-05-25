@@ -1,35 +1,11 @@
-function shouldShowPrice(list) {
-  if (list.show_price_on_menu === undefined) {
-    return true;
-  } else {
-    return list.show_price_on_menu;
-  }
-}
+import initPreviewUtils from '../shared/previewPathUtils';
 
-function buildMenuListShowPrice(list, index) {
-  const listRep = buildMenuListRep(index);
-  const showPrice = shouldShowPrice(list);
-  return `${listRep}[show_price_on_menu]=${showPrice}`;
-}
-
-function buildMenuListPosition(list, index) {
-  const listRep = buildMenuListRep(index);
-  return `${listRep}[position]=${index}`;
-}
-
-function buildMenuListListId(list, index) {
-  const listRep = buildMenuListRep(index);
-  return `${listRep}[list_id]=${list.id}`
-}
-
-function buildMenuListRep(num) {
-  return `digital_display_menu[digital_display_menu_lists_attributes][${num}]`;
-}
-
-function buildMenuListId(list, index) {
-  const listRep = buildMenuListRep(index);
-  return `${listRep}[id]=${list.digital_display_menu_list_id}`;
-}
+const {
+  buildMenuListId,
+  buildMenuListListId,
+  buildMenuListPosition,
+  buildMenuListShowPrice
+} = initPreviewUtils('digitalDisplay');
 
 function buildQueryString(lists, base) {
   return lists.reduce((acc, list, idx) => {
