@@ -8,7 +8,7 @@ class GoogleMenusController < ApplicationController
 
   def update
     if @google_menu.update google_menu_params
-      # GoogleMyBusiness::LocationUpdateService.new(establishment: @establishment).call
+      GoogleMyBusiness::LocationUpdateService.new(establishment: @establishment).call
       redirect_to edit_account_establishment_google_menu_path(@account, @establishment, @google_menu), notice: 'Google Menu updated'
     else
       logger.debug("\n\nGoogle Menu invalid! #{@google_menu.errors.full_messages}\n\n")

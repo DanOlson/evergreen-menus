@@ -28,10 +28,9 @@ module GoogleMyBusiness
     end
 
     def request_body
+      menu = @establishment.google_menu
       {
-        priceLists: @establishment.web_menus.synced_to_google.map do |menu|
-          menu_serializer.call menu
-        end
+        priceLists: [menu_serializer.call(menu)]
       }
     end
 
@@ -48,7 +47,7 @@ module GoogleMyBusiness
     end
 
     def default_menu_serializer
-      GoogleMyBusiness::WebMenuSerializer.new
+      GoogleMyBusiness::MenuSerializer.new
     end
   end
 end

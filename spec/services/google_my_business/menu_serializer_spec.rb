@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 module GoogleMyBusiness
-  describe WebMenuSerializer do
-    let(:instance) { WebMenuSerializer.new }
-    let(:web_menu) { create :web_menu, name: 'Happy Hour' }
-    let(:appetizers) { create :list, name: 'Appetizers', establishment: web_menu.establishment }
-    let(:tap_beer) { create :list, name: 'Tap Beer', establishment: web_menu.establishment }
+  describe MenuSerializer do
+    let(:instance) { MenuSerializer.new }
+    let(:google_menu) { create :google_menu, name: 'Google Menu' }
+    let(:appetizers) { create :list, name: 'Appetizers', establishment: google_menu.establishment }
+    let(:tap_beer) { create :list, name: 'Tap Beer', establishment: google_menu.establishment }
     let!(:wings) { create :menu_item, name: 'Wings', price: '9.50', description: 'Bone-in wings', list: appetizers }
     let!(:pretzel) { create :menu_item, name: 'Pretzel', price: '4.95', description: 'Boring salt-bread', list: appetizers }
     let!(:furious) { create :menu_item, name: 'Surly Furious', price: '6', description: 'American IPA', list: tap_beer }
@@ -15,13 +15,13 @@ module GoogleMyBusiness
     let(:show_description) { true }
 
     before do
-      web_menu.web_menu_lists.create!({
+      google_menu.google_menu_lists.create!({
         list: tap_beer,
         position: 1,
         show_price_on_menu: show_price,
         show_description_on_menu: show_description
       })
-      web_menu.web_menu_lists.create!({
+      google_menu.google_menu_lists.create!({
         list: appetizers,
         position: 0,
         show_price_on_menu: show_price,
@@ -34,10 +34,10 @@ module GoogleMyBusiness
         it 'creates a priceList per Google specifications' do
           expected = <<~JSON
             {
-              "priceListId": "Happy Hour",
+              "priceListId": "Google Menu",
               "labels": [
                 {
-                  "displayName": "Happy Hour"
+                  "displayName": "Google Menu"
                 }
               ],
               "sections": [
@@ -121,7 +121,7 @@ module GoogleMyBusiness
             }
           JSON
 
-          serialized = JSON.generate instance.call(web_menu)
+          serialized = JSON.generate instance.call(google_menu)
           expect(serialized).to be_json_eql expected
         end
       end
@@ -133,10 +133,10 @@ module GoogleMyBusiness
         it 'creates a priceList without description' do
           expected = <<~JSON
             {
-              "priceListId": "Happy Hour",
+              "priceListId": "Google Menu",
               "labels": [
                 {
-                  "displayName": "Happy Hour"
+                  "displayName": "Google Menu"
                 }
               ],
               "sections": [
@@ -216,7 +216,7 @@ module GoogleMyBusiness
             }
           JSON
 
-          serialized = JSON.generate instance.call(web_menu)
+          serialized = JSON.generate instance.call(google_menu)
           expect(serialized).to be_json_eql expected
         end
       end
@@ -228,10 +228,10 @@ module GoogleMyBusiness
         it 'creates a priceList without prices' do
           expected = <<~JSON
             {
-              "priceListId": "Happy Hour",
+              "priceListId": "Google Menu",
               "labels": [
                 {
-                  "displayName": "Happy Hour"
+                  "displayName": "Google Menu"
                 }
               ],
               "sections": [
@@ -295,7 +295,7 @@ module GoogleMyBusiness
             }
           JSON
 
-          serialized = JSON.generate instance.call(web_menu)
+          serialized = JSON.generate instance.call(google_menu)
           expect(serialized).to be_json_eql expected
         end
       end
