@@ -32,7 +32,16 @@ module GoogleMyBusiness
       end
       price_list = location.price_list
       ActiveRecord::Base.transaction do
-        menu = establishment.create_google_menu!(name: price_list.name)
+        old_menu = establishment.google_menu
+        menu = GoogleMenu.create!(name: price_list.name, establishment: establishment)
+        ###
+        # According to Rails docs, this is supposed to be deleted
+        # automatically by calling establishment.google_menu = menu
+        # It's not, however, in Rails 5.0.0.1 in development. It _is_
+        # deleted in test environment though... Thus the manual steps.
+        # Maybe re-evaluate this if you've upgraded Rails.
+        old_menu.destroy if old_menu
+        establishment.google_menu = menu
         seed = { lists: [], google_menu_lists: [] }
         data = price_list.sections.each_with_index.inject(seed) do |acc, (section, idx)|
           list = establishment.lists.where(name: section.name).first
