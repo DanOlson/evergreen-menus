@@ -16,12 +16,6 @@ class WebMenu < ActiveRecord::Base
 
   validates :name, :establishment, presence: true
 
-  class << self
-    def synced_to_google
-      where sync_to_google: true
-    end
-  end
-
   def restricted_availability?
     !!availability_start_time
   end

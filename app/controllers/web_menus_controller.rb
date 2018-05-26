@@ -24,9 +24,6 @@ class WebMenusController < ApplicationController
 
   def update
     if @web_menu.update(web_menu_params)
-      if @web_menu.sync_to_google?
-        GoogleMyBusiness::LocationUpdateService.new(establishment: @establishment).call
-      end
       redirect_to edit_account_establishment_web_menu_path(@account, @establishment, @web_menu), notice: 'Web menu updated'
     else
       logger.debug("\n\nMenu invalid! #{@web_menu.errors.full_messages}\n\n")
@@ -65,7 +62,6 @@ class WebMenusController < ApplicationController
       :availability_start_time,
       :availability_end_time,
       :restricted_availability,
-      :sync_to_google,
       {
         web_menu_lists_attributes: [
           :id,

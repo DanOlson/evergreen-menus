@@ -12,8 +12,6 @@ class WebMenuSerializer
 
   def call
     additional_attrs = {
-      syncToGoogle: sync_to_google?,
-      showSyncToGoogleInput: show_sync_to_google?,
       lists: lists.as_json,
       listsAvailable: available_lists,
       previewPath: preview_path,
@@ -38,19 +36,6 @@ class WebMenuSerializer
 
   def availability_end
     restriction = @web_menu.availability_end_time and restriction.strftime(TIME_FORMAT)
-  end
-
-  def gmb_enabled?
-    @gmb_enabled ||= establishment.account.google_my_business_enabled?
-  end
-
-  def show_sync_to_google?
-    gmb_enabled? && !!@can_view_web_integrations
-  end
-
-  def sync_to_google?
-    return false unless gmb_enabled?
-    @web_menu.sync_to_google == nil || @web_menu.sync_to_google?
   end
 
   def establishment

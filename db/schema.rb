@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180509235420) do
+ActiveRecord::Schema.define(version: 20180526012939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -256,7 +256,6 @@ ActiveRecord::Schema.define(version: 20180509235420) do
     t.datetime "updated_at",              null: false
     t.time     "availability_start_time"
     t.time     "availability_end_time"
-    t.boolean  "sync_to_google"
   end
 
   add_foreign_key "auth_tokens", "establishments"

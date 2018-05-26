@@ -4,7 +4,6 @@ import Panel from '../shared/Panel';
 import Buttons from '../shared/MenuFormButtons';
 import EmbedCodeOptions from './EmbedCodeOptions';
 import ShowCodeButton from './ShowCodeButton';
-import SyncToGoogleInput from './SyncToGoogleInput';
 import AvailableListGroup from '../shared/AvailableListGroup';
 import AvailabilityInput from '../shared/AvailabilityInput';
 import ChosenListGroup from '../shared/ChosenListGroup';
@@ -26,9 +25,7 @@ class WebMenuApp extends Component {
       availabilityEndTime,
       restrictedAvailability,
       lists,
-      listsAvailable,
-      showSyncToGoogleInput,
-      syncToGoogle
+      listsAvailable
     } = props.webMenu;
 
     this.handleNameChange        = this.handleNameChange.bind(this);
@@ -152,7 +149,7 @@ class WebMenuApp extends Component {
     } = this.state;
     const previewPath = generatePreviewPath(this.props.webMenu, this.state);
     const totalListCount = lists.length + listsAvailable.length;
-    const { embedCode, ampEmbedCode, ampHeadEmbedCode, syncToGoogle, showSyncToGoogleInput } = this.props.webMenu;
+    const { embedCode, ampEmbedCode, ampHeadEmbedCode } = this.props.webMenu;
     const toggleCodeButtonClass = embedCode ? (showEmbedCode ? 'active' : '') : 'hidden';
 
     return (
@@ -211,10 +208,6 @@ class WebMenuApp extends Component {
                 name="web_menu[availability_end_time]"
                 labelText="Availability End"
               />
-            </div>
-
-            <div className="form-group form-row">
-              <SyncToGoogleInput show={showSyncToGoogleInput} checked={syncToGoogle} />
             </div>
 
             <AvailableListGroup
