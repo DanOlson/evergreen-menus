@@ -10,7 +10,7 @@ class GoogleOauthService
   end
 
   def authorization_uri
-    @client.authorization_uri.to_s
+    @client.authorization_uri(approval_prompt: 'force').to_s
   end
 
   def exchange(code:, account:)

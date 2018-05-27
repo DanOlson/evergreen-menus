@@ -6,7 +6,7 @@ describe GoogleOauthService do
       client = double('MockSignetClient', authorization_uri: nil)
       service = GoogleOauthService.new client
       service.authorization_uri
-      expect(client).to have_received :authorization_uri
+      expect(client).to have_received(:authorization_uri).with(approval_prompt: 'force')
     end
 
     it 'uses the correct value' do
