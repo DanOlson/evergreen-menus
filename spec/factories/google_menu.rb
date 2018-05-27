@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :google_menu do
-    name 'New Google Menu'
+    name 'Google Menu'
     association :establishment, strategy: :build
 
     trait :with_lists do

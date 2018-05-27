@@ -96,7 +96,7 @@
           <% if google_menu = establishment.google_menu %>
             <div class="list-group-item" data-test="google-menu-list-item">
               <span class="menu-type-icon fa fa-google" aria-hidden="true" title="Google Menu"></span>
-              <%= link_to google_menu.name, edit_account_establishment_google_menu_path(account, establishment, google_menu), data: { test: 'menu-link' } %>
+              <%= link_to 'Google Menu', edit_account_establishment_google_menu_path(account, establishment, google_menu), data: { test: 'menu-link' } %>
             </div>
           <% end %>
         </div>
