@@ -36,9 +36,9 @@
           </td>
           <td>
             <% if @account.google_my_business_enabled? %>
-              <span class="menu-type-icon fa fa-2x fa-check web-integration-enabled" aria-hidden="true" title="Connected"></span>
+              <span class="menu-type-icon fa fa-2x fa-check web-integration-enabled" aria-hidden="true" title="Connected" data-test="status-google-integration-enabled"></span>
             <% else %>
-              <span class="menu-type-icon fa fa-2x fa-times web-integration-disabled" aria-hidden="true" title="Disconnected"></span>
+              <span class="menu-type-icon fa fa-2x fa-times web-integration-disabled" aria-hidden="true" title="Disconnected" data-test="status-google-integration-disabled"></span>
             <% end %>
           </td>
           <td>
