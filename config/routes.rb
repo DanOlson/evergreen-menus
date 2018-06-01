@@ -13,6 +13,8 @@ Beermapper::Application.routes.draw do
   get '/terms' => 'terms#index'
   get '/privacy' => 'terms#privacy_policy'
 
+  post '/contact' => 'contacts#create'
+
   get 'amp/lists/:id' => 'amp_lists#show'
   resources :web_menus, only: :show
   resources :accounts do
