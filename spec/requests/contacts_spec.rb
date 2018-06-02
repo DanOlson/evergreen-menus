@@ -22,8 +22,8 @@ describe 'contact form submission' do
   context 'when origin is evergreenmenus.com' do
     let(:origin) { 'https://evergreenmenus.com' }
 
-    it 'redirects back to origin' do
-      expect(response).to redirect_to "#{origin}?submitted=1"
+    it 'returns 201' do
+      expect(response).to have_http_status :created
     end
 
     it 'sends the correct CORS headers' do
@@ -47,8 +47,8 @@ describe 'contact form submission' do
         }
       end
 
-      it 'redirects back to origin' do
-        expect(response).to redirect_to "#{origin}?submitted=1"
+      it 'returns 201' do
+        expect(response).to have_http_status :created
       end
 
       it 'sends the correct CORS headers' do

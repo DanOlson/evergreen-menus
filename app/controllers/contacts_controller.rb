@@ -12,7 +12,7 @@ class ContactsController < ApplicationController
     if allowed?
       send_email
       set_cors_headers
-      redirect_to "#{origin}?submitted=1"
+      head :created
     else
       head :unauthorized
     end
