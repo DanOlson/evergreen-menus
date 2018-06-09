@@ -10,6 +10,9 @@ Beermapper::Application.routes.draw do
   get 'oauth/google/callback' => 'oauth_google#callback'
   delete 'oauth/google/revoke' => 'oauth_google#revoke'
 
+  get 'oauth/facebook/authorize' => 'oauth_facebook#authorize'
+  get 'oauth/facebook/callback' => 'oauth_facebook#callback'
+
   get '/terms' => 'terms#index'
   get '/privacy' => 'terms#privacy_policy'
 

@@ -79,9 +79,16 @@ NameVirtualHost *:80
 127.0.0.1 my-bar.locl
 ```
 
+### Additionally, setup local SSL support in Apache with these instructions
+
+https://gist.github.com/jonathantneal/774e4b0b3d4d739cbc53
+
 ### Restart Apache
 
-`sudo apachectl restart`
+```
+sudo apachectl configtest
+sudo apachectl restart
+```
 
 ### Bundler
 
