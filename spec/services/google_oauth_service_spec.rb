@@ -124,8 +124,8 @@ describe GoogleOauthService do
     end
 
     context 'when the saved token has expired' do
-      let(:now) { Time.zone.now - 1.second }
-      let(:refresh_time) { now - 3601.seconds }
+      let(:one_second_ago) { Time.zone.now - 1.second }
+      let(:refresh_time) { one_second_ago - 3601.seconds }
       let(:fresh_token) do
         {
           'access_token' => 'muchnewerandbetteraccesstoken',
@@ -139,7 +139,7 @@ describe GoogleOauthService do
           token_data: mock_token,
           access_token: 'a-mock-access-token',
           refresh_token: 'the-mock-refresh-token',
-          expires_at: now,
+          expires_at: one_second_ago,
           created_at: refresh_time,
           updated_at: refresh_time
         })

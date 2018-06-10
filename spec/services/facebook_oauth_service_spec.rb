@@ -132,6 +132,26 @@ describe FacebookOauthService do
         expect(token).to eq 'a-mock-access-token'
       end
     end
+
+    context 'when the token has expired' do
+      let(:one_second_ago) { Time.zone.now - 1.second }
+      let(:refresh_time) { one_second_ago - 3601.seconds }
+
+      before do
+        AuthToken.facebook_user.for_account(account).create!({
+          token_data: mock_token,
+          access_token: 'a-mock-access-token',
+          expires_at: one_second_ago,
+          created_at: refresh_time,
+          updated_at: refresh_time
+        })
+      end
+
+      it 'returns the token anyway so FB can 401 it' do
+        token = service.fetch_token account
+        expect(token).to eq 'a-mock-access-token'
+      end
+    end
   end
 
   describe '#revoke' do

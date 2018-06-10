@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://graph.facebook.com/me/accounts
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - graph.facebook.com
+      Authorization:
+      - Bearer mock-user-access-token
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"cdbec71e5d3f1fce1e63c3a55b1eca0bfa46af7b"'
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - Aqh5jO2SbA+
+      X-Fb-Rev:
+      - '3990631'
+      X-App-Usage:
+      - '{"call_count":0,"total_cputime":0,"total_time":0}'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v3.0
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding
+      X-Fb-Debug:
+      - fPmn5wTbSNa1Rp9chm66Jg8G4uBAwvFiZjbSsE3ZxVGReZNyX2reLGtgzzy9NM5IbGcHAoctf4zSBEXlzDclEg==
+      Date:
+      - Sun, 10 Jun 2018 02:50:09 GMT
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '421'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":[{"access_token":"the-mock-page-access-token","category":"Restaurant","category_list":[{"id":"273819889375819","name":"Restaurant"}],"name":"Betty''s
+        Bakery","id":"240936686640816","perms":["ADMINISTER","EDIT_PROFILE","CREATE_CONTENT","MODERATE_CONTENT","CREATE_ADS","BASIC_ADMIN"]}],"paging":{"cursors":{"before":"MjQwOTM2Njg2NjQwODE2","after":"MjQwOTM2Njg2NjQwODE2"}}}'
+    http_version: 
+  recorded_at: Sun, 10 Jun 2018 02:50:09 GMT
+recorded_with: VCR 3.0.3

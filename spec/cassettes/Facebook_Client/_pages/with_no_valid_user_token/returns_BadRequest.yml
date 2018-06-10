@@ -1,0 +1,64 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://graph.facebook.com/me/accounts
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - graph.facebook.com
+      Authorization:
+      - 'Bearer '
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      X-App-Usage:
+      - '{"call_count":0,"total_cputime":0,"total_time":0}'
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - FiuC6pTN7pd
+      X-Fb-Rev:
+      - '3990631'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v2.6
+      Cache-Control:
+      - no-store
+      Pragma:
+      - no-cache
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Www-Authenticate:
+      - OAuth "Facebook Platform" "invalid_request" "An active access token must be
+        used to query information about the current user."
+      Vary:
+      - Accept-Encoding
+      X-Fb-Debug:
+      - hTLtVzCHS5R9Kp1FEeXKkLbleXfSK0MQzppVBfQp5V83jM4FbxK+G4uIx6ypSquRne1afIuxkVD/RM4I6jRtuQ==
+      Date:
+      - Sun, 10 Jun 2018 03:34:54 GMT
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '155'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"error":{"message":"An active access token must be used to query information
+        about the current user.","type":"OAuthException","code":2500,"fbtrace_id":"FiuC6pTN7pd"}}'
+    http_version: 
+  recorded_at: Sun, 10 Jun 2018 03:34:54 GMT
+recorded_with: VCR 3.0.3
