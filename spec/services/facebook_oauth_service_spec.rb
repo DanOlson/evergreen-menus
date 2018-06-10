@@ -83,7 +83,7 @@ describe FacebookOauthService do
       result = service.exchange code: 'foo', establishment: establishment
       expect(mock_client).to have_received(:code=).with('foo')
       expect(result).to eq nil
-      auth_token = AuthToken.facebook.for_establishment(establishment).first
+      auth_token = AuthToken.facebook_user.for_establishment(establishment).first
       expect(auth_token.access_token).to eq 'a-mock-access-token'
       expect(auth_token.expires_at).to be_within(1.minute).of(Time.now + 1.hour)
     end
@@ -93,7 +93,7 @@ describe FacebookOauthService do
         service.exchange code: 'foo', establishment: establishment
       }.to change(AuthToken, :count).by 1
 
-      auth_token = AuthToken.facebook.for_establishment(establishment).first
+      auth_token = AuthToken.facebook_user.for_establishment(establishment).first
       token_data = auth_token.token_data
       expect(token_data).to eq mock_token.stringify_keys
       expect(auth_token.access_token).to eq 'a-mock-access-token'
@@ -125,7 +125,7 @@ describe FacebookOauthService do
       let(:now) { Time.zone.now }
 
       before do
-        AuthToken.facebook.for_establishment(establishment).create!({
+        AuthToken.facebook_user.for_establishment(establishment).create!({
           token_data: mock_token,
           access_token: 'a-mock-access-token',
           expires_at: now + 3600.seconds,
@@ -147,7 +147,7 @@ describe FacebookOauthService do
 
     context 'when there is a token' do
       before do
-        AuthToken.facebook.for_establishment(establishment).create!({
+        AuthToken.facebook_user.for_establishment(establishment).create!({
           token_data: {
             access_token: 'asdf',
             refresh_token: 'q432423',
@@ -161,7 +161,7 @@ describe FacebookOauthService do
         expect {
           service.revoke establishment
         }.to change(AuthToken, :count).by -1
-        expect(AuthToken.facebook.for_establishment(establishment).exists?).to eq false
+        expect(AuthToken.facebook_user.for_establishment(establishment).exists?).to eq false
       end
     end
 

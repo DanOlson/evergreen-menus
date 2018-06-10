@@ -6,7 +6,8 @@ class AuthToken < ActiveRecord::Base
 
   module Providers
     GOOGLE = 'google'
-    FACEBOOK = 'facebook'
+    FACEBOOK_USER = 'facebook_user'
+    FACEBOOK_PAGE = 'facebook_page'
   end
 
   class << self
@@ -14,8 +15,8 @@ class AuthToken < ActiveRecord::Base
       where(provider: Providers::GOOGLE)
     end
 
-    def facebook
-      where(provider: Providers::FACEBOOK)
+    def facebook_user
+      where(provider: Providers::FACEBOOK_USER)
     end
 
     def for_account(account)

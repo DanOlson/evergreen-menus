@@ -14,13 +14,10 @@ class FacebookOauthService
     @client.authorization_uri.to_s
   end
 
-  ###
-  # TODO: Once FB approves the app, add exchange of
-  # long-lived user token for page token
   def exchange(code:, establishment:)
     @client.code = code
     token_data = @client.fetch_access_token!
-    AuthToken.facebook.for_establishment(establishment).create!({
+    AuthToken.facebook_user.for_establishment(establishment).create!({
       access_token: token_data['access_token'],
       expires_at: Time.now + token_data['expires_in'].seconds,
       token_data: token_data
@@ -29,12 +26,12 @@ class FacebookOauthService
   end
 
   def fetch_token(establishment)
-    auth_token = AuthToken.facebook.for_establishment(establishment).first or return
+    auth_token = AuthToken.facebook_user.for_establishment(establishment).first or return
     auth_token.access_token
   end
 
   def revoke(establishment)
-    AuthToken.facebook.for_establishment(establishment).delete_all
+    AuthToken.facebook_user.for_establishment(establishment).delete_all
     nil
   end
 
