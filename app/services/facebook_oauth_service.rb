@@ -9,15 +9,15 @@ class FacebookOauthService
     @client = client
   end
 
-  def authorization_uri(establishment_id:)
-    @client.state = Base64.urlsafe_encode64 "establishment-#{establishment_id}"
+  def authorization_uri
+    @client.state = Base64.urlsafe_encode64 "foobar"
     @client.authorization_uri.to_s
   end
 
-  def exchange(code:, establishment:)
+  def exchange(code:, account:)
     @client.code = code
     token_data = @client.fetch_access_token!
-    AuthToken.facebook_user.for_establishment(establishment).create!({
+    AuthToken.facebook_user.for_account(account).create!({
       access_token: token_data['access_token'],
       expires_at: Time.now + token_data['expires_in'].seconds,
       token_data: token_data
@@ -25,13 +25,13 @@ class FacebookOauthService
     nil # Avoid exposing the refresh_token
   end
 
-  def fetch_token(establishment)
-    auth_token = AuthToken.facebook_user.for_establishment(establishment).first or return
+  def fetch_token(account)
+    auth_token = AuthToken.facebook_user.for_account(account).first or return
     auth_token.access_token
   end
 
-  def revoke(establishment)
-    AuthToken.facebook_user.for_establishment(establishment).delete_all
+  def revoke(account)
+    AuthToken.facebook_user.for_account(account).delete_all
     nil
   end
 

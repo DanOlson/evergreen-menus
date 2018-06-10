@@ -4,23 +4,16 @@ describe FacebookOauthService do
   describe '#authorization_uri' do
     it 'delegates to the client' do
       client = double('MockSignetClient').as_null_object
-      state = Base64.urlsafe_encode64 'establishment-123'
       service = FacebookOauthService.new client
-      service.authorization_uri({
-        establishment_id: '123'
-      })
-      expect(client).to have_received(:state=).with state
+      service.authorization_uri
+      expect(client).to have_received :state=
       expect(client).to have_received :authorization_uri
     end
 
     it 'uses the correct value' do
       expected = 'https://www.facebook.com/v3.0/dialog/oauth'
-      expected_state = Base64.urlsafe_encode64 'establishment-123'
-      actual = FacebookOauthService.new.authorization_uri({
-        establishment_id: '123'
-      })
+      actual = FacebookOauthService.new.authorization_uri
       expect(actual).to start_with expected
-      expect(actual).to include "state=#{expected_state}"
     end
   end
 
@@ -76,24 +69,24 @@ describe FacebookOauthService do
     let(:mock_client) do
       double('MockSignetClient', :code= => nil, fetch_access_token!: mock_token)
     end
-    let(:establishment) { create :establishment }
+    let(:account) { create :account }
     let(:service) { FacebookOauthService.new mock_client }
 
     it 'exchanges code for token' do
-      result = service.exchange code: 'foo', establishment: establishment
+      result = service.exchange code: 'foo', account: account
       expect(mock_client).to have_received(:code=).with('foo')
       expect(result).to eq nil
-      auth_token = AuthToken.facebook_user.for_establishment(establishment).first
+      auth_token = AuthToken.facebook_user.for_account(account).first
       expect(auth_token.access_token).to eq 'a-mock-access-token'
       expect(auth_token.expires_at).to be_within(1.minute).of(Time.now + 1.hour)
     end
 
     it 'saves the token data to the database' do
       expect {
-        service.exchange code: 'foo', establishment: establishment
+        service.exchange code: 'foo', account: account
       }.to change(AuthToken, :count).by 1
 
-      auth_token = AuthToken.facebook_user.for_establishment(establishment).first
+      auth_token = AuthToken.facebook_user.for_account(account).first
       token_data = auth_token.token_data
       expect(token_data).to eq mock_token.stringify_keys
       expect(auth_token.access_token).to eq 'a-mock-access-token'
@@ -112,12 +105,12 @@ describe FacebookOauthService do
     let(:mock_client) do
       double('MockSignetClient')
     end
-    let(:establishment) { create :establishment }
+    let(:account) { create :account }
     let(:service) { FacebookOauthService.new mock_client }
 
     context 'when there is no token' do
       it 'returns nil' do
-        expect(service.fetch_token(establishment)).to be_nil
+        expect(service.fetch_token(account)).to be_nil
       end
     end
 
@@ -125,7 +118,7 @@ describe FacebookOauthService do
       let(:now) { Time.zone.now }
 
       before do
-        AuthToken.facebook_user.for_establishment(establishment).create!({
+        AuthToken.facebook_user.for_account(account).create!({
           token_data: mock_token,
           access_token: 'a-mock-access-token',
           expires_at: now + 3600.seconds,
@@ -135,19 +128,19 @@ describe FacebookOauthService do
       end
 
       it 'returns the saved data' do
-        token = service.fetch_token establishment
+        token = service.fetch_token account
         expect(token).to eq 'a-mock-access-token'
       end
     end
   end
 
   describe '#revoke' do
-    let(:establishment) { create :establishment }
+    let(:account) { create :account }
     let(:service) { FacebookOauthService.new }
 
     context 'when there is a token' do
       before do
-        AuthToken.facebook_user.for_establishment(establishment).create!({
+        AuthToken.facebook_user.for_account(account).create!({
           token_data: {
             access_token: 'asdf',
             refresh_token: 'q432423',
@@ -159,16 +152,16 @@ describe FacebookOauthService do
 
       it 'deletes the token' do
         expect {
-          service.revoke establishment
+          service.revoke account
         }.to change(AuthToken, :count).by -1
-        expect(AuthToken.facebook_user.for_establishment(establishment).exists?).to eq false
+        expect(AuthToken.facebook_user.for_account(account).exists?).to eq false
       end
     end
 
     context 'when there is no token' do
       it 'deletes no tokens' do
         expect {
-          service.revoke establishment
+          service.revoke account
         }.to_not change AuthToken, :count
       end
     end
