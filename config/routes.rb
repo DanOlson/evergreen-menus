@@ -12,6 +12,7 @@ Beermapper::Application.routes.draw do
 
   get 'oauth/facebook/authorize' => 'oauth_facebook#authorize'
   get 'oauth/facebook/callback' => 'oauth_facebook#callback'
+  get 'oauth/facebook/revoke' => 'oauth_facebook#revoke'
 
   get '/terms' => 'terms#index'
   get '/privacy' => 'terms#privacy_policy'
@@ -38,6 +39,10 @@ Beermapper::Application.routes.draw do
 
     namespace 'google_my_business' do
       resources :account_associations, only: [:new, :create]
+      resources :establishment_associations, only: [:new, :create]
+    end
+
+    namespace 'facebook' do
       resources :establishment_associations, only: [:new, :create]
     end
   end

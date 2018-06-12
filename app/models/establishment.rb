@@ -1,6 +1,7 @@
 class Establishment < ActiveRecord::Base
-  validates :name, :address, :url, presence: true
+  validates :name, :url, presence: true
   validates :google_my_business_location_id, uniqueness: true, allow_nil: true, allow_blank: true
+  validates :facebook_page_id, uniqueness: true, allow_nil: true, allow_blank: true
   belongs_to :account
   has_many :invitation_establishment_assignments, dependent: :destroy
   has_many :establishment_staff_assignments, dependent: :destroy
@@ -22,16 +23,5 @@ class Establishment < ActiveRecord::Base
     def active
       where active: true
     end
-  end
-
-  def address
-    self[:address] || "#{street_address}, #{city}, #{state} #{postal_code}"
-  end
-
-  def address_changed?
-    street_address_changed? ||
-    city_changed? ||
-    state_changed? ||
-    postal_code_changed?
   end
 end

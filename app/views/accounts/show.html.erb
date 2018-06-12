@@ -50,6 +50,27 @@
             </div>
           </td>
         </tr>
+
+        <tr>
+          <td>
+            <span class="menu-type-icon fa fa-2x fa-facebook" aria-hidden="true" title="Facebook"></span>
+          </td>
+          <td>
+            <% if @account.facebook_enabled? %>
+              <span class="menu-type-icon fa fa-2x fa-check web-integration-enabled" aria-hidden="true" title="Connected" data-test="status-facebook-integration-enabled"></span>
+            <% else %>
+              <span class="menu-type-icon fa fa-2x fa-times web-integration-disabled" aria-hidden="true" title="Disconnected" data-test="status-facebook-integration-disabled"></span>
+            <% end %>
+          </td>
+          <td>
+            <div class="row">
+              <div class="col-sm-1"><%= facebook_link @account %></div>
+              <% if @account.facebook_enabled? %>
+                <div class="col-sm-1"><%= disconnect_facebook_link %></div>
+              <% end %>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   <% end %>

@@ -46,6 +46,7 @@ class Ability
     can :manage, UserInvitation, account_id: user.account_id
     can :read, Role, id: [Role.manager.id, Role.staff.id]
     can :manage, :google_my_business
+    can :manage, :facebook
   end
 
   def admin_abilities(user)
