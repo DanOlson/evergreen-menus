@@ -154,6 +154,30 @@ describe FacebookOauthService do
     end
   end
 
+  describe '#fetch_page_token' do
+    let(:establishment) { create :establishment }
+    let(:service) { FacebookOauthService.new }
+
+    context 'when there is a token' do
+      before do
+        AuthToken.facebook_page.for_establishment(establishment).create!({
+          token_data: { access_token: 'the-page-token' },
+          access_token: 'the-page-token'
+        })
+      end
+
+      it 'returns the token' do
+        expect(service.fetch_page_token(establishment)).to eq 'the-page-token'
+      end
+    end
+
+    context 'when there is no token' do
+      it 'returns the nil' do
+        expect(service.fetch_page_token(establishment)).to eq nil
+      end
+    end
+  end
+
   describe '#revoke' do
     let(:account) { create :account }
     let(:service) { FacebookOauthService.new }

@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://graph.facebook.com/240936686640816?fields=access_token
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - graph.facebook.com
+      Authorization:
+      - Bearer mock-user-token
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"945edbbf38a2828902f2a27d781440de3dec01a5"'
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - FbhsGTTkSYq
+      X-Fb-Rev:
+      - '4002248'
+      X-App-Usage:
+      - '{"call_count":1,"total_cputime":0,"total_time":0}'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v3.0
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding
+      X-Fb-Debug:
+      - V3Yvc2QpGSg36TBjnSQ3Tou4WOvApVGwl57XQ/r3WBCG0VpwRdSALZH+SBPo4e8BaNhGiSt8n2/eC3gIRn7cQw==
+      Date:
+      - Thu, 14 Jun 2018 00:38:57 GMT
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '232'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"mock-page-token","id":"240936686640816"}'
+    http_version: 
+  recorded_at: Thu, 14 Jun 2018 00:38:57 GMT
+recorded_with: VCR 3.0.3

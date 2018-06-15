@@ -1,0 +1,127 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://graph.facebook.com/240936686640816?fields=access_token
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - graph.facebook.com
+      Authorization:
+      - Bearer user-access-token
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"f8e34cd8b987e2332ab45db43d4afde2bc5784cd"'
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - FdB+x/qXoUh
+      X-Fb-Rev:
+      - '4010395'
+      X-App-Usage:
+      - '{"call_count":0,"total_cputime":0,"total_time":0}'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v3.0
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding
+      X-Fb-Debug:
+      - xp4CxoiJjUuizHMPilOtRpuopJPKd/+SwUXMUzw+PtN0Vz/o2Oqde3YDEQwTNqliidfvg4Eg1jVeELMqEZV9fw==
+      Date:
+      - Fri, 15 Jun 2018 03:07:44 GMT
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '235'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"page-access-token","id":"240936686640816"}'
+    http_version: 
+  recorded_at: Fri, 15 Jun 2018 03:07:44 GMT
+- request:
+    method: post
+    uri: https://graph.facebook.com/240936686640816/tabs
+    body:
+      encoding: US-ASCII
+      string: app_id=1838673429769675&custom_name=Menu&tab=app_1838673429769675
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - graph.facebook.com
+      Authorization:
+      - Bearer page-access-token
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Page-Usage:
+      - '{"call_count":1,"total_cputime":1,"total_time":1}'
+      X-App-Usage:
+      - '{"call_count":0,"total_cputime":0,"total_time":0}'
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - HPIv5zuAJdm
+      X-Fb-Rev:
+      - '4010395'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v3.0
+      Cache-Control:
+      - no-store
+      Pragma:
+      - no-cache
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Www-Authenticate:
+      - OAuth "Facebook Platform" "invalid_request" "(#2069016) This page does not
+        have permission to install the custom tab"
+      Vary:
+      - Accept-Encoding
+      X-Fb-Debug:
+      - Tg/xBO/KzLWbNjtFEBHqSwHnQ+lDXQyl6i60sr6RslLyPeF+eVVGFA84Uifmw9YPED/f50XaMaEQw6pkfqPlHA==
+      Date:
+      - Fri, 15 Jun 2018 03:07:44 GMT
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '158'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"error":{"message":"(#2069016) This page does not have permission
+        to install the custom tab","type":"OAuthException","code":2069016,"fbtrace_id":"HPIv5zuAJdm"}}'
+    http_version: 
+  recorded_at: Fri, 15 Jun 2018 03:07:44 GMT
+recorded_with: VCR 3.0.3

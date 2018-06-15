@@ -19,6 +19,10 @@ class AuthToken < ActiveRecord::Base
       where(provider: Providers::FACEBOOK_USER)
     end
 
+    def facebook_page
+      where(provider: Providers::FACEBOOK_PAGE)
+    end
+
     def for_account(account)
       where(account: account)
     end

@@ -1,0 +1,123 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://graph.facebook.com/240936686640816?fields=access_token
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - graph.facebook.com
+      Authorization:
+      - Bearer user-access-token
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Etag:
+      - '"e26bfd50e5852d0c51e37d7b28f2c4fc0bbb1f5d"'
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - AJ+CtJlKGy6
+      X-Fb-Rev:
+      - '4010395'
+      X-App-Usage:
+      - '{"call_count":0,"total_cputime":0,"total_time":0}'
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v3.0
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Pragma:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding
+      X-Fb-Debug:
+      - qbrwCrBH2RZ1Atq2ImCM7IWgQaRKIyogy2tOABMymDbNDrDNn9JyN9dp1I2w72FcYkZMj5cRCUwqka3xHeqhOA==
+      Date:
+      - Fri, 15 Jun 2018 03:07:44 GMT
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '227'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"page-access-token","id":"240936686640816"}'
+    http_version: 
+  recorded_at: Fri, 15 Jun 2018 03:07:44 GMT
+- request:
+    method: post
+    uri: https://graph.facebook.com/240936686640816/tabs
+    body:
+      encoding: US-ASCII
+      string: app_id=1838673429769675&custom_name=Menu&tab=app_1838673429769675
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - graph.facebook.com
+      Authorization:
+      - Bearer page-access-token
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Page-Usage:
+      - '{"call_count":1,"total_cputime":1,"total_time":1}'
+      X-App-Usage:
+      - '{"call_count":0,"total_cputime":0,"total_time":0}'
+      Strict-Transport-Security:
+      - max-age=15552000; preload
+      X-Fb-Trace-Id:
+      - BV3kFrEJoMy
+      X-Fb-Rev:
+      - '4010395'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Facebook-Api-Version:
+      - v3.0
+      Cache-Control:
+      - no-store
+      Pragma:
+      - no-cache
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      Vary:
+      - Accept-Encoding
+      X-Fb-Debug:
+      - mWg7ccfulhClQ7lRY1DNgOjFZkbHO9iDsXa4Xc2nuXhIR1/ID0BZguLBDRyk7X/q5wD0rwurgvRjEOG3iCaHKQ==
+      Date:
+      - Fri, 15 Jun 2018 03:07:45 GMT
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '158'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"some-tab-id"}'
+    http_version: 
+  recorded_at: Fri, 15 Jun 2018 03:07:45 GMT
+recorded_with: VCR 3.0.3

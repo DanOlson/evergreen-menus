@@ -13,9 +13,27 @@ module Facebook
         page_data = JSON.parse(response.body)['data']
         page_data.map { |p| Page.new p }
       elsif response.code == '401'
-        raise UnauthorizedError.new(account)
+        raise UnauthorizedError.for_user account
       else
         raise "Error calling Facebook API: #{response.code} #{response.body}"
+      end
+    end
+
+    def page_access_token(establishment)
+      response = @client.page(establishment, fields: 'access_token')
+      if response.code == '200'
+        JSON.parse(response.body)['access_token']
+      elsif response.code == '401'
+        raise UnauthorizedError.for_page establishment
+      else
+        raise "Error calling Facebook API: #{response.code} #{response.body}"
+      end
+    end
+
+    def create_tab(establishment)
+      response = @client.create_tab establishment
+      if message = JSON.parse(response.body).dig('error', 'message')
+        raise message
       end
     end
 

@@ -30,9 +30,21 @@ class FacebookOauthService
     auth_token.access_token
   end
 
+  def fetch_page_token(establishment)
+    auth_token = AuthToken
+      .facebook_page
+      .for_establishment(establishment)
+      .first or return
+    auth_token.access_token
+  end
+
   def revoke(account)
     AuthToken.facebook_user.for_account(account).delete_all
     nil
+  end
+
+  def app_id
+    @client.client_id
   end
 
   private
