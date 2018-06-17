@@ -55,7 +55,8 @@ class FacebookOauthService
       token_credential_uri: 'https://graph.facebook.com/v3.0/oauth/access_token',
       client_id: ENV.fetch('FACEBOOK_CLIENT_ID') { APP_CONFIG[:facebook][:client_id] },
       client_secret: ENV.fetch('FACEBOOK_CLIENT_SECRET') { APP_CONFIG[:facebook][:client_secret] },
-      redirect_uri: oauth_facebook_callback_url(protocol: 'https')
+      redirect_uri: oauth_facebook_callback_url(protocol: 'https'),
+      scope: 'pages_show_list'
     })
   end
 end
