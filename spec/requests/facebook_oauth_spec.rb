@@ -36,4 +36,27 @@ describe 'Facebook OAuth' do
       expect(URI(location).path).to eq account_path(user.account)
     end
   end
+
+  describe 'DELETE to /oauth/facebook/revoke' do
+    before do
+      AuthToken.facebook_user.for_account(account).create!({
+        token_data: {
+          access_token: 'asdf',
+          expires_in: 3600,
+          token_type: 'Bearer'
+        },
+        access_token: 'asdf'
+      })
+    end
+
+    it 'deletes tokens and redirects back' do
+      expect(AuthToken.facebook_user.for_account(account).exists?).to eq true
+
+      delete '/oauth/google/revoke'
+
+      expect(response).to have_http_status :redirect
+      expect(response['Location']).to eq account_url(account)
+      expect(AuthToken.google.for_account(account).exists?).to eq false
+    end
+  end
 end

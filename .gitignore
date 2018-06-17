@@ -15,7 +15,6 @@
 /log/*.log
 /tmp
 .DS_Store
-ember/.DS_Store
 node_modules
 public/javascripts/*
 public/stylesheets/*

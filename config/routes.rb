@@ -12,7 +12,9 @@ Beermapper::Application.routes.draw do
 
   get 'oauth/facebook/authorize' => 'oauth_facebook#authorize'
   get 'oauth/facebook/callback' => 'oauth_facebook#callback'
-  get 'oauth/facebook/revoke' => 'oauth_facebook#revoke'
+  delete 'oauth/facebook/revoke' => 'oauth_facebook#revoke'
+
+  post '/facebook/tab' => 'facebook_menus#show'
 
   get '/terms' => 'terms#index'
   get '/privacy' => 'terms#privacy_policy'

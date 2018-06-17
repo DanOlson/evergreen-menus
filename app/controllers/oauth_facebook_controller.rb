@@ -14,6 +14,11 @@ class OauthFacebookController < ApplicationController
     end
   end
 
+  def revoke
+    service.revoke account
+    redirect_to account_path(account), notice: 'You have disconnected your account from Facebook'
+  end
+
   private
 
   def service
