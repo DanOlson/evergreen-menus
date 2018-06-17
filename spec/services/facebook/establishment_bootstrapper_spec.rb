@@ -51,9 +51,46 @@ module Facebook
             expect(token.token_data).to eq('access_token' => 'mock_page_token')
           end
 
+          it 'creates a google_menu for the establishment' do
+            expect {
+              instance.call
+            }.to change(GoogleMenu, :count).by 1
+            establishment1.reload
+            expect(establishment1.google_menu).to_not eq nil
+          end
+
           it 'creates a tab on the facebook page' do
             instance.call
             expect(mock_facebook_service).to have_received(:create_tab).with establishment1
+          end
+        end
+
+        context 'when there is already a google_menu for the establishment' do
+          before do
+            GoogleMenu.create! establishment: establishment1
+          end
+
+          it 'does not create a google_menu' do
+            expect {
+              instance.call
+            }.to_not change GoogleMenu, :count
+          end
+        end
+
+        context 'when there is some other token for an establishment that has been unlinked' do
+          before do
+            AuthToken
+              .for_establishment(establishment2)
+              .create!({
+                provider: 'somewhere-else',
+                token_data: '{}',
+                access_token: 'asdf'
+              })
+          end
+
+          it 'the token is not deleted' do
+            instance.call
+            expect(AuthToken.for_establishment(establishment2).where(provider: 'somewhere-else').count).to eq 1
           end
         end
       end
