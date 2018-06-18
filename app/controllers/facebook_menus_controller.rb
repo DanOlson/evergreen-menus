@@ -10,7 +10,7 @@ class FacebookMenusController < ApplicationController
       render :not_found, layout: false, status: :payment_required
     else
       @google_menu = establishment.google_menu
-      render :show, layout: false
+      render :show, layout: 'facebook_menu_tab'
     end
   end
 end

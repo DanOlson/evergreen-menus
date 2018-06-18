@@ -74,7 +74,8 @@ module.exports = {
     'digital-display-menus': './javascripts/digital-display-menus.js',
     'google-menu': './javascripts/google-menu.js',
     'core-js': './javascripts/core-js.js',
-    digitalDisplay: './stylesheets/digital_display.scss'
+    digitalDisplay: './stylesheets/digital_display.scss',
+    facebookTab: './stylesheets/facebook_tab.scss',
   },
   output: {
     path: __dirname + '/public',
