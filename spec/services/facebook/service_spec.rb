@@ -121,7 +121,7 @@ module Facebook
       end
     end
 
-    describe '#page_access_token' do
+    describe '#page' do
       let(:mock_client) { double(Client, page: mock_page_response) }
       let(:establishment) do
         build_stubbed :establishment, {
@@ -137,14 +137,31 @@ module Facebook
             body: <<~JSON
               {
                 "access_token": "a-fake-access-token",
+                "name": "Willy's",
+                "fan_count": 4013,
                 "id": "240936686640816"
               }
             JSON
           })
         end
 
-        it 'returns the token value' do
-          expect(instance.page_access_token(establishment)).to eq 'a-fake-access-token'
+        it 'returns a Page instance' do
+          expected = Page.new(
+            'access_token' => 'a-fake-access-token',
+            'name' => "Willy's",
+            'fan_count' => 4013,
+            'id' => '240936686640816'
+          )
+          actual = instance.page establishment
+
+          expect(mock_client)
+            .to have_received(:page)
+            .with(establishment, fields: [:id, :name, :access_token, :fan_count])
+
+          expect(actual.id).to eq expected.id
+          expect(actual.name).to eq expected.name
+          expect(actual.fan_count).to eq expected.fan_count
+          expect(actual.access_token).to eq expected.access_token
         end
       end
 
@@ -168,7 +185,7 @@ module Facebook
 
         it 'raises an UnauthorizedError' do
           expect {
-            instance.page_access_token establishment
+            instance.page establishment
           }.to raise_error UnauthorizedError
         end
       end
@@ -193,7 +210,7 @@ module Facebook
 
         it 'raises an error' do
           expect {
-            instance.page_access_token establishment
+            instance.page establishment
           }.to raise_error RuntimeError
         end
       end

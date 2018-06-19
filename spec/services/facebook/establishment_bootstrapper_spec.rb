@@ -3,9 +3,12 @@ require 'spec_helper'
 module Facebook
   describe EstablishmentBootstrapper do
     let(:account) { create :account }
+    let(:page) do
+      Page.new('access_token' => 'mock_page_token')
+    end
     let(:mock_facebook_service) do
       double(Service, {
-        page_access_token: 'mock_page_token',
+        page: page,
         create_tab: nil
       })
     end

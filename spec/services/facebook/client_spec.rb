@@ -63,10 +63,19 @@ module Facebook
         let(:user_token) { 'mock-user-token' }
 
         it 'fetches the page from the Facebook Graph API' do
-          response = instance.page establishment, fields: 'access_token'
+          response = instance.page establishment, fields: ['access_token']
           expect(response.code).to eq '200'
           page = JSON.parse response.body
           expect(page['access_token']).to eq 'mock-page-token'
+        end
+
+        it 'allows requesting several fields' do
+          response = instance.page establishment, fields: %w(name access_token fan_count)
+          expect(response.code).to eq '200'
+          page = JSON.parse response.body
+          expect(page['access_token']).to eq 'mock-page-token'
+          expect(page['name']).to eq 'Farbar Minneapolis'
+          expect(page['fan_count']).to eq 0
         end
       end
 
@@ -74,7 +83,7 @@ module Facebook
         let(:user_token) { 'some-bad-token' }
 
         it 'returns Unauthorized' do
-          response = instance.page establishment, fields: 'access_token'
+          response = instance.page establishment, fields: ['access_token']
           expect(response.code).to eq '401'
         end
       end
@@ -83,7 +92,7 @@ module Facebook
         let(:user_token) { nil }
 
         it 'returns BadRequest' do
-          response = instance.page establishment, fields: 'access_token'
+          response = instance.page establishment, fields: ['access_token']
           expect(response.code).to eq '400'
         end
       end

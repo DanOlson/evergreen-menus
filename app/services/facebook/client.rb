@@ -25,7 +25,7 @@ module Facebook
       @logger.info "Fetching page from Facebook Graph API for establishment_id: #{establishment.id}"
       uri = URI(FB_BASE_URL + '/' + establishment.facebook_page_id)
       if fields = opts[:fields]
-        uri.query = "fields=#{fields}"
+        uri.query = "fields=#{fields.join(',')}"
       end
       issue_get uri
     end

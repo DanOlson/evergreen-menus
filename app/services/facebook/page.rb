@@ -1,11 +1,20 @@
 module Facebook
   class Page
-    attr_reader :id, :name, :access_token
+    FIELDS = %i(id name access_token fan_count)
+
+    class << self
+      def fields
+        FIELDS
+      end
+    end
+
+    attr_reader *FIELDS
 
     def initialize(args = {})
       @id = args['id']
       @name = args['name']
       @access_token = args['access_token']
+      @fan_count = args['fan_count']
     end
   end
 end

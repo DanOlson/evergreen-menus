@@ -19,10 +19,10 @@ module Facebook
       end
     end
 
-    def page_access_token(establishment)
-      response = @client.page(establishment, fields: 'access_token')
+    def page(establishment)
+      response = @client.page(establishment, fields: Page.fields)
       if response.code == '200'
-        JSON.parse(response.body)['access_token']
+        Page.new JSON.parse(response.body)
       elsif response.code == '401'
         raise UnauthorizedError.for_page establishment
       else

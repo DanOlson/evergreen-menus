@@ -17,13 +17,9 @@ module Facebook
     private
 
     def cleanup_stale_auth_tokens
-      establishment_ids = @account
-        .establishments
-        .where(facebook_page_id: [nil, ''])
-        .select(:id)
       AuthToken
         .facebook_page
-        .where(establishment_id: establishment_ids)
+        .for_account(@account)
         .destroy_all
     end
 
@@ -38,7 +34,8 @@ module Facebook
     end
 
     def fetch_and_save_token(establishment)
-      token = @facebook_service.page_access_token establishment
+      page = @facebook_service.page establishment
+      token = page.access_token
       AuthToken
         .facebook_page
         .for_establishment(establishment)
