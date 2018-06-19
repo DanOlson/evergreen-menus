@@ -23,6 +23,10 @@ class AuthToken < ActiveRecord::Base
       where(provider: Providers::FACEBOOK_PAGE)
     end
 
+    def facebook
+      where(provider: [Providers::FACEBOOK_USER, Providers::FACEBOOK_PAGE])
+    end
+
     def for_account(account)
       where(account: account)
     end
@@ -33,6 +37,6 @@ class AuthToken < ActiveRecord::Base
   end
 
   def expired?
-    Time.now > expires_at
+    !!expires_at && Time.now > expires_at
   end
 end

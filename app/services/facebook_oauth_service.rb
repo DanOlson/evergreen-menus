@@ -11,17 +11,24 @@ class FacebookOauthService
 
   def authorization_uri
     @client.state = Base64.urlsafe_encode64 "foobar"
-    @client.authorization_uri.to_s
+    @client.authorization_uri({
+      additional_parameters: {
+        auth_type: 'rerequest'
+      }
+    }).to_s
   end
 
   def exchange(code:, account:)
     @client.code = code
     token_data = @client.fetch_access_token!
-    AuthToken.facebook_user.for_account(account).create!({
+    token_attrs = {
       access_token: token_data['access_token'],
-      expires_at: Time.now + token_data['expires_in'].seconds,
       token_data: token_data
-    })
+    }
+    if token_data.key? 'expires_in'
+      token_attrs[:expires_at] = Time.now + token_data['expires_in'].seconds
+    end
+    AuthToken.facebook_user.for_account(account).create!(token_attrs)
     nil # Avoid exposing the refresh_token
   end
 
@@ -39,7 +46,7 @@ class FacebookOauthService
   end
 
   def revoke(account)
-    AuthToken.facebook_user.for_account(account).delete_all
+    AuthToken.facebook.for_account(account).delete_all
     nil
   end
 

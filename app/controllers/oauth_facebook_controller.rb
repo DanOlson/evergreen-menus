@@ -10,7 +10,7 @@ class OauthFacebookController < ApplicationController
       redirect_to account_path(account), alert: 'Access denied'
     else
       service.exchange code: params[:code], account: account
-      redirect_to account_path(account), notice: 'Facebook authorization was successful'
+      redirect_to new_account_facebook_establishment_association_path(account), notice: 'Facebook authorization was successful'
     end
   end
 

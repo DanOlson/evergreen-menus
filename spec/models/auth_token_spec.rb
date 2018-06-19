@@ -27,5 +27,11 @@ describe AuthToken do
 
       it { is_expected.to eq true }
     end
+
+    context 'when +expires_at+ is nil' do
+      let(:expires_at) { nil }
+
+      it { is_expected.to eq false }
+    end
   end
 end

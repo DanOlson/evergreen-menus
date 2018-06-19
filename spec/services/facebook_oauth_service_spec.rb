@@ -7,13 +7,18 @@ describe FacebookOauthService do
       service = FacebookOauthService.new client
       service.authorization_uri
       expect(client).to have_received :state=
-      expect(client).to have_received :authorization_uri
+      expect(client).to have_received(:authorization_uri).with({
+        additional_parameters: {
+          auth_type: 'rerequest'
+        }
+      })
     end
 
     it 'uses the correct value' do
       expected = 'https://www.facebook.com/v3.0/dialog/oauth'
       actual = FacebookOauthService.new.authorization_uri
       expect(actual).to start_with expected
+      expect(actual).to include '&auth_type=rerequest'
     end
   end
 
@@ -27,9 +32,12 @@ describe FacebookOauthService do
       expect(String(client.token_credential_uri)).to eq expected
     end
 
-    xit 'has the correct scope' do
-      expected = 'manage_pages'
-      expect(client.scope).to eq [expected]
+    xit 'requests manage_pages permission' do
+      expect(client.scope).to include 'manage_pages'
+    end
+
+    it 'requests pages_show_list permission' do
+      expect(client.scope).to include 'pages_show_list'
     end
 
     it 'has the correct redirect_uri' do
@@ -91,6 +99,25 @@ describe FacebookOauthService do
       expect(token_data).to eq mock_token.stringify_keys
       expect(auth_token.access_token).to eq 'a-mock-access-token'
       expect(auth_token.expires_at).to be_within(1.second).of(Time.now + 1.hour)
+    end
+
+    context 'when there is no expiry' do
+      let(:mock_token) do
+        {
+          'access_token' => 'a-mock-access-token',
+          'token_type' => 'bearer',
+          'auth_type' => 'rerequest'
+        }
+      end
+
+      it 'exchanges code for token' do
+        result = service.exchange code: 'foo', account: account
+        expect(mock_client).to have_received(:code=).with('foo')
+        expect(result).to eq nil
+        auth_token = AuthToken.facebook_user.for_account(account).first
+        expect(auth_token.access_token).to eq 'a-mock-access-token'
+        expect(auth_token.expires_at).to eq nil
+      end
     end
   end
 
@@ -199,6 +226,33 @@ describe FacebookOauthService do
           service.revoke account
         }.to change(AuthToken, :count).by -1
         expect(AuthToken.facebook_user.for_account(account).exists?).to eq false
+      end
+
+      context 'and there are page tokens' do
+        let(:establishment) do
+          create :establishment, account: account, facebook_page_id: 'asdf'
+        end
+
+        before do
+          AuthToken
+            .facebook_page
+            .for_establishment(establishment)
+            .create!({
+              access_token: 'asdf',
+              token_data: { access_token: 'asdf' }
+            })
+        end
+
+        it 'deletes the page tokens' do
+          expect {
+            service.revoke account
+          }.to change(AuthToken, :count).by -2
+
+          page_token = AuthToken
+            .facebook_page
+            .for_establishment(establishment).first
+          expect(page_token).to eq nil
+        end
       end
     end
 
