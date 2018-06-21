@@ -11,11 +11,17 @@ module Facebook
       authorize! :manage, :facebook
       if @account.update account_params
         begin
-          EstablishmentBootstrapper.new(@account).call
-          redirect_to account_path(@account), notice: 'Facebook onboarding is complete!'
+          results = EstablishmentBootstrapper.new(@account).call
+          if results.all? &:success?
+            redirect_to account_path(@account), notice: 'Facebook onboarding is complete!'
+          else
+            failed_results = results.select { |r| !r.success? }
+            flash[:warn] = "Facebook onboarding is complete, but we encountered the following issues:<br>#{failed_results.map(&:failure_text).join('<br>')}".html_safe
+            redirect_to account_path(@account)
+          end
         rescue => e
-          logger.error "Error bootstrapping Facebook for account_id: #{@account.id}"
-          redirect_to account_path(@account), alert: 'Facebook onboarding failed. Page has fewer than 2000 likes?'
+          logger.error "Error bootstrapping Facebook for account_id: #{@account.id} message: #{e.message}"
+          redirect_to account_path(@account), alert: 'Facebook onboarding failed.'
         end
       else
         @account = @account.decorate

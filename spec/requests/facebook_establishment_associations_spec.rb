@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Facebook Establishment associations' do
   let(:account) { create :account }
-  let(:establishment) { create :establishment, account: account }
+  let(:establishment) { create :establishment, name: 'Tavern 42', account: account }
   let(:user) { create :user, :manager, account: account }
 
   before do
@@ -52,7 +52,7 @@ describe 'Facebook Establishment associations' do
         }
         expect(response).to redirect_to account_path(account)
         follow_redirect!
-        expect(response.body).to include 'Facebook onboarding failed. Page has fewer than 2000 likes?'
+        expect(response.body).to include "Facebook onboarding is complete, but we encountered the following issues:<br>Failed to create a Menu tab on the Facebook page for Tavern 42. We can still make it happen, though. <a href=\"/facebook/overcoming_custom_tab_restrictions\">Click here for instructions.</a>"
       end
     end
   end

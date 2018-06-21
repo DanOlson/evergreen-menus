@@ -39,6 +39,7 @@ describe 'Google OAuth' do
   describe 'DELETE to /oauth/google/revoke' do
     before do
       AuthToken.google.for_account(account).create!({
+        access_token: 'asdf',
         token_data: {
           access_token: 'asdf',
           refresh_token: 'qwer',

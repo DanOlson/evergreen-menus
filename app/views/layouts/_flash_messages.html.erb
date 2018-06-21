@@ -1,6 +1,9 @@
 <% if alert = flash[:alert] %>
-  <div class="alert alert-danger" data-test="flash-alert"><%= alert %></div>
+  <div class="alert alert-danger" data-test="flash-alert" role="alert"><%= alert %></div>
 <% end %>
 <% if notice = flash[:notice] %>
-  <div class="alert alert-success" data-test="flash-success"><%= notice %></div>
+  <div class="alert alert-success" data-test="flash-success" role="alert"><%= notice %></div>
+<% end %>
+<% if warn = flash[:warn] %>
+  <div class="alert alert-warning" data-test="flash-warn" role="alert"><%= warn %></div>
 <% end %>

@@ -212,6 +212,7 @@ describe FacebookOauthService do
     context 'when there is a token' do
       before do
         AuthToken.facebook_user.for_account(account).create!({
+          access_token: 'asdf',
           token_data: {
             access_token: 'asdf',
             refresh_token: 'q432423',

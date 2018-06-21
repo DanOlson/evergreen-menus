@@ -17,6 +17,7 @@ feature 'Google OAuth2' do
 
   scenario 'manager can disconnect their account from Google', :js, :admin do
     AuthToken.google.for_account(account).create!({
+      access_token: 'asdf',
       token_data: {
         access_token: 'asdf',
         refresh_token: 'qwer',

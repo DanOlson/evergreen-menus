@@ -1,5 +1,5 @@
 class AuthToken < ActiveRecord::Base
-  validates :provider, :account, :token_data, presence: true
+  validates :provider, :account, :access_token, :token_data, presence: true
 
   belongs_to :account
   belongs_to :establishment
