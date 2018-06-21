@@ -52,7 +52,7 @@ describe 'Facebook Establishment associations' do
         }
         expect(response).to redirect_to account_path(account)
         follow_redirect!
-        expect(response.body).to include "Facebook onboarding is complete, but we encountered the following issues:<br>Failed to create a Menu tab on the Facebook page for Tavern 42. We can still make it happen, though. <a href=\"/facebook/overcoming_custom_tab_restrictions\">Click here for instructions.</a>"
+        expect(response.body).to include "Facebook onboarding is complete, but we encountered the following issues:<br><ul><li>Failed to create a Menu tab on the Facebook page for Tavern 42. We can still make it happen, though. <a href=\"/facebook/overcoming_custom_tab_restrictions\">Click here for instructions.</a></li></ul>"
       end
     end
   end

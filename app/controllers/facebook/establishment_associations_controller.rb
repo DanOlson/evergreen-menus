@@ -15,12 +15,12 @@ module Facebook
           if results.all? &:success?
             redirect_to account_path(@account), notice: 'Facebook onboarding is complete!'
           else
-            failed_results = results.select { |r| !r.success? }
-            flash[:warn] = "Facebook onboarding is complete, but we encountered the following issues:<br>#{failed_results.map(&:failure_text).join('<br>')}".html_safe
-            redirect_to account_path(@account)
+            flash[:warn] = warning_messages results
+            redirect_to account_path @account
           end
         rescue => e
           logger.error "Error bootstrapping Facebook for account_id: #{@account.id} message: #{e.message}"
+          logger.error(e.backtrace.join("\n"))
           redirect_to account_path(@account), alert: 'Facebook onboarding failed.'
         end
       else
@@ -35,6 +35,12 @@ module Facebook
       params
         .require(:account)
         .permit(establishments_attributes: [:id, :facebook_page_id])
+    end
+
+    def warning_messages(results)
+      failed_results = results.select { |r| !r.success? }
+      list_items = failed_results.map { |r| "<li>#{r.failure_text}</li>" }.join
+      "Facebook onboarding is complete, but we encountered the following issues:<br><ul>#{list_items}</ul>".html_safe
     end
   end
 end
