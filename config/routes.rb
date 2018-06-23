@@ -15,6 +15,7 @@ Beermapper::Application.routes.draw do
   delete 'oauth/facebook/revoke' => 'oauth_facebook#revoke'
 
   post '/facebook/tab' => 'facebook_menus#show'
+  get '/facebook/overcoming_custom_tab_restrictions' => 'help#facebook_custom_tab_restrictions'
 
   get '/terms' => 'terms#index'
   get '/privacy' => 'terms#privacy_policy'

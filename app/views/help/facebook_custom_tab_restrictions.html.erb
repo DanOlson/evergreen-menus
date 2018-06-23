@@ -1,0 +1,39 @@
+<% if current_user.account %>
+  <% breadcrumb :account, current_user.account %>
+<% end %>
+<%= render 'shared/panel', title: 'Facebook Custom Tab Restrictions', data_test: 'overcoming-facebook-custom-tab-restrictions', panel_class: 'help-facebook-custom-tab' do %>
+  <p>
+    Facebook recently made some changes that impose some restrictions on creating custom tabs on pages. To create a custom tab, at least one of the following two conditions must be met:
+  </p>
+  <ul>
+    <li>The page must have at least 2000 fans (likes)</li>
+    <li>The app developer of the custom tab must be an admin of the page on which the tab is placed.</li>
+  </ul>
+
+  <p>
+    If your page has yet to reach 2000 likes, we can work around this restriction by <i>briefly</i> granting the Evergreen Menus Facebook profile an admin role on your page. We realize that this requires a certain amount of trust, and we don't take that lightly. Rest assured, we are committed to the highest levels of customer service, and we will take no action whatsoever on your business's Facebook page. Once you complete the following steps, <strong>you may remove Evergreen Menus as an admin</strong> and your custom tab integration will continue to operate. We regret the situation we're in, but with a few quick steps, we can be up and running.
+  </p>
+
+  <h3>Step 1</h3>
+  <p>
+    From your business's Facebook page, click on the Settings link in the upper right corner.
+    <img class="img-fluid" src="/images/facebook-tab-step-1.png" alt="Visit Settings"/>
+  </p>
+
+  <h3>Step 2</h3>
+  <p>
+    Next, click the "Page Roles" tab in the left navigation element.
+    <img class="img-fluid" src="/images/facebook-tab-step-2.png" alt="Visit Page Roles"/>
+  </p>
+
+  <h3>Step 3</h3>
+  <p>
+    Search for "Evergreen Menus" in the "Assign a New Page Role" section. Be sure to select "Admin" as the role, then click the "Add" button. This will send us an invitation to be an admin on your page. Once we accept this invitation (should be no more 24 hours... usually much faster), come back here and <a href="https://www.facebook.com/dialog/pagetab?app_id=<%= @facebook_app_id %>&redirect_uri=https://www.facebook.com" target="_blank">click this link</a> to setup your custom Menu tab.
+    <img class="img-fluid" src="/images/facebook-tab-step-3.png" alt="Add Evergreen Menus as Admin"/>
+  </p>
+
+  <h3>Step 4</h3>
+  <p>
+    You're all set! You should now have a "Menu" tab on your Facebook page. Go back to the "Page Roles" page from step 2, and under the "Existing Page Roles" section, you can now remove Evergreen Menus as an admin on your page.
+  </p>
+<% end %>

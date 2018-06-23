@@ -110,6 +110,7 @@ module Facebook
     end
 
     class Result
+      include Rails.application.routes.url_helpers
       attr_reader :establishment, :save_token, :ensure_menu, :create_tab
 
       def initialize(establishment)
@@ -128,7 +129,7 @@ module Facebook
         return if success?
         text = "#{failed_operation.failure_text} for #{establishment.name}"
         if failed_operation == create_tab
-          text += '. We can still make it happen, though. <a href="/facebook/overcoming_custom_tab_restrictions">Click here for instructions.</a>'
+          text += ". We can still make it happen, though. <a href=\"#{facebook_overcoming_custom_tab_restrictions_path}\">Click here for instructions.</a>"
         end
         text
       end
