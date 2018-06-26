@@ -452,9 +452,9 @@ feature 'establishment management' do
     expect(form.menus_panel).to have_no_help_text
   end
 
-  scenario 'Google Menu appears in menu list when it exists' do
+  scenario 'Online Menu appears in menu list when it exists' do
     establishment = create :establishment, account: user.account
-    create :google_menu, name: 'My Google Menu', establishment: establishment
+    create :online_menu, establishment: establishment
     login user
 
     establishment_form = PageObjects::Admin::EstablishmentForm.new
@@ -462,6 +462,6 @@ feature 'establishment management' do
       account_id: establishment.account_id,
       establishment_id: establishment.id
     })
-    expect(establishment_form).to have_google_menu
+    expect(establishment_form).to have_online_menu
   end
 end

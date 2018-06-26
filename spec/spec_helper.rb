@@ -26,7 +26,7 @@ VCR.configure do |c|
     req.uri['menu_preview.pdf'] ||
     req.uri['/digital_display_menu_preview?'] ||
     req.uri['/web_menu_preview?'] ||
-    req.uri['/google_menu_preview?']
+    req.uri['/online_menu_preview?']
   end
 end
 
@@ -85,6 +85,8 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   config.infer_spec_type_from_file_location!
+
+  config.example_status_persistence_file_path = 'tmp/rspec-examples.txt'
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing

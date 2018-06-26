@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
-import App from './google-menu/App';
+import App from './online-menu/App';
 
 (function bootstrap() {
-  const root = document.getElementById('google-menu-app-root');
+  const root = document.getElementById('online-menu-app-root');
 
   render(<App {...window._EVERGREEN} />, root);
 })();

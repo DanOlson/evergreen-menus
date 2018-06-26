@@ -1,0 +1,15 @@
+<script>
+  window._EVERGREEN = {
+    menu: <%= raw online_menu_json @online_menu %>,
+    cancelEditPath: "<%= edit_account_establishment_path(@account, @establishment) %>",
+    submitButtonText: 'Update'
+  };
+</script>
+<% breadcrumb :online_menu, @account, @establishment, @online_menu %>
+<%= form_for [@account, @establishment, @online_menu], html: { class: 'online-menu-form' } do |f| %>
+  <div id="online-menu-app-root"></div>
+<% end %>
+
+<%= javascript_include_tag fingerprinted_asset('core-js') %>
+<%= javascript_include_tag fingerprinted_asset(:vendor) %>
+<%= javascript_include_tag fingerprinted_asset('online-menu') %>

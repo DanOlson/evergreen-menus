@@ -2,8 +2,8 @@ require_relative './roles/list_selectable'
 
 module PageObjects
   module Admin
-    class GoogleMenuForm < SitePrism::Page
-      set_url '/accounts{/account_id}/establishments{/establishment_id}/google_menus{/google_menu_id}/edit'
+    class OnlineMenuForm < SitePrism::Page
+      set_url '/accounts{/account_id}/establishments{/establishment_id}/online_menus{/online_menu_id}/edit'
 
       class Preview < SitePrism::Section
         class List < SitePrism::Section
@@ -67,12 +67,12 @@ module PageObjects
         end
       end
 
-      element :submit_button, '[data-test="google-menu-form-submit"]'
-      element :cancel_link,   '[data-test="google-menu-form-cancel"]'
+      element :submit_button, '[data-test="online-menu-form-submit"]'
+      element :cancel_link,   '[data-test="online-menu-form-cancel"]'
       element :help_icon,     '[data-test="help-icon"]'
       element :help_text,     '[data-test="help-text"]'
 
-      section :preview, Preview,  '[data-test="google-menu-preview"]'
+      section :preview, Preview,  '[data-test="online-menu-preview"]'
 
       include ListSelectable
 

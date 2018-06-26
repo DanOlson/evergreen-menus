@@ -1,16 +1,16 @@
 module GoogleMyBusiness
   class MenuSerializer
-    def call(google_menu)
-      generate_price_list(google_menu)
+    def call(online_menu)
+      generate_price_list(online_menu)
     end
 
     private
 
-    def generate_price_list(google_menu)
+    def generate_price_list(online_menu)
       {
-        priceListId: google_menu.name,
-        labels: [{ displayName: google_menu.name }],
-        sections: google_menu.lists.map { |l| generate_section l }
+        priceListId: online_menu.name,
+        labels: [{ displayName: online_menu.name }],
+        sections: online_menu.lists.map { |l| generate_section l }
       }
     end
 

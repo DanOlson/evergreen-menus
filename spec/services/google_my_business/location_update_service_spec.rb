@@ -24,11 +24,8 @@ module GoogleMyBusiness
     end
 
     describe '#call' do
-      let!(:google_menu) do
-        create :google_menu, {
-          name: 'Google Menu',
-          establishment: establishment
-        }
+      let!(:online_menu) do
+        create :online_menu, establishment: establishment
       end
       let(:mock_client) { double('Client', update_location: nil) }
       let(:mock_menu_serializer) { double('MenuSerializer', call: nil) }
@@ -68,9 +65,9 @@ module GoogleMyBusiness
           context 'and the establishment has a google_my_business_location_id' do
             let(:establishment) { create :establishment, account: account, google_my_business_location_id: 'accounts/asdf/locations/1234' }
 
-            it 'serializes the Google Menu' do
+            it 'serializes the Online Menu' do
               instance.call
-              expect(mock_menu_serializer).to have_received(:call).with google_menu
+              expect(mock_menu_serializer).to have_received(:call).with online_menu
             end
 
             it 'calls the client with the expected parameters' do
@@ -80,7 +77,7 @@ module GoogleMyBusiness
               expected = {
                 account_id: 'asdf',
                 location_id: '1234',
-                body: { priceLists: ['Google Menu'] }
+                body: { priceLists: ['Online Menu'] }
               }
 
               instance.call

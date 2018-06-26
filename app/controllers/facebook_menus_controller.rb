@@ -9,7 +9,7 @@ class FacebookMenusController < ApplicationController
     elsif !establishment.account.active?
       render :not_found, layout: false, status: :payment_required
     else
-      @google_menu = establishment.google_menu
+      @online_menu = establishment.online_menu
       render :show, layout: 'facebook_menu_tab'
     end
   end

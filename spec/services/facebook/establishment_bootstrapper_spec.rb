@@ -47,12 +47,12 @@ module Facebook
           expect(token.token_data).to eq('access_token' => 'mock_page_token')
         end
 
-        it 'creates a google_menu for the establishment' do
+        it 'creates an online_menu for the establishment' do
           expect {
             instance.call
-          }.to change(GoogleMenu, :count).by 1
+          }.to change(OnlineMenu, :count).by 1
           establishment1.reload
-          expect(establishment1.google_menu).to_not eq nil
+          expect(establishment1.online_menu).to_not eq nil
         end
 
         it 'creates a tab on the facebook page' do
@@ -77,15 +77,15 @@ module Facebook
           end
         end
 
-        context 'when there is already a google_menu for the establishment' do
+        context 'when there is already an online_menu for the establishment' do
           before do
-            GoogleMenu.create! establishment: establishment1
+            OnlineMenu.create! establishment: establishment1
           end
 
-          it 'does not create a google_menu' do
+          it 'does not create an online_menu' do
             expect {
               instance.call
-            }.to_not change GoogleMenu, :count
+            }.to_not change OnlineMenu, :count
           end
         end
 

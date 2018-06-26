@@ -3,9 +3,9 @@ require 'spec_helper'
 module GoogleMyBusiness
   describe MenuSerializer do
     let(:instance) { MenuSerializer.new }
-    let(:google_menu) { create :google_menu, name: 'Google Menu' }
-    let(:appetizers) { create :list, name: 'Appetizers', establishment: google_menu.establishment }
-    let(:tap_beer) { create :list, name: 'Tap Beer', establishment: google_menu.establishment }
+    let(:online_menu) { create :online_menu, name: 'Google Menu' }
+    let(:appetizers) { create :list, name: 'Appetizers', establishment: online_menu.establishment }
+    let(:tap_beer) { create :list, name: 'Tap Beer', establishment: online_menu.establishment }
     let!(:wings) { create :menu_item, name: 'Wings', price: '9.50', description: 'Bone-in wings', list: appetizers }
     let!(:pretzel) { create :menu_item, name: 'Pretzel', price: '4.95', description: 'Boring salt-bread', list: appetizers }
     let!(:furious) { create :menu_item, name: 'Surly Furious', price: '6', description: 'American IPA', list: tap_beer }
@@ -15,13 +15,13 @@ module GoogleMyBusiness
     let(:show_description) { true }
 
     before do
-      google_menu.google_menu_lists.create!({
+      online_menu.online_menu_lists.create!({
         list: tap_beer,
         position: 1,
         show_price_on_menu: show_price,
         show_description_on_menu: show_description
       })
-      google_menu.google_menu_lists.create!({
+      online_menu.online_menu_lists.create!({
         list: appetizers,
         position: 0,
         show_price_on_menu: show_price,
@@ -121,7 +121,7 @@ module GoogleMyBusiness
             }
           JSON
 
-          serialized = JSON.generate instance.call(google_menu)
+          serialized = JSON.generate instance.call(online_menu)
           expect(serialized).to be_json_eql expected
         end
       end
@@ -216,7 +216,7 @@ module GoogleMyBusiness
             }
           JSON
 
-          serialized = JSON.generate instance.call(google_menu)
+          serialized = JSON.generate instance.call(online_menu)
           expect(serialized).to be_json_eql expected
         end
       end
@@ -295,7 +295,7 @@ module GoogleMyBusiness
             }
           JSON
 
-          serialized = JSON.generate instance.call(google_menu)
+          serialized = JSON.generate instance.call(online_menu)
           expect(serialized).to be_json_eql expected
         end
       end

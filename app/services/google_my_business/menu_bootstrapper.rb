@@ -23,26 +23,26 @@ module GoogleMyBusiness
 
     def call
       begin
-        @logger.info "Bootstrapping GoogleMenu for locationId #{@gmb_location_id}"
+        @logger.info "Bootstrapping OnlineMenu for locationId #{@gmb_location_id}"
         location = gmb_service.location @gmb_location_id
       rescue RequestFailedException => e
-        @logger.warn "Location request failed with status: #{e.response.code}"
-        @logger.warn e.message
+        @logger.error "Google My Business Location request failed with status: #{e.response.code}"
+        @logger.error e.message
         return
       end
       price_list = location.price_list
       ActiveRecord::Base.transaction do
-        old_menu = establishment.google_menu
-        menu = GoogleMenu.create!(name: price_list.name, establishment: establishment)
+        old_menu = establishment.online_menu
+        menu = OnlineMenu.create!(name: price_list.name, establishment: establishment)
         ###
         # According to Rails docs, this is supposed to be deleted
-        # automatically by calling establishment.google_menu = menu
+        # automatically by calling establishment.online_menu = menu
         # It's not, however, in Rails 5.0.0.1 in development. It _is_
         # deleted in test environment though... Thus the manual steps.
         # Maybe re-evaluate this if you've upgraded Rails.
         old_menu.destroy if old_menu
-        establishment.google_menu = menu
-        seed = { lists: [], google_menu_lists: [] }
+        establishment.online_menu = menu
+        seed = { lists: [], online_menu_lists: [] }
         data = price_list.sections.each_with_index.inject(seed) do |acc, (section, idx)|
           list = establishment.lists.where(name: section.name).first
           if !list
@@ -62,19 +62,19 @@ module GoogleMyBusiness
             acc[:lists] << list
           end
 
-          google_menu_list = menu.google_menu_lists.new({
+          online_menu_list = menu.online_menu_lists.new({
             list: list,
             position: idx,
             show_price_on_menu: true,
             show_description_on_menu: true
           })
 
-          acc[:google_menu_lists] << google_menu_list
+          acc[:online_menu_lists] << online_menu_list
           acc
         end
 
         List.import data[:lists], recursive: true
-        GoogleMenuList.import data[:google_menu_lists]
+        OnlineMenuList.import data[:online_menu_lists]
       end
     end
 

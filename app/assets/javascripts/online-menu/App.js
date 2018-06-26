@@ -100,17 +100,17 @@ class App extends Component {
     return (
       <div className="form-row">
         <div className="col-sm-6">
-          <Panel title="Google Menu">
+          <Panel title="Online Menu">
             <AvailableListGroup
               totalListCount={totalListCount}
               lists={listsAvailable}
-              menuType="google"
+              menuType="online"
               onAdd={this.addListToMenu}
               onDrop={this.removeListFromMenu}
             />
             <ChosenListGroup
               lists={lists}
-              menuType="google"
+              menuType="online"
               onRemove={this.removeListFromMenu}
               onShowPriceChange={this.onShowPriceChange}
               onShowDescriptionChange={this.onShowDescriptionChange}
@@ -118,7 +118,7 @@ class App extends Component {
               onDrop={this.addListToMenu}
             />
 
-            <Buttons {...this.props} menuType="google-menu" />
+            <Buttons {...this.props} menuType="online-menu" />
           </Panel>
         </div>
         <div className="col-sm-6">

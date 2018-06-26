@@ -13,7 +13,7 @@ class Establishment < ActiveRecord::Base
   has_many :menus, dependent: :destroy
   has_many :digital_display_menus, dependent: :destroy
   has_many :web_menus, dependent: :destroy
-  has_one :google_menu, dependent: :destroy
+  has_one :online_menu, dependent: :destroy
 
   paginates_per 100
 

@@ -50,8 +50,8 @@ crumb :web_menu do |account, establishment, web_menu|
   parent :establishment, account, establishment
 end
 
-crumb :google_menu do |account, establishment, google_menu|
-  path = edit_account_establishment_google_menu_path(account, establishment, google_menu)
+crumb :online_menu do |account, establishment, online_menu|
+  path = edit_account_establishment_online_menu_path(account, establishment, online_menu)
   link 'Google Menu', path
   parent :establishment, account, establishment
 end

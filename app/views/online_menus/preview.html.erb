@@ -1,5 +1,5 @@
 <div class="evergreen-menus">
-  <% @google_menu.lists.each do |list| %>
+  <% @online_menu.lists.each do |list| %>
     <%= render partial: "web_menus/list", locals: { beers: list.beers, show_description: list.show_description_on_menu?, show_price: list.show_price_on_menu?, title: list.name } %>
   <% end %>
 </div>

@@ -6,7 +6,7 @@ const {
   buildMenuListPosition,
   buildMenuListShowPrice,
   buildMenuListShowDescription
-} = initPreviewUtils('google');
+} = initPreviewUtils('online');
 
 function buildQueryString(lists, base) {
   return lists.reduce((acc, list, idx) => {
@@ -16,7 +16,7 @@ function buildQueryString(lists, base) {
       buildMenuListShowPrice(list, idx),
       buildMenuListShowDescription(list, idx)
     ];
-    if (list.google_menu_list_id) {
+    if (list.online_menu_list_id) {
       params.push(buildMenuListId(list, idx));
     }
     return acc + '&' + params.join('&');
@@ -29,7 +29,7 @@ function generatePreviewPath(menu, formState) {
   const queryString = buildQueryString(lists, '?');
   if (id) {
     // Menu is already persisted
-    return previewPath + queryString + `&google_menu[id]=${id}`;
+    return previewPath + queryString + `&online_menu[id]=${id}`;
   } else {
     // Menu is not yet saved
     return previewPath + queryString;

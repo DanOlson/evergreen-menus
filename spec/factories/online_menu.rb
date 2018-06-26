@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :google_menu do
-    name 'Google Menu'
+  factory :online_menu do
+    name 'Online Menu'
     association :establishment, strategy: :build
 
     trait :with_lists do
@@ -13,7 +13,7 @@ FactoryGirl.define do
 
         evaluator.list_count.times do |t|
           list = create :list, :with_items, name: list_names[t], establishment: menu.establishment
-          menu.google_menu_lists.create({
+          menu.online_menu_lists.create({
             position: t,
             show_price_on_menu: true,
             show_description_on_menu: true,

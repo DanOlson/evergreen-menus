@@ -1,12 +1,12 @@
-class GoogleMenuSerializer
+class OnlineMenuSerializer
   include Rails.application.routes.url_helpers
 
-  def initialize(google_menu)
-    @google_menu = google_menu
+  def initialize(online_menu)
+    @online_menu = online_menu
   end
 
   def call
-    @google_menu.as_json.merge({
+    @online_menu.as_json.merge({
       lists: lists.as_json,
       listsAvailable: available_lists,
       previewPath: preview_path,
@@ -16,14 +16,14 @@ class GoogleMenuSerializer
   private
 
   def establishment
-    @establishment ||= @google_menu.establishment
+    @establishment ||= @online_menu.establishment
   end
 
   def lists
-    @google_menu.google_menu_lists.includes(list: :beers).map do |ml|
+    @online_menu.online_menu_lists.includes(list: :beers).map do |ml|
       list = ListSerializer.new(ml.list).call(as_json: true)
       {
-        google_menu_list_id: ml.id,
+        online_menu_list_id: ml.id,
         show_price_on_menu: ml.show_price_on_menu,
         show_description_on_menu: ml.show_description_on_menu
       }.merge(list)
@@ -31,12 +31,12 @@ class GoogleMenuSerializer
   end
 
   def available_lists
-    available = establishment.lists.includes(:beers) - @google_menu.lists.includes(:beers)
+    available = establishment.lists.includes(:beers) - @online_menu.lists.includes(:beers)
     available.map { |list| ListSerializer.new(list).call(as_json: true) }
   end
 
   def preview_path
-    account_establishment_google_menu_preview_path(
+    account_establishment_online_menu_preview_path(
       establishment.account,
       establishment
     )

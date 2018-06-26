@@ -64,7 +64,7 @@ module Facebook
     end
 
     def ensure_menu_exists(establishment, operation)
-      establishment.create_google_menu! unless establishment.google_menu
+      establishment.create_online_menu! unless establishment.online_menu
     rescue => e
       message = 'Failed to create the Evergreen Facebook menu'
       @logger.error message

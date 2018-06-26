@@ -6,7 +6,7 @@ module GoogleMyBusiness
     let(:establishment) do
       create :establishment, google_my_business_location_id: location_id
     end
-    let(:logger) { double 'Logger', warn: nil, info: nil }
+    let(:logger) { double 'Logger', error: nil, info: nil }
 
     describe 'initialization' do
       it 'uses a correctly configured Service by default' do
@@ -90,23 +90,23 @@ module GoogleMyBusiness
           end
         end
 
-        context 'and a GoogleMenu does not yet exist for the establishment' do
+        context 'and an OnlineMenu does not yet exist for the establishment' do
           before do
-            expect(establishment.google_menu).to eq nil
+            expect(establishment.online_menu).to eq nil
           end
 
-          it 'creates a GoogleMenu' do
+          it 'creates a OnlineMenu' do
             expect {
               instance.call
-            }.to change(GoogleMenu, :count).by 1
+            }.to change(OnlineMenu, :count).by 1
 
-            expect(establishment.google_menu).to_not eq nil
-            expect(establishment.google_menu.name).to eq 'Dinner'
+            expect(establishment.online_menu).to_not eq nil
+            expect(establishment.online_menu.name).to eq 'Dinner'
           end
 
           it 'creates the correct lists' do
             instance.call
-            menu = establishment.google_menu
+            menu = establishment.online_menu
             lists = menu.lists.all
             expect(lists.size).to eq 1
             expect(lists.first.name).to eq 'Pasta'
@@ -116,7 +116,7 @@ module GoogleMyBusiness
 
           it 'creates the correct list items' do
             instance.call
-            list = establishment.google_menu.lists.first
+            list = establishment.online_menu.lists.first
             expect(list.beers.size).to eq 2
 
             florentine, mac_and_cheese = list.beers
@@ -139,7 +139,7 @@ module GoogleMyBusiness
 
             it 'does not change the existing list' do
               instance.call
-              list = establishment.google_menu.lists.first
+              list = establishment.online_menu.lists.first
               expect(list.beers.size).to eq 2
 
               spaghetti, ravoili = list.beers
@@ -154,25 +154,25 @@ module GoogleMyBusiness
           end
         end
 
-        context 'and a GoogleMenu already exists for the establishment' do
+        context 'and an OnlineMenu already exists for the establishment' do
           before do
-            create :google_menu, name: 'Menu', establishment: establishment
+            create :online_menu, name: 'Menu', establishment: establishment
           end
 
-          it 'does not create a new GoogleMenu' do
+          it 'does not create a new OnlineMenu' do
             expect {
               instance.call
-            }.to_not change(GoogleMenu, :count)
+            }.to_not change(OnlineMenu, :count)
           end
 
-          it 'updates the existing GoogleMenu' do
+          it 'updates the existing OnlineMenu' do
             instance.call
-            menu = establishment.google_menu
+            menu = establishment.online_menu
             expect(menu.name).to eq 'Dinner'
             lists = menu.lists.all
             expect(lists.size).to eq 1
             expect(lists.first.name).to eq 'Pasta'
-            list = establishment.google_menu.lists.first
+            list = establishment.online_menu.lists.first
             expect(list.beers.size).to eq 2
 
             florentine, mac_and_cheese = list.beers
@@ -197,12 +197,12 @@ module GoogleMyBusiness
           end
         end
 
-        it 'creates a GoogleMenu with no lists' do
+        it 'creates an OnlineMenu with no lists' do
           expect {
             instance.call
-          }.to change(GoogleMenu, :count).by 1
+          }.to change(OnlineMenu, :count).by 1
 
-          menu = establishment.google_menu
+          menu = establishment.online_menu
           expect(menu).to_not eq nil
           expect(menu.name).to eq 'Menu'
           expect(menu.lists.all.size).to eq 0
@@ -231,17 +231,17 @@ module GoogleMyBusiness
           end
         end
 
-        it 'does not create a GoogleMenu' do
+        it 'does not create an OnlineMenu' do
           expect {
             instance.call
-          }.to change(GoogleMenu, :count).by 0
-          expect(establishment.google_menu).to eq nil
+          }.to change(OnlineMenu, :count).by 0
+          expect(establishment.online_menu).to eq nil
         end
 
         it 'logs the error' do
           instance.call
-          expect(logger).to have_received(:warn).with 'Location request failed with status: 401'
-          expect(logger).to have_received(:warn).with 'Request had invalid authentication credentials.'
+          expect(logger).to have_received(:error).with 'Google My Business Location request failed with status: 401'
+          expect(logger).to have_received(:error).with 'Request had invalid authentication credentials.'
         end
       end
     end

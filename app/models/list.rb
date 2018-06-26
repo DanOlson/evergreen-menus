@@ -16,6 +16,7 @@ class List < ActiveRecord::Base
   has_many :menu_lists, dependent: :destroy
   has_many :digital_display_menu_lists, dependent: :destroy
   has_many :web_menu_lists, dependent: :destroy
+  has_many :online_menu_lists, dependent: :destroy
 
   validates :name, presence: true
   validates :show_price, :show_description, inclusion: { in: [true, false] }

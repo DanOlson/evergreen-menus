@@ -28,7 +28,7 @@ class Preview extends Component {
           className={`card contextual-help bg-light ${showHelp ? '' : 'hidden'}`}
           data-test="help-text">
           <div className="card-body">
-            The preview content shown here is unstyled. Google's own styles will apply to the content shown below.
+            The preview content shown here is unstyled.
           </div>
         </div>
         <div className="menu-preview-wrapper">
@@ -37,7 +37,7 @@ class Preview extends Component {
             type="text/html"
             height="600"
             style={{ width: "100%" }}
-            data-test="google-menu-preview">
+            data-test="online-menu-preview">
           </object>
         </div>
       </Panel>

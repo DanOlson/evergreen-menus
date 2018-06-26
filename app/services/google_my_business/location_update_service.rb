@@ -28,7 +28,7 @@ module GoogleMyBusiness
     end
 
     def request_body
-      menu = @establishment.google_menu
+      menu = @establishment.online_menu
       {
         priceLists: [menu_serializer.call(menu)]
       }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180610210400) do
+ActiveRecord::Schema.define(version: 20180626015830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,6 +189,26 @@ ActiveRecord::Schema.define(version: 20180610210400) do
     t.time     "availability_end_time"
   end
 
+  create_table "online_menu_lists", force: :cascade do |t|
+    t.integer  "online_menu_id",                          null: false
+    t.integer  "list_id",                                 null: false
+    t.integer  "position",                                null: false
+    t.boolean  "show_price_on_menu",       default: true, null: false
+    t.boolean  "show_description_on_menu", default: true, null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.index ["list_id"], name: "index_online_menu_lists_on_list_id", using: :btree
+    t.index ["online_menu_id"], name: "index_online_menu_lists_on_online_menu_id", using: :btree
+  end
+
+  create_table "online_menus", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "establishment_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["establishment_id"], name: "index_online_menus_on_establishment_id", using: :btree
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
@@ -276,6 +296,9 @@ ActiveRecord::Schema.define(version: 20180610210400) do
   add_foreign_key "menu_lists", "lists"
   add_foreign_key "menu_lists", "menus"
   add_foreign_key "menus", "establishments"
+  add_foreign_key "online_menu_lists", "lists"
+  add_foreign_key "online_menu_lists", "online_menus"
+  add_foreign_key "online_menus", "establishments"
   add_foreign_key "user_invitations", "accounts"
   add_foreign_key "user_invitations", "roles"
   add_foreign_key "user_invitations", "users", column: "accepting_user_id"
