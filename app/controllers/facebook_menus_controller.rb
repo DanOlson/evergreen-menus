@@ -10,7 +10,7 @@ class FacebookMenusController < ApplicationController
       render :not_found, layout: false, status: :payment_required
     else
       @online_menu = establishment.online_menu
-      response.headers['X-FRAME-OPTIONS'] = 'ALLOW-FROM https://www.facebook.com'
+      response.headers.delete 'X-FRAME-OPTIONS'
       render :show, layout: 'facebook_menu_tab'
     end
   end
