@@ -12,9 +12,5 @@ module GoogleMyBusiness
         })
       end
     end
-
-    def purge_menus
-      OnlineMenu.where(establishment: @account.establishments).map &:destroy
-    end
   end
 end
