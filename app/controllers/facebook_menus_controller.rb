@@ -10,6 +10,7 @@ class FacebookMenusController < ApplicationController
       render :not_found, layout: false, status: :payment_required
     else
       @online_menu = establishment.online_menu
+      response.headers.delete 'X-Frame-Options'
       render :show, layout: 'facebook_menu_tab'
     end
   end

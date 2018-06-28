@@ -27,10 +27,6 @@ module Beermapper
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
 
-    ###
-    # We handle this in our web server config
-    config.action_dispatch.default_headers.delete('X-Frame-Options')
-
     config.active_record.index_nested_attribute_errors = true
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.

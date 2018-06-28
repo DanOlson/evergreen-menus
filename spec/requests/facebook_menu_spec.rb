@@ -24,6 +24,7 @@ describe 'POST to /facebook/tab' do
         post '/facebook/tab', params: { signed_request: signed_request }
         expect(response).to have_http_status :ok
         expect(response.body).to include 'Tap Beer'
+        expect(response.headers['X-Frame-Options']).to be_nil
       end
     end
 
