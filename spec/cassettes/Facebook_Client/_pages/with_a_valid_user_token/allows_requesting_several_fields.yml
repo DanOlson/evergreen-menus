@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://graph.facebook.com/me/accounts?fields=id,name,access_token,fan_count
+    uri: https://graph.facebook.com/me/accounts?fields=name,access_token
     body:
       encoding: US-ASCII
       string: ''
@@ -56,8 +56,7 @@ http_interactions:
       - '421'
     body:
       encoding: ASCII-8BIT
-      string: '{"data":[{"access_token":"the-mock-page-access-token","name":"Betty''s
-        Bakery","id":"240936686640816","fan_count":2001}],"paging":{"cursors":{"before":"MjQwOTM2Njg2NjQwODE2","after":"MjQwOTM2Njg2NjQwODE2"}}}'
+      string: '{"data":[{"access_token":"the-mock-page-access-token","name":"Betty''s Bakery"}],"paging":{"cursors":{"before":"MjQwOTM2Njg2NjQwODE2","after":"MjQwOTM2Njg2NjQwODE2"}}}'
     http_version: 
   recorded_at: Sun, 10 Jun 2018 02:50:09 GMT
 recorded_with: VCR 3.0.3

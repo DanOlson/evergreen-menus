@@ -15,9 +15,10 @@ module Facebook
       @logger = logger
     end
 
-    def pages
+    def pages(fields: Page.fields)
       @logger.info "Fetching pages from Facebook Graph API for account_id: #{account.id}"
       uri = URI(FB_BASE_URL + '/me/accounts')
+      uri.query = "fields=#{fields.join(',')}"
       issue_get uri
     end
 

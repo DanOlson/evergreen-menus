@@ -32,6 +32,20 @@ module Facebook
           expect(page['access_token']).to eq 'the-mock-page-access-token'
           expect(page['name']).to eq "Betty's Bakery"
           expect(page['id']).to eq '240936686640816'
+          expect(page['fan_count']).to eq 2001
+        end
+
+        it 'allows requesting several fields' do
+          response = instance.pages fields: %w(name access_token)
+          expect(response.code).to eq '200'
+          parsed_response = JSON.parse response.body
+          pages = parsed_response['data']
+          expect(pages.size).to eq 1
+
+          page = pages.first
+          expect(page['access_token']).to eq 'the-mock-page-access-token'
+          expect(page['name']).to eq "Betty's Bakery"
+          expect(page.keys.size).to eq 2
         end
       end
 
