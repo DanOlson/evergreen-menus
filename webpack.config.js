@@ -73,6 +73,7 @@ module.exports = {
     'web-menus': './javascripts/web-menus.js',
     'digital-display-menus': './javascripts/digital-display-menus.js',
     'online-menu': './javascripts/online-menu.js',
+    'facebook-match-pages': './javascripts/facebook-match-pages.js',
     'core-js': './javascripts/core-js.js',
     digitalDisplay: './stylesheets/digital_display.scss',
     facebookTab: './stylesheets/facebook_tab.scss',

@@ -1,30 +1,12 @@
+<script>
+  window._EVERGREEN = {
+    pages: <%= raw @account.facebook_pages.to_json %>,
+    establishments: <%= raw @account.establishments.to_json %>,
+    updateAssociationPath: "<%= raw account_facebook_update_establishment_association_path(@account) %>"
+  }
+</script>
+
 <% breadcrumb :account, @account %>
-<%= render 'shared/panel', title: 'Associate Facebook Pages', data_test: 'associate-facebook-pages-form' do %>
-  <%= form_for @account, url: account_facebook_establishment_associations_path, method: :post, html: { class: 'form-zzzinline' } do |f| %>
-    <div class="col-sm-6">
-      <%= f.fields_for :establishments, @account.establishments.order(:name) do |establishments_form| %>
-        <% est = establishments_form.object %>
-        <% err = @account.errors.messages[:"establishments[#{establishments_form.index}].facebook_page_id"].first %>
-        <div class="form-group">
-          <%= establishments_form.label :facebook_page_id, est.name, class: 'control-label' %>
-          <%= establishments_form.select :facebook_page_id, options_for_select(facebook_page_opts(@account), selected: establishments_form.object.facebook_page_id), { include_blank: true }, class: "form-control #{err and 'is-invalid'}", data: { test: 'facebook-page-select' }, aria: { describedby: "facebook-page-id-explanation-#{est.id}" } %>
-        </div>
-        <% if err %>
-          <div class="invalid-feedback" style="display: block;">
-            Facebook Page <%= err %>
-          </div>
-        <% end %>
-        <small id="facebook-page-id-explanation-<%= est.id %>" class="form-text text-muted">
-          Please select the page that represents <%= est.name %> so that we publish menu data to the right place
-        </small>
-
-        <hr role="presentation" />
-      <% end %>
-
-      <div class="button-wrapper">
-        <%= f.submit 'Submit', class: 'btn btn-evrgn-primary', data: { test: 'account-form-submit' } %>
-        <%= link_to 'Cancel', account_path(@account), class: 'btn btn-outline-secondary', data: { test: 'account-form-cancel' } %>
-      </div>
-    </div>
-  <% end %>
-<% end %>
+<div id="facebook-match-pages-app-root" class="facebook-match-pages"></div>
+<%= javascript_include_tag fingerprinted_asset(:vendor) %>
+<%= javascript_include_tag fingerprinted_asset('facebook-match-pages') %>

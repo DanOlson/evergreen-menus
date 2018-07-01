@@ -1,6 +1,6 @@
 <% breadcrumb :account, @account %>
 <%= render 'shared/panel', title: 'Associate Google My Business Locations', data_test: 'associate-google-my-business-locations-form' do %>
-  <%= form_for @account, url: account_google_my_business_establishment_associations_path, method: :post, html: { class: 'form-zzzinline' } do |f| %>
+  <%= form_for @account, url: account_google_my_business_establishment_associations_path, method: :post do |f| %>
     <div class="col-sm-6">
       <% if @account.google_my_business_enabled? %>
         <%= f.fields_for :establishments, @account.establishments.order(:name) do |establishments_form| %>

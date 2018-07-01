@@ -56,4 +56,86 @@ describe 'Facebook Establishment associations' do
       end
     end
   end
+
+  describe 'PUT to /accounts/:account_id/facebook/establishment_associations' do
+    context 'when the establishment is found' do
+      it 'sets facebook_page_id and returns 204' do
+        put account_facebook_update_establishment_association_path(account), {
+          params: {
+            establishment_id: establishment.id,
+            facebook_page_id: '240936686640816'
+          },
+          as: :json
+        }
+        establishment.reload
+        expect(response).to have_http_status :no_content
+        expect(establishment.facebook_page_id).to eq '240936686640816'
+      end
+    end
+
+    context 'when other establishment is already assigned' do
+      before do
+        create :establishment, facebook_page_id: '240936686640816', account: account
+      end
+
+      it 'reassigns and returns 204' do
+        put account_facebook_update_establishment_association_path(account), {
+          params: {
+            establishment_id: establishment.id,
+            facebook_page_id: '240936686640816'
+          },
+          as: :json
+        }
+        establishment.reload
+        expect(response).to have_http_status :no_content
+        expect(establishment.facebook_page_id).to eq '240936686640816'
+      end
+    end
+
+    describe 'unsetting the facebook_page_id' do
+      before do
+        establishment.update! facebook_page_id: '240936686640816'
+        establishment.reload
+      end
+
+      it 'unsets facebook_page_id and returns 204' do
+        put account_facebook_update_establishment_association_path(account), {
+          params: {
+            establishment_id: '',
+            facebook_page_id: '240936686640816'
+          },
+          as: :json
+        }
+        establishment.reload
+        expect(response).to have_http_status :no_content
+        expect(establishment.facebook_page_id).to be_nil
+      end
+    end
+
+    context 'when facebook_page_id is missing from params' do
+      it 'returns 400' do
+        put account_facebook_update_establishment_association_path(account), {
+          params: {
+            establishment_id: establishment.id
+          },
+          as: :json
+        }
+
+        expect(response).to have_http_status :bad_request
+      end
+    end
+
+    context 'when establishment_id is missing from params' do
+      it 'returns 400' do
+        put account_facebook_update_establishment_association_path(account), {
+          params: {
+            facebook_page_id: '240936686640816'
+          },
+          as: :json
+        }
+
+        expect(response).to have_http_status :bad_request
+      end
+    end
+  end
 end
