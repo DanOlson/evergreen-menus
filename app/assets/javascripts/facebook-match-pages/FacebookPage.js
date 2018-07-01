@@ -59,19 +59,37 @@ class FacebookPage extends Component {
   }
 
   renderLinkStatus () {
-    const { persistedSelectedEstablishmentId, selectedEstablishment } = this.state
-    const associationIsDirty = persistedSelectedEstablishmentId !== selectedEstablishment.id.toString()
-    if (associationIsDirty) {
-      return <a href="#" onClick={this.handleLink} className="btn btn-evrgn-outline-primary">Link</a>
+    if (this.isAssociationDirty()) {
+      return <a href="#" onClick={this.handleLink} className="btn btn-evrgn-outline-primary link-status">Link</a>
     } else {
-      return <i className="fa fa-3x fa-check-square-o check" aria-hidden title="Linked"></i>
+      return <i className="fa fa-3x fa-check-square-o check link-status" aria-hidden title="Linked"></i>
     }
+  }
+
+  renderCreateTabButton () {
+    const { page } = this.props
+    if (!this.isAssociationDirty() /* && page.fan_count >= 2000 */) {
+      return (
+        <button
+          type="button"
+          onClick={() => {}}
+          className="btn btn-evrgn-primary">
+          Create Custom Tab
+        </button>
+      )
+    }
+  }
+
+  isAssociationDirty () {
+    const { persistedSelectedEstablishmentId, selectedEstablishment } = this.state
+    return persistedSelectedEstablishmentId !== selectedEstablishment.id.toString()
   }
 
   render () {
     const { page, establishmentOpts } = this.props
     const { selectedEstablishment } = this.state
     const linkStatus = this.renderLinkStatus()
+    const createTabButton = this.renderCreateTabButton()
     return (
       <section>
         <div className="row">
@@ -79,15 +97,20 @@ class FacebookPage extends Component {
             <i className="facebook-icon fa fa-2x fa-facebook-square" aria-hidden></i>
             <span className="page-name">{page.name}</span>
           </h4>
-          <div className="form-group col-sm-3 my-auto">
-            <EstablishmentSelect
-              establishments={establishmentOpts}
-              selected={selectedEstablishment}
-              onChange={this.handleEstablishmentChange}
-            />
+          <div className="form-group col-sm-4 my-auto">
+            <div className="valign-wrapper-w80">
+              <EstablishmentSelect
+                establishments={establishmentOpts}
+                selected={selectedEstablishment}
+                onChange={this.handleEstablishmentChange}
+              />
+            </div>
+            <div className="valign-wrapper-w20">
+              {linkStatus}
+            </div>
           </div>
-          <div className="col-sm-5 my-auto">
-            {linkStatus}
+          <div className="col-sm-4 my-auto">
+            {createTabButton}
           </div>
         </div>
       </section>
