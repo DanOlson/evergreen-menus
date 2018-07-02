@@ -13,17 +13,11 @@ module Facebook
         head :bad_request and return
       end
 
-      relation = @account
-        .establishments
-        .accessible_by(current_ability)
-
-      prev_est = relation.find_by(facebook_page_id: params[:facebook_page_id])
-      new_est = relation.find_by(id: params[:establishment_id])
-
-      Establishment.transaction do
-        prev_est.update(facebook_page_id: nil) if prev_est
-        new_est.update(facebook_page_id: params[:facebook_page_id]) if new_est
-      end
+      EstablishmentAssociationService.new({
+        ability: current_ability,
+        facebook_page_id: params[:facebook_page_id],
+        establishment_id: params[:establishment_id]
+      }).call
 
       head :no_content
     end
