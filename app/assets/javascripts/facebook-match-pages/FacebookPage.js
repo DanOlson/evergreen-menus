@@ -27,7 +27,7 @@ class FacebookPage extends Component {
     const authToken = document.getElementsByName('csrf-token')[0].content
     fetch(path, {
       credentials: 'same-origin', // send cookies
-      method: 'put',
+      method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },

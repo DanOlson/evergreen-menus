@@ -2,7 +2,7 @@
   window._EVERGREEN = {
     pages: <%= raw @account.facebook_pages.to_json %>,
     establishments: <%= raw @account.establishments.to_json %>,
-    updateAssociationPath: "<%= raw account_facebook_update_establishment_association_path(@account) %>"
+    updateAssociationPath: "<%= raw account_facebook_establishment_associations_path(@account) %>"
   }
 </script>
 

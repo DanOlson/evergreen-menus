@@ -20,47 +20,10 @@ describe 'Facebook Establishment associations' do
     sign_in user
   end
 
-  describe 'POST to /accounts/:account_id/facebook/establishment_associations', :vcr do
-    let(:params) do
-      {
-        account: {
-          establishments_attributes: {
-            '0' => {
-              'id' => establishment.id,
-              'facebook_page_id' => '240936686640816'
-            }
-          }
-        }
-      }
-    end
-
-    context 'when all goes well' do
-      it 'fetches and saves a page token, then creates a tab on the page' do
-        post account_facebook_establishment_associations_path(account), {
-          params: params
-        }
-        expect(response).to redirect_to account_path(account)
-        follow_redirect!
-        expect(response.body).to include 'Facebook onboarding is complete!'
-      end
-    end
-
-    context 'when there are not enough likes on the page' do
-      it 'informs the user of the issue' do
-        post account_facebook_establishment_associations_path(account), {
-          params: params
-        }
-        expect(response).to redirect_to account_path(account)
-        follow_redirect!
-        expect(response.body).to include "Facebook onboarding is complete, but we encountered the following issues:<br><ul><li>Failed to create a Menu tab on the Facebook page for Tavern 42. We can still make it happen, though. <a href=\"/facebook/overcoming_custom_tab_restrictions\">Click here for instructions.</a></li></ul>"
-      end
-    end
-  end
-
-  describe 'PUT to /accounts/:account_id/facebook/establishment_associations' do
+  describe 'POST to /accounts/:account_id/facebook/establishment_associations' do
     context 'when the establishment is found' do
       it 'sets facebook_page_id and returns 204' do
-        put account_facebook_update_establishment_association_path(account), {
+        post account_facebook_establishment_associations_path(account), {
           params: {
             establishment_id: establishment.id,
             facebook_page_id: '240936686640816'
@@ -79,7 +42,7 @@ describe 'Facebook Establishment associations' do
       end
 
       it 'reassigns and returns 204' do
-        put account_facebook_update_establishment_association_path(account), {
+        post account_facebook_establishment_associations_path(account), {
           params: {
             establishment_id: establishment.id,
             facebook_page_id: '240936686640816'
@@ -99,7 +62,7 @@ describe 'Facebook Establishment associations' do
       end
 
       it 'unsets facebook_page_id and returns 204' do
-        put account_facebook_update_establishment_association_path(account), {
+        post account_facebook_establishment_associations_path(account), {
           params: {
             establishment_id: '',
             facebook_page_id: '240936686640816'
@@ -114,7 +77,7 @@ describe 'Facebook Establishment associations' do
 
     context 'when facebook_page_id is missing from params' do
       it 'returns 400' do
-        put account_facebook_update_establishment_association_path(account), {
+        post account_facebook_establishment_associations_path(account), {
           params: {
             establishment_id: establishment.id
           },
@@ -127,7 +90,7 @@ describe 'Facebook Establishment associations' do
 
     context 'when establishment_id is missing from params' do
       it 'returns 400' do
-        put account_facebook_update_establishment_association_path(account), {
+        post account_facebook_establishment_associations_path(account), {
           params: {
             facebook_page_id: '240936686640816'
           },
