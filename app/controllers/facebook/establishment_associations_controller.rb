@@ -1,6 +1,7 @@
 module Facebook
   class EstablishmentAssociationsController < ApplicationController
     load_and_authorize_resource :account, id_param: :account_id, class: '::Account'
+    load_and_authorize_resource :establishment, through: :account, id_param: :establishment_id, class: '::Establishment', only: :tab
 
     def new
       authorize! :manage, :facebook
@@ -20,6 +21,16 @@ module Facebook
       }).call
 
       head :no_content
+    end
+
+    def tab
+      authorize! :manage, :facebook
+      result = MenuTabBootstrapper.new(@establishment).call
+      if result.success?
+        head :no_content
+      else
+        head :internal_server_error
+      end
     end
   end
 end

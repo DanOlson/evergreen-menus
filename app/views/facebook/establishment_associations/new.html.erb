@@ -2,7 +2,9 @@
   window._EVERGREEN = {
     pages: <%= raw @account.facebook_pages.to_json %>,
     establishments: <%= raw @account.establishments.to_json %>,
-    updateAssociationPath: "<%= raw account_facebook_establishment_associations_path(@account) %>"
+    updateAssociationPath: "<%= raw account_facebook_establishment_associations_path(@account) %>",
+    createTabPath: "<%= raw account_facebook_menu_tabs_path(@account) %>",
+    tabRestrictionsPath: "<%= raw facebook_overcoming_custom_tab_restrictions_path %>"
   }
 </script>
 

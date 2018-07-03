@@ -47,6 +47,7 @@ Beermapper::Application.routes.draw do
 
     namespace 'facebook' do
       resources :establishment_associations, only: [:new, :create]
+      post 'menu_tabs' => 'establishment_associations#tab'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

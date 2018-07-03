@@ -9,13 +9,22 @@ class App extends Component {
   }
 
   renderPages () {
-    const { pages, establishments, updateAssociationPath } = this.props
+    const {
+      pages,
+      establishments,
+      updateAssociationPath,
+      createTabPath,
+      tabRestrictionsPath
+    } = this.props
+
     return pages.map(page => {
       return (
         <FacebookPage
           page={page}
           establishmentOpts={establishments}
           updateAssociationPath={updateAssociationPath}
+          createTabPath={createTabPath}
+          tabRestrictionsPath={tabRestrictionsPath}
           key={page.id}
         />
       )
@@ -35,7 +44,9 @@ class App extends Component {
 App.propTypes = {
   pages: PropTypes.array.isRequired,
   establishments: PropTypes.array.isRequired,
-  updateAssociationPath: PropTypes.string.isRequired
+  updateAssociationPath: PropTypes.string.isRequired,
+  createTabPath: PropTypes.string.isRequired,
+  tabRestrictionsPath: PropTypes.string.isRequired
 }
 
 export default App

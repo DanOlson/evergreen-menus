@@ -1,41 +1,35 @@
 module Facebook
-  class EstablishmentBootstrapper
-    attr_reader :account
+  class MenuTabBootstrapper
+    attr_reader :establishment
 
-    def initialize(account, facebook_service: nil, logger: Rails.logger)
-      @account = account
+    def initialize(establishment, facebook_service: nil, logger: Rails.logger)
+      @establishment = establishment
       @logger = logger
       @facebook_service = facebook_service || default_fb_service
     end
 
     def call
-      cleanup_stale_auth_tokens
-      integrate
+      result = Result.new establishment
+      if establishment.facebook_page_id.present?
+        fetch_and_save_token result.save_token
+        ensure_menu_exists result.ensure_menu
+        create_tab result.create_tab
+      end
+
+      result
     end
 
     private
 
-    def cleanup_stale_auth_tokens
+    def page_token_exists?
       AuthToken
         .facebook_page
-        .for_account(@account)
-        .destroy_all
+        .for_establishment(establishment)
+        .exists?
     end
 
-    def integrate
-      @account.establishments.map do |e|
-        result = Result.new e
-        if e.facebook_page_id.present?
-          fetch_and_save_token e, result.save_token
-          ensure_menu_exists e, result.ensure_menu
-          create_tab e, result.create_tab
-        end
-
-        result
-      end
-    end
-
-    def fetch_and_save_token(establishment, operation)
+    def fetch_and_save_token(operation)
+      return if page_token_exists?
       begin
         page = @facebook_service.page establishment
         @logger.info "Page #{page.id} for establishment #{establishment.id} has #{page.fan_count} likes"
@@ -63,7 +57,7 @@ module Facebook
       end
     end
 
-    def ensure_menu_exists(establishment, operation)
+    def ensure_menu_exists(operation)
       establishment.create_online_menu! unless establishment.online_menu
     rescue => e
       message = 'Failed to create the Evergreen Facebook menu'
@@ -71,7 +65,7 @@ module Facebook
       operation.fail message, e
     end
 
-    def create_tab(establishment, operation)
+    def create_tab(operation)
       @facebook_service.create_tab establishment
     rescue => e
       message = 'Failed to create a Menu tab on the Facebook page'
@@ -80,7 +74,7 @@ module Facebook
     end
 
     def default_fb_service
-      Service.new account: @account
+      Service.new account: establishment.account
     end
 
     class Operation

@@ -2,9 +2,10 @@ module Facebook
   class Service
     attr_reader :account, :client
 
-    def initialize(account:, client: nil)
+    def initialize(account:, client: nil, logger: Rails.logger)
       @account = account
       @client = client || default_client
+      @logger = logger
     end
 
     def pages
@@ -33,6 +34,7 @@ module Facebook
     def create_tab(establishment)
       response = @client.create_tab establishment
       if message = JSON.parse(response.body).dig('error', 'message')
+        @logger.error message
         raise message
       end
     end

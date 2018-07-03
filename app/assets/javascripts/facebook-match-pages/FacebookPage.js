@@ -9,6 +9,7 @@ class FacebookPage extends Component {
     super(props)
     this.handleLink = this.handleLink.bind(this)
     this.handleEstablishmentChange = this.handleEstablishmentChange.bind(this)
+    this.createTab = this.createTab.bind(this)
 
     const selectedEstablishment = props.establishmentOpts.find(e => {
       return e.facebook_page_id === props.page.id
@@ -27,7 +28,7 @@ class FacebookPage extends Component {
     const authToken = document.getElementsByName('csrf-token')[0].content
     fetch(path, {
       credentials: 'same-origin', // send cookies
-      method: 'post',
+      method: 'put',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -47,6 +48,41 @@ class FacebookPage extends Component {
     }).catch(console.error)
   }
 
+  createTab (event) {
+    event.preventDefault()
+    const button = event.target
+    button.setAttribute('disabled', '')
+    button.innerText = 'Adding tab...'
+    const { createTabPath } = this.props
+    const establishmentId = this.state.selectedEstablishment.id.toString()
+    const authToken = document.getElementsByName('csrf-token')[0].content
+    fetch(createTabPath, {
+      credentials: 'same-origin',
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        establishment_id: establishmentId,
+        authenticity_token: authToken
+      })
+    })
+    .then(res => {
+      if (res.ok) {
+        button.innerText = 'Tab added!'
+      } else {
+        button.innerText = 'Adding tab failed'
+        setTimeout(() => {
+          button.removeAttribute('disabled')
+          button.innerText = 'Retry?'
+        }, 2000)
+      }
+    })
+    .catch(err => {
+      button.innerText = 'Adding tab failed'
+    })
+  }
+
   handleEstablishmentChange (event) {
     const newValue = event.target.value
     const selectedEstablishment = this.props.establishmentOpts.find(e => {
@@ -62,20 +98,27 @@ class FacebookPage extends Component {
     if (this.isAssociationDirty()) {
       return <a href="#" onClick={this.handleLink} className="btn btn-evrgn-outline-primary link-status">Link</a>
     } else {
-      return <i className="fa fa-3x fa-check-square-o check link-status" aria-hidden title="Linked"></i>
+      return <i className="fa fa-2x fa-check check link-status" aria-hidden title="Linked"></i>
     }
   }
 
   renderCreateTabButton () {
-    const { page } = this.props
-    if (!this.isAssociationDirty() /* && page.fan_count >= 2000 */) {
+    if (this.isAssociationDirty()) return
+    const { page, tabRestrictionsPath } = this.props
+    if (page.fan_count >= 2000) {
       return (
         <button
           type="button"
-          onClick={() => {}}
+          onClick={this.createTab}
           className="btn btn-evrgn-primary">
-          Create Custom Tab
+          Add Menu Tab
         </button>
+      )
+    } else {
+      return (
+        <a target="_blank" href={tabRestrictionsPath} className="btn btn-evrgn-primary">
+          Add Menu Tab
+        </a>
       )
     }
   }
@@ -125,7 +168,9 @@ FacebookPage.defaultProps = {
 FacebookPage.propTypes = {
   establishmentOpts: PropTypes.array,
   page: PropTypes.object.isRequired,
-  updateAssociationPath: PropTypes.string.isRequired
+  updateAssociationPath: PropTypes.string.isRequired,
+  createTabPath: PropTypes.string.isRequired,
+  tabRestrictionsPath: PropTypes.string.isRequired
 }
 
 export default FacebookPage

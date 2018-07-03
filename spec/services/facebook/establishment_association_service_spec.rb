@@ -19,7 +19,7 @@ module Facebook
         EstablishmentAssociationService.new(args)
       end
 
-      context 'with a simple, greenfield happy-path association' do
+      context 'with a simple, greenfield, happy-path association' do
         it 'sets facebook_page_id on the establishment' do
           instance.call
           establishment.reload
