@@ -9,7 +9,6 @@ class FacebookPage extends Component {
     super(props)
     this.handleLink = this.handleLink.bind(this)
     this.handleEstablishmentChange = this.handleEstablishmentChange.bind(this)
-    this.createTab = this.createTab.bind(this)
 
     const selectedEstablishment = props.establishmentOpts.find(e => {
       return e.facebook_page_id === props.page.id
@@ -48,41 +47,6 @@ class FacebookPage extends Component {
     }).catch(console.error)
   }
 
-  createTab (event) {
-    event.preventDefault()
-    const button = event.target
-    button.setAttribute('disabled', '')
-    button.innerText = 'Adding tab...'
-    const { createTabPath } = this.props
-    const establishmentId = this.state.selectedEstablishment.id.toString()
-    const authToken = document.getElementsByName('csrf-token')[0].content
-    fetch(createTabPath, {
-      credentials: 'same-origin',
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        establishment_id: establishmentId,
-        authenticity_token: authToken
-      })
-    })
-    .then(res => {
-      if (res.ok) {
-        button.innerText = 'Tab added!'
-      } else {
-        button.innerText = 'Adding tab failed'
-        setTimeout(() => {
-          button.removeAttribute('disabled')
-          button.innerText = 'Retry?'
-        }, 2000)
-      }
-    })
-    .catch(err => {
-      button.innerText = 'Adding tab failed'
-    })
-  }
-
   handleEstablishmentChange (event) {
     const newValue = event.target.value
     const selectedEstablishment = this.props.establishmentOpts.find(e => {
@@ -115,15 +79,14 @@ class FacebookPage extends Component {
       )
     }
 
-    const { page, tabRestrictionsPath } = this.props
+    const { page, tabRestrictionsPath, facebookAddTabUrl } = this.props
     if (page.fan_count >= 2000) {
       return (
-        <button
-          type="button"
-          onClick={this.createTab}
+        <a
+          href={facebookAddTabUrl}
           className="btn btn-evrgn-primary">
           Add Menu Tab
-        </button>
+        </a>
       )
     } else {
       return (
@@ -185,8 +148,8 @@ FacebookPage.propTypes = {
   establishmentOpts: PropTypes.array,
   page: PropTypes.object.isRequired,
   updateAssociationPath: PropTypes.string.isRequired,
-  createTabPath: PropTypes.string.isRequired,
-  tabRestrictionsPath: PropTypes.string.isRequired
+  tabRestrictionsPath: PropTypes.string.isRequired,
+  facebookAddTabUrl: PropTypes.string.isRequired
 }
 
 export default FacebookPage

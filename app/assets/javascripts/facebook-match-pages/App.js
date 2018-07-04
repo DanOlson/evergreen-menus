@@ -13,8 +13,8 @@ class App extends Component {
       pages,
       establishments,
       updateAssociationPath,
-      createTabPath,
-      tabRestrictionsPath
+      tabRestrictionsPath,
+      facebookAddTabUrl
     } = this.props
 
     return pages.map(page => {
@@ -23,8 +23,8 @@ class App extends Component {
           page={page}
           establishmentOpts={establishments}
           updateAssociationPath={updateAssociationPath}
-          createTabPath={createTabPath}
           tabRestrictionsPath={tabRestrictionsPath}
+          facebookAddTabUrl={facebookAddTabUrl}
           key={page.id}
         />
       )
@@ -58,7 +58,7 @@ App.propTypes = {
   pages: PropTypes.array.isRequired,
   establishments: PropTypes.array.isRequired,
   updateAssociationPath: PropTypes.string.isRequired,
-  createTabPath: PropTypes.string.isRequired,
+  facebookAddTabUrl: PropTypes.string.isRequired,
   tabRestrictionsPath: PropTypes.string.isRequired
 }
 
