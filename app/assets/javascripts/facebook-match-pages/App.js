@@ -35,7 +35,20 @@ class App extends Component {
     const pages = this.renderPages()
     return (
       <Panel title="Associate Facebook Pages">
-        {pages}
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Page</th>
+              <th>Fans</th>
+              <th>Establishment</th>
+              <th>Linked</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pages}
+          </tbody>
+        </table>
       </Panel>
     )
   }

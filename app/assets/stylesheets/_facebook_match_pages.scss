@@ -4,17 +4,21 @@
     margin-bottom: auto;
   }
 
+  td {
+    vertical-align: middle;
+  }
+
   .facebook-icon {
     vertical-align: middle;
     color: #4267b2;
   }
 
-  .check {
+  .status-linked {
     color: $color-evergreen;
   }
 
-  .link-status {
-    margin-left: 0.5rem;
+  .status-unlinked {
+    color: #b65760;
   }
 
   .page-name {

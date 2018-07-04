@@ -28,7 +28,7 @@ class FacebookPage extends Component {
     const authToken = document.getElementsByName('csrf-token')[0].content
     fetch(path, {
       credentials: 'same-origin', // send cookies
-      method: 'put',
+      method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -96,14 +96,25 @@ class FacebookPage extends Component {
 
   renderLinkStatus () {
     if (this.isAssociationDirty()) {
-      return <a href="#" onClick={this.handleLink} className="btn btn-evrgn-outline-primary link-status">Link</a>
+      return <i className="fa fa-2x fa-times status-unlinked" aria-hidden title="Not Linked"></i>
     } else {
-      return <i className="fa fa-2x fa-check check link-status" aria-hidden title="Linked"></i>
+      return <i className="fa fa-2x fa-check status-linked" aria-hidden title="Linked"></i>
     }
   }
 
-  renderCreateTabButton () {
-    if (this.isAssociationDirty()) return
+  renderActionButton () {
+    if (!this.isEstablishmentLinked()) return
+    if (this.isAssociationDirty()) {
+      return (
+        <a
+          href=""
+          onClick={this.handleLink}
+          className="btn btn-evrgn-primary">
+          Link
+        </a>
+      )
+    }
+
     const { page, tabRestrictionsPath } = this.props
     if (page.fan_count >= 2000) {
       return (
@@ -128,35 +139,40 @@ class FacebookPage extends Component {
     return persistedSelectedEstablishmentId !== selectedEstablishment.id.toString()
   }
 
+  isEstablishmentLinked () {
+    const {
+      persistedSelectedEstablishmentId,
+      selectedEstablishment
+    } = this.state
+    return !!(persistedSelectedEstablishmentId || selectedEstablishment.id)
+  }
+
   render () {
     const { page, establishmentOpts } = this.props
     const { selectedEstablishment } = this.state
     const linkStatus = this.renderLinkStatus()
-    const createTabButton = this.renderCreateTabButton()
+    const actionButton = this.renderActionButton()
     return (
-      <section>
-        <div className="row">
-          <h4 className="my-auto col-sm-4">
+      <tr>
+        <td>
+          <h4 className="my-auto">
             <i className="facebook-icon fa fa-2x fa-facebook-square" aria-hidden></i>
             <span className="page-name">{page.name}</span>
           </h4>
-          <div className="form-group col-sm-4 my-auto">
-            <div className="valign-wrapper-w80">
-              <EstablishmentSelect
-                establishments={establishmentOpts}
-                selected={selectedEstablishment}
-                onChange={this.handleEstablishmentChange}
-              />
-            </div>
-            <div className="valign-wrapper-w20">
-              {linkStatus}
-            </div>
+        </td>
+        <td>{page.fan_count}</td>
+        <td>
+          <div className="form-group my-auto">
+            <EstablishmentSelect
+              establishments={establishmentOpts}
+              selected={selectedEstablishment}
+              onChange={this.handleEstablishmentChange}
+            />
           </div>
-          <div className="col-sm-4 my-auto">
-            {createTabButton}
-          </div>
-        </div>
-      </section>
+        </td>
+        <td>{linkStatus}</td>
+        <td>{actionButton}</td>
+      </tr>
     )
   }
 }
