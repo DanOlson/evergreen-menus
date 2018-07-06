@@ -444,11 +444,13 @@ feature 'establishment management' do
     form.toggle_lists_help
     expect(form.lists_panel).to have_help_text
     form.toggle_lists_help
+    sleep 0.25
     expect(form.lists_panel).to have_no_help_text
 
     form.toggle_menus_help
     expect(form.menus_panel).to have_help_text
     form.toggle_menus_help
+    sleep 0.4
     expect(form.menus_panel).to have_no_help_text
   end
 

@@ -22,12 +22,5 @@
 </div>
 
 <% if help_type %>
-  <% content_for :javascripts do %>
-    <script type="text/javascript">
-      function toggleHelp(helpType) {
-        var help = document.querySelector('[data-help="' + helpType + '"]');
-        help.classList.toggle('hidden');
-      }
-    </script>
-  <% end %>
+  <%= render 'shared/toggle_help' %>
 <% end %>

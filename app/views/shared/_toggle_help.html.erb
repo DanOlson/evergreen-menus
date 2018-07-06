@@ -1,0 +1,18 @@
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    function toggleHelp(helpType) {
+      var help = document.querySelector('[data-help="' + helpType + '"]');
+      if (help.classList.contains('open')) {
+        help.classList.toggle('open');
+        setTimeout(function () {
+          help.classList.toggle('hidden');
+        }, 200)
+      } else {
+        help.classList.toggle('hidden');
+        setTimeout(function () {
+          help.classList.toggle('open');
+        })
+      }
+    }
+  </script>
+<% end %>

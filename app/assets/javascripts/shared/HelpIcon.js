@@ -5,14 +5,14 @@ class HelpIcon extends Component {
   render () {
     const { onClick, className } = this.props
     return (
-        <div className={className}>
-          <i
-            className="fa fa-question-circle-o fa-2x help-icon"
-            aria-hidden="true"
-            data-test="help-icon"
-            onClick={onClick}>
-          </i>
-        </div>
+      <div className={className}>
+        <i
+          className="fa fa-question-circle-o fa-2x help-icon"
+          aria-hidden="true"
+          data-test="help-icon"
+          onClick={onClick}>
+        </i>
+      </div>
     )
   }
 }

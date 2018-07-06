@@ -38,7 +38,7 @@
     <div class="col-sm-6">
       <%= render 'shared/panel', title: 'Lists', data_test: 'lists', help_type: 'lists' do %>
         <div
-          class="card contextual-help bg-light <%= has_lists ? 'hidden' : '' %>"
+          class="card contextual-help bg-light <%= has_lists ? 'expandable hidden' : '' %>"
           data-help="lists"
           data-test="lists-help-text">
           <div class="card-body">
@@ -66,7 +66,7 @@
     <div class="col-sm-6">
       <%= render 'shared/panel', title: 'Menus', data_test: 'menus', help_type: 'menus' do %>
         <div
-          class="card contextual-help bg-light <%= hide_menus_help?(establishment) ? 'hidden' : '' %>"
+          class="card contextual-help bg-light <%= hide_menus_help?(establishment) ? 'expandable hidden' : '' %>"
           data-help="menus"
           data-test="menus-help-text">
           <div class="card-body">

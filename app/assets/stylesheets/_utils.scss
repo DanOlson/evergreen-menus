@@ -59,3 +59,20 @@
 .help-icon {
   cursor: pointer;
 }
+
+.expandable {
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  line-height: 0;
+  padding: 0 1em;
+  color: transparent;
+
+  &.open {
+    line-height: inherit;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    color: inherit;
+  }
+}

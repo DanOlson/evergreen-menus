@@ -43,11 +43,30 @@
           </td>
           <td>
             <div class="row">
+              <div class="col-sm-1">
+                <i
+                  onclick="toggleHelp('google')"
+                  class="fa fa-question-circle-o fa-2x help-icon"
+                  data-test="toggle-info-google"
+                  aria-hidden="true">
+                </i>
+              </div>
               <div class="col-sm-1"><%= google_my_business_link @account %></div>
               <% if @account.google_my_business_enabled? %>
                 <div class="col-sm-1"><%= disconnect_google_my_business_link %></div>
               <% end %>
             </div>
+          </td>
+        </tr>
+        <tr data-help="google" class="expandable hidden">
+          <td colspan="3" class="borderless">
+            <p>
+              Enabling the Google My Business integration will prompt you to link your Google My Business locations
+              with your Evergreen Menus establishments. Once you've done that, you'll notice a new "Online Menu"
+              in your establishments' menu list. Whenever you update your Online Menu, or any of the lists that
+              are in it, the changes will be pushed to your Google My Business listing so that the Menu there
+              is always up to date.
+            </p>
           </td>
         </tr>
 
@@ -64,6 +83,14 @@
           </td>
           <td>
             <div class="row">
+              <div class="col-sm-1">
+                <i
+                  onclick="toggleHelp('facebook')"
+                  class="fa fa-question-circle-o fa-2x help-icon"
+                  data-test="toggle-info-facebook"
+                  aria-hidden="true">
+                </i>
+              </div>
               <div class="col-sm-1"><%= facebook_link @account %></div>
               <% if @account.facebook_enabled? %>
                 <div class="col-sm-2"><%= disconnect_facebook_link %></div>
@@ -72,7 +99,18 @@
             </div>
           </td>
         </tr>
+        <tr data-help="facebook" class="expandable hidden">
+          <td colspan="3" class="borderless">
+            <p>
+              The Facebook integration will allow you to add a "Menu" tab to your restaurant's Facebook page,
+              driven off the content of your establishment's "Online Menu". Whenever you update your Online Menu,
+              or any of the lists that are in it, the changes will be instantly reflected on your Facebook page.
+            </p>
+          </td>
+        </tr>
       </tbody>
     </table>
   <% end %>
 <% end %>
+
+<%= render 'shared/toggle_help' %>
