@@ -15,14 +15,6 @@ module AccountsHelper
     end
   end
 
-  def facebook_add_tab_path(account)
-    facebook_app_id = ENV.fetch('FACEBOOK_CLIENT_ID') {
-      APP_CONFIG[:facebook][:client_id]
-    }
-    redirect_uri = account_url account
-    "https://www.facebook.com/dialog/pagetab?app_id=#{facebook_app_id}&redirect_uri=#{redirect_uri}"
-  end
-
   def connect_google_my_business_link
     link_to 'Connect',
             oauth_google_authorize_path,

@@ -24,7 +24,7 @@ class FacebookPage extends Component {
     const path = this.props.updateAssociationPath
     const establishmentId = this.state.selectedEstablishment.id.toString()
     const pageId = this.props.page.id
-    const authToken = document.getElementsByName('csrf-token')[0].content
+    const { csrfToken } = this.props
     fetch(path, {
       credentials: 'same-origin', // send cookies
       method: 'post',
@@ -32,7 +32,7 @@ class FacebookPage extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        authenticity_token: authToken,
+        authenticity_token: csrfToken,
         establishment_id: establishmentId,
         facebook_page_id: pageId
       })
@@ -79,14 +79,19 @@ class FacebookPage extends Component {
       )
     }
 
-    const { page, tabRestrictionsPath, facebookAddTabUrl } = this.props
+    const { page, tabRestrictionsPath, addTabPath, csrfToken } = this.props
+    const { persistedSelectedEstablishmentId } = this.state
     if (page.fan_count >= 2000) {
       return (
-        <a
-          href={facebookAddTabUrl}
-          className="btn btn-evrgn-primary">
-          Add Menu Tab
-        </a>
+        <form method="post" action={addTabPath}>
+          <input type="hidden" name="authenticity_token" value={csrfToken} />
+          <input type="hidden" name="establishment_id" value={persistedSelectedEstablishmentId} />
+          <button
+            type="submit"
+            className="btn btn-evrgn-primary">
+            Add Menu Tab
+          </button>
+        </form>
       )
     } else {
       return (
@@ -148,8 +153,9 @@ FacebookPage.propTypes = {
   establishmentOpts: PropTypes.array,
   page: PropTypes.object.isRequired,
   updateAssociationPath: PropTypes.string.isRequired,
-  tabRestrictionsPath: PropTypes.string.isRequired,
-  facebookAddTabUrl: PropTypes.string.isRequired
+  addTabPath: PropTypes.string.isRequired,
+  facebookAddTabUrl: PropTypes.string.isRequired,
+  csrfToken: PropTypes.string.isRequired
 }
 
 export default FacebookPage

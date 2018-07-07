@@ -25,12 +25,18 @@ module Facebook
 
     def tab
       authorize! :manage, :facebook
-      result = MenuTabBootstrapper.new(@establishment).call
-      if result.success?
-        head :no_content
-      else
-        head :internal_server_error
-      end
+      @establishment.create_online_menu! unless @establishment.online_menu
+      redirect_to facebook_add_tab_url
+    end
+
+    private
+
+    def facebook_add_tab_url
+      facebook_app_id = ENV.fetch('FACEBOOK_CLIENT_ID') {
+        APP_CONFIG[:facebook][:client_id]
+      }
+      redirect_uri = account_url @account
+      "https://www.facebook.com/dialog/pagetab?app_id=#{facebook_app_id}&redirect_uri=#{redirect_uri}"
     end
   end
 end

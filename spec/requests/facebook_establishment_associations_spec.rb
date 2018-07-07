@@ -6,21 +6,24 @@ describe 'Facebook Establishment associations' do
   let(:user) { create :user, :manager, account: account }
 
   before do
-    AuthToken
-      .facebook_user
-      .for_account(account)
-      .create!({
-        token_data: {
-          access_token: 'user-access-token',
-          token_type: 'bearer',
-          expires_in: 5183999
-        },
-        access_token: 'user-access-token'
-      })
     sign_in user
   end
 
   describe 'POST to /accounts/:account_id/facebook/establishment_associations' do
+    before do
+      AuthToken
+        .facebook_user
+        .for_account(account)
+        .create!({
+          token_data: {
+            access_token: 'user-access-token',
+            token_type: 'bearer',
+            expires_in: 5183999
+          },
+          access_token: 'user-access-token'
+        })
+    end
+
     context 'when the establishment is found' do
       it 'sets facebook_page_id and returns 204' do
         post account_facebook_establishment_associations_path(account), {
@@ -98,6 +101,50 @@ describe 'Facebook Establishment associations' do
         }
 
         expect(response).to have_http_status :bad_request
+      end
+    end
+  end
+
+  describe 'POST to /accounts/:accountId/facebook/menu_tabs' do
+    it 'redirects to Facebook' do
+      post account_facebook_menu_tabs_path(account), {
+        params: {
+          establishment_id: establishment.id
+        }
+      }
+      facebook_app_id = ENV.fetch('FACEBOOK_CLIENT_ID') {
+        APP_CONFIG[:facebook][:client_id]
+      }
+      redirect_uri = account_url(account)
+      facebook_add_tab_url = "https://www.facebook.com/dialog/pagetab?app_id=#{facebook_app_id}&redirect_uri=#{redirect_uri}"
+      expect(response).to redirect_to facebook_add_tab_url
+    end
+
+    context 'when no OnlineMenu exists for the given establishment' do
+      it 'creates an OnlineMenu' do
+        post account_facebook_menu_tabs_path(account), {
+          params: {
+            establishment_id: establishment.id
+          }
+        }
+        establishment.reload
+        expect(establishment.online_menu).to_not be_nil
+      end
+    end
+
+    context 'when an OnlineMenu already exists for the given establishment' do
+      before do
+        establishment.create_online_menu!
+      end
+
+      it 'does not create an OnlineMenu' do
+        expect {
+          post account_facebook_menu_tabs_path(account), {
+            params: {
+              establishment_id: establishment.id
+            }
+          }
+        }.to_not change(OnlineMenu, :count)
       end
     end
   end
