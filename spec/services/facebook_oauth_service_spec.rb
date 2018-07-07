@@ -32,10 +32,6 @@ describe FacebookOauthService do
       expect(String(client.token_credential_uri)).to eq expected
     end
 
-    xit 'requests manage_pages permission' do
-      expect(client.scope).to include 'manage_pages'
-    end
-
     it 'requests pages_show_list permission' do
       expect(client.scope).to include 'pages_show_list'
     end
