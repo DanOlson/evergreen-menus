@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import EstablishmentSelect from './EstablishmentSelect'
 import 'whatwg-fetch'
@@ -9,6 +9,7 @@ class FacebookPage extends Component {
     super(props)
     this.handleLink = this.handleLink.bind(this)
     this.handleEstablishmentChange = this.handleEstablishmentChange.bind(this)
+    this.confirmRestrictionWorkaround = this.confirmRestrictionWorkaround.bind(this)
 
     const selectedEstablishment = props.establishmentOpts.find(e => {
       return e.facebook_page_id === props.page.id
@@ -66,6 +67,17 @@ class FacebookPage extends Component {
     }
   }
 
+  confirmRestrictionWorkaround (event) {
+    const message = "Have you applied the workaround for Facebook's restrictions?"
+    if (!confirm(message)) {
+      event.preventDefault()
+      const button = event.target.querySelector('input[type="submit"]')
+      setTimeout(_ => {
+        button.disabled = false
+      }, 100)
+    }
+  }
+
   renderActionButton () {
     if (!this.isEstablishmentLinked()) return
     if (this.isAssociationDirty()) {
@@ -79,32 +91,45 @@ class FacebookPage extends Component {
       )
     }
 
-    const { page, tabRestrictionsPath, addTabPath, csrfToken } = this.props
+    const { tabRestrictionsPath, addTabPath, csrfToken } = this.props
     const { persistedSelectedEstablishmentId } = this.state
-    if (page.fan_count >= 2000) {
-      return (
-        <form method="post" action={addTabPath}>
-          <input type="hidden" name="authenticity_token" value={csrfToken} />
-          <input type="hidden" name="establishment_id" value={persistedSelectedEstablishmentId} />
-          <button
-            type="submit"
-            className="btn btn-evrgn-primary">
-            Add Menu Tab
-          </button>
-        </form>
-      )
-    } else {
-      return (
-        <a target="_blank" href={tabRestrictionsPath} className="btn btn-evrgn-primary">
-          Add Menu Tab
+    const submitHandler = this.restrictionApplies() ?
+      this.confirmRestrictionWorkaround :
+      () => {}
+    let restrictionWarning
+
+    if (this.restrictionApplies()) {
+      restrictionWarning = (
+        <a target="_blank" href={tabRestrictionsPath}>
+          <i className="icon fa fa-2x fa-exclamation-triangle" title="Restrictions Apply"></i>
         </a>
       )
     }
+
+    return (
+      <Fragment>
+        <form method="post" action={addTabPath} onSubmit={submitHandler} className="btn--add-menu">
+          <input type="hidden" name="authenticity_token" value={csrfToken} />
+          <input type="hidden" name="establishment_id" value={persistedSelectedEstablishmentId} />
+          <input
+            type="submit"
+            name="commit"
+            className="btn btn-evrgn-primary"
+            value="Add Menu Tab" />
+        </form>
+        {restrictionWarning}
+      </Fragment>
+    )
   }
 
   isAssociationDirty () {
     const { persistedSelectedEstablishmentId, selectedEstablishment } = this.state
     return persistedSelectedEstablishmentId !== selectedEstablishment.id.toString()
+  }
+
+  restrictionApplies () {
+    const { page } = this.props
+    return page.fan_count > 2000
   }
 
   isEstablishmentLinked () {
@@ -128,7 +153,12 @@ class FacebookPage extends Component {
             <span className="page-name">{page.name}</span>
           </h4>
         </td>
-        <td>{page.fan_count}</td>
+        <td>
+          <span
+            style={{ color: this.restrictionApplies() ? 'red' : 'inherit' }}>
+            {page.fan_count}
+          </span>
+        </td>
         <td>
           <div className="form-group my-auto">
             <EstablishmentSelect
@@ -154,7 +184,6 @@ FacebookPage.propTypes = {
   page: PropTypes.object.isRequired,
   updateAssociationPath: PropTypes.string.isRequired,
   addTabPath: PropTypes.string.isRequired,
-  facebookAddTabUrl: PropTypes.string.isRequired,
   csrfToken: PropTypes.string.isRequired
 }
 
