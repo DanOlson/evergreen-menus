@@ -129,7 +129,7 @@ class FacebookPage extends Component {
 
   restrictionApplies () {
     const { page } = this.props
-    return page.fan_count > 2000
+    return page.fan_count < 2000
   }
 
   isEstablishmentLinked () {
