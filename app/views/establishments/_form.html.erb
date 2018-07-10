@@ -95,7 +95,7 @@
           <% end %>
           <% if online_menu = establishment.online_menu %>
             <div class="list-group-item" data-test="online-menu-list-item">
-              <span class="menu-type-icon fa fa-google" aria-hidden="true" title="Online Menu"></span>
+              <span class="menu-type-icon fa fa-globe" aria-hidden="true" title="Online Menu"></span>
               <%= link_to 'Online Menu', edit_account_establishment_online_menu_path(account, establishment, online_menu), data: { test: 'menu-link' } %>
             </div>
           <% end %>
