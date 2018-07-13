@@ -80,16 +80,6 @@ feature 'Online Menu management' do
     expect(preview_taps_list.item_named('Nitro Milk Stout').price).to eq '$6.50'
     expect(preview_bottles_list.item_named('Arrogant Bastard').price).to eq '$7.50'
 
-    # What's up with the preview styles?
-    online_menu_form.show_help_text
-    expect(online_menu_form).to have_help_text
-    expected_help_text = "The preview content shown here is unstyled."
-    expect(online_menu_form.help_text_content).to eq expected_help_text
-
-    # Oh, got it.
-    online_menu_form.hide_help_text
-    expect(online_menu_form).to_not have_help_text
-
     # Submit
     online_menu_form.submit
 

@@ -69,9 +69,6 @@ module PageObjects
 
       element :submit_button, '[data-test="online-menu-form-submit"]'
       element :cancel_link,   '[data-test="online-menu-form-cancel"]'
-      element :help_icon,     '[data-test="help-icon"]'
-      element :help_text,     '[data-test="help-text"]'
-
       section :preview, Preview,  '[data-test="online-menu-preview"]'
 
       include ListSelectable
@@ -90,18 +87,6 @@ module PageObjects
 
       def cancel
         cancel_link.click
-      end
-
-      def show_help_text
-        help_icon.trigger('click') unless has_help_text?
-      end
-
-      def hide_help_text
-        help_icon.trigger('click') if has_help_text?
-      end
-
-      def help_text_content
-        help_text.text
       end
     end
   end

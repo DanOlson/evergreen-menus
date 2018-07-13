@@ -19,7 +19,7 @@ class OnlineMenusController < ApplicationController
   def preview
     preview = OnlineMenuPreviewGenerator.new online_menu_params, current_ability
     @online_menu = preview.call
-    render :preview, layout: false
+    render :preview, layout: 'facebook_menu_tab'
   end
 
   private
