@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180626015830) do
+ActiveRecord::Schema.define(version: 20180716025733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20180626015830) do
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
     t.string   "google_my_business_account_id"
+    t.string   "stripe_id"
   end
 
   create_table "api_keys", force: :cascade do |t|
@@ -209,6 +210,19 @@ ActiveRecord::Schema.define(version: 20180626015830) do
     t.index ["establishment_id"], name: "index_online_menus_on_establishment_id", using: :btree
   end
 
+  create_table "plans", force: :cascade do |t|
+    t.string   "remote_id"
+    t.string   "name"
+    t.integer  "price_cents",    default: 0,     null: false
+    t.string   "price_currency", default: "USD", null: false
+    t.integer  "interval"
+    t.integer  "interval_count"
+    t.integer  "status"
+    t.text     "description"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
@@ -222,6 +236,20 @@ ActiveRecord::Schema.define(version: 20180626015830) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "last_ran_at"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer  "account_id"
+    t.integer  "plan_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "status"
+    t.string   "payment_method"
+    t.string   "remote_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["account_id"], name: "index_subscriptions_on_account_id", using: :btree
+    t.index ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
   end
 
   create_table "user_invitations", force: :cascade do |t|
@@ -299,6 +327,8 @@ ActiveRecord::Schema.define(version: 20180626015830) do
   add_foreign_key "online_menu_lists", "lists"
   add_foreign_key "online_menu_lists", "online_menus"
   add_foreign_key "online_menus", "establishments"
+  add_foreign_key "subscriptions", "accounts"
+  add_foreign_key "subscriptions", "plans"
   add_foreign_key "user_invitations", "accounts"
   add_foreign_key "user_invitations", "roles"
   add_foreign_key "user_invitations", "users", column: "accepting_user_id"
