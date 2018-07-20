@@ -1,15 +1,28 @@
 require 'stripe'
 
 class PlanCreator
-  attr_reader :remote_id, :name, :price_cents, :interval, :trial_period_days, :product_id
+  attr_reader :remote_id,
+              :name,
+              :price_cents,
+              :interval,
+              :trial_period_days,
+              :product_id,
+              :description
 
-  def initialize(remote_id:, name:, price_cents:, product_id:, interval: 'month', trial_period_days: 21)
+  def initialize(remote_id:,
+                 name:,
+                 price_cents:,
+                 product_id:,
+                 interval: 'month',
+                 trial_period_days: 21,
+                 description: nil)
     @remote_id = remote_id
     @name = name
     @price_cents = price_cents
     @interval = interval
     @trial_period_days = trial_period_days
     @product_id = product_id
+    @description = description
   end
 
   def call
@@ -28,7 +41,8 @@ class PlanCreator
       price_cents: price_cents,
       interval: interval,
       interval_count: 1,
-      status: :active
+      status: :active,
+      description: description
     })
   rescue => e
     puts "Failed to create plan: #{e.message}\n#{e.backtrace.join("\n")}"
@@ -50,19 +64,22 @@ namespace :stripe do
         remote_id: "one-and-done-#{Rails.env}",
         name: 'One and Done',
         price_cents: 3900,
-        product_id: product.id
+        product_id: product.id,
+        description: 'one establishment'
       },
       {
         remote_id: "restauranteur-#{Rails.env}",
         name: 'Restauranteur',
         price_cents: 7900,
-        product_id: product.id
+        product_id: product.id,
+        description: 'up to six establishments'
       },
       {
         remote_id: "franchisee-#{Rails.env}",
         name: 'Franchisee',
         price_cents: 17900,
-        product_id: product.id
+        product_id: product.id,
+        description: 'up to 12 establishments'
       }
     ]
 

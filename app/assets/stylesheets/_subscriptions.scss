@@ -1,0 +1,70 @@
+.subscriptions {
+  .plan {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    height: 100%;
+  }
+
+  .plan-name {
+    color: $color-evergreen;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .plan-price {
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .value-checks {
+    list-style: none;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .value-add-item {
+    .icon {
+      vertical-align: middle;
+    }
+  }
+
+  .value-add-item-text {
+    vertical-align: middle;
+    margin-left: 0.5rem;
+  }
+
+  .cta {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .subscription-form {
+    padding: 1rem;
+    display: none;
+  }
+
+
+  .StripeElement {
+    background-color: white;
+    height: 40px;
+    padding: 10px 12px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+  }
+
+  .StripeElement--focus {
+    box-shadow: 0 1px 3px 0 #cfd7df;
+  }
+
+  .StripeElement--invalid {
+    border-color: #fa755a;
+  }
+
+  .StripeElement--webkit-autofill {
+    background-color: #fefde5 !important;
+  }
+}

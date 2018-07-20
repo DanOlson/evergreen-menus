@@ -4,6 +4,8 @@ Beermapper::Application.routes.draw do
     get 'register/:invitation', to: 'user_registrations#new', as: :new_invited_registration
   end
 
+  resources :subscriptions, only: [:new, :create]
+
   root to: 'home#index'
 
   get 'oauth/google/authorize' => 'oauth_google#authorize'
