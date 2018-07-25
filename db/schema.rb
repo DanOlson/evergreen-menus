@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180716025733) do
+ActiveRecord::Schema.define(version: 20180723022806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,6 +210,20 @@ ActiveRecord::Schema.define(version: 20180716025733) do
     t.index ["establishment_id"], name: "index_online_menus_on_establishment_id", using: :btree
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.integer  "account_id"
+    t.integer  "price_cents",    default: 0,     null: false
+    t.string   "price_currency", default: "USD", null: false
+    t.string   "reference"
+    t.integer  "status"
+    t.string   "payment_method"
+    t.string   "response_id"
+    t.json     "full_response"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.index ["account_id"], name: "index_payments_on_account_id", using: :btree
+  end
+
   create_table "plans", force: :cascade do |t|
     t.string   "remote_id"
     t.string   "name"
@@ -327,6 +341,7 @@ ActiveRecord::Schema.define(version: 20180716025733) do
   add_foreign_key "online_menu_lists", "lists"
   add_foreign_key "online_menu_lists", "online_menus"
   add_foreign_key "online_menus", "establishments"
+  add_foreign_key "payments", "accounts"
   add_foreign_key "subscriptions", "accounts"
   add_foreign_key "subscriptions", "plans"
   add_foreign_key "user_invitations", "accounts"

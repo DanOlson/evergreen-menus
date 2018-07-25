@@ -3,4 +3,6 @@ class Plan < ActiveRecord::Base
   enum interval: { day: 0, week: 1, month: 2, year: 3 }
 
   monetize :price_cents
+
+  has_many :subscriptions
 end

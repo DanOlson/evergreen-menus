@@ -32,6 +32,7 @@ group :test do
   gem 'database_cleaner', '~> 1.5.3'
   gem 'site_prism',       '~> 2.9'
   gem 'pdf-reader',       '~> 2.0'
+  gem 'timecop',          '~> 0.9.1'
 end
 
 group :development do

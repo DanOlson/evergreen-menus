@@ -4,7 +4,8 @@ Beermapper::Application.routes.draw do
     get 'register/:invitation', to: 'user_registrations#new', as: :new_invited_registration
   end
 
-  resources :subscriptions, only: [:new, :create]
+  resources :subscriptions, only: :create
+  resources :plans, only: :index
 
   root to: 'home#index'
 

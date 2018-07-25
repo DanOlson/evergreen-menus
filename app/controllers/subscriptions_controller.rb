@@ -1,15 +1,18 @@
 class SubscriptionsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:new, :create]
-
-  def new
-    @plans = Plan.active
-    @stripe_pub_key = ENV.fetch('STRIPE_PUB_KEY') {
-      APP_CONFIG.dig(:stripe, :pub_key)
-    }
-  end
+  skip_before_action :authenticate_user!, only: :create
 
   def create
-    redirect_to new_user_registration_path
+    service = SignupService.new({
+      plan_id: subscription_params[:plan_id],
+      email: subscription_params[:email],
+      credit_card_token: subscription_params[:source]
+    })
+    service.call
+    if service.success?
+      redirect_to new_user_registration_path
+    else
+      redirect_to plans_path, alert: "Uh oh! We couldn't sign you up. Please try again."
+    end
   end
 
   private
