@@ -1,5 +1,5 @@
 class SignupService
-  attr_reader :email, :credit_card_token, :plan_id
+  attr_reader :email, :credit_card_token, :plan_id, :signup_invitation
 
   def initialize(email:, credit_card_token:, plan_id:, logger: default_logger)
     @email = email
@@ -15,6 +15,7 @@ class SignupService
       stripe_customer = create_stripe_customer
       link_customer_to_account account: account, customer: stripe_customer
       create_subscription account: account, customer: stripe_customer
+      @signup_invitation = create_invitation account: account
       @success = true
     end
   rescue => e
@@ -56,6 +57,14 @@ class SignupService
       remote_id: stripe_subscription.id,
       payment_method: 'stripe',
       status: :pending_initial_payment
+    })
+  end
+
+  def create_invitation(account:)
+    SignupInvitation.create!({
+      account: account,
+      role: Role.manager,
+      email: email
     })
   end
 

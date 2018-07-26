@@ -9,7 +9,8 @@ class SubscriptionsController < ApplicationController
     })
     service.call
     if service.success?
-      redirect_to new_user_registration_path
+      gid = service.signup_invitation.to_sgid for: 'registration'
+      redirect_to new_invited_registration_path(gid), notice: 'Signup successful! Please fill in your account details.'
     else
       redirect_to plans_path, alert: "Uh oh! We couldn't sign you up. Please try again."
     end

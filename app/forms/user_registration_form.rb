@@ -92,8 +92,11 @@ class UserRegistrationForm
       password: password,
       password_confirmation: password_confirmation,
       account: account,
-      role: role,
-      establishment_ids: user_invitation.establishment_ids
-    })
+      role: role
+    }).tap do |user|
+      if user_invitation
+        user.establishment_ids = user_invitation.establishment_ids
+      end
+    end
   end
 end

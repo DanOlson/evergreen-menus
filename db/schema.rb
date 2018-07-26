@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180723022806) do
+ActiveRecord::Schema.define(version: 20180726012731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -252,6 +252,18 @@ ActiveRecord::Schema.define(version: 20180723022806) do
     t.datetime "last_ran_at"
   end
 
+  create_table "signup_invitations", force: :cascade do |t|
+    t.string   "email"
+    t.integer  "account_id"
+    t.boolean  "accepted",          default: false
+    t.integer  "accepting_user_id"
+    t.integer  "role_id"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.index ["account_id"], name: "index_signup_invitations_on_account_id", using: :btree
+    t.index ["role_id"], name: "index_signup_invitations_on_role_id", using: :btree
+  end
+
   create_table "subscriptions", force: :cascade do |t|
     t.integer  "account_id"
     t.integer  "plan_id"
@@ -342,6 +354,8 @@ ActiveRecord::Schema.define(version: 20180723022806) do
   add_foreign_key "online_menu_lists", "online_menus"
   add_foreign_key "online_menus", "establishments"
   add_foreign_key "payments", "accounts"
+  add_foreign_key "signup_invitations", "accounts"
+  add_foreign_key "signup_invitations", "roles"
   add_foreign_key "subscriptions", "accounts"
   add_foreign_key "subscriptions", "plans"
   add_foreign_key "user_invitations", "accounts"

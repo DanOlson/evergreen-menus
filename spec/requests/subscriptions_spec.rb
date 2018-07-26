@@ -24,7 +24,13 @@ describe 'subscriptions' do
       }
 
       expect(response).to have_http_status :redirect
+      expect(response.location).to match /\.com\/register\/.*$/
       expect(Subscription.last.plan).to eq plan
+
+      follow_redirect!
+      expect(response).to have_http_status :ok
+      expect(response.body).to include 'Signup successful! Please fill in your account details.'
+      expect(response.body).to include 'Welcome'
     end
 
     context 'when creating the subscription is unsuccessful' do

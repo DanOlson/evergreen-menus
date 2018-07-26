@@ -44,6 +44,27 @@ describe SignupService do
 
         expect(instance).to be_success
       end
+
+      it 'creates a signup invitation' do
+        instance = SignupService.new({
+          email: 'bob@example.com',
+          plan_id: plan.id,
+          credit_card_token: 'tok_1CryOUFuGCUWqFqFlVJV2ovo'
+        })
+
+        expect {
+          instance.call
+        }.to change(SignupInvitation, :count).by 1
+
+        signup_invitation = instance.signup_invitation
+        account = Account.last
+
+        expect(signup_invitation.account).to eq account
+        expect(signup_invitation.role).to eq Role.manager
+        expect(signup_invitation.email).to eq 'bob@example.com'
+        expect(signup_invitation.accepted).to eq false
+        expect(signup_invitation.accepting_user_id).to be_nil
+      end
     end
 
     context 'when something goes wrong' do
@@ -57,6 +78,18 @@ describe SignupService do
         expect {
           instance.call
         }.to_not change(Account, :count)
+
+        expect(instance).to_not be_success
+
+        expect {
+          instance.call
+        }.to_not change(Subscription, :count)
+
+        expect(instance).to_not be_success
+
+        expect {
+          instance.call
+        }.to_not change(SignupInvitation, :count)
 
         expect(instance).to_not be_success
       end
