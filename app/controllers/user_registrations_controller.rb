@@ -17,6 +17,7 @@ class UserRegistrationsController < Devise::RegistrationsController
       sign_in @user.model, scope: :user
       redirect_to after_sign_in_path_for(@user.model), notice: "Welcome, #{@user.first_name}!"
     else
+      logger.warn "Invitation is not valid: #{@user.errors.full_messages}"
       render :new
     end
   end
@@ -40,7 +41,8 @@ class UserRegistrationsController < Devise::RegistrationsController
       :username,
       :password,
       :password_confirmation,
-      :user_invitation_id
+      :invitation_id,
+      :invitation_type
     )
   end
 

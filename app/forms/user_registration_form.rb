@@ -12,8 +12,9 @@ class UserRegistrationForm
     account_id
     role
     role_id
-    user_invitation
-    user_invitation_id
+    invitation
+    invitation_id
+    invitation_type
   )
 
   attr_accessor *ATTRIBUTES
@@ -35,7 +36,9 @@ class UserRegistrationForm
         email: invitation.email,
         account: invitation.account,
         role: invitation.role,
-        user_invitation_id: invitation.id
+        invitation: invitation,
+        invitation_id: invitation.id,
+        invitation_type: invitation.class.name
       })
     end
   end
@@ -49,9 +52,9 @@ class UserRegistrationForm
   def save
     ActiveRecord::Base.transaction do
       model.save
-      user_invitation.accepting_user = model
-      user_invitation.accepted = true
-      user_invitation.save
+      invitation.accepting_user = model
+      invitation.accepted = true
+      invitation.save
     end
   end
 
@@ -60,7 +63,7 @@ class UserRegistrationForm
   end
 
   def account_id
-    @account_id ||= user_invitation && user_invitation.account_id
+    @account_id ||= invitation && invitation.account_id
   end
 
   def role
@@ -68,15 +71,19 @@ class UserRegistrationForm
   end
 
   def role_id
-    @role_id ||= user_invitation && user_invitation.role_id
+    @role_id ||= invitation && invitation.role_id
   end
 
   def username
     @username ||= email
   end
 
-  def user_invitation
-    @user_invitation ||= UserInvitation.find_by(id: user_invitation_id)
+  def invitation
+    @invitation ||= begin
+      if %w(UserInvitation SignupInvitation).include? @invitation_type
+        @invitation_type.constantize.find_by(id: invitation_id)
+      end
+    end
   end
 
   def model
@@ -94,8 +101,8 @@ class UserRegistrationForm
       account: account,
       role: role
     }).tap do |user|
-      if user_invitation
-        user.establishment_ids = user_invitation.establishment_ids
+      if invitation
+        user.establishment_ids = invitation.establishment_ids
       end
     end
   end

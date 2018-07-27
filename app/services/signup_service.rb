@@ -35,7 +35,7 @@ class SignupService
   end
 
   def create_account
-    Account.create! name: "#{email} Account"
+    Account.create! name: "#{email} Account", active: true
   end
 
   def create_stripe_customer

@@ -18,6 +18,7 @@ describe SignupService do
 
         account = Account.last
         expect(account.stripe_id).to_not be_nil
+        expect(account).to be_active
 
         expect(instance).to be_success
       end

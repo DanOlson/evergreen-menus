@@ -7,4 +7,8 @@ class SignupInvitation < ActiveRecord::Base
 
   attr_accessor :first_name, :last_name
   alias_attribute :username, :email
+
+  def establishment_ids
+    []
+  end
 end

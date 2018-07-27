@@ -20,6 +20,7 @@ class UserInvitationsController < ApplicationController
 
       redirect_to location, notice: notice
     else
+      logger.warn "Invitation is not valid: #{@user.errors.full_messages}"
       render :new
     end
   end
