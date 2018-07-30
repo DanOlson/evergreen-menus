@@ -25,6 +25,9 @@ Beermapper::Application.routes.draw do
 
   post '/contact' => 'contacts#create'
 
+  # Stripe webhooks
+  post '/stripe/events' => 'stripe#events'
+
   get 'amp/lists/:id' => 'amp_lists#show'
   resources :web_menus, only: :show
   resources :accounts do
