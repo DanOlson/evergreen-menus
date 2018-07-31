@@ -6,6 +6,6 @@ FactoryGirl.define do
     interval :month
     interval_count 1
     description 'up to six establishments'
-    remote_id 'restauranteur-test'
+    remote_id 'restauranteur-development'
   end
 end

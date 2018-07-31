@@ -11,5 +11,9 @@ class StripeClient
         trial_end: trial_end
       })
     end
+
+    def fetch_charge(charge_id)
+      Stripe::Charge.retrieve charge_id
+    end
   end
 end
