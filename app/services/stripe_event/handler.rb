@@ -3,12 +3,14 @@ module StripeEvent
     @@handlers_by_event = {}
 
     class << self
-      def handles(event)
-        handlers_by_event[event] = self
+      def handles(event_type)
+        handlers_by_event[event_type] = self
       end
 
-      def for(event)
-        handlers_by_event[event]
+      def for(stripe_event)
+        event_type = stripe_event.type
+        klass = handlers_by_event.fetch(event_type) { StripeEvent::NullHandler }
+        klass.new stripe_event
       end
 
       private
@@ -17,6 +19,8 @@ module StripeEvent
         @@handlers_by_event
       end
     end
+
+    attr_reader :event
 
     def initialize(event, logger: default_logger)
       @event = event

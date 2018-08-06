@@ -12,9 +12,9 @@ module StripeEvent
     let(:event) { Stripe::Event.construct_from event_data }
     let(:instance) { InvoicePaymentSucceeded.new(event) }
 
-    describe '.handles' do
+    describe 'handler registry' do
       it 'handles "invoice.payment_succeeded"' do
-        expect(Handler.for('invoice.payment_succeeded')).to eq InvoicePaymentSucceeded
+        expect(Handler.for(event)).to be_a InvoicePaymentSucceeded
       end
     end
 

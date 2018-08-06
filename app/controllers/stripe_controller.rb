@@ -5,6 +5,7 @@ class StripeController < ApplicationController
     event = Stripe::Webhook.construct_event(
       request.body.read, signature, webhook_secret
     )
+    StripeEvent::Handler.for(event).call
     head :ok
   rescue JSON::ParserError, Stripe::SignatureVerificationError => e
     logger.error "Webhook error: #{e.message}"
