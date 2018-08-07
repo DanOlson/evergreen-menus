@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe StripeSubscription do
   before do
-    Timecop.freeze Time.at 1532398535 # 2018-07-23 21:15:35 -0500
+    Timecop.freeze Time.at 1533608525 # 2018-08-06 21:22:05 -0500
   end
 
   after do
@@ -10,20 +10,21 @@ describe StripeSubscription do
   end
 
   describe '.create', :vcr do
-    let(:plan) { create :plan, remote_id: 'restauranteur-development' }
+    let(:plan) { create :plan }
     let(:customer) { double StripeCustomer, id: 'cus_DHqGf2aCq0nWUt' }
 
     it 'creates a StripeSubscription' do
       three_weeks_from_now = (Time.now + 3.weeks).to_i
-      subscription = StripeSubscription.create customer: customer, plan: plan
+      subscription = StripeSubscription.create customer: customer, plan: plan, quantity: 2
 
       expect(subscription).to be_a StripeSubscription
       expect(subscription.id).to start_with 'sub_'
       expect(subscription.object).to eq 'subscription'
       expect(subscription.customer).to eq 'cus_DHqGf2aCq0nWUt'
       expect(subscription.status).to eq 'trialing'
-      expect(subscription.trial_end).to eq 1534212935
-      expect(subscription.plan.id).to eq 'restauranteur-development'
+      expect(subscription.quantity).to eq 2
+      expect(subscription.trial_end).to eq 1535422925
+      expect(subscription.plan.id).to eq 'specialty-development'
     end
   end
 
@@ -33,7 +34,7 @@ describe StripeSubscription do
 
       it 'returns a date based on the interval of the given plan' do
         end_date = StripeSubscription.calculate_end_date plan: plan
-        expect(end_date).to eq Date.parse('2018-08-23')
+        expect(end_date).to eq Date.parse('2018-09-06')
       end
     end
 
@@ -42,7 +43,7 @@ describe StripeSubscription do
 
       it 'returns a date based on the interval of the given plan' do
         end_date = StripeSubscription.calculate_end_date plan: plan
-        expect(end_date).to eq Date.parse('2018-10-23')
+        expect(end_date).to eq Date.parse('2018-11-06')
       end
     end
 

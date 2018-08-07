@@ -1,8 +1,13 @@
 class SignupService
-  attr_reader :email, :credit_card_token, :plan_id, :signup_invitation
+  attr_reader :email, :credit_card_token, :plan_id, :quantity, :signup_invitation
 
-  def initialize(email:, credit_card_token:, plan_id:, logger: default_logger)
+  def initialize(email:,
+                 credit_card_token:,
+                 plan_id:,
+                 quantity:,
+                 logger: default_logger)
     @email = email
+    @quantity = quantity
     @credit_card_token = credit_card_token
     @plan_id = plan_id
     @logger = logger
@@ -49,11 +54,13 @@ class SignupService
   def create_subscription(account:, customer:)
     stripe_subscription = StripeSubscription.create({
       customer: customer,
-      plan: plan
+      plan: plan,
+      quantity: quantity
     })
     Subscription.create!({
       account: account,
       plan: plan,
+      quantity: quantity,
       remote_id: stripe_subscription.id,
       payment_method: 'stripe',
       status: :pending_initial_payment

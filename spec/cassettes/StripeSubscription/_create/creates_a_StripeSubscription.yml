@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.stripe.com/v1/subscriptions
     body:
       encoding: UTF-8
-      string: customer=cus_DHqGf2aCq0nWUt&items[0][plan]=restauranteur-development&trial_end=1534212935
+      string: customer=cus_DHqGf2aCq0nWUt&items[0][plan]=specialty-development&items[0][quantity]=2&trial_end=1535422925
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/3.17.0
@@ -29,11 +29,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Tue, 24 Jul 2018 03:17:59 GMT
+      - Tue, 07 Aug 2018 02:23:44 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '2173'
+      - '2185'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -49,7 +49,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_ER9WyV1RQsHm5o
+      - req_Ary8AGnSqjQJMO
       Stripe-Version:
       - '2018-05-21'
       Strict-Transport-Security:
@@ -58,16 +58,16 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "sub_DHqjLSQwqcaI6Q",
+          "id": "sub_DN51hWFP1WWaiC",
           "object": "subscription",
           "application_fee_percent": null,
           "billing": "charge_automatically",
-          "billing_cycle_anchor": 1534212935,
+          "billing_cycle_anchor": 1535422925,
           "cancel_at_period_end": false,
           "canceled_at": null,
-          "created": 1532402279,
-          "current_period_end": 1534212935,
-          "current_period_start": 1532402279,
+          "created": 1533608624,
+          "current_period_end": 1535422925,
+          "current_period_start": 1533608624,
           "customer": "cus_DHqGf2aCq0nWUt",
           "days_until_due": null,
           "discount": null,
@@ -76,24 +76,26 @@ http_interactions:
             "object": "list",
             "data": [
               {
-                "id": "si_DHqjDgaLEi4s62",
+                "id": "si_DN51IuWZPDPRo6",
                 "object": "subscription_item",
-                "created": 1532402279,
-                "metadata": {},
+                "created": 1533608624,
+                "metadata": {
+                },
                 "plan": {
-                  "id": "restauranteur-development",
+                  "id": "specialty-development",
                   "object": "plan",
                   "active": true,
                   "aggregate_usage": null,
-                  "amount": 7900,
+                  "amount": 5000,
                   "billing_scheme": "per_unit",
-                  "created": 1531797208,
+                  "created": 1533606354,
                   "currency": "usd",
                   "interval": "month",
                   "interval_count": 1,
                   "livemode": false,
-                  "metadata": {},
-                  "nickname": "Restauranteur",
+                  "metadata": {
+                  },
+                  "nickname": "Specialty",
                   "product": "prod_DFE5sMkOQFQngD",
                   "tiers": null,
                   "tiers_mode": null,
@@ -101,30 +103,32 @@ http_interactions:
                   "trial_period_days": 21,
                   "usage_type": "licensed"
                 },
-                "quantity": 1,
-                "subscription": "sub_DHqjLSQwqcaI6Q"
+                "quantity": 2,
+                "subscription": "sub_DN51hWFP1WWaiC"
               }
             ],
             "has_more": false,
             "total_count": 1,
-            "url": "/v1/subscription_items?subscription=sub_DHqjLSQwqcaI6Q"
+            "url": "/v1/subscription_items?subscription=sub_DN51hWFP1WWaiC"
           },
           "livemode": false,
-          "metadata": {},
+          "metadata": {
+          },
           "plan": {
-            "id": "restauranteur-development",
+            "id": "specialty-development",
             "object": "plan",
             "active": true,
             "aggregate_usage": null,
-            "amount": 7900,
+            "amount": 5000,
             "billing_scheme": "per_unit",
-            "created": 1531797208,
+            "created": 1533606354,
             "currency": "usd",
             "interval": "month",
             "interval_count": 1,
             "livemode": false,
-            "metadata": {},
-            "nickname": "Restauranteur",
+            "metadata": {
+            },
+            "nickname": "Specialty",
             "product": "prod_DFE5sMkOQFQngD",
             "tiers": null,
             "tiers_mode": null,
@@ -132,13 +136,13 @@ http_interactions:
             "trial_period_days": 21,
             "usage_type": "licensed"
           },
-          "quantity": 1,
-          "start": 1532402279,
+          "quantity": 2,
+          "start": 1533608624,
           "status": "trialing",
           "tax_percent": null,
-          "trial_end": 1534212935,
-          "trial_start": 1532402279
+          "trial_end": 1535422925,
+          "trial_start": 1533608624
         }
     http_version:
-  recorded_at: Tue, 24 Jul 2018 02:15:35 GMT
+  recorded_at: Tue, 07 Aug 2018 02:22:05 GMT
 recorded_with: VCR 3.0.3

@@ -5,6 +5,7 @@ class SubscriptionsController < ApplicationController
     service = SignupService.new({
       plan_id: subscription_params[:plan_id],
       email: subscription_params[:email],
+      quantity: subscription_params[:quantity],
       credit_card_token: subscription_params[:source]
     })
     service.call
@@ -19,6 +20,11 @@ class SubscriptionsController < ApplicationController
   private
 
   def subscription_params
-    params.require(:subscription).permit(:plan_id, :email, :source)
+    params.require(:subscription).permit(
+      :plan_id,
+      :email,
+      :source,
+      :quantity
+    )
   end
 end

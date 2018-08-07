@@ -1,9 +1,10 @@
 class StripeSubscription < SimpleDelegator
   class << self
-    def create(customer:, plan:)
+    def create(customer:, plan:, quantity:)
       subscription = StripeClient.create_subscription({
         customer: customer.id,
         plan: plan.remote_id,
+        quantity: quantity,
         trial_end: (Time.now + 3.weeks).to_i
       })
 

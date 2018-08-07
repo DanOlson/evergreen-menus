@@ -1,11 +1,11 @@
 FactoryGirl.define do
   factory :plan do
-    name 'Restauranteur'
+    name 'Specialty'
     status :active
-    price_cents 7900
+    price_cents 5000
     interval :month
     interval_count 1
     description 'up to six establishments'
-    remote_id 'restauranteur-development'
+    remote_id 'specialty-development'
   end
 end

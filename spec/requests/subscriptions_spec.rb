@@ -3,6 +3,9 @@ require 'spec_helper'
 describe 'subscriptions' do
   describe 'GET to /plans' do
     before do
+      create :plan, remote_id: 'carryout-test'
+      create :plan, remote_id: 'specialty-test'
+      create :plan, remote_id: 'banquet-test'
       get plans_path
     end
 
@@ -12,14 +15,15 @@ describe 'subscriptions' do
   end
 
   describe 'POST to /subscriptions', :vcr do
-    let!(:plan) { create :plan, remote_id: 'restauranteur-development' }
+    let!(:plan) { create :plan }
 
     it 'creates a subscription' do
       post subscriptions_path, params: {
         subscription: {
           plan_id: plan.id,
+          quantity: 2,
           email: 'walter@lebowski.me',
-          source: 'tok_1CrcRpFuGCUWqFqFWmggUkFo'
+          source: 'tok_1CwL4DFuGCUWqFqFtVBg8u1P'
         }
       }
 
@@ -38,8 +42,9 @@ describe 'subscriptions' do
         post subscriptions_path, params: {
           subscription: {
             plan_id: plan.id,
+            quantity: 2,
             email: 'walter@lebowski.me',
-            source: 'tok_1CrcRpFuGCUWqFqFWmggUkFo' # duplicate token
+            source: 'tok_1CwL4DFuGCUWqFqFtVBg8u1P' # duplicate token
           }
         }
 

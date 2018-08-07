@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180726012731) do
+ActiveRecord::Schema.define(version: 20180807015213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -272,8 +272,9 @@ ActiveRecord::Schema.define(version: 20180726012731) do
     t.integer  "status"
     t.string   "payment_method"
     t.string   "remote_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "quantity",       default: 1
     t.index ["account_id"], name: "index_subscriptions_on_account_id", using: :btree
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
   end

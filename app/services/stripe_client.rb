@@ -4,10 +4,10 @@ class StripeClient
       Stripe::Customer.create args
     end
 
-    def create_subscription(customer:, plan:, trial_end:)
+    def create_subscription(customer:, plan:, quantity: 1, trial_end:)
       Stripe::Subscription.create({
         customer: customer,
-        items: [{ plan: plan }],
+        items: [{ plan: plan, quantity: quantity }],
         trial_end: trial_end
       })
     end

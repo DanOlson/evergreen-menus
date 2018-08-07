@@ -2,14 +2,15 @@ require 'spec_helper'
 
 describe SignupService do
   describe '#call', :vcr do
-    let(:plan) { create :plan, remote_id: 'one-and-done-development' }
+    let(:plan) { create :plan }
 
     context 'when all goes well' do
       it 'creates an account' do
         instance = SignupService.new({
           email: 'bob@example.com',
           plan_id: plan.id,
-          credit_card_token: 'tok_1CrbLWFuGCUWqFqFr5BHz2Uy'
+          quantity: 3,
+          credit_card_token: 'tok_1CwKz7FuGCUWqFqFgHJwtDsA'
         })
 
         expect {
@@ -27,7 +28,8 @@ describe SignupService do
         instance = SignupService.new({
           email: 'bob@example.com',
           plan_id: plan.id,
-          credit_card_token: 'tok_1CrbNDFuGCUWqFqF3n6PHxvn'
+          quantity: 3,
+          credit_card_token: 'tok_1CwL2LFuGCUWqFqF4gPi3imH'
         })
 
         expect {
@@ -39,6 +41,7 @@ describe SignupService do
 
         expect(subscription.account).to eq account
         expect(subscription.plan).to eq plan
+        expect(subscription.quantity).to eq 3
         expect(subscription.remote_id).to start_with 'sub_'
         expect(subscription.payment_method).to eq 'stripe'
         expect(subscription.status).to eq 'pending_initial_payment'
@@ -50,7 +53,8 @@ describe SignupService do
         instance = SignupService.new({
           email: 'bob@example.com',
           plan_id: plan.id,
-          credit_card_token: 'tok_1CryOUFuGCUWqFqFlVJV2ovo'
+          quantity: 3,
+          credit_card_token: 'tok_1CwL0LFuGCUWqFqFndfst3jU'
         })
 
         expect {
@@ -73,7 +77,8 @@ describe SignupService do
         instance = SignupService.new({
           email: 'bob@example.com',
           plan_id: plan.id,
-          credit_card_token: 'tok_1CrbNDFuGCUWqFqF3n6PHxvn' # duplicate token
+          quantity: 3,
+          credit_card_token: 'tok_1CwL0LFuGCUWqFqFndfst3jU' # duplicate token
         })
 
         expect {
