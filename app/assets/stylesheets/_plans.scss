@@ -1,8 +1,12 @@
-.subscriptions {
+.plans {
   .plan {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    height: 100%;
+  }
+
+  .plan-details {
+    min-height: 23rem;
+    position: relative;
   }
 
   .plan-name {
@@ -35,7 +39,10 @@
 
   .cta {
     text-align: center;
-    margin-top: 2rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 
   .subscription-form {

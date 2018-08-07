@@ -5,4 +5,18 @@ class Plan < ActiveRecord::Base
   monetize :price_cents
 
   has_many :subscriptions
+
+  class << self
+    def tier_1
+      active.find_by remote_id: "carryout-#{Rails.env}"
+    end
+
+    def tier_2
+      active.find_by remote_id: "specialty-#{Rails.env}"
+    end
+
+    def tier_3
+      active.find_by remote_id: "banquet-#{Rails.env}"
+    end
+  end
 end

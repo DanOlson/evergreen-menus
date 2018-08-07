@@ -33,6 +33,7 @@ class PlanCreator
       currency: 'usd',
       interval: interval,
       product: product_id,
+      usage_type: 'licensed',
       trial_period_days: trial_period_days
     })
     Plan.create({
@@ -61,25 +62,25 @@ namespace :stripe do
 
     plans = [
       {
-        remote_id: "one-and-done-#{Rails.env}",
-        name: 'One and Done',
-        price_cents: 3900,
+        remote_id: "carryout-#{Rails.env}",
+        name: 'Carryout',
+        price_cents: 3000,
         product_id: product.id,
-        description: 'one establishment'
+        description: 'Basic, in-house functions like print menus, digital displays, and website integration'
       },
       {
-        remote_id: "restauranteur-#{Rails.env}",
-        name: 'Restauranteur',
-        price_cents: 7900,
+        remote_id: "specialty-#{Rails.env}",
+        name: 'Specialty',
+        price_cents: 5000,
         product_id: product.id,
-        description: 'up to six establishments'
+        description: 'Print menus, digital displays, website integration, Google My Business, and social media integrations'
       },
       {
-        remote_id: "franchisee-#{Rails.env}",
-        name: 'Franchisee',
-        price_cents: 17900,
+        remote_id: "banquet-#{Rails.env}",
+        name: 'Banquet',
+        price_cents: 7500,
         product_id: product.id,
-        description: 'up to 12 establishments'
+        description: 'All features, plus white glove setup and premium support'
       }
     ]
 
