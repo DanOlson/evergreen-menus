@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.stripe.com/v1/subscriptions
     body:
       encoding: UTF-8
-      string: customer=cus_DHp2EbahQyQruN&items[0][plan]=banquet-development&items[0][quantity]=4&trial_end=1535422788
+      string: customer=cus_DHp2EbahQyQruN&items[0][plan]=t3-development&items[0][quantity]=4&trial_end=1535422788
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/3.17.0
@@ -82,7 +82,7 @@ http_interactions:
                 "metadata": {
                 },
                 "plan": {
-                  "id": "banquet-development",
+                  "id": "t3-development",
                   "object": "plan",
                   "active": true,
                   "aggregate_usage": null,
@@ -115,7 +115,7 @@ http_interactions:
           "metadata": {
           },
           "plan": {
-            "id": "banquet-development",
+            "id": "t3-development",
             "object": "plan",
             "active": true,
             "aggregate_usage": null,

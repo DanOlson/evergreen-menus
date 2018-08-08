@@ -18,7 +18,7 @@ describe StripeClient, :vcr do
     it 'creates a subscription with the Stripe API' do
       subscription = StripeClient.create_subscription({
         customer: 'cus_DHp2EbahQyQruN',
-        plan: 'banquet-development',
+        plan: 't3-development',
         quantity: 4,
         trial_end: 1535422788
       })
@@ -28,7 +28,7 @@ describe StripeClient, :vcr do
       expect(subscription.customer).to eq 'cus_DHp2EbahQyQruN'
       expect(subscription.quantity).to eq 4
       expect(subscription.trial_end).to eq 1535422788
-      expect(subscription.plan.id).to eq 'banquet-development'
+      expect(subscription.plan.id).to eq 't3-development'
     end
   end
 end

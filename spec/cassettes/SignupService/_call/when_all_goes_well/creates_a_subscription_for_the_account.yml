@@ -124,7 +124,7 @@ http_interactions:
     uri: https://api.stripe.com/v1/subscriptions
     body:
       encoding: UTF-8
-      string: customer=cus_DN5DyId3a6LsgA&items[0][plan]=specialty-development&items[0][quantity]=3&trial_end=1535423732
+      string: customer=cus_DN5DyId3a6LsgA&items[0][plan]=t2-development&items[0][quantity]=3&trial_end=1535423732
     headers:
       User-Agent:
       - Stripe/v1 RubyBindings/3.17.0
@@ -201,7 +201,7 @@ http_interactions:
                 "metadata": {
                 },
                 "plan": {
-                  "id": "specialty-development",
+                  "id": "t2-development",
                   "object": "plan",
                   "active": true,
                   "aggregate_usage": null,
@@ -234,7 +234,7 @@ http_interactions:
           "metadata": {
           },
           "plan": {
-            "id": "specialty-development",
+            "id": "t2-development",
             "object": "plan",
             "active": true,
             "aggregate_usage": null,

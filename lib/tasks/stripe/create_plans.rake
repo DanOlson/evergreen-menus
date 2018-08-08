@@ -14,7 +14,7 @@ class PlanCreator
                  price_cents:,
                  product_id:,
                  interval: 'month',
-                 trial_period_days: 21,
+                 trial_period_days: 14,
                  description: nil)
     @remote_id = remote_id
     @name = name
@@ -62,22 +62,22 @@ namespace :stripe do
 
     plans = [
       {
-        remote_id: "carryout-#{Rails.env}",
-        name: 'Carryout',
+        remote_id: "t1-#{Rails.env}",
+        name: 'The Snack',
         price_cents: 3000,
         product_id: product.id,
         description: 'Basic, in-house functions like print menus, digital displays, and website integration'
       },
       {
-        remote_id: "specialty-#{Rails.env}",
-        name: 'Specialty',
+        remote_id: "t2-#{Rails.env}",
+        name: 'The Meal',
         price_cents: 5000,
         product_id: product.id,
         description: 'Print menus, digital displays, website integration, Google My Business, and social media integrations'
       },
       {
-        remote_id: "banquet-#{Rails.env}",
-        name: 'Banquet',
+        remote_id: "t3-#{Rails.env}",
+        name: 'The Feast',
         price_cents: 7500,
         product_id: product.id,
         description: 'All features, plus white glove setup and premium support'

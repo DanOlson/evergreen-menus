@@ -24,7 +24,7 @@ describe StripeSubscription do
       expect(subscription.status).to eq 'trialing'
       expect(subscription.quantity).to eq 2
       expect(subscription.trial_end).to eq 1535422925
-      expect(subscription.plan.id).to eq 'specialty-development'
+      expect(subscription.plan.id).to eq 't2-development'
     end
   end
 
