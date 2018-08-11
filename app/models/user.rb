@@ -21,4 +21,8 @@ class User < ActiveRecord::Base
   def active_for_authentication?
     super && (!account || active?)
   end
+
+  def admin?
+    role == Role.admin
+  end
 end

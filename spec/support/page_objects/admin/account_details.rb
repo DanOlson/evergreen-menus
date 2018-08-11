@@ -12,6 +12,7 @@ module PageObjects
       end
 
       elements :establishments, '[data-test="establishment"]'
+      element :add_establishment_button, '[data-test="add-establishment"]'
       element :edit_button, '[data-test="edit-account"]'
       element :title, '[data-test="panel-title"]'
 
@@ -43,6 +44,10 @@ module PageObjects
 
       def name
         title.text
+      end
+
+      def add_establishment
+        add_establishment_button.click
       end
     end
   end

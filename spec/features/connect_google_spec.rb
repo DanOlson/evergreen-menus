@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Google OAuth2' do
-  let(:account) { create :account, name: 'Green Plate, LLC' }
+  let(:account) { create :account, :with_subscription, name: 'Green Plate, LLC' }
   let(:manager) { create :user, :manager, account: account }
   let(:staff) { create :user, account: account }
 

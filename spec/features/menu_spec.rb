@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'menu management' do
-  let(:account) { create :account }
+  let(:account) { create :account, :with_subscription }
   let(:establishment) { create :establishment, account: account }
 
   before do

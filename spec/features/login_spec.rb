@@ -2,10 +2,12 @@ require 'spec_helper'
 
 feature 'logging in' do
   scenario 'with valid credentials' do
+    account = create :account, :with_subscription
     user = create :user, {
       username: 'thedude',
       email: 'dude@lebowski.me',
-      password: 'thedudeabides'
+      password: 'thedudeabides',
+      account: account
     }
 
     visit '/users/sign_in'

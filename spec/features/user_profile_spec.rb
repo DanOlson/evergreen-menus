@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'user profile management' do
-  let(:account) { create :account }
+  let(:account) { create :account, :with_subscription }
   let(:user) do
     create :user, {
       account: account,

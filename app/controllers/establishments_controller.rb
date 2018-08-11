@@ -1,6 +1,7 @@
 class EstablishmentsController < ApplicationController
   load_and_authorize_resource :account
   load_and_authorize_resource :establishment, through: :account
+  check_entitlements :new_establishment, only: [:new, :create]
 
   def new
   end

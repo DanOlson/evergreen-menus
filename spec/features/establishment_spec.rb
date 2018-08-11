@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 feature 'establishment management' do
-  let(:user) { create :user, :manager }
+  let(:account) { create :account, :with_subscription }
+  let(:user) { create :user, :manager, account: account }
 
   scenario 'creating an establishment' do
     login user
@@ -18,7 +19,7 @@ feature 'establishment management' do
   end
 
   scenario 'editing an establishment' do
-    establishment = create :establishment, account: user.account
+    establishment = create :establishment, account: account
     login user
 
     click_link establishment.name
@@ -64,7 +65,7 @@ feature 'establishment management' do
   end
 
   scenario "editing a list", :js, :admin do
-    establishment = create :establishment, account: user.account
+    establishment = create :establishment, account: account
     login user
 
     click_link establishment.name
@@ -114,7 +115,7 @@ feature 'establishment management' do
   end
 
   scenario "a list can have prices and descriptions", :js, :admin do
-    establishment = create :establishment, account: user.account
+    establishment = create :establishment, account: account
     login user
 
     click_link establishment.name
@@ -162,7 +163,7 @@ feature 'establishment management' do
   end
 
   scenario 'items can be removed and unremoved from the list', :js, :admin do
-    establishment = create :establishment, account: user.account
+    establishment = create :establishment, account: account
     login user
 
     click_link establishment.name
@@ -205,7 +206,7 @@ feature 'establishment management' do
   end
 
   scenario 'unsaved items can be deleted from the UI', :js, :admin do
-    establishment = create :establishment, account: user.account
+    establishment = create :establishment, account: account
     login user
 
     click_link establishment.name
@@ -222,7 +223,7 @@ feature 'establishment management' do
   end
 
   scenario "items added to a list show up on the establishment's website", :admin, :js do
-    establishment = create :establishment, name: "The Lanes", account: user.account
+    establishment = create :establishment, name: "The Lanes", account: account
 
     login user
 
@@ -321,7 +322,7 @@ feature 'establishment management' do
   end
 
   scenario 'lists can be deleted', :admin, :js do
-    establishment = create :establishment, name: "The Lanes", account: user.account
+    establishment = create :establishment, name: "The Lanes", account: account
     list = establishment.lists.create!(name: 'Weekly Specials')
 
     login user
@@ -342,7 +343,7 @@ feature 'establishment management' do
   end
 
   scenario 'labels can be applied to list items', :admin, :js do
-    establishment = create :establishment, name: "Wally's", account: user.account
+    establishment = create :establishment, name: "Wally's", account: account
     login user
 
     click_link "Wally's"
@@ -455,7 +456,7 @@ feature 'establishment management' do
   end
 
   scenario 'Online Menu appears in menu list when it exists' do
-    establishment = create :establishment, account: user.account
+    establishment = create :establishment, account: account
     create :online_menu, establishment: establishment
     login user
 

@@ -10,7 +10,7 @@ admin = FactoryGirl.create :user, :admin, {
   password: 'password'
 }
 
-account = FactoryGirl.create :account
+account = FactoryGirl.create :account, :with_subscription, quantity: 10
 user    = FactoryGirl.create :user, :manager, {
   username: 'manager',
   password: 'password',
@@ -243,11 +243,12 @@ beers = [
 
 Establishment.all.each do |est|
   list = est.lists.create!(name: 'Beers', type: List::TYPE_DRINK)
-  beers.shuffle.take(16).each do |beer_name|
+  beers.shuffle.take(16).each_with_index do |beer_name, index|
     list.beers.create!({
       name: beer_name.encode,
       price: (3..9).to_a.shuffle.first.to_s,
-      description: "#{Faker::Beer.alcohol} - #{Faker::Beer.style} - #{Faker::Beer.ibu}"
+      description: "#{Faker::Beer.alcohol} - #{Faker::Beer.style} - #{Faker::Beer.ibu}",
+      position: index
     })
   end
 end

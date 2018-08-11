@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'staff management' do
-  let(:account) { create :account }
+  let(:account) { create :account, :with_subscription }
   let!(:staff_member) do
     create :user, {
       account: account,

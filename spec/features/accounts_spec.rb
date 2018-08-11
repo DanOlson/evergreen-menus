@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'account management' do
-  let(:account) { create :account, name: 'Green Plate, LLC' }
+  let(:account) { create :account, :with_subscription, name: 'Green Plate, LLC' }
   let(:user) { create :user, account: account }
   let(:bar_1) { create :establishment, name: "Bar 1", account: account }
   let(:bar_2) { create :establishment, name: "Bar 2", account: account }

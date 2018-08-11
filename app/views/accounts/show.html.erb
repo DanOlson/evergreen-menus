@@ -12,7 +12,9 @@
     <% end %>
   </div>
   <div class="button-wrapper">
-    <%= link_to "Add Establishment", new_account_establishment_path(@account), class: 'btn btn-success', data: { test: 'add-establishment' } %>
+    <% if entitled_to? :new_establishment %>
+      <%= link_to "Add Establishment", new_account_establishment_path(@account), class: 'btn btn-success', data: { test: 'add-establishment' } %>
+    <% end %>
     <% if can? :edit, @account %>
       <%= link_to 'Edit Account', edit_account_path(@account), class: 'btn btn-primary', data: { test: 'edit-account' } %>
     <% end %>

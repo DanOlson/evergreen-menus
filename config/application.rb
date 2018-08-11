@@ -22,8 +22,6 @@ module Beermapper
     config.active_record.default_timezone = :local
     config.active_record.time_zone_aware_types = [:time]
 
-    config.autoload_paths += [Rails.root.join('lib/constraints')]
-
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
 

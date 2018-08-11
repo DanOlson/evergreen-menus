@@ -3,7 +3,12 @@ task generate_third_party_site: :environment do
   require Rails.root.join 'lib/services/third_party_site_generator'
   include Rails.application.routes.url_helpers
 
-  establishment = Establishment.first || abort("NO ESTABLISHMENTS!")
+  menu = WebMenu.first
+  if !menu
+    puts "Couldn't generate third-party site: no web menus exist!"
+    exit(1)
+  end
+  establishment = menu.establishment
   menu = establishment.web_menus.first
   host = Rails.env.test? ? 'http://test.beermapper-api.locl' : 'http://beermapper-api.locl'
   embed_code = MenuEmbedCode.new({

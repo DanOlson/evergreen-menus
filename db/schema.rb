@@ -54,11 +54,11 @@ ActiveRecord::Schema.define(version: 20180807015213) do
 
   create_table "beers", force: :cascade do |t|
     t.string   "name"
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "establishment_id"
     t.integer  "price_in_cents"
-    t.text     "description"
     t.integer  "list_id"
     t.string   "labels"
     t.integer  "position"
