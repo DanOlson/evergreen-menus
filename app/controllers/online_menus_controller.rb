@@ -2,6 +2,7 @@ class OnlineMenusController < ApplicationController
   load_and_authorize_resource :account, except: :show
   load_and_authorize_resource :establishment, through: :account, except: :show
   load_and_authorize_resource :online_menu, through: :establishment, except: :show, singleton: true
+  check_entitlements :online_menu
 
   def edit
   end

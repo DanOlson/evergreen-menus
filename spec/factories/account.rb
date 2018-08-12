@@ -9,7 +9,7 @@ FactoryGirl.define do
       end
 
       after :create do |acct, evaluator|
-        plan = Plan.tier_2 || FactoryGirl.create(:plan, :tier2)
+        plan = Plan.tier_2 || FactoryGirl.create(:plan, :tier_2)
         Subscription.create!({
           account: acct,
           plan: plan,

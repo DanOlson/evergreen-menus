@@ -8,7 +8,7 @@ describe Entitlements do
   describe '#entitled_to?' do
     subject { instance.entitled_to? privilege }
 
-    describe ':new_establishment' do
+    describe :new_establishment do
       let(:privilege) { :new_establishment }
 
       before do
@@ -116,6 +116,108 @@ describe Entitlements do
           it { is_expected.to eq false }
         end
       end
+    end
+
+    shared_examples_for 'web integration entitlements' do
+      before do
+        Subscription.create!({
+          plan: plan,
+          account: account,
+          quantity: 1,
+          status: status,
+          remote_id: 'sub_foo'
+        })
+      end
+
+      context 'with tier_1 plan' do
+        let(:plan) { create :plan, :tier_1 }
+
+        context 'when the subscription is "active"' do
+          let(:status) { :active }
+          it { is_expected.to eq false }
+        end
+
+        context 'when the subscription is "pending_initial_payment"' do
+          let(:status) { :pending_initial_payment }
+          it { is_expected.to eq false }
+        end
+
+        context 'when the subscription is "canceled"' do
+          let(:status) { :canceled }
+          it { is_expected.to eq false }
+        end
+
+        context 'when the subscription is "inactive"' do
+          let(:status) { :inactive }
+          it { is_expected.to eq false }
+        end
+      end
+
+      context 'with tier_2 plan' do
+        let(:plan) { create :plan, :tier_2 }
+
+        context 'when the subscription is "active"' do
+          let(:status) { :active }
+          it { is_expected.to eq true }
+        end
+
+        context 'when the subscription is "pending_initial_payment"' do
+          let(:status) { :pending_initial_payment }
+          it { is_expected.to eq true }
+        end
+
+        context 'when the subscription is "canceled"' do
+          let(:status) { :canceled }
+          it { is_expected.to eq false }
+        end
+
+        context 'when the subscription is "inactive"' do
+          let(:status) { :inactive }
+          it { is_expected.to eq false }
+        end
+      end
+
+      context 'with tier_3 plan' do
+        let(:plan) { create :plan, :tier_3 }
+
+        context 'when the subscription is "active"' do
+          let(:status) { :active }
+          it { is_expected.to eq true }
+        end
+
+        context 'when the subscription is "pending_initial_payment"' do
+          let(:status) { :pending_initial_payment }
+          it { is_expected.to eq true }
+        end
+
+        context 'when the subscription is "canceled"' do
+          let(:status) { :canceled }
+          it { is_expected.to eq false }
+        end
+
+        context 'when the subscription is "inactive"' do
+          let(:status) { :inactive }
+          it { is_expected.to eq false }
+        end
+      end
+    end
+
+    describe :google_my_business do
+      let(:privilege) { :google_my_business }
+
+      it_behaves_like 'web integration entitlements'
+    end
+
+    describe :facebook do
+      let(:privilege) { :facebook }
+
+      it_behaves_like 'web integration entitlements'
+    end
+
+    describe :online_menu do
+      let(:privilege) { :online_menu }
+
+      it_behaves_like 'web integration entitlements'
     end
 
     context 'with unknown privilege' do

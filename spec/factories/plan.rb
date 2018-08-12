@@ -7,22 +7,22 @@ FactoryGirl.define do
     interval_count 1
     remote_id 't2-development'
 
-    trait :tier1 do
+    trait :tier_1 do
       name 'The Snack'
       price_cents 3000
-      remote_id 't1-development'
+      remote_id "t1-#{Rails.env}"
     end
 
-    trait :tier2 do
+    trait :tier_2 do
       name 'The Meal'
       price_cents 5000
-      remote_id 't2-development'
+      remote_id "t2-#{Rails.env}"
     end
 
-    trait :tier3 do
+    trait :tier_3 do
       name 'The Feast'
       price_cents 7500
-      remote_id 't3-development'
+      remote_id "t3-#{Rails.env}"
     end
   end
 end

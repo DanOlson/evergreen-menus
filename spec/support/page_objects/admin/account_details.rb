@@ -9,6 +9,12 @@ module PageObjects
         element :edit_google_link, '[data-test="edit-google-link"]'
         element :status_google_enabled, '[data-test="status-google-integration-enabled"]'
         element :status_google_disabled, '[data-test="status-google-integration-disabled"]'
+
+        element :connect_with_facebook_button, '[data-test="connect-facebook-button"]'
+        element :disconnect_from_facebook_button, '[data-test="disconnect-facebook-button"]'
+        element :edit_facebook_link, '[data-test="edit-facebook-link"]'
+        element :status_facebook_enabled, '[data-test="status-facebook-integration-enabled"]'
+        element :status_facebook_disabled, '[data-test="status-facebook-integration-disabled"]'
       end
 
       elements :establishments, '[data-test="establishment"]'
@@ -40,6 +46,26 @@ module PageObjects
 
       def has_edit_google_link?
         has_web_integrations? && web_integrations.has_edit_google_link?
+      end
+
+      def has_connect_with_facebook_button?
+        has_web_integrations? && web_integrations.has_connect_with_facebook_button?
+      end
+
+      def has_disconnect_from_facebook_button?
+        has_web_integrations? && web_integrations.has_disconnect_from_facebook_button?
+      end
+
+      def has_facebook_enabled_status?
+        has_web_integrations? && web_integrations.has_status_facebook_enabled?
+      end
+
+      def has_facebook_disabled_status?
+        has_web_integrations? && web_integrations.has_status_facebook_disabled?
+      end
+
+      def has_edit_facebook_link?
+        has_web_integrations? && web_integrations.has_edit_facebook_link?
       end
 
       def name
