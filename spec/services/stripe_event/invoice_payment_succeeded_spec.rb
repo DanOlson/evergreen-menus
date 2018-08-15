@@ -10,7 +10,7 @@ module StripeEvent
       )
     end
     let(:event) { Stripe::Event.construct_from event_data }
-    let(:instance) { InvoicePaymentSucceeded.new(event) }
+    let(:instance) { InvoicePaymentSucceeded.new event }
 
     describe 'handler registry' do
       it 'handles "invoice.payment_succeeded"' do

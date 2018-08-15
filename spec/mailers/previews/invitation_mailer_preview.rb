@@ -2,6 +2,7 @@
 class InvitationMailerPreview < ActionMailer::Preview
   def invitation_email
     invitation = UserInvitation.new({
+      id: '42',
       first_name: 'Donny',
       last_name: 'Kerabatsos',
       email: 'donny@lebowski.me',
