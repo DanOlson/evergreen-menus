@@ -26,18 +26,18 @@ class PlanCreator
   end
 
   def call
-    stripe_plan = Stripe::Plan.create({
-      id: remote_id,
-      nickname: name,
-      amount: price_cents,
-      currency: 'usd',
-      interval: interval,
-      product: product_id,
-      usage_type: 'licensed',
-      trial_period_days: trial_period_days
-    })
+    # stripe_plan = Stripe::Plan.create({
+    #   id: remote_id,
+    #   nickname: name,
+    #   amount: price_cents,
+    #   currency: 'usd',
+    #   interval: interval,
+    #   product: product_id,
+    #   usage_type: 'licensed',
+    #   trial_period_days: trial_period_days
+    # })
     Plan.create({
-      remote_id: stripe_plan.id,
+      remote_id: remote_id,
       name: name,
       price_cents: price_cents,
       interval: interval,
