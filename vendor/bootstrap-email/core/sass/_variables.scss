@@ -1,0 +1,107 @@
+$font-size-base: 16px;
+$line-height-base: 1.5;
+$headings-line-height: 1.2;
+$headings-ratios: (1: 2.25, 2: 2, 3: 1.75, 4: 1.5, 5: 1.25, 6: 1);
+
+//
+// Color system
+//
+
+$white:  #ffffff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black:  #000000 !default;
+
+$grays: (
+  100: $gray-100,
+  200: $gray-200,
+  300: $gray-300,
+  400: $gray-400,
+  500: $gray-500,
+  600: $gray-600,
+  700: $gray-700,
+  800: $gray-800,
+  900: $gray-900
+) !default;
+
+$blue:    #007bff !default;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #e83e8c !default;
+$red:     #dc3545 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #ffc107 !default;
+$green:   #2B9B53 !default;
+$teal:    #20c997 !default;
+$cyan:    #17a2b8 !default;
+
+$colors: (
+  blue: $blue,
+  indigo: $indigo,
+  purple: $purple,
+  pink: $pink,
+  red: $red,
+  orange: $orange,
+  yellow: $yellow,
+  green: $green,
+  teal: $teal,
+  cyan: $cyan,
+  white: $white,
+  gray: $gray-600,
+  gray-dark: $gray-800
+) !default;
+
+$theme-primary: $blue !default;
+$theme-secondary: $gray-600 !default;
+$theme-success: $green !default;
+$theme-danger: $red !default;
+$theme-warning: $yellow !default;
+$theme-info: $cyan !default;
+$theme-light: $gray-100 !default;
+$theme-dark: $gray-800 !default;
+
+$theme-colors: (
+  primary: $theme-primary,
+  secondary: $theme-secondary,
+  success: $theme-success,
+  danger: $theme-danger,
+  warning: $theme-warning,
+  info: $theme-info,
+  light: $theme-light,
+  dark: $theme-dark
+) !default;
+
+$spacer: $font-size-base;
+$spacers: (
+  0: 0,
+  1: ($spacer * .25),
+  2: ($spacer * .5),
+  3: $spacer,
+  4: ($spacer * 1.5),
+  5: ($spacer * 3)
+) !default;
+
+$font-family-sans-serif: Helvetica, Arial, sans-serif !default;
+
+$widths: (
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  100: 100%,
+  auto: auto
+) !default;
+
+$table-border-color: $gray-200;
+$table-border-width: 1px;
+
+// Utility functions
+@function heading-size($n) { @return map-get($headings-ratios, $n) * $font-size-base; }
+@function heading-line-height($n) { @return heading-size($n) * $headings-line-height; }
+

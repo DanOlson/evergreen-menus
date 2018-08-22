@@ -14,6 +14,7 @@ gem 'gretel',       '~> 3.0.9', github: 'DanOlson/gretel', branch: 'master'
 gem 'activerecord-import', '~> 0.23.0'
 gem 'money-rails',  '~> 1.11.0'
 gem 'stripe',       '~> 3.17.0'
+gem 'bootstrap-email', path: 'vendor/bootstrap-email'
 
 group :development, :test do
   gem 'rspec-rails',  '~> 3.5.0'

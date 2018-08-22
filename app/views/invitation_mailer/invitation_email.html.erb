@@ -1,9 +1,19 @@
-<h1>Hello, <%= @invitation.first_name %>!</h1>
-<p>
-  <%= @inviter %> has invited you to join Evergreen Menus so that you can help
-  keep the menus fresh at <%= @invitation.account.name %>.<br>
-</p>
-<p>
-  To register, please follow this link: <%= @registration_url %>
-</p>
-<p>Thanks, and have a great day!</p>
+<preview><%= @inviter %> has invited you to join Evergreen Menus</preview>
+<div class="card">
+  <div class="card-header">
+    <br>
+    <h1 class="text-center">Hello, <%= @invitation.first_name %>!</h1>
+  </div>
+  <div class="card-body">
+    <p>
+      <%= @inviter %> has invited you to join Evergreen Menus so that you can help
+      keep the menus fresh at <%= @invitation.account.name %>.<br>
+    </p>
+    <br>
+    <br>
+
+    <div class="text-center">
+      <a class="btn btn-success" href="<%= @registration_url %>">Accept Invitation</a>
+    </div>
+  </div>
+</div>

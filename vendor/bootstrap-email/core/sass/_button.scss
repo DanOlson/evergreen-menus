@@ -1,0 +1,59 @@
+.btn {
+  border-radius: 4px;
+  border-collapse: separate !important;
+}
+
+.btn td {
+  border-radius: 4px;
+  text-align: center;
+}
+
+.btn td a {
+  font-size: 16px;
+  font-family: Helvetica, Arial, sans-serif;
+  text-decoration: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  line-height: 1.25 * $font-size-base;
+  border: 1px solid #e9703e;
+  display: inline-block;
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+@each $color, $value in $theme-colors {
+  .btn-#{$color} td {
+    background-color: $value;
+  }
+  .btn-#{$color} td a {
+    background-color: $value;
+    @include color-yiq($value);
+    border-color: $value;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .btn-outline-#{$color} td {
+    background-color: transparent;
+    border-color: $value;
+  }
+  .btn-outline-#{$color} td a {
+    background-color: transparent;
+    border-color: $value;
+    color: $value;
+  }
+}
+
+.btn-sm td a {
+  font-size: .875 * $font-size-base;
+  padding: .25 * $font-size-base .5 * $font-size-base;
+  line-height: 1.5 * .875 * $font-size-base;
+  border-radius: .2 * $font-size-base;
+}
+
+.btn-lg td a {
+  font-size: 1.25 * $font-size-base;
+  padding: .5 * $font-size-base 1 * $font-size-base;
+  line-height: 1.5 * 1.25 * $font-size-base;
+  border-radius: .3 * $font-size-base;
+}

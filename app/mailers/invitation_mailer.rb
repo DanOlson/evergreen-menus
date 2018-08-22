@@ -8,7 +8,7 @@ class InvitationMailer < ApplicationMailer
     gid = user_invitation.to_sgid(for: 'registration')
     @registration_url = new_invited_registration_url(gid)
 
-    mail({
+    make_bootstrap_mail({
       to: user_invitation.email,
       subject: "Invitation to Evergreen Menus",
       from: DO_NOT_REPLY_EMAIL_ADDR

@@ -1,9 +1,15 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <%= stylesheet_link_tag fingerprinted_asset(:email), media: "all" %>
   </head>
-  <body>
-    <%= yield %>
+  <body class="bg-light">
+    <div class="container text-muted">
+      <div style="background-color:#2B9B53;height:76px;padding-left:20px;padding-top:20px;">
+        <%= image_tag logo_url, height: '50', width: '172', alt: 'Logo' %>
+      </div>
+      <%= yield %>
+    </div>
   </body>
 </html>

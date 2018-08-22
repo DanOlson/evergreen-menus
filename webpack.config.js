@@ -3,7 +3,6 @@
 const isProd  = process.argv.indexOf('-p') !== -1;
 const fs      = require('fs');
 const path    = require('path');
-const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -15,15 +14,11 @@ const plugins = [
     {
       from: path.join(__dirname, 'app', 'assets', 'images'),
       to: 'images/'
-    }
-  ]),
-  new CopyWebpackPlugin([
+    },
     {
       from: path.join(__dirname, 'app', 'assets', 'font-awesome-4.7.0/css'),
       to: 'font-awesome/css'
-    }
-  ]),
-  new CopyWebpackPlugin([
+    },
     {
       from: path.join(__dirname, 'app', 'assets', 'font-awesome-4.7.0/fonts'),
       to: 'font-awesome/fonts'
@@ -65,18 +60,19 @@ const plugins = [
 
 module.exports = {
   mode: isProd ? 'production' : 'development',
-  context: __dirname + '/app/assets',
+  context: __dirname,
   entry: {
-    application: './stylesheets/application.scss',
-    lists: './javascripts/lists.js',
-    'print-menus': './javascripts/print-menus.js',
-    'web-menus': './javascripts/web-menus.js',
-    'digital-display-menus': './javascripts/digital-display-menus.js',
-    'online-menu': './javascripts/online-menu.js',
-    'facebook-match-pages': './javascripts/facebook-match-pages.js',
-    'core-js': './javascripts/core-js.js',
-    digitalDisplay: './stylesheets/digital_display.scss',
-    facebookTab: './stylesheets/facebook_tab.scss',
+    application: './app/assets/stylesheets/application.scss',
+    lists: './app/assets/javascripts/lists.js',
+    'print-menus': './app/assets/javascripts/print-menus.js',
+    'web-menus': './app/assets/javascripts/web-menus.js',
+    'digital-display-menus': './app/assets/javascripts/digital-display-menus.js',
+    'online-menu': './app/assets/javascripts/online-menu.js',
+    'facebook-match-pages': './app/assets/javascripts/facebook-match-pages.js',
+    'core-js': './app/assets/javascripts/core-js.js',
+    digitalDisplay: './app/assets/stylesheets/digital_display.scss',
+    facebookTab: './app/assets/stylesheets/facebook_tab.scss',
+    email: './vendor/bootstrap-email/core/bootstrap-email.scss'
   },
   output: {
     path: __dirname + '/public',
@@ -113,9 +109,7 @@ module.exports = {
       }
     ]
   },
-
-  plugins: plugins,
-
+  plugins,
   optimization: {
     splitChunks: {
       cacheGroups: {

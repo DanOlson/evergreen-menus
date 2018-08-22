@@ -362,7 +362,7 @@ feature 'account management' do
       find('[data-test="send-reset-password-instructions"]').click
 
       email = ActionMailer::Base.deliveries.first
-      email_body = email.body.raw_source
+      email_body = email.html_part.to_s
 
       expect(email.from).to eq ['do-not-reply@evergreenmenus.com']
 
