@@ -35,7 +35,7 @@ Capybara::Webkit.configure do |config|
   config.allow_url("admin.test.evergreenmenus.com")
   config.allow_url("cdn.test.evergreenmenus.com")
   config.allow_url("test.my-bar.locl")
-  config.allow_url("maxcdn.bootstrapcdn.com")
+  config.allow_url("stackpath.bootstrapcdn.com")
 end
 
 RSpec.configure do |config|
