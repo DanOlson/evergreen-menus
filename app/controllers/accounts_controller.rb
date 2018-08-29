@@ -20,12 +20,11 @@ class AccountsController < ApplicationController
   end
 
   def update
-    update_params = account_params
-    update_params.delete(:active) unless can?(:activate, @account)
-    if @account.update update_params
+    service = AccountUpdateService.call update_params
+    if service.success?
       redirect_to @account, notice: 'Account updated'
     else
-      errors = @account.errors.full_messages
+      errors = service.error_messages
       flash.now[:alert] = errors.join(', ')
       render :edit
     end
@@ -44,11 +43,28 @@ class AccountsController < ApplicationController
 
   private
 
+  def update_params
+    {
+      account: @account,
+      ability: current_ability
+    }.tap do |h|
+      h.merge! as_sym_hash(account_params)
+      h.merge! stripe_params
+    end
+  end
+
   def account_params
     params.require(:account).permit(
       :name,
-      :active,
-      :google_my_business_account_id
+      :active
     )
+  end
+
+  def stripe_params
+    { stripe: as_sym_hash(params.fetch(:stripe, {})) }
+  end
+
+  def as_sym_hash(strong_params)
+    strong_params.to_unsafe_h.symbolize_keys
   end
 end

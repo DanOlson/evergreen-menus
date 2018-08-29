@@ -13,4 +13,37 @@ describe StripeCustomer do
       expect(stripe_customer.id).to start_with 'cus_'
     end
   end
+
+  describe '.update', :vcr do
+    context 'when the customer is found' do
+      it 'returns the update customer' do
+        customer = StripeCustomer.update 'cus_DHp2EbahQyQruN', {
+          source: 'tok_1D3aWaFuGCUWqFqFcW4PeJh4'
+        }
+
+        expect(customer).to be_a StripeCustomer
+        expect(customer.id).to eq 'cus_DHp2EbahQyQruN'
+      end
+    end
+
+    context 'when the customer is not found' do
+      it 'raises a StripeCustomer::InvalidRequestError error' do
+        expect {
+          StripeCustomer.update 'asdf', {
+            source: 'tok_1D3aWaFuGCUWqFqFcW4PeJh4'
+          }
+        }.to raise_error(StripeCustomer::InvalidRequestError)
+      end
+    end
+
+    context 'when the source is bad' do
+      it 'raises a StripeCustomer::InvalidRequestError error' do
+        expect {
+          StripeCustomer.update 'cus_DHp2EbahQyQruN', {
+            source: 'tok_qwerty'
+          }
+        }.to raise_error(StripeCustomer::InvalidRequestError)
+      end
+    end
+  end
 end

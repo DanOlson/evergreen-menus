@@ -24,16 +24,17 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara',         '~> 2.7.1'
-  gem 'json_spec',        '~> 1.1.5'
-  gem 'capybara-webkit',  '~> 1.11.1'
-  gem 'vcr',              '~> 3.0.3'
-  gem 'webmock',          '~> 2.3.0'
-  gem 'launchy',          '~> 2.4.3'
-  gem 'database_cleaner', '~> 1.5.3'
-  gem 'site_prism',       '~> 2.9'
-  gem 'pdf-reader',       '~> 2.0'
-  gem 'timecop',          '~> 0.9.1'
+  gem 'capybara',                 '~> 2.7.1'
+  gem 'json_spec',                '~> 1.1.5'
+  gem 'capybara-webkit',          '~> 1.11.1'
+  gem 'vcr',                      '~> 3.0.3'
+  gem 'webmock',                  '~> 2.3.0'
+  gem 'launchy',                  '~> 2.4.3'
+  gem 'database_cleaner',         '~> 1.5.3'
+  gem 'site_prism',               '~> 2.9'
+  gem 'pdf-reader',               '~> 2.0'
+  gem 'timecop',                  '~> 0.9.1'
+  gem 'rails-controller-testing', '~> 1.0.1'
 end
 
 group :development do

@@ -14,6 +14,28 @@ describe StripeClient, :vcr do
     end
   end
 
+  describe '.update_customer' do
+    context 'when the customer is found' do
+      it 'updates the customer' do
+        customer = StripeClient.update_customer 'cus_DHp2EbahQyQruN', {
+          source: 'tok_1D3aJbFuGCUWqFqFa3tya62B'
+        }
+
+        expect(customer).to_not be_nil
+      end
+    end
+
+    context 'when the customer is not found' do
+      it 'errors' do
+        expect {
+          StripeClient.update_customer nil, {
+            source: 'tok_1D3aJbFuGCUWqFqFa3tya62B'
+          }
+        }.to raise_error(Stripe::InvalidRequestError)
+      end
+    end
+  end
+
   describe '.create_subscription' do
     it 'creates a subscription with the Stripe API' do
       subscription = StripeClient.create_subscription({

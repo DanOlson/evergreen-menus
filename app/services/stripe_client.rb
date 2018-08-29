@@ -4,6 +4,10 @@ class StripeClient
       Stripe::Customer.create args
     end
 
+    def update_customer(customer_id, **args)
+      Stripe::Customer.update customer_id, args
+    end
+
     def create_subscription(customer:, plan:, quantity: 1, trial_end:)
       Stripe::Subscription.create({
         customer: customer,
