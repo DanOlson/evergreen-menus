@@ -1,5 +1,9 @@
 class StripeClient
   class << self
+    def find_customer(customer_id)
+      Stripe::Customer.retrieve customer_id
+    end
+
     def create_customer(**args)
       Stripe::Customer.create args
     end

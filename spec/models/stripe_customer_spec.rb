@@ -1,6 +1,21 @@
 require 'spec_helper'
 
 describe StripeCustomer do
+  describe '.find', :vcr do
+    it 'finds the customer by id' do
+      stripe_customer = StripeCustomer.find 'cus_DHp2EbahQyQruN'
+      expect(stripe_customer).to be_a StripeCustomer
+      expect(stripe_customer.id).to eq 'cus_DHp2EbahQyQruN'
+      expect(stripe_customer.email).to eq 'liam.robinson.16@example.com'
+    end
+
+    context 'when the customer cannot be found' do
+      it 'returns nil' do
+        expect(StripeCustomer.find('fakecustomer')).to eq nil
+      end
+    end
+  end
+
   describe '.create', :vcr do
     it 'creates a StripeCustomer' do
       args = {

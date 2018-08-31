@@ -5,6 +5,9 @@ class AccountsController < ApplicationController
   end
 
   def edit
+    @stripe_pub_key = ENV.fetch('STRIPE_PUB_KEY') {
+      APP_CONFIG.dig(:stripe, :pub_key)
+    }
     @account = @account.decorate
   end
 
@@ -24,6 +27,7 @@ class AccountsController < ApplicationController
     if service.success?
       redirect_to @account, notice: 'Account updated'
     else
+      @account = @account.decorate
       errors = service.error_messages
       flash.now[:alert] = errors.join(', ')
       render :edit

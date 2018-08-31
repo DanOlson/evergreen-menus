@@ -23,6 +23,13 @@ class AccountDecorator < ApplicationDecorator
     @facebook_pages ||= facebook_service.pages
   end
 
+  def credit_card_info
+    return unless object.stripe_id.present?
+    customer = StripeCustomer.find(object.stripe_id) or return
+    card_info = customer.sources.data[0] or return
+    "#{card_info.brand} ending in #{card_info.last4}"
+  end
+
   private
 
   def default_gmb_service

@@ -47,4 +47,34 @@ describe AccountDecorator do
       expect(instance.facebook_pages).to eq fb_pages
     end
   end
+
+  describe '#credit_card_info', :vcr do
+    let(:account) { build_stubbed :account, stripe_id: stripe_id }
+    let(:instance) do
+      AccountDecorator.new(account)
+    end
+    subject { instance.credit_card_info }
+
+    context 'when the account has a stripe_id' do
+      let(:stripe_id) { 'cus_DHp2EbahQyQruN' }
+
+      it { is_expected.to eq 'Visa ending in 4242' }
+
+      context 'but the Stripe customer cannot be found' do
+        let(:stripe_id) { 'cus_abc' }
+        it { is_expected.to eq nil }
+      end
+
+      context 'but the customer does not have a card' do
+        # Jeff Lebowski has no card
+        let(:stripe_id) { 'cus_DVe73qX1zqGHby' }
+        it { is_expected.to eq nil }
+      end
+    end
+
+    context 'when the account has no stripe_id' do
+      let(:stripe_id) { nil }
+      it { is_expected.to eq nil }
+    end
+  end
 end

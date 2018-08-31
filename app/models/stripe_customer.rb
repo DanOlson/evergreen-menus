@@ -2,6 +2,11 @@ class StripeCustomer < SimpleDelegator
   InvalidRequestError = Class.new(StandardError)
 
   class << self
+    def find(stripe_id)
+      new StripeClient.find_customer stripe_id
+    rescue Stripe::InvalidRequestError
+    end
+
     def create(**args)
       new StripeClient.create_customer args
     end
