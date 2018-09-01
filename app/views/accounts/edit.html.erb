@@ -1,1 +1,40 @@
-<%= render 'form', title: 'Edit Account', submit_text: 'Save' %>
+<%= render 'form', title: 'Edit Account', submit_text: 'Save' do %>
+  <hr class="section-boundary">
+
+  <p class="cancel-text">
+    We hope you find Evergreen Menus useful, but if for any reason you're not happy, you can always
+    <a href="" class="js-cancel-account" data-test="cancel-account-link">cancel your account</a>.
+  </p>
+
+  <div class="expandable hidden" data-help="cancel">
+  <%= form_for :cancel_account, url: account_cancelation_path(@account) do |f| %>
+    <div class="row">
+      <div class="form-group">
+        <%= f.label :reason, for: 'reason' %>
+        <%= f.text_area :reason, class: 'form-control', aria: { describedby: 'cancel-reason-help' } %>
+        <small id="cancel-reason-help" class="form-text text-muted">
+          Please let us know why you're canceling. It will help us improve for the future.
+        </small>
+      </div>
+    </div>
+    <div class="row">
+      <div class="cancel-button-wrapper">
+        <%= f.submit 'Cancel', class: 'btn btn-evrgn-delete', data: { confirm: 'Are you sure you want to cancel your account?' } %>
+      </div>
+    </div>
+  <% end %>
+  </div>
+
+  <%= render 'shared/toggle_help' %>
+  <% content_for :javascripts do %>
+    <script type="text/javascript">
+      var cancelLink = document.querySelector('.js-cancel-account')
+      cancelLink.addEventListener('click', function (e) {
+        e.preventDefault()
+        toggleHelp('cancel')
+        document.querySelector('textarea[name="cancel_account[reason]"]').focus()
+      })
+    </script>
+  <% end %>
+<% end %>
+

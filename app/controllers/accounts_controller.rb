@@ -45,6 +45,9 @@ class AccountsController < ApplicationController
     redirect_to accounts_path, notice: 'Account deleted'
   end
 
+  def cancel
+  end
+
   private
 
   def update_params
