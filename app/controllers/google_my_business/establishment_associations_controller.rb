@@ -8,37 +8,18 @@ module GoogleMyBusiness
     end
 
     def create
-      establishment = find_establishment
+      authorize! :update, @account
       authorize! :manage, :google_my_business
-      if establishment.update establishment_params
-        MenuBootstrapper.call({
-          establishment: establishment,
-          gmb_location_id: establishment.google_my_business_location_id
-        })
-        head :no_content
-      else
-        @account = @account.decorate
-        render :new, alert: @account.errors.full_messages.join("\n")
-      end
-    end
 
-    private
+      EstablishmentAssociationService.new({
+        ability: current_ability,
+        establishment_id: params[:establishment_id],
+        location_id: params[:location_id]
+      }).call
 
-    def find_establishment
-      @account
-        .establishments
-        .accessible_by(current_ability)
-        .find_by! id: params[:establishment_id]
-    end
-
-    def establishment_params
-      { google_my_business_location_id: params.require(:location_id) }
-    end
-
-    def account_params
-      params
-        .require(:account)
-        .permit(establishments_attributes: [:id, :google_my_business_location_id])
+      head :no_content
+    rescue CanCan::AccessDenied
+      head :unauthorized
     end
   end
 end

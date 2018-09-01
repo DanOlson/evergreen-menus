@@ -24,8 +24,4 @@ class OauthGoogleController < ApplicationController
   def service
     GoogleOauthService.new
   end
-
-  def establishment_bootstrapper
-    GoogleMyBusiness::EstablishmentBootstrapper.new account
-  end
 end
