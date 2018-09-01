@@ -1,0 +1,34 @@
+.google-match-locations {
+  .my-auto {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+
+  .google-icon {
+    vertical-align: middle;
+    color: #e94137;
+  }
+
+  .status-linked {
+    color: $color-evergreen;
+  }
+
+  .status-unlinked {
+    color: #b65760;
+  }
+
+  .location-name {
+    vertical-align: middle;
+    margin-left: 1rem;
+  }
+
+  .icon {
+    color: #868e96;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+  }
+}

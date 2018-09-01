@@ -1,32 +1,13 @@
+<script>
+  window._EVERGREEN = {
+    locations: <%= raw @account.google_my_business_locations.to_json %>,
+    establishments: <%= raw @account.establishments.order(:name).to_json %>,
+    updateAssociationPath: "<%= raw account_google_my_business_establishment_associations_path(@account) %>",
+    csrfToken: "<%= raw form_authenticity_token %>"
+  }
+</script>
+
 <% breadcrumb :account, @account %>
-<%= render 'shared/panel', title: 'Associate Google My Business Locations', data_test: 'associate-google-my-business-locations-form' do %>
-  <%= form_for @account, url: account_google_my_business_establishment_associations_path, method: :post do |f| %>
-    <div class="col-sm-6">
-      <% if @account.google_my_business_enabled? %>
-        <%= f.fields_for :establishments, @account.establishments.order(:name) do |establishments_form| %>
-          <% est = establishments_form.object %>
-          <% err = @account.errors.messages[:"establishments[#{establishments_form.index}].google_my_business_location_id"].first %>
-          <div class="form-group">
-            <%= establishments_form.label :google_my_business_location_id, est.name, class: 'control-label' %>
-            <%= establishments_form.select :google_my_business_location_id, options_for_select(google_my_business_location_opts(@account), selected: establishments_form.object.google_my_business_location_id), { include_blank: true }, class: "form-control #{err and 'is-invalid'}", data: { test: 'gmb-location-select' }, aria: { describedby: "gmb-loc-id-explanation-#{est.id}" } %>
-          </div>
-          <% if err %>
-            <div class="invalid-feedback" style="display: block;">
-              Location id <%= err %>
-            </div>
-          <% end %>
-          <small id="gmb-loc-id-explanation-<%= est.id %>" class="form-text text-muted">
-            Please select the location that represents <%= est.name %> so that we publish menu data to the right place
-          </small>
-
-          <hr role="presentation" />
-        <% end %>
-      <% end %>
-
-      <div class="button-wrapper">
-        <%= f.submit 'Submit', class: 'btn btn-evrgn-primary', data: { test: 'account-form-submit' } %>
-        <%= link_to 'Cancel', account_google_my_business_account_associations_path(@account), class: 'btn btn-outline-secondary', data: { test: 'account-form-cancel' } %>
-      </div>
-    </div>
-  <% end %>
-<% end %>
+<div id="google-match-locations-app-root" class="google-match-locations"></div>
+<%= javascript_include_tag fingerprinted_asset(:vendor) %>
+<%= javascript_include_tag fingerprinted_asset('google-match-locations') %>

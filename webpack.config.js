@@ -69,6 +69,7 @@ module.exports = {
     'digital-display-menus': './app/assets/javascripts/digital-display-menus.js',
     'online-menu': './app/assets/javascripts/online-menu.js',
     'facebook-match-pages': './app/assets/javascripts/facebook-match-pages.js',
+    'google-match-locations': './app/assets/javascripts/google-match-locations.js',
     'core-js': './app/assets/javascripts/core-js.js',
     digitalDisplay: './app/assets/stylesheets/digital_display.scss',
     facebookTab: './app/assets/stylesheets/facebook_tab.scss',

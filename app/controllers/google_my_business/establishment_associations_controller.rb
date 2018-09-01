@@ -8,10 +8,14 @@ module GoogleMyBusiness
     end
 
     def create
+      establishment = find_establishment
       authorize! :manage, :google_my_business
-      if @account.update account_params
-        EstablishmentBootstrapper.new(@account).bootstrap_menus
-        redirect_to account_path(@account), notice: 'Google My Business onboarding is complete!'
+      if establishment.update establishment_params
+        MenuBootstrapper.call({
+          establishment: establishment,
+          gmb_location_id: establishment.google_my_business_location_id
+        })
+        head :no_content
       else
         @account = @account.decorate
         render :new, alert: @account.errors.full_messages.join("\n")
@@ -19,6 +23,17 @@ module GoogleMyBusiness
     end
 
     private
+
+    def find_establishment
+      @account
+        .establishments
+        .accessible_by(current_ability)
+        .find_by! id: params[:establishment_id]
+    end
+
+    def establishment_params
+      { google_my_business_location_id: params.require(:location_id) }
+    end
 
     def account_params
       params
