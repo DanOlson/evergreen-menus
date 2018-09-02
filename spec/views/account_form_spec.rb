@@ -11,7 +11,7 @@ describe 'accounts/edit' do
 
   context 'when the account has a stripe_id' do
     let(:account) do
-      acct = build :account, stripe_id: 'customer'
+      acct = build :account, id: 1, stripe_id: 'customer'
       allow(acct).to receive(:credit_card_info) { 'Visa ending in 4242' }
       acct
     end
@@ -23,7 +23,7 @@ describe 'accounts/edit' do
   end
 
   context 'when the account does not have a stripe_id' do
-    let(:account) { build :account }
+    let(:account) { build :account, id: 1 }
 
     it 'has no credit card form' do
       account_form = Capybara::Node::Simple.new rendered

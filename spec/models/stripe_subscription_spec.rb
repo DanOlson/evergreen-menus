@@ -57,4 +57,17 @@ describe StripeSubscription do
       end
     end
   end
+
+  describe '#cancel', :vcr do
+    let(:subscription) do
+      StripeSubscription.new Stripe::Subscription.retrieve 'sub_DN51hWFP1WWaiC'
+    end
+
+    it 'cancels the subscription' do
+      result = subscription.cancel
+      expect(result).to be_a StripeSubscription
+      expect(result.canceled_at).to_not be_nil
+      expect(result.status).to eq 'canceled'
+    end
+  end
 end

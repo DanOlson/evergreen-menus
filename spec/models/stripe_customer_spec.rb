@@ -61,4 +61,12 @@ describe StripeCustomer do
       end
     end
   end
+
+  describe '#subscriptions', :vcr do
+    it 'returns an array of StripeSubscriptions' do
+      customer = StripeCustomer.find 'cus_DNRZrCKLanBhY0'
+      subscriptions = customer.subscriptions
+      expect(subscriptions).to all be_a StripeSubscription
+    end
+  end
 end

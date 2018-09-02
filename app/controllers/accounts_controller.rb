@@ -46,6 +46,12 @@ class AccountsController < ApplicationController
   end
 
   def cancel
+    AccountCancellationService.call({
+      ability: current_ability,
+      account_id: params[:account_id]
+    })
+    sign_out current_user
+    redirect_to 'https://evergreenmenus.com'
   end
 
   private

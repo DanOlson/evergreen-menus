@@ -17,4 +17,8 @@ class StripeCustomer < SimpleDelegator
       raise InvalidRequestError
     end
   end
+
+  def subscriptions
+    super.data.map { |s| StripeSubscription.new s }
+  end
 end

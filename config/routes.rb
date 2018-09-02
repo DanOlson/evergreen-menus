@@ -31,7 +31,7 @@ Beermapper::Application.routes.draw do
   get 'amp/lists/:id' => 'amp_lists#show'
   resources :web_menus, only: :show
   resources :accounts do
-    post '/cancel' => 'accounts#cancel', as: :cancelation
+    post '/cancel' => 'accounts#cancel', as: :cancellation
     resources :establishments do
       resources :lists
       resources :menus, path: '/print_menus'

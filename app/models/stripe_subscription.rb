@@ -15,4 +15,8 @@ class StripeSubscription < SimpleDelegator
       plan.interval_count.send(plan.interval).from_now from_date
     end
   end
+
+  def cancel
+    self.class.new delete
+  end
 end
