@@ -10,7 +10,9 @@ class ListItemPriceInput extends Component {
           <label htmlFor={`list_beers_attributes_${appId}_price`} className="sr-only">
             Price
           </label>
-          <span className="beer-input-price-currency input-group-addon">$</span>
+          <div className="input-group-prepend">
+            <span className="beer-input-price-currency input-group-text">$</span>
+          </div>
           <input
             type="number"
             step="0.01"
