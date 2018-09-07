@@ -16,7 +16,7 @@ gem 'stripe',       '~> 3.17.0'
 gem 'bootstrap-email', path: 'vendor/bootstrap-email'
 
 group :development, :test do
-  gem 'rspec-rails',  '~> 3.5.0'
+  gem 'rspec-rails',  '~> 3.8.0'
   gem 'pry-rails',    '~> 0.3.2'
   gem 'factory_girl', '~> 4.7.0'
   gem 'faker',        '~> 1.8', github: 'stympy/faker', branch: 'master'
