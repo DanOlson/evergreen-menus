@@ -10,11 +10,8 @@
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
 
-# Although this is not needed for an api-only application, rails4 
-# requires secret_key_base or secret_toke to be defined, otherwise an 
+# Although this is not needed for an api-only application, rails4
+# requires secret_key_base or secret_toke to be defined, otherwise an
 # error is raised.
-# Using secret_token for rails3 compatibility. Change to secret_key_base
-# to avoid deprecation warning.
 # Can be safely removed in a rails3 api-only application.
-Beermapper::Application.config.secret_token    = APP_CONFIG[:secret_token]
 Beermapper::Application.config.secret_key_base = APP_CONFIG[:secret_token]

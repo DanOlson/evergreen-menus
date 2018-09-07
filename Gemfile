@@ -1,11 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'rails',        '>= 5.0.0.1', '< 5.1'
+gem 'rails',        '~> 5.2.1'
 gem 'pg',           '~> 0.18.0'
 gem 'bcrypt',       '~> 3.1.7'
-gem 'kaminari',     '~> 0.15.1'
-gem 'devise',       '~> 4.2.0'
-gem 'cancancan',    '~> 1.15.0'
+gem 'devise',       '~> 4.5.0'
+gem 'cancancan',    '~> 2.2.0'
 gem 'prawn',        '~> 2.2'
 gem 'mailgun-ruby', '~> 1.1.6'
 gem 'signet',       '~> 0.8.1'
@@ -30,7 +29,7 @@ group :test do
   gem 'vcr',                      '~> 3.0.3'
   gem 'webmock',                  '~> 2.3.0'
   gem 'launchy',                  '~> 2.4.3'
-  gem 'database_cleaner',         '~> 1.5.3'
+  gem 'database_cleaner',         '~> 1.7.0'
   gem 'site_prism',               '~> 2.9'
   gem 'pdf-reader',               '~> 2.0'
   gem 'timecop',                  '~> 0.9.1'
@@ -43,9 +42,4 @@ group :development do
   gem 'capistrano-bundler',   '~> 1.1', require: false
   gem 'capistrano-rvm',       '~> 0.1', require: false
   gem 'capistrano-passenger', '~> 0.2', require: false
-end
-
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
 end
