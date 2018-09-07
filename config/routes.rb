@@ -1,4 +1,4 @@
-Beermapper::Application.routes.draw do
+EvergreenMenus::Application.routes.draw do
   devise_for :users, controllers: { registrations: 'user_registrations' }
   as :user do
     get 'register/:invitation', to: 'user_registrations#new', as: :new_invited_registration

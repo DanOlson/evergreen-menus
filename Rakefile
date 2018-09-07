@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Beermapper::Application.load_tasks
+EvergreenMenus::Application.load_tasks

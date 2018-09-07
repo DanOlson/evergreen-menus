@@ -3,7 +3,7 @@ environment_url_options = {
   protocol: 'https'
 }
 
-Beermapper::Application.configure do
+EvergreenMenus::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Production DB is on UTC

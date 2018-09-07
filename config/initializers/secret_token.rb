@@ -14,4 +14,4 @@
 # requires secret_key_base or secret_toke to be defined, otherwise an
 # error is raised.
 # Can be safely removed in a rails3 api-only application.
-Beermapper::Application.config.secret_key_base = APP_CONFIG[:secret_token]
+EvergreenMenus::Application.config.secret_key_base = APP_CONFIG[:secret_token]
