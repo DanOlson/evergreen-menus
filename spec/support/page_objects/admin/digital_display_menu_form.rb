@@ -42,7 +42,7 @@ module PageObjects
         # seem to load <object>s out of the box.
         def initialize(parent, root_element)
           path = root_element['data']
-          cookie = "_beermapper_session=#{page.driver.cookies['_beermapper_session']}"
+          cookie = "_evergreen_session=#{page.driver.cookies['_evergreen_session']}"
           open(Capybara.app_host + path, 'Cookie' => cookie) do |io|
             preview_root_element = Capybara::Node::Simple.new io.read
             super(parent, preview_root_element)

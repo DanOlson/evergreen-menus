@@ -28,7 +28,7 @@ module PageObjects
 
         def pdf_reader
           @pdf_reader ||= begin
-            cookie = "_beermapper_session=#{page.driver.cookies['_beermapper_session']}"
+            cookie = "_evergreen_session=#{page.driver.cookies['_evergreen_session']}"
             io = open(Capybara.app_host + url, 'Cookie' => cookie)
             PDF::Reader.new io
           end
