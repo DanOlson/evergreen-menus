@@ -4,6 +4,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'vcr'
 require Rails.root.join 'db/seeds/role_seeder'
+require Rails.root.join 'lib/services/third_party_site_generator'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -49,6 +50,7 @@ RSpec.configure do |config|
 
   config.include DeviseRequestSpecHelpers, type: :request
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include AuthenticationHelper, type: :feature
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

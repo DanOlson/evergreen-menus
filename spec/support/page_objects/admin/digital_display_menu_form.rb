@@ -1,4 +1,5 @@
 require_relative './roles/list_selectable'
+require_relative '../../authentication_helper'
 
 module PageObjects
   module Admin
@@ -6,6 +7,8 @@ module PageObjects
       set_url_matcher %r{/accounts/\d+/establishments/\d+/digital_displays/(new|\d+/edit)}
 
       class DigitalDisplayMenuPreview < SitePrism::Section
+        include AuthenticationHelper
+
         class List < SitePrism::Section
           class Beer < SitePrism::Section
             element :name_wrapper, '[data-test="digital-display-menu-list-item-name"]'
@@ -42,8 +45,7 @@ module PageObjects
         # seem to load <object>s out of the box.
         def initialize(parent, root_element)
           path = root_element['data']
-          cookie = "_evergreen_session=#{page.driver.cookies['_evergreen_session']}"
-          open(Capybara.app_host + path, 'Cookie' => cookie) do |io|
+          open(Capybara.app_host + path, 'Cookie' => session_cookie) do |io|
             preview_root_element = Capybara::Node::Simple.new io.read
             super(parent, preview_root_element)
           end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'digital display menu management' do
+feature 'web menu management' do
   let(:account) { create :account, :with_subscription }
   let(:establishment) { create :establishment, account: account }
 

@@ -1,6 +1,7 @@
 require 'open-uri'
 require_relative './roles/availability_restrictable'
 require_relative './roles/list_selectable'
+require_relative '../../authentication_helper'
 
 module PageObjects
   module Admin
@@ -8,6 +9,8 @@ module PageObjects
       set_url_matcher %r{/accounts/\d+/establishments/\d+/print_menus/(new|\d+/edit)}
 
       class MenuPreview < SitePrism::Section
+        include AuthenticationHelper
+
         element :pdf, '[data-test="menu-pdf"]'
 
         def url
@@ -28,8 +31,7 @@ module PageObjects
 
         def pdf_reader
           @pdf_reader ||= begin
-            cookie = "_evergreen_session=#{page.driver.cookies['_evergreen_session']}"
-            io = open(Capybara.app_host + url, 'Cookie' => cookie)
+            io = open(Capybara.app_host + url, 'Cookie' => session_cookie)
             PDF::Reader.new io
           end
         end

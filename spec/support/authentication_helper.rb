@@ -1,6 +1,4 @@
-shared_context type: :feature do
-  require Rails.root.join 'lib/services/third_party_site_generator'
-
+module AuthenticationHelper
   def login(user, username: user.username, password: user.password)
     visit '/users/sign_in'
 
@@ -11,5 +9,10 @@ shared_context type: :feature do
 
   def logout
     find('[data-test="logout"]').click
+  end
+
+  def session_cookie
+    cookie = page.send(:driver).cookies['_evergreen_session']
+    "_evergreen_session=#{cookie}"
   end
 end
