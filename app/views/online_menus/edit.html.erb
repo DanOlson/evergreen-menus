@@ -10,6 +10,6 @@
   <div id="online-menu-app-root"></div>
 <% end %>
 
-<%= javascript_include_tag fingerprinted_asset('core-js') %>
-<%= javascript_include_tag fingerprinted_asset(:vendor) %>
-<%= javascript_include_tag fingerprinted_asset('online-menu') %>
+<%= javascript_include_tag fingerprinted_asset('core-js'), skip_pipeline: true %>
+<%= javascript_include_tag fingerprinted_asset(:vendor), skip_pipeline: true %>
+<%= javascript_include_tag fingerprinted_asset('online-menu'), skip_pipeline: true %>

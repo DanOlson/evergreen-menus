@@ -19,6 +19,6 @@
   <%= button_to 'Delete', account_establishment_menu_path(account, establishment, menu), method: :delete, class: 'hidden', id: 'menu-form-delete', data: { confirm: 'Are you sure you want to delete this menu?' } %>
 <% end %>
 
-<%= javascript_include_tag fingerprinted_asset('core-js') %>
-<%= javascript_include_tag fingerprinted_asset(:vendor) %>
-<%= javascript_include_tag fingerprinted_asset('print-menus') %>
+<%= javascript_include_tag fingerprinted_asset('core-js'), skip_pipeline: true %>
+<%= javascript_include_tag fingerprinted_asset(:vendor), skip_pipeline: true %>
+<%= javascript_include_tag fingerprinted_asset('print-menus'), skip_pipeline: true %>
