@@ -23,6 +23,8 @@ class Beer < ActiveRecord::Base
   belongs_to :establishment
   belongs_to :list
 
+  has_one_attached :image
+
   validates :position, presence: true
 
   class << self
@@ -54,6 +56,11 @@ class Beer < ActiveRecord::Base
     super().merge({
       "price" => price,
       "labels" => Array(labels)
-    })
+    }).tap do |h|
+      if image.attached?
+        h['imageUrl'] = Rails.application.routes.url_helpers.rails_representation_url(image.variant(resize: '100X100'))
+        h['imageFilename'] = image.filename
+      end
+    end
   end
 end

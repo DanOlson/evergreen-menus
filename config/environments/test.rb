@@ -48,6 +48,7 @@ EvergreenMenus::Application.configure do
   config.active_support.deprecation = :stderr
 
   # config.log_level = :debug
+  config.active_storage.service = :test
 end
 
 Rails.application.routes.default_url_options.merge!(environment_url_options)

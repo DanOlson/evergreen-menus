@@ -43,6 +43,8 @@ EvergreenMenus::Application.configure do
   config.assets.debug = false
   config.assets.compile = false
   config.assets.quiet = true
+
+  config.active_storage.service = :local
 end
 
 Rails.application.routes.default_url_options.merge!(environment_url_options)

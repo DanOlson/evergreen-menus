@@ -14,6 +14,8 @@ gem 'activerecord-import', '~> 0.23.0'
 gem 'money-rails',  '~> 1.11.0'
 gem 'stripe',       '~> 3.17.0'
 gem 'bootstrap-email', path: 'vendor/bootstrap-email'
+gem 'aws-sdk-s3',   '~> 1.19.0', require: false
+gem 'mini_magick',  '~> 4.8.0'
 
 group :development, :test do
   gem 'rspec-rails',  '~> 3.8.0'

@@ -6,12 +6,12 @@
   };
 </script>
 <% breadcrumb :list, @account, @establishment, @list %>
-<%= form_for [account, establishment, list], html: { class: 'list-form' } do |f| %>
+<%= form_tag [account, establishment, list], class: 'list-form', method: method, multipart: true do |f| %>
 
   <div id="app-root"></div>
 
   <div class="button-wrapper">
-    <%= f.submit submit_text, class: 'btn btn-evrgn-primary', data: { test: 'list-form-submit' } %>
+    <%= button_tag submit_text, class: 'btn btn-evrgn-primary', data: { test: 'list-form-submit' } %>
     <%= link_to 'Cancel', edit_account_establishment_path(account, establishment), class: 'btn btn-outline-secondary', data: { test: 'list-form-cancel' } %>
     <% if list.persisted? %>
       <label for="list-form-delete" data-test="list-form-delete" class="btn btn-evrgn-delete">Delete</label>

@@ -28,3 +28,5 @@ third-party-site/public
 third-party-site/public-test
 
 config/initializers/fingerprint.rb
+
+storage/

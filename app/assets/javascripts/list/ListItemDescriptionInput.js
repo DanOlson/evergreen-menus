@@ -13,7 +13,7 @@ class ListItemDescriptionInput extends Component {
           data-test={`beer-description-input-${appId}`}
           placeholder="Description"
           defaultValue={value}
-          rows="3"
+          rows="5"
           name={`list[beers_attributes][${appId}][description]`}
           id={`list_beers_attributes_${appId}_description`}
           className="form-control">

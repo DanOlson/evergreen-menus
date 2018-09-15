@@ -4,6 +4,7 @@ import ListItemNameInput from './ListItemNameInput';
 import ListItemPriceInput from './ListItemPriceInput';
 import ListItemDescriptionInput from './ListItemDescriptionInput';
 import ListItemLabelsInput from './ListItemLabelsInput';
+import ListItemImageInput from './ListItemImageInput';
 import ListItemAction from './ListItemAction';
 import Flyout from './Flyout';
 import ToggleFlyoutButton from './ToggleFlyoutButton';
@@ -129,7 +130,9 @@ class ListItemInputGroup extends Component {
       price,
       description,
       labels,
-      showFlyout
+      showFlyout,
+      imageUrl,
+      imageFilename
     } = this.state;
     const className = markedForRemoval ? 'remove-beer' : '';
     const {
@@ -163,6 +166,7 @@ class ListItemInputGroup extends Component {
         </div>
         <Flyout show={showFlyout}>
           <ListItemDescriptionInput appId={appId} value={description} />
+          <ListItemImageInput appId={appId} filename={imageFilename} url={imageUrl} />
           <ListItemLabelsInput appId={appId} menuItemLabels={menuItemLabels} appliedLabels={labels} />
         </Flyout>
         <div className="form-row">

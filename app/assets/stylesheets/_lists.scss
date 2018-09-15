@@ -12,7 +12,7 @@
   }
 
   .flyout {
-    padding-top: 0.25rem;
+    padding-top: 0.5rem;
   }
 
   .form-check-label {
@@ -21,6 +21,15 @@
 
   .beer-separator {
     margin: 8px 8px;
+  }
+
+  .custom-file {
+    margin-bottom: 0.5rem;
+  }
+
+  .custom-file-label {
+    font-weight: inherit;
+    overflow: hidden;
   }
 
   padding-bottom: 20px;
