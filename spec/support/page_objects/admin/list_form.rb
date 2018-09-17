@@ -4,6 +4,8 @@ module PageObjects
       element :name_input, '[data-test^="beer-name-input-"]'
       element :price_input, '[data-test^="beer-price-input-"]'
       element :description_input, '[data-test^="beer-description-input-"]'
+      element :image_input, '[data-test="beer-image-input"]'
+      element :image_label, '[data-test="beer-image-label"]'
       element :toggle_flyout_button, '[data-test="expand-list-item"]'
       element :flyout, '[data-test="menu-item-flyout"]'
       element :remove_button, '[data-test^="remove-beer-"]'
@@ -25,6 +27,16 @@ module PageObjects
         description_input.set description
 
         toggle_flyout_button.click
+      end
+
+      def image=(filepath)
+        toggle_flyout_button.click unless has_flyout?
+        image_input.set filepath
+      end
+
+      def image_label_text
+        toggle_flyout_button.click unless has_flyout?
+        image_label.text
       end
 
       def labels=(labels)
@@ -92,12 +104,13 @@ module PageObjects
         list_name_input.set list_name
       end
 
-      def add_beer(beer_name, price: nil, description: nil, labels: [])
+      def add_beer(beer_name, price: nil, description: nil, image: nil, labels: [])
         add_beer_button.click
         new_beer             = beers.last
         new_beer.name        = beer_name
         new_beer.price       = price
         new_beer.description = description
+        new_beer.image       = image
         new_beer.labels      = labels
       end
 

@@ -28,12 +28,15 @@ class ListItemImageInput extends Component {
           <input
             type="file"
             name={`list[beers_attributes][${appId}][image]`}
-            data-test={`beer-image-input-${appId}`}
+            data-test="beer-image-input"
             id={`list_beers_attributes_${appId}_image`}
             className="custom-file-input"
             onChange={this.handleFileChange}
           />
-          <label htmlFor={`list_beers_attributes_${appId}_image`} className="custom-file-label">
+          <label
+            htmlFor={`list_beers_attributes_${appId}_image`}
+            className="custom-file-label"
+            data-test="beer-image-label">
             {labelText}
           </label>
         </div>
