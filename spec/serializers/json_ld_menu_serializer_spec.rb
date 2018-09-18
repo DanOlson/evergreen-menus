@@ -105,6 +105,31 @@ describe JsonLdMenuSerializer do
       end
     end
 
+    context 'when some of the menu items have images attached' do
+      let(:image_file) do
+        File.open file_fixture 'indeed-logo.png'
+      end
+
+      before do
+        list = menu.lists.first
+        item = list.beers.first
+        item.image.attach({
+          io: image_file,
+          filename: 'indeed-logo.png',
+          content_type: 'image/png'
+        })
+      end
+
+      after { image_file.close }
+
+      subject do
+        parsed_result['hasMenuSection'][0]['hasMenuItem'][0]['image']
+      end
+
+      it { is_expected.to start_with('http://') }
+      it { is_expected.to end_with('indeed-logo.png') }
+    end
+
     describe 'representing dietary restrictions' do
       let(:menu) do
         menu = create :menu, name: 'Dinner'

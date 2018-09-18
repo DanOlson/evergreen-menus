@@ -1,4 +1,6 @@
 class JsonLdMenuSerializer
+  include Rails.application.routes.url_helpers
+
   MENU_TYPE = 'Menu'
   MENU_SECTION_TYPE = 'MenuSection'
   MENU_ITEM_TYPE = 'MenuItem'
@@ -60,7 +62,11 @@ class JsonLdMenuSerializer
           price: item.price,
           priceCurrency: USD
         }
-      }.merge restricted_diet_for(label)
+      }.tap do |h|
+        if item.image.attached?
+          h['image'] = rails_representation_url(item.image.variant(resize: '300X300'))
+        end
+      end.merge restricted_diet_for(label)
     end
   end
 
