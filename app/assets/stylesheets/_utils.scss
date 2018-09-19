@@ -60,6 +60,12 @@
   cursor: pointer;
 }
 
+img.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .expandable {
   -webkit-transition: all .2s ease-in-out;
   -o-transition: all .2s ease-in-out;

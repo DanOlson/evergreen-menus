@@ -17,6 +17,8 @@ class Establishment < ActiveRecord::Base
 
   accepts_nested_attributes_for :lists, allow_destroy: true
 
+  has_one_attached :logo
+
   class << self
     def active
       where active: true

@@ -12,10 +12,12 @@ feature 'establishment management' do
 
     form.set_name 'The Lanes'
     form.set_url 'http://thelanes.com/beer-menu'
+    form.set_logo Rails.root.join('spec/fixtures/files/the-jesus.png')
     form.submit
 
     expect(form).to be_displayed
     expect(page).to have_css "div.alert-success", text: "Establishment created"
+    expect(form).to have_logo_label 'the-jesus.png'
   end
 
   scenario 'editing an establishment' do
@@ -28,11 +30,13 @@ feature 'establishment management' do
 
     form.set_name 'Sobchak Security'
     form.set_url 'http://sobsec.com/beer-menu'
+    form.set_logo Rails.root.join('spec/fixtures/files/the-jesus.png')
     form.submit
 
     expect(form).to be_displayed
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(page).to have_selector "input[value='Sobchak Security']"
+    expect(form).to have_logo_label 'the-jesus.png'
   end
 
   scenario 'deleting an establishment', :js, :admin do

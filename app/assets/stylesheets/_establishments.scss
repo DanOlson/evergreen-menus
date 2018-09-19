@@ -2,4 +2,15 @@
   .menu-type-icon {
     margin-right: 0.25rem;
   }
+
+  .custom-file-label {
+    top: 2.4em;
+    left: 15px;
+    right: 15px;
+    font-weight: inherit;
+
+    &:after {
+      font-weight: 700;
+    }
+  }
 }

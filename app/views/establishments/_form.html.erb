@@ -1,23 +1,53 @@
 <% has_lists = establishment.lists.any? %>
+<% file_label_text = establishment.logo.attached? ? establishment.logo.filename : 'Choose file' %>
 <% breadcrumb :establishment, account, establishment %>
+
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    var fileInput = document.querySelector('.js-custom-file-input')
+    var fileLabel = document.querySelector('.js-custom-file-label')
+    fileInput.addEventListener('change', function (e) {
+      var filename = e.target.value.split(/\\/).pop()
+      fileLabel.innerText = filename;
+      var logoImage = document.querySelector('.js-logo-image')
+      logoImage.style.opacity = 0.5;
+    });
+  </script>
+<% end %>
+
 <div class="edit-establishment">
   <div class="row">
     <div class="col-sm-12">
       <%= form_for [account, establishment], html: { class: 'establishment-form' } do |f| %>
         <%= render 'shared/panel', title: 'Establishment Info' do %>
           <div class="row">
-            <div class="form-group col-sm-6">
-              <%= f.label :name, class: 'col-form-label' %>
-              <div class="">
-                <%= f.text_field :name, class: 'form-control', data: { test: 'establishment-name' } %>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <%= f.label :name, class: 'col-form-label' %>
+                <div class="">
+                  <%= f.text_field :name, class: 'form-control', data: { test: 'establishment-name' } %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :url, class: 'col-form-label' %>
+                <div class="">
+                  <%= f.text_field :url, class: 'form-control', data: { test: 'establishment-url' } %>
+                </div>
               </div>
             </div>
 
-            <div class="form-group col-sm-6">
-              <%= f.label :url, class: 'col-form-label' %>
-              <div class="">
-                <%= f.text_field :url, class: 'form-control', data: { test: 'establishment-url' } %>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <%= f.label :logo, class: 'col-form-label' %>
+                <div className="custom-file">
+                  <%= f.file_field :logo, class: 'custom-file-input js-custom-file-input', data: { test: 'establishment-logo' } %>
+                  <%= label_tag nil, file_label_text, class: 'custom-file-label js-custom-file-label', data: { test: 'establishment-logo-label' } %>
+                </div>
               </div>
+
+              <% if establishment.logo.attached? %>
+                <%= image_tag establishment.logo.variant(resize: "300X300"), class: 'img-fluid center js-logo-image', alt: 'Logo' %>
+              <% end %>
             </div>
           </div>
 

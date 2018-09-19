@@ -53,7 +53,8 @@ class EstablishmentsController < ApplicationController
       :city,
       :state,
       :postal_code,
-      :google_my_business_location_id
+      :google_my_business_location_id,
+      :logo
     )
   end
 end

@@ -60,6 +60,8 @@ module PageObjects
 
       element :name_input,        '[data-test="establishment-name"]'
       element :url_input,         '[data-test="establishment-url"]'
+      element :logo_input,        '[data-test="establishment-logo"]'
+      element :logo_label,        '[data-test="establishment-logo-label"]'
       element :submit_button,     '[data-test="establishment-form-submit"]'
       element :cancel_link,       '[data-test="establishment-form-cancel"]'
       element :delete_button,     '[data-test="establishment-form-delete"]'
@@ -103,6 +105,14 @@ module PageObjects
 
       def set_url(url)
         url_input.set url
+      end
+
+      def set_logo(filename)
+        logo_input.set filename
+      end
+
+      def has_logo_label?(label_text)
+        logo_label.text == label_text
       end
 
       def lists
