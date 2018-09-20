@@ -4,10 +4,6 @@ import Panel from '../shared/Panel'
 import Location from './Location'
 
 class App extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   renderLocations () {
     const {
       locations,
@@ -32,8 +28,8 @@ class App extends Component {
   render () {
     const locations = this.renderLocations()
     return (
-      <Panel title="Associate Google My Business Locations">
-        <table className="table">
+      <Panel title='Associate Google My Business Locations'>
+        <table className='table'>
           <thead>
             <tr>
               <th>Location</th>

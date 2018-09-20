@@ -1,30 +1,30 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class AddButton extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
+  constructor (props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(event) {
-    const { listId } = this.props;
-    event.preventDefault();
-    this.props.onClick(listId);
+  handleClick (event) {
+    const { listId } = this.props
+    event.preventDefault()
+    this.props.onClick(listId)
   }
 
-  render() {
+  render () {
     return (
       <a
-        href=""
-        role="button"
-        data-test="add-list"
-        title="Add list"
+        href=''
+        role='button'
+        data-test='add-list'
+        title='Add list'
         onClick={this.handleClick}
         className={`btn btn-outline-secondary btn-sm move-list-button`}>
-        <span className="fa fa-plus fa-lg"></span>
+        <span className='fa fa-plus fa-lg' />
       </a>
-    );
+    )
   }
 }
 
@@ -33,4 +33,4 @@ AddButton.propTypes = {
   listId: PropTypes.number.isRequired
 }
 
-export default AddButton;
+export default AddButton

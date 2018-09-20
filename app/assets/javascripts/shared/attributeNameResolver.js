@@ -3,36 +3,36 @@ const attrNamesByMenuType = {
   digitalDisplay: 'digital_display_menu_lists_attributes',
   web: 'web_menu_lists_attributes',
   online: 'online_menu_lists_attributes'
-};
+}
 
 const entityNamesByMenuType = {
   pdf: 'menu',
   digitalDisplay: 'digital_display_menu',
   web: 'web_menu',
   online: 'online_menu'
-};
+}
 
 const resolveEntityIdName = {
   pdf: 'menu_list_id',
   digitalDisplay: 'digital_display_menu_list_id',
   web: 'web_menu_list_id',
   online: 'online_menu_list_id'
-};
-
-function resolveNestedAttrName(menuType) {
-  return attrNamesByMenuType[menuType];
 }
 
-function resolveEntityName(menuType) {
-  return entityNamesByMenuType[menuType];
+function resolveNestedAttrName (menuType) {
+  return attrNamesByMenuType[menuType]
 }
 
-function resolveNestedEntityIdName(menuType) {
-  return resolveEntityIdName[menuType];
+function resolveEntityName (menuType) {
+  return entityNamesByMenuType[menuType]
+}
+
+function resolveNestedEntityIdName (menuType) {
+  return resolveEntityIdName[menuType]
 }
 
 export default {
   resolveNestedAttrName,
   resolveEntityName,
   resolveNestedEntityIdName
-};
+}

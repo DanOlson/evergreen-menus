@@ -1,13 +1,13 @@
-import initPreviewUtils from '../shared/previewPathUtils';
+import initPreviewUtils from '../shared/previewPathUtils'
 
 const {
   buildMenuListId,
   buildMenuListListId,
   buildMenuListPosition,
   buildMenuListShowPrice
-} = initPreviewUtils('pdf');
+} = initPreviewUtils('pdf')
 
-function buildQueryString(lists, base) {
+function buildQueryString (lists, base) {
   return lists.reduce((acc, list, idx) => {
     let params = [
       buildMenuListListId(list, idx),
@@ -15,13 +15,13 @@ function buildQueryString(lists, base) {
       buildMenuListShowPrice(list, idx)
     ]
     if (list.menu_list_id) {
-      params.push(buildMenuListId(list, idx));
+      params.push(buildMenuListId(list, idx))
     }
-    return acc + '&' + params.join('&');
-  }, base);
+    return acc + '&' + params.join('&')
+  }, base)
 }
 
-function generatePreviewPath(menu, formState) {
+function generatePreviewPath (menu, formState) {
   const {
     lists,
     name,
@@ -33,8 +33,8 @@ function generatePreviewPath(menu, formState) {
     availabilityEndTime,
     restrictedAvailability,
     showLogo
-  } = formState;
-  const { previewPath, id } = menu;
+  } = formState
+  const { previewPath, id } = menu
   const seed = [
     `?menu[name]=${name}`,
     `menu[template]=${template}`,
@@ -45,13 +45,13 @@ function generatePreviewPath(menu, formState) {
     `menu[availability_end_time]=${availabilityEndTime}`,
     `menu[restricted_availability]=${restrictedAvailability}`,
     `menu[show_logo]=${showLogo}`
-  ].join('&');
-  const queryString = buildQueryString(lists, seed);
+  ].join('&')
+  const queryString = buildQueryString(lists, seed)
   if (id) {
-    return previewPath + queryString + `&menu[id]=${id}`;
+    return previewPath + queryString + `&menu[id]=${id}`
   } else {
-    return previewPath + queryString;
+    return previewPath + queryString
   }
 }
 
-export default generatePreviewPath;
+export default generatePreviewPath

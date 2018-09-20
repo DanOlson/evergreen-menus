@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import HelpIcon from './HelpIcon';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import HelpIcon from './HelpIcon'
 
 class Panel extends Component {
-  render() {
+  render () {
     const {
       dataTest,
       title,
@@ -11,32 +11,32 @@ class Panel extends Component {
       className,
       headerContent,
       onToggleHelp
-    } = this.props;
+    } = this.props
 
     let helpIcon
     if (onToggleHelp) {
-      helpIcon = <HelpIcon className="float-right" onClick={onToggleHelp} />
+      helpIcon = <HelpIcon className='float-right' onClick={onToggleHelp} />
     }
     return (
       <div className={`card ${className}`} data-test={dataTest}>
-        <div className="card-header">
+        <div className='card-header'>
           {helpIcon}
-          <h3 className="card-title">
+          <h3 className='card-title'>
             {title}
             {headerContent}
           </h3>
         </div>
-        <div className="card-body">
+        <div className='card-body'>
           {children}
         </div>
       </div>
-    );
+    )
   }
 }
 
 Panel.defaultProps = {
   className: ''
-};
+}
 
 Panel.propTypes = {
   dataTest: PropTypes.string,
@@ -44,6 +44,6 @@ Panel.propTypes = {
   className: PropTypes.string,
   headerContent: PropTypes.element,
   onToggleHelp: PropTypes.func
-};
+}
 
-export default Panel;
+export default Panel

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class ShowDescriptionInput extends Component {
   render () {
@@ -9,7 +9,7 @@ class ShowDescriptionInput extends Component {
       index,
       value,
       onChange
-    } = this.props;
+    } = this.props
     const showDescriptionInputId = `menu_${nestedAttrsName}_${index}_show_description_on_menu`
     const showDescription = {
       type: 'checkbox',
@@ -21,31 +21,31 @@ class ShowDescriptionInput extends Component {
     }
     // New records always show description
     if (value === undefined || value) {
-      showDescription.defaultChecked = 'checked';
+      showDescription.defaultChecked = 'checked'
     }
 
     return (
-      <span className="chosen-list-toggle-detail">
+      <span className='chosen-list-toggle-detail'>
         <input
-          type="hidden"
+          type='hidden'
           name={`${entityName}[${nestedAttrsName}][${index}][show_description_on_menu]`}
-          value="0"
+          value='0'
         />
         <label
           htmlFor={showDescriptionInputId}
-          className="menu-list-show-description"
-          data-test="show-descriptions-label">
-          <span className="fa fa-comment-o" title="show description" aria-hidden="true"></span>
+          className='menu-list-show-description'
+          data-test='show-descriptions-label'>
+          <span className='fa fa-comment-o' title='show description' aria-hidden='true' />
           <input {...showDescription} />
         </label>
       </span>
-    );
+    )
   }
 }
 
 ShowDescriptionInput.defaultProps = {
   value: true
-};
+}
 
 ShowDescriptionInput.propTypes = {
   entityName: PropTypes.string.isRequired,
@@ -55,4 +55,4 @@ ShowDescriptionInput.propTypes = {
   value: PropTypes.bool
 }
 
-export default ShowDescriptionInput;
+export default ShowDescriptionInput

@@ -61,9 +61,9 @@ class FacebookPage extends Component {
 
   renderLinkStatus () {
     if (this.isAssociationDirty()) {
-      return <i className="fa fa-2x fa-times status-unlinked" aria-hidden title="Not Linked"></i>
+      return <i className='fa fa-2x fa-times status-unlinked' aria-hidden title='Not Linked' />
     } else {
-      return <i className="fa fa-2x fa-check status-linked" aria-hidden title="Linked"></i>
+      return <i className='fa fa-2x fa-check status-linked' aria-hidden title='Linked' />
     }
   }
 
@@ -83,9 +83,9 @@ class FacebookPage extends Component {
     if (this.isAssociationDirty()) {
       return (
         <a
-          href=""
+          href=''
           onClick={this.handleLink}
-          className="btn btn-evrgn-primary">
+          className='btn btn-evrgn-primary'>
           Link
         </a>
       )
@@ -93,29 +93,29 @@ class FacebookPage extends Component {
 
     const { tabRestrictionsPath, addTabPath, csrfToken } = this.props
     const { persistedSelectedEstablishmentId } = this.state
-    const submitHandler = this.restrictionApplies() ?
-      this.confirmRestrictionWorkaround :
-      () => {}
+    const submitHandler = this.restrictionApplies()
+      ? this.confirmRestrictionWorkaround
+      : () => {}
     let restrictionWarning
 
     if (this.restrictionApplies()) {
       restrictionWarning = (
-        <a target="_blank" href={tabRestrictionsPath}>
-          <i className="icon fa fa-2x fa-exclamation-triangle" title="Restrictions Apply"></i>
+        <a target='_blank' href={tabRestrictionsPath}>
+          <i className='icon fa fa-2x fa-exclamation-triangle' title='Restrictions Apply' />
         </a>
       )
     }
 
     return (
       <Fragment>
-        <form method="post" action={addTabPath} onSubmit={submitHandler} className="btn--add-menu">
-          <input type="hidden" name="authenticity_token" value={csrfToken} />
-          <input type="hidden" name="establishment_id" value={persistedSelectedEstablishmentId} />
+        <form method='post' action={addTabPath} onSubmit={submitHandler} className='btn--add-menu'>
+          <input type='hidden' name='authenticity_token' value={csrfToken} />
+          <input type='hidden' name='establishment_id' value={persistedSelectedEstablishmentId} />
           <input
-            type="submit"
-            name="commit"
-            className="btn btn-evrgn-primary"
-            value="Add Menu Tab" />
+            type='submit'
+            name='commit'
+            className='btn btn-evrgn-primary'
+            value='Add Menu Tab' />
         </form>
         {restrictionWarning}
       </Fragment>
@@ -148,9 +148,9 @@ class FacebookPage extends Component {
     return (
       <tr>
         <td>
-          <h4 className="my-auto">
-            <i className="facebook-icon fa fa-2x fa-facebook-square" aria-hidden></i>
-            <span className="page-name">{page.name}</span>
+          <h4 className='my-auto'>
+            <i className='facebook-icon fa fa-2x fa-facebook-square' aria-hidden />
+            <span className='page-name'>{page.name}</span>
           </h4>
         </td>
         <td>
@@ -160,7 +160,7 @@ class FacebookPage extends Component {
           </span>
         </td>
         <td>
-          <div className="form-group my-auto">
+          <div className='form-group my-auto'>
             <EstablishmentSelect
               establishments={establishmentOpts}
               selected={selectedEstablishment}

@@ -1,4 +1,4 @@
-import initPreviewUtils from '../shared/previewPathUtils';
+import initPreviewUtils from '../shared/previewPathUtils'
 
 const {
   buildMenuListId,
@@ -6,34 +6,34 @@ const {
   buildMenuListPosition,
   buildMenuListShowPrice,
   buildMenuListShowDescription
-} = initPreviewUtils('online');
+} = initPreviewUtils('online')
 
-function buildQueryString(lists, base) {
+function buildQueryString (lists, base) {
   return lists.reduce((acc, list, idx) => {
     let params = [
       buildMenuListListId(list, idx),
       buildMenuListPosition(list, idx),
       buildMenuListShowPrice(list, idx),
       buildMenuListShowDescription(list, idx)
-    ];
+    ]
     if (list.online_menu_list_id) {
-      params.push(buildMenuListId(list, idx));
+      params.push(buildMenuListId(list, idx))
     }
-    return acc + '&' + params.join('&');
-  }, base);
+    return acc + '&' + params.join('&')
+  }, base)
 }
 
-function generatePreviewPath(menu, formState) {
-  const { lists } = formState;
-  const { previewPath, id } = menu;
-  const queryString = buildQueryString(lists, '?');
+function generatePreviewPath (menu, formState) {
+  const { lists } = formState
+  const { previewPath, id } = menu
+  const queryString = buildQueryString(lists, '?')
   if (id) {
     // Menu is already persisted
-    return previewPath + queryString + `&online_menu[id]=${id}`;
+    return previewPath + queryString + `&online_menu[id]=${id}`
   } else {
     // Menu is not yet saved
-    return previewPath + queryString;
+    return previewPath + queryString
   }
 }
 
-export default generatePreviewPath;
+export default generatePreviewPath

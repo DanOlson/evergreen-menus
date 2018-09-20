@@ -60,9 +60,9 @@ class Location extends Component {
 
   renderLinkStatus () {
     if (this.isAssociationDirty()) {
-      return <i className="fa fa-2x fa-times status-unlinked" aria-hidden title="Not Linked"></i>
+      return <i className='fa fa-2x fa-times status-unlinked' aria-hidden title='Not Linked' />
     } else {
-      return <i className="fa fa-2x fa-check status-linked" aria-hidden title="Linked"></i>
+      return <i className='fa fa-2x fa-check status-linked' aria-hidden title='Linked' />
     }
   }
 
@@ -71,9 +71,9 @@ class Location extends Component {
     if (this.isAssociationDirty()) {
       return (
         <a
-          href=""
+          href=''
           onClick={this.handleLink}
-          className="btn btn-evrgn-primary">
+          className='btn btn-evrgn-primary'>
           Link
         </a>
       )
@@ -101,13 +101,13 @@ class Location extends Component {
     return (
       <tr>
         <td>
-          <h4 className="my-auto">
-            <i className="google-icon fa fa-2x fa-google" aria-hidden></i>
-            <span className="location-name">{location.location_name}</span>
+          <h4 className='my-auto'>
+            <i className='google-icon fa fa-2x fa-google' aria-hidden />
+            <span className='location-name'>{location.location_name}</span>
           </h4>
         </td>
         <td>
-          <div className="form-group my-auto">
+          <div className='form-group my-auto'>
             <EstablishmentSelect
               establishments={establishmentOpts}
               selected={selectedEstablishment}

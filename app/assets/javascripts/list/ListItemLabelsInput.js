@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ListItemLabelInput from './ListItemLabelInput';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import ListItemLabelInput from './ListItemLabelInput'
 
 class ListItemLabelsInput extends Component {
   render () {
@@ -12,13 +12,13 @@ class ListItemLabelsInput extends Component {
         label,
         checked: isChecked,
         key: idx
-      };
+      }
       return <ListItemLabelInput {...labelProps} />
     })
 
     return (
-      <div className="col-sm-4 col-xs-8">
-        <input type="hidden" name={`list[beers_attributes][${appId}][labels][]`} />
+      <div className='col-sm-4 col-xs-8'>
+        <input type='hidden' name={`list[beers_attributes][${appId}][labels][]`} />
         {labelInputs}
       </div>
     )
@@ -35,4 +35,4 @@ ListItemLabelsInput.propTypes = {
   appliedLabels: PropTypes.array
 }
 
-export default ListItemLabelsInput;
+export default ListItemLabelsInput

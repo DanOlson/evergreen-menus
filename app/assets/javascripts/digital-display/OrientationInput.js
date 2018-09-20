@@ -1,52 +1,52 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class OrientationInput extends Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
+  constructor (props) {
+    super(props)
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange(event) {
-    const val = event.target.value === 'true' ? 'horizontal' : 'vertical';
-    this.props.onChange(val);
+  handleChange (event) {
+    const val = event.target.value === 'true' ? 'horizontal' : 'vertical'
+    this.props.onChange(val)
   }
 
-  render() {
-    const { isHorizontal, className } = this.props;
+  render () {
+    const { isHorizontal, className } = this.props
     return (
       <div className={className}>
         <label>Orientation</label>
-        <div className="form-check">
-          <label className="form-check-label">
+        <div className='form-check'>
+          <label className='form-check-label'>
             <input
-              type="radio"
-              name="digital_display_menu[horizontal_orientation]"
-              className="form-check-input"
-              value="true"
+              type='radio'
+              name='digital_display_menu[horizontal_orientation]'
+              className='form-check-input'
+              value='true'
               defaultChecked={isHorizontal}
               onClick={this.handleChange}
-              data-test="digital-display-menu-horizontal-orientation-true"
+              data-test='digital-display-menu-horizontal-orientation-true'
             />
             Horizontal
           </label>
         </div>
-        <div className="form-check">
-          <label className="form-check-label">
+        <div className='form-check'>
+          <label className='form-check-label'>
             <input
-              type="radio"
-              name="digital_display_menu[horizontal_orientation]"
-              className="form-check-input"
-              value="false"
+              type='radio'
+              name='digital_display_menu[horizontal_orientation]'
+              className='form-check-input'
+              value='false'
               defaultChecked={!isHorizontal}
               onClick={this.handleChange}
-              data-test="digital-display-menu-horizontal-orientation-false"
+              data-test='digital-display-menu-horizontal-orientation-false'
             />
             Vertical
           </label>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -54,10 +54,10 @@ OrientationInput.propTypes = {
   className: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   isHorizontal: PropTypes.bool.isRequired
-};
+}
 
 OrientationInput.defaultProps = {
   className: 'form-group'
-};
+}
 
-export default OrientationInput;
+export default OrientationInput

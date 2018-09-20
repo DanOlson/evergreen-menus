@@ -1,67 +1,67 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { ChromePicker } from 'react-color';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { ChromePicker } from 'react-color'
 
 class ColorPickerInput extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
-    this.handleFocus = this.handleFocus.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleColorChange = this.handleColorChange.bind(this);
+    this.handleFocus = this.handleFocus.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+    this.handleColorChange = this.handleColorChange.bind(this)
 
     this.state = {
       showColorPicker: false
-    };
+    }
   }
 
-  handleFocus() {
+  handleFocus () {
     this.setState(prevState => {
-      return { showColorPicker: true };
-    });
+      return { showColorPicker: true }
+    })
   }
 
-  handleClose() {
+  handleClose () {
     this.setState(prevState => {
-      return { showColorPicker: false };
-    });
+      return { showColorPicker: false }
+    })
   }
 
-  handleColorChange(event) {
-    const color = event.target.value;
-    this.props.onChangeComplete({ hex: color });
+  handleColorChange (event) {
+    const color = event.target.value
+    this.props.onChangeComplete({ hex: color })
   }
 
-  renderPicker() {
-    const { onChangeComplete, color } = this.props;
+  renderPicker () {
+    const { onChangeComplete, color } = this.props
     const popover = {
       position: 'absolute',
       zIndex: '2'
-    };
+    }
     const cover = {
       position: 'fixed',
       top: '0px',
       right: '0px',
       bottom: '0px',
       left: '0px'
-    };
+    }
 
-    let picker;
+    let picker
     if (this.state.showColorPicker) {
       picker = (
         <div style={popover}>
           <div style={cover} onClick={this.handleClose} />
-          <ChromePicker color={color} onChangeComplete={onChangeComplete} disableAlpha={true} />
+          <ChromePicker color={color} onChangeComplete={onChangeComplete} disableAlpha />
         </div>
-      );
+      )
     }
 
-    return picker;
+    return picker
   }
 
-  render() {
-    const { label, color, id, name, dataTest, className } = this.props;
-    const picker = this.renderPicker();
+  render () {
+    const { label, color, id, name, dataTest, className } = this.props
+    const picker = this.renderPicker()
 
     return (
       <div className={className}>
@@ -70,16 +70,16 @@ class ColorPickerInput extends Component {
           id={id}
           name={name}
           data-test={dataTest}
-          type="text"
-          className="form-control"
+          type='text'
+          className='form-control'
           value={color}
-          readOnly={true}
+          readOnly
           onFocus={this.handleFocus}
           onClick={this.handleFocus}
         />
         {picker}
       </div>
-    );
+    )
   }
 }
 
@@ -91,10 +91,10 @@ ColorPickerInput.propTypes = {
   name: PropTypes.string.isRequired,
   dataTest: PropTypes.string.isRequired,
   className: PropTypes.string
-};
+}
 
 ColorPickerInput.defaultProps = {
-  className: "form-group"
-};
+  className: 'form-group'
+}
 
-export default ColorPickerInput;
+export default ColorPickerInput

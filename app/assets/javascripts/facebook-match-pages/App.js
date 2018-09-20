@@ -4,10 +4,6 @@ import Panel from '../shared/Panel'
 import FacebookPage from './FacebookPage'
 
 class App extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   renderPages () {
     const {
       pages,
@@ -36,8 +32,8 @@ class App extends Component {
   render () {
     const pages = this.renderPages()
     return (
-      <Panel title="Associate Facebook Pages">
-        <table className="table">
+      <Panel title='Associate Facebook Pages'>
+        <table className='table'>
           <thead>
             <tr>
               <th>Page</th>

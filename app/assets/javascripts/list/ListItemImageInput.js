@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 const defaultLabelText = 'Choose image...'
 
@@ -20,23 +20,23 @@ class ListItemImageInput extends Component {
   }
 
   render () {
-    const { appId, url } = this.props;
-    const { labelText } = this.state;
+    const { appId, url } = this.props
+    const { labelText } = this.state
     return (
-      <div className="col-sm-3 col-xs-8">
-        <div className="custom-file">
+      <div className='col-sm-3 col-xs-8'>
+        <div className='custom-file'>
           <input
-            type="file"
+            type='file'
             name={`list[beers_attributes][${appId}][image]`}
-            data-test="beer-image-input"
+            data-test='beer-image-input'
             id={`list_beers_attributes_${appId}_image`}
-            className="custom-file-input"
+            className='custom-file-input'
             onChange={this.handleFileChange}
           />
           <label
             htmlFor={`list_beers_attributes_${appId}_image`}
-            className="custom-file-label"
-            data-test="beer-image-label">
+            className='custom-file-label'
+            data-test='beer-image-label'>
             {labelText}
           </label>
         </div>

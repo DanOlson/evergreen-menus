@@ -6,10 +6,10 @@ export default class EstablishmentSelect extends PureComponent {
     const options = establishments.map(est => {
       return <option value={est.id} key={est.id}>{est.name}</option>
     })
-    const blank = <option value={null} key="null"></option>
+    const blank = <option value={null} key='null' />
 
     return (
-      <select defaultValue={selected && selected.id} className="form-control" onChange={onChange}>
+      <select defaultValue={selected && selected.id} className='form-control' onChange={onChange}>
         {[blank, ...options]}
       </select>
     )

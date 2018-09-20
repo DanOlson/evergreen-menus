@@ -1,23 +1,23 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Panel from '../shared/Panel';
-import Buttons from '../shared/MenuFormButtons';
-import EmbedCodeOptions from './EmbedCodeOptions';
-import ShowCodeButton from './ShowCodeButton';
-import AvailableListGroup from '../shared/AvailableListGroup';
-import AvailabilityInput from '../shared/AvailabilityInput';
-import ChosenListGroup from '../shared/ChosenListGroup';
-import Preview from './Preview';
-import generatePreviewPath from './previewPath';
-import { applyFind } from '../polyfills/Array';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import Panel from '../shared/Panel'
+import Buttons from '../shared/MenuFormButtons'
+import EmbedCodeOptions from './EmbedCodeOptions'
+import ShowCodeButton from './ShowCodeButton'
+import AvailableListGroup from '../shared/AvailableListGroup'
+import AvailabilityInput from '../shared/AvailabilityInput'
+import ChosenListGroup from '../shared/ChosenListGroup'
+import Preview from './Preview'
+import generatePreviewPath from './previewPath'
+import { applyFind } from '../polyfills/Array'
+import { DragDropContext } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
-applyFind();
+applyFind()
 
 class WebMenuApp extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     const {
       name,
@@ -26,18 +26,18 @@ class WebMenuApp extends Component {
       restrictedAvailability,
       lists,
       listsAvailable
-    } = props.webMenu;
+    } = props.webMenu
 
-    this.handleNameChange        = this.handleNameChange.bind(this);
-    this.handleStartTimeChange   = this.handleStartTimeChange.bind(this);
-    this.handleEndTimeChange     = this.handleEndTimeChange.bind(this);
-    this.handleRestrictedAvailChange = this.handleRestrictedAvailChange.bind(this);
-    this.addListToMenu           = this.addListToMenu.bind(this);
-    this.removeListFromMenu      = this.removeListFromMenu.bind(this);
-    this.onShowPriceChange       = this.onShowPriceChange.bind(this);
-    this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this);
-    this.moveChosenList          = this.moveChosenList.bind(this);
-    this.toggleCodeVisibility    = this.toggleCodeVisibility.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this)
+    this.handleStartTimeChange = this.handleStartTimeChange.bind(this)
+    this.handleEndTimeChange = this.handleEndTimeChange.bind(this)
+    this.handleRestrictedAvailChange = this.handleRestrictedAvailChange.bind(this)
+    this.addListToMenu = this.addListToMenu.bind(this)
+    this.removeListFromMenu = this.removeListFromMenu.bind(this)
+    this.onShowPriceChange = this.onShowPriceChange.bind(this)
+    this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this)
+    this.moveChosenList = this.moveChosenList.bind(this)
+    this.toggleCodeVisibility = this.toggleCodeVisibility.bind(this)
 
     this.state = {
       name,
@@ -47,97 +47,97 @@ class WebMenuApp extends Component {
       availabilityEndTime,
       restrictedAvailability,
       showEmbedCode: false
-    };
+    }
   }
 
-  moveChosenList(dragIndex, hoverIndex) {
+  moveChosenList (dragIndex, hoverIndex) {
     this.setState(prevState => {
-      const { lists } = prevState;
-      const dragList = lists[dragIndex];
-      const newLists = [...lists];
-      newLists.splice(dragIndex, 1);
-      newLists.splice(hoverIndex, 0, dragList);
-      return { lists: newLists };
-    });
+      const { lists } = prevState
+      const dragList = lists[dragIndex]
+      const newLists = [...lists]
+      newLists.splice(dragIndex, 1)
+      newLists.splice(hoverIndex, 0, dragList)
+      return { lists: newLists }
+    })
   }
 
-  addListToMenu(listId) {
+  addListToMenu (listId) {
     this.setState(prevState => {
-      const { lists, listsAvailable } = prevState;
-      const listToAdd = listsAvailable.find(list => list.id === listId);
-      const newLists = [...lists, listToAdd];
+      const { lists, listsAvailable } = prevState
+      const listToAdd = listsAvailable.find(list => list.id === listId)
+      const newLists = [...lists, listToAdd]
       return {
         listsAvailable: listsAvailable.filter(list => list.id !== listId),
         lists: newLists
       }
-    });
+    })
   }
 
-  removeListFromMenu(listId) {
+  removeListFromMenu (listId) {
     this.setState(prevState => {
-      const { lists, listsAvailable } = prevState;
-      const listToRemove = lists.find(list => list.id === listId);
-      const newLists = lists.filter(list => list.id !== listId);
+      const { lists, listsAvailable } = prevState
+      const listToRemove = lists.find(list => list.id === listId)
+      const newLists = lists.filter(list => list.id !== listId)
       return {
         listsAvailable: [...listsAvailable, listToRemove],
         lists: newLists
-      };
-    });
+      }
+    })
   }
 
-  handleNameChange(event) {
-    const name = event.target.value;
+  handleNameChange (event) {
+    const name = event.target.value
     this.setState(prevState => {
-      return { name };
-    });
+      return { name }
+    })
   }
 
-  handleStartTimeChange(newStartTime) {
+  handleStartTimeChange (newStartTime) {
     this.setState(prevState => {
-      return { availabilityStartTime: newStartTime };
-    });
+      return { availabilityStartTime: newStartTime }
+    })
   }
 
-  handleEndTimeChange(newEndTime) {
+  handleEndTimeChange (newEndTime) {
     this.setState(prevState => {
-      return { availabilityEndTime: newEndTime };
-    });
+      return { availabilityEndTime: newEndTime }
+    })
   }
 
-  handleRestrictedAvailChange(event) {
-    const { checked } = event.target;
+  handleRestrictedAvailChange (event) {
+    const { checked } = event.target
     this.setState(prevState => {
-      return { restrictedAvailability: checked };
-    });
+      return { restrictedAvailability: checked }
+    })
   }
 
-  onShowPriceChange(listId, showPrice) {
+  onShowPriceChange (listId, showPrice) {
     this.setState(prevState => {
-      const { lists, name, font } = prevState;
-      const list = lists.find(list => list.id === listId);
-      list.show_price_on_menu = showPrice;
-      return { lists };
-    });
+      const { lists } = prevState
+      const list = lists.find(list => list.id === listId)
+      list.show_price_on_menu = showPrice
+      return { lists }
+    })
   }
 
-  onShowDescriptionChange(listId, showDesc) {
+  onShowDescriptionChange (listId, showDesc) {
     this.setState(prevState => {
-      const { lists, name, font } = prevState;
-      const list = lists.find(list => list.id === listId);
-      list.show_description_on_menu = showDesc;
-      return { lists };
-    });
+      const { lists } = prevState
+      const list = lists.find(list => list.id === listId)
+      list.show_description_on_menu = showDesc
+      return { lists }
+    })
   }
 
   toggleCodeVisibility () {
     this.setState(prevState => {
       return {
         showEmbedCode: !prevState.showEmbedCode
-      };
-    });
+      }
+    })
   }
 
-  render() {
+  render () {
     const {
       lists,
       listsAvailable,
@@ -146,46 +146,46 @@ class WebMenuApp extends Component {
       availabilityStartTime,
       availabilityEndTime,
       restrictedAvailability
-    } = this.state;
-    const previewPath = generatePreviewPath(this.props.webMenu, this.state);
-    const totalListCount = lists.length + listsAvailable.length;
-    const { embedCode, ampEmbedCode, ampHeadEmbedCode } = this.props.webMenu;
-    const toggleCodeButtonClass = embedCode ? (showEmbedCode ? 'active' : '') : 'hidden';
+    } = this.state
+    const previewPath = generatePreviewPath(this.props.webMenu, this.state)
+    const totalListCount = lists.length + listsAvailable.length
+    const { embedCode, ampEmbedCode, ampHeadEmbedCode } = this.props.webMenu
+    const toggleCodeButtonClass = embedCode ? (showEmbedCode ? 'active' : '') : 'hidden'
 
     return (
-      <div className="form-row">
-        <div className="col-sm-6">
+      <div className='form-row'>
+        <div className='col-sm-6'>
           <Panel title={name}>
-            <div className="form-group">
-              <label htmlFor="menu_name">Name</label>
+            <div className='form-group'>
+              <label htmlFor='menu_name'>Name</label>
               <input
-                id="web_menu_name"
-                name="web_menu[name]"
-                className="form-control"
-                data-test="web-menu-name"
-                type="text"
+                id='web_menu_name'
+                name='web_menu[name]'
+                className='form-control'
+                data-test='web-menu-name'
+                type='text'
                 defaultValue={name}
                 onChange={this.handleNameChange}
               />
             </div>
 
-            <div className="form-group form-row">
-              <div className="col-sm-3">
+            <div className='form-group form-row'>
+              <div className='col-sm-3'>
                 <input
-                  type="hidden"
-                  name="web_menu[restricted_availability]"
-                  value="0"
+                  type='hidden'
+                  name='web_menu[restricted_availability]'
+                  value='0'
                 />
-                <label htmlFor="web-menu-restricted-availability">
-                  <span>Restrict <span className="fa fa-clock-o fa-lg" aria-hidden="true"></span></span>
+                <label htmlFor='web-menu-restricted-availability'>
+                  <span>Restrict <span className='fa fa-clock-o fa-lg' aria-hidden='true' /></span>
                 </label>
                 <input
-                  type="checkbox"
-                  name="web_menu[restricted_availability]"
-                  data-test="menu-restricted-availability"
-                  id="web-menu-restricted-availability"
-                  className="d-block"
-                  value="1"
+                  type='checkbox'
+                  name='web_menu[restricted_availability]'
+                  data-test='menu-restricted-availability'
+                  id='web-menu-restricted-availability'
+                  className='d-block'
+                  value='1'
                   defaultChecked={restrictedAvailability ? 'checked' : undefined}
                   onChange={this.handleRestrictedAvailChange}
                 />
@@ -195,31 +195,31 @@ class WebMenuApp extends Component {
                 show={restrictedAvailability}
                 time={availabilityStartTime}
                 onChange={this.handleStartTimeChange}
-                className="col-sm-4"
-                name="web_menu[availability_start_time]"
-                labelText="Availability Start"
+                className='col-sm-4'
+                name='web_menu[availability_start_time]'
+                labelText='Availability Start'
               />
 
               <AvailabilityInput
                 show={restrictedAvailability}
                 time={availabilityEndTime}
                 onChange={this.handleEndTimeChange}
-                className="col-sm-4"
-                name="web_menu[availability_end_time]"
-                labelText="Availability End"
+                className='col-sm-4'
+                name='web_menu[availability_end_time]'
+                labelText='Availability End'
               />
             </div>
 
             <AvailableListGroup
               totalListCount={totalListCount}
               lists={listsAvailable}
-              menuType="web"
+              menuType='web'
               onAdd={this.addListToMenu}
               onDrop={this.removeListFromMenu}
             />
             <ChosenListGroup
               lists={lists}
-              menuType="web"
+              menuType='web'
               onRemove={this.removeListFromMenu}
               onShowPriceChange={this.onShowPriceChange}
               onShowDescriptionChange={this.onShowDescriptionChange}
@@ -227,7 +227,7 @@ class WebMenuApp extends Component {
               onDrop={this.addListToMenu}
             />
 
-            <Buttons {...this.props} menuType="web-menu">
+            <Buttons {...this.props} menuType='web-menu'>
               <ShowCodeButton
                 onClick={this.toggleCodeVisibility}
                 buttonClass={toggleCodeButtonClass}>
@@ -243,23 +243,23 @@ class WebMenuApp extends Component {
             />
           </Panel>
         </div>
-        <div className="col-sm-6">
+        <div className='col-sm-6'>
           <Preview previewPath={previewPath} />
         </div>
       </div>
-    );
+    )
   }
 }
 
 WebMenuApp.defaultProps = {
   canDestroy: false
-};
+}
 
 WebMenuApp.propTypes = {
   webMenu: PropTypes.object.isRequired,
   cancelEditPath: PropTypes.string.isRequired,
   submitButtonText: PropTypes.string.isRequired,
   canDestroy: PropTypes.bool
-};
+}
 
-export default DragDropContext(HTML5Backend)(WebMenuApp);
+export default DragDropContext(HTML5Backend)(WebMenuApp)

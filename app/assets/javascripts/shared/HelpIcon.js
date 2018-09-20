@@ -7,11 +7,10 @@ class HelpIcon extends Component {
     return (
       <div className={className}>
         <i
-          className="fa fa-question-circle-o fa-2x help-icon"
-          aria-hidden="true"
-          data-test="help-icon"
-          onClick={onClick}>
-        </i>
+          className='fa fa-question-circle-o fa-2x help-icon'
+          aria-hidden='true'
+          data-test='help-icon'
+          onClick={onClick} />
       </div>
     )
   }
