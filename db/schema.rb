@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_11_024001) do
+ActiveRecord::Schema.define(version: 2018_09_20_012954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -209,6 +209,7 @@ ActiveRecord::Schema.define(version: 2018_09_11_024001) do
     t.string "template", limit: 60
     t.time "availability_start_time"
     t.time "availability_end_time"
+    t.boolean "show_logo", default: false
   end
 
   create_table "online_menu_lists", id: :serial, force: :cascade do |t|

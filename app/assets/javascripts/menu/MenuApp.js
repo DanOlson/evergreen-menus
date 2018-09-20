@@ -28,7 +28,8 @@ class MenuApp extends Component {
       template,
       availabilityStartTime,
       availabilityEndTime,
-      restrictedAvailability
+      restrictedAvailability,
+      showLogo
     } = menu;
 
     this.handleMenuNameChange = this.handleMenuNameChange.bind(this);
@@ -39,6 +40,7 @@ class MenuApp extends Component {
     this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
     this.handleEndTimeChange  = this.handleEndTimeChange.bind(this);
     this.handleRestrictedAvailChange = this.handleRestrictedAvailChange.bind(this);
+    this.showLogoChange       = this.showLogoChange.bind(this);
     this.addListToMenu        = this.addListToMenu.bind(this);
     this.removeListFromMenu   = this.removeListFromMenu.bind(this);
     this.onShowPriceChange    = this.onShowPriceChange.bind(this);
@@ -54,7 +56,8 @@ class MenuApp extends Component {
       numberOfColumns,
       availabilityStartTime,
       availabilityEndTime,
-      restrictedAvailability
+      restrictedAvailability,
+      showLogo
     };
   }
 
@@ -161,6 +164,13 @@ class MenuApp extends Component {
     });
   }
 
+  showLogoChange(event) {
+    const { checked } = event.target;
+    this.setState(prevState => {
+      return { showLogo: checked };
+    });
+  }
+
   renderOptions(choices) {
     return choices.map((option, index) => {
       return <option value={option} key={index}>{option}</option>
@@ -178,7 +188,8 @@ class MenuApp extends Component {
       template,
       availabilityStartTime,
       availabilityEndTime,
-      restrictedAvailability
+      restrictedAvailability,
+      showLogo
     } = this.state;
     const {
       fontOptions,
@@ -206,16 +217,38 @@ class MenuApp extends Component {
         <div className="col-sm-6">
           <Panel title={name}>
             <div className="form-group">
-              <label htmlFor="menu_name">Name</label>
-              <input
-                id="menu_name"
-                name="menu[name]"
-                className="form-control"
-                data-test="menu-name"
-                type="text"
-                defaultValue={name}
-                onChange={this.handleMenuNameChange}
-              />
+              <div className="form-row">
+                <div className="col-sm-8">
+                  <label htmlFor="menu_name">Name</label>
+                  <input
+                    id="menu_name"
+                    name="menu[name]"
+                    className="form-control"
+                    data-test="menu-name"
+                    type="text"
+                    defaultValue={name}
+                    onChange={this.handleMenuNameChange}
+                  />
+                </div>
+                <div className="col-sm-4">
+                  <input
+                    type="hidden"
+                    name="menu[show_logo]"
+                    value="0"
+                  />
+                  <label htmlFor="menu-show-logo">Show Logo?</label>
+                  <input
+                    type="checkbox"
+                    name="menu[show_logo]"
+                    data-test="menu-show-logo"
+                    id="menu-show-logo"
+                    className="d-block"
+                    value="1"
+                    defaultChecked={showLogo ? 'checked' : undefined}
+                    onChange={this.showLogoChange}
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="form-group">

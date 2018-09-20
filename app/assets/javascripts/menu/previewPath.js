@@ -31,7 +31,8 @@ function generatePreviewPath(menu, formState) {
     template,
     availabilityStartTime,
     availabilityEndTime,
-    restrictedAvailability
+    restrictedAvailability,
+    showLogo
   } = formState;
   const { previewPath, id } = menu;
   const seed = [
@@ -42,7 +43,8 @@ function generatePreviewPath(menu, formState) {
     `menu[number_of_columns]=${numberOfColumns}`,
     `menu[availability_start_time]=${availabilityStartTime}`,
     `menu[availability_end_time]=${availabilityEndTime}`,
-    `menu[restricted_availability]=${restrictedAvailability}`
+    `menu[restricted_availability]=${restrictedAvailability}`,
+    `menu[show_logo]=${showLogo}`
   ].join('&');
   const queryString = buildQueryString(lists, seed);
   if (id) {

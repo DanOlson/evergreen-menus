@@ -75,6 +75,7 @@ class MenusController < ApplicationController
       :availability_start_time,
       :availability_end_time,
       :restricted_availability,
+      :show_logo,
       {
         menu_lists_attributes: [
           :id,

@@ -15,7 +15,8 @@ class MenuSerializer
       numberOfColumns: @menu.number_of_columns,
       availabilityStartTime: availability_start,
       availabilityEndTime: availability_end,
-      restrictedAvailability: @menu.restricted_availability?
+      restrictedAvailability: @menu.restricted_availability?,
+      showLogo: @menu.show_logo
     }).to_json
   end
 
