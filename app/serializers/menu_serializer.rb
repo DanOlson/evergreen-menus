@@ -16,6 +16,7 @@ class MenuSerializer
       availabilityStartTime: availability_start,
       availabilityEndTime: availability_end,
       restrictedAvailability: @menu.restricted_availability?,
+      hasLogo: @menu.establishment.logo.attached?,
       showLogo: @menu.show_logo
     }).to_json
   end

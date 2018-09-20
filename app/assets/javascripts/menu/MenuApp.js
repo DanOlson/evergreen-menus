@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ColumnsInput from './ColumnsInput'
+import ShowLogoInput from './ShowLogoInput'
 import AvailabilityInput from '../shared/AvailabilityInput'
 import AvailableListGroup from '../shared/AvailableListGroup'
 import ChosenListGroup from '../shared/ChosenListGroup'
@@ -197,7 +198,8 @@ class MenuApp extends Component {
       downloadMenuPath,
       canDestroyMenu,
       menuFormSubmitText,
-      cancelEditMenuPath
+      cancelEditMenuPath,
+      menu
     } = this.props
     const fontOpts = this.renderOptions(fontOptions)
     const templateOpts = this.renderOptions(templateOptions)
@@ -230,30 +232,8 @@ class MenuApp extends Component {
                     onChange={this.handleMenuNameChange}
                   />
                 </div>
-                <div className='col-sm-4'>
-                  <input
-                    type='hidden'
-                    name='menu[show_logo]'
-                    value='0'
-                  />
-                  <label htmlFor='menu-show-logo'>Show Logo?</label>
-                  <input
-                    type='checkbox'
-                    name='menu[show_logo]'
-                    data-test='menu-show-logo'
-                    id='menu-show-logo'
-                    className='d-block'
-                    value='1'
-                    defaultChecked={showLogo ? 'checked' : undefined}
-                    onChange={this.showLogoChange}
-                  />
-                </div>
-              </div>
-            </div>
 
-            <div className='form-group'>
-              <div className='form-row'>
-                <div className='col-sm-3'>
+                <div className='col-sm-4'>
                   <label htmlFor='menu_template'>Template</label>
                   <select
                     id='menu_template'
@@ -265,6 +245,16 @@ class MenuApp extends Component {
                     {templateOpts}
                   </select>
                 </div>
+              </div>
+            </div>
+
+            <div className='form-group'>
+              <div className='form-row'>
+                <ShowLogoInput
+                  hasLogo={menu.hasLogo}
+                  checked={showLogo}
+                  onChange={this.handleShowLogoChange}
+                />
 
                 <div className='col-sm-4'>
                   <label htmlFor='menu_font'>Font</label>
@@ -279,7 +269,7 @@ class MenuApp extends Component {
                   </select>
                 </div>
 
-                <div className='col-sm-2'>
+                <div className='col'>
                   <label htmlFor='menu_font_size'>Font Size</label>
                   <input
                     id='menu_font_size'
@@ -295,7 +285,7 @@ class MenuApp extends Component {
                 </div>
 
                 <ColumnsInput
-                  className='col-sm-3 menu-columns-input'
+                  className='col menu-columns-input'
                   onChange={this.handleColumnsChange}
                   columns={numberOfColumns}
                   disabled={columnsDisabled}
