@@ -1,6 +1,7 @@
 class MenuCenteredPdf
   include ActionView::Helpers::NumberHelper
   include Prawn::View
+  include PdfImageHelpers
 
   attr_reader :menu, :lists
 
@@ -100,6 +101,7 @@ class MenuCenteredPdf
   end
 
   def header
+    establishment_logo menu
     bounding_box([bounds.left, cursor], width: bounds.width, height: 50) do
       pad_top(10) do
         text menu.name.upcase, {

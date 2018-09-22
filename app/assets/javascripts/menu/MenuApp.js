@@ -41,7 +41,7 @@ class MenuApp extends Component {
     this.handleStartTimeChange = this.handleStartTimeChange.bind(this)
     this.handleEndTimeChange = this.handleEndTimeChange.bind(this)
     this.handleRestrictedAvailChange = this.handleRestrictedAvailChange.bind(this)
-    this.showLogoChange = this.showLogoChange.bind(this)
+    this.handleShowLogoChange = this.handleShowLogoChange.bind(this)
     this.addListToMenu = this.addListToMenu.bind(this)
     this.removeListFromMenu = this.removeListFromMenu.bind(this)
     this.onShowPriceChange = this.onShowPriceChange.bind(this)
@@ -165,7 +165,7 @@ class MenuApp extends Component {
     })
   }
 
-  showLogoChange (event) {
+  handleShowLogoChange (event) {
     const { checked } = event.target
     this.setState(prevState => {
       return { showLogo: checked }

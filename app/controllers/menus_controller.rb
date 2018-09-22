@@ -25,7 +25,8 @@ class MenusController < ApplicationController
   def preview
     respond_to do |format|
       format.pdf {
-        pdf = MenuPreviewGenerator.generate menu_params, current_ability
+        preview_params = menu_params.merge(establishment: @establishment)
+        pdf = MenuPreviewGenerator.generate preview_params, current_ability
         send_data pdf.render, {
           filename: pdf.filename,
           type: 'application/pdf',

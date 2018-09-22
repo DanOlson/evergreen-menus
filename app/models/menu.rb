@@ -28,9 +28,9 @@ class Menu < ActiveRecord::Base
   end
 
   TEMPLATES = [
-    Templates::BASIC,
     Templates::STANDARD,
-    Templates::CENTERED
+    Templates::CENTERED,
+    Templates::BASIC
   ]
 
   FONTS = [
@@ -63,5 +63,9 @@ class Menu < ActiveRecord::Base
 
   def restricted_availability?
     !!availability_start_time
+  end
+
+  def show_logo?
+    establishment.logo.attached? && read_attribute(:show_logo)
   end
 end

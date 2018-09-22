@@ -1,6 +1,7 @@
 class MenuBasicPdf
   include ActionView::Helpers::NumberHelper
   include Prawn::View
+  include PdfImageHelpers
 
   attr_reader :menu, :lists
 
@@ -54,6 +55,7 @@ class MenuBasicPdf
 
   def header
     bounding_box([0, cursor], width: bounds.width) do
+      establishment_logo menu
       text menu.name, align: :center, size: menu.font_size + 2
 
       if menu.restricted_availability?

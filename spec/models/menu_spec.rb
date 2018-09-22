@@ -61,4 +61,41 @@ describe Menu do
       end
     end
   end
+
+  describe '#show_logo?' do
+    let(:menu) { build :menu, establishment: establishment, show_logo: attr_value }
+    subject { menu.show_logo? }
+
+    context 'when the "show_logo" attribute is true' do
+      let(:attr_value) { true }
+
+      context 'and the establishment has a logo' do
+        let(:establishment) { create :establishment, :with_logo }
+
+        it { is_expected.to eq true }
+      end
+
+      context 'and the establishment does not have a logo' do
+        let(:establishment) { create :establishment }
+
+        it { is_expected.to eq false }
+      end
+    end
+
+    context 'when the "show_logo" attribute is false' do
+      let(:attr_value) { false }
+
+      context 'and the establishment has a logo' do
+        let(:establishment) { create :establishment, :with_logo }
+
+        it { is_expected.to eq false }
+      end
+
+      context 'and the establishment does not have a logo' do
+        let(:establishment) { create :establishment }
+
+        it { is_expected.to eq false }
+      end
+    end
+  end
 end
