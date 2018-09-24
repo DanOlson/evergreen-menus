@@ -1,22 +1,4 @@
-class MenuBasicPdf
-  include ActionView::Helpers::NumberHelper
-  include Prawn::View
-  include PdfImageHelpers
-
-  attr_reader :menu, :lists
-
-  def initialize(menu:, lists: nil)
-    @menu  = menu
-    @lists = lists || default_lists
-  end
-
-  def filename
-    @filename ||= begin
-      menu_name = @menu.name.split(/[[:space:]]/).map(&:downcase).join('-')
-      "#{menu_name}-#{Time.now.to_i}.pdf"
-    end
-  end
-
+class MenuBasicPdf < PdfTemplate
   def generate
     font menu.font
 
@@ -25,12 +7,6 @@ class MenuBasicPdf
     footer
 
     draw_border
-  end
-
-  def render
-    generate
-
-    super
   end
 
   private
@@ -47,10 +23,6 @@ class MenuBasicPdf
         rounded_rectangle [exp_left, exp_top], bounds.width + 20, bounds.height + 20, 10
       end
     end
-  end
-
-  def default_lists
-    menu.menu_lists.joins(:list).select('lists.*, menu_lists.show_price_on_menu')
   end
 
   def header

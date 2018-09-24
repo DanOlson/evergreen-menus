@@ -1,22 +1,4 @@
-class MenuStandardPdf
-  include ActionView::Helpers::NumberHelper
-  include Prawn::View
-  include PdfImageHelpers
-
-  attr_reader :menu, :lists
-
-  def initialize(menu:, lists: nil)
-    @menu  = menu
-    @lists = lists || default_lists
-  end
-
-  def filename
-    @filename ||= begin
-      menu_name = @menu.name.split(/[[:space:]]/).map(&:downcase).join('-')
-      "#{menu_name}-#{Time.now.to_i}.pdf"
-    end
-  end
-
+class MenuStandardPdf < PdfTemplate
   def generate
     font_families.update(
       "glyphter" => {
@@ -29,17 +11,7 @@ class MenuStandardPdf
     body
   end
 
-  def render
-    generate
-
-    super
-  end
-
   private
-
-  def default_lists
-    menu.menu_lists.joins(:list).select('lists.*, menu_lists.show_price_on_menu')
-  end
 
   def header
     establishment_logo menu
