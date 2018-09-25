@@ -15,6 +15,7 @@ class Menu < ActiveRecord::Base
     BASIC    = 'Basic'
     STANDARD = 'Standard'
     CENTERED = 'Centered'
+    IMAGE    = 'Image'
 
     class << self
       def pdf_class_for(template)
@@ -30,6 +31,7 @@ class Menu < ActiveRecord::Base
   TEMPLATES = [
     Templates::STANDARD,
     Templates::CENTERED,
+    Templates::IMAGE,
     Templates::BASIC
   ]
 

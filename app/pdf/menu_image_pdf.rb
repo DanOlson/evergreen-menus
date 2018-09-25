@@ -1,4 +1,4 @@
-class MenuStandardPdf < PdfTemplate
+class MenuImagePdf < PdfTemplate
   def generate
     font_families.update(
       "glyphter" => {
@@ -23,8 +23,9 @@ class MenuStandardPdf < PdfTemplate
       }
 
       if menu.restricted_availability?
-        availability_range = AvailabilityRange.call menu
-        text "Available #{availability_range}", {
+        start_time = menu.availability_start_time.strftime(TIME_FORMAT)
+        end_time = menu.availability_end_time.strftime(TIME_FORMAT)
+        text "Available #{start_time} - #{end_time}", {
           align: :center,
           size: menu.font_size
         }
@@ -129,5 +130,14 @@ class MenuStandardPdf < PdfTemplate
     end
 
     move_down descent_amount
+
+    if beer.image.attached?
+      if bounds.width + 50 > y
+        bounds.move_past_bottom
+      end
+      image_url = url_for beer.image.variant(interlace: 'None')
+      image open(image_url), fit: [bounds.width, bounds.width]
+      move_down 10
+    end
   end
 end
