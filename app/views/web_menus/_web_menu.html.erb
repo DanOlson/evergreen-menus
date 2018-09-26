@@ -1,9 +1,7 @@
 <div class="evergreen-menus">
   <% if @web_menu.restricted_availability? %>
-    <% start_time = @web_menu.availability_start_time.strftime('%l:%M %P') %>
-    <% end_time = @web_menu.availability_end_time.strftime('%l:%M %P') %>
     <span class="menu-restricted-availability" data-test="availability-restriction">
-      Available <%= start_time %> - <%= end_time %>
+      Available <%= AvailabilityRange.call(@web_menu) %>
     </span>
   <% end %>
   <% @web_menu.lists.each do |list| %>

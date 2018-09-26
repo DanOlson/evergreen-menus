@@ -1,7 +1,6 @@
 class MenuCenteredPdf
   include ActionView::Helpers::NumberHelper
   include Prawn::View
-  TIME_FORMAT = '%l:%M %P'
 
   attr_reader :menu, :lists
 
@@ -110,9 +109,8 @@ class MenuCenteredPdf
         }
 
         if menu.restricted_availability?
-          start_time = menu.availability_start_time.strftime(TIME_FORMAT)
-          end_time = menu.availability_end_time.strftime(TIME_FORMAT)
-          text "Available #{start_time} - #{end_time}", {
+          availability_range = AvailabilityRange.call menu
+          text "Available #{availability_range}", {
             align: :center,
             size: menu.font_size
           }
