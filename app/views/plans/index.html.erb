@@ -1,132 +1,143 @@
+<section class="jumbotron jumbotron-fluid evergreen-hero-2">
+  <div class="container">
+    <h1>Try Evergreen Menus free for 14 days</h1>
 
-<div class="row plans">
-  <div class="col-xl-4">
-    <div class="card plan">
-      <div class="plan-details">
-        <h4 class="plan-name"><%= @plan_1.name %></h4>
-        <p class="plan-price"><%= number_to_currency @plan_1.price, precision: 0 %> / establishment / <%= @plan_1.interval %></p>
-        <div class="plan-description">
-          <ul class="value-checks">
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Power your website's menu</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Design print menus</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Display in-house digital menus</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Free 2 week trial</span>
-            </li>
-          </ul>
-        </div>
-        <div class="cta">
-          <button class="btn btn-outline-success" onClick="choosePlan(<%= @plan_1.id %>)" type="button">Choose</button>
+    <p class="lead text-center">
+      Choose the plan that suits your needs
+    </p>
+  </div>
+</section>
+<section class="jumbotron jumbotron-fluid evergreen-hero-1">
+  <div class="container pricing-wrap">
+    <div class="row plans">
+      <div class="col-xl-4">
+        <div class="card plan">
+          <div class="plan-details">
+            <h4 class="plan-name"><%= @plan_1.name %></h4>
+            <p class="plan-price"><%= number_to_currency @plan_1.price, precision: 0 %> / establishment / <%= @plan_1.interval %></p>
+            <div class="plan-description">
+              <ul class="value-checks">
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Power your website's menu</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Design print menus</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Display in-house digital menus</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Free 2 week trial</span>
+                </li>
+              </ul>
+            </div>
+            <div class="cta">
+              <button class="btn btn-outline-success" onClick="choosePlan(<%= @plan_1.id %>)" type="button">Choose</button>
+            </div>
+          </div>
+
+          <%= render partial: 'subscription_form', locals: { plan: @plan_1 } %>
         </div>
       </div>
 
-      <%= render partial: 'subscription_form', locals: { plan: @plan_1 } %>
-    </div>
-  </div>
+      <div class="col-xl-4">
+        <div class="card plan">
+          <div class="plan-details">
+            <h4 class="plan-name"><%= @plan_2.name %></h4>
+            <p class="plan-price"><%= number_to_currency @plan_2.price, precision: 0 %> / establishment / <%= @plan_2.interval %></p>
+            <div class="plan-description">
+              <ul class="value-checks">
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Power your website's menu</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Design print menus</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Display in-house digital menus</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Sync with Google My Business</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Add your menu to Facebook</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Free 2 week trial</span>
+                </li>
+              </ul>
+            </div>
+            <div class="cta">
+              <button class="btn btn-outline-success" onClick="choosePlan(<%= @plan_2.id %>)" type="button">Choose</button>
+            </div>
+          </div>
 
-  <div class="col-xl-4">
-    <div class="card plan">
-      <div class="plan-details">
-        <h4 class="plan-name"><%= @plan_2.name %></h4>
-        <p class="plan-price"><%= number_to_currency @plan_2.price, precision: 0 %> / establishment / <%= @plan_2.interval %></p>
-        <div class="plan-description">
-          <ul class="value-checks">
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Power your website's menu</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Design print menus</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Display in-house digital menus</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Sync with Google My Business</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Add your menu to Facebook</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Free 2 week trial</span>
-            </li>
-          </ul>
-        </div>
-        <div class="cta">
-          <button class="btn btn-outline-success" onClick="choosePlan(<%= @plan_2.id %>)" type="button">Choose</button>
-        </div>
-      </div>
-
-      <%= render partial: 'subscription_form', locals: { plan: @plan_2 } %>
-    </div>
-  </div>
-
-  <div class="col-xl-4">
-    <div class="card plan">
-      <div class="plan-details">
-        <h4 class="plan-name"><%= @plan_3.name %></h4>
-        <p class="plan-price"><%= number_to_currency @plan_3.price, precision: 0 %> / establishment / <%= @plan_3.interval %></p>
-        <div class="plan-description">
-          <ul class="value-checks">
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Power your website's menu</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Design print menus</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Display in-house digital menus</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Sync with Google My Business</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Add your menu to Facebook</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">White glove setup</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Premium support</span>
-            </li>
-            <li class="value-add-item">
-              <i class="icon fa fa-check" aria-hidden></i>
-              <span class="value-add-item-text">Free 2 week trial</span>
-            </li>
-          </ul>
-        </div>
-        <div class="cta">
-          <button class="btn btn-outline-success" onClick="choosePlan(<%= @plan_3.id %>)" type="button">Choose</button>
+          <%= render partial: 'subscription_form', locals: { plan: @plan_2 } %>
         </div>
       </div>
 
-      <%= render partial: 'subscription_form', locals: { plan: @plan_3 } %>
+      <div class="col-xl-4">
+        <div class="card plan">
+          <div class="plan-details">
+            <h4 class="plan-name"><%= @plan_3.name %></h4>
+            <p class="plan-price"><%= number_to_currency @plan_3.price, precision: 0 %> / establishment / <%= @plan_3.interval %></p>
+            <div class="plan-description">
+              <ul class="value-checks">
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Power your website's menu</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Design print menus</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Display in-house digital menus</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Sync with Google My Business</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Add your menu to Facebook</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">White glove setup</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Premium support</span>
+                </li>
+                <li class="value-add-item">
+                  <i class="icon fa fa-check" aria-hidden></i>
+                  <span class="value-add-item-text">Free 2 week trial</span>
+                </li>
+              </ul>
+            </div>
+            <div class="cta">
+              <button class="btn btn-outline-success" onClick="choosePlan(<%= @plan_3.id %>)" type="button">Choose</button>
+            </div>
+          </div>
+
+          <%= render partial: 'subscription_form', locals: { plan: @plan_3 } %>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
+</section>
 <% content_for :javascripts do %>
   <script src="https://js.stripe.com/v3/"></script>
   <script type="text/javascript">
@@ -140,6 +151,7 @@
       }
 
       activeForm.classList.toggle('show')
+      activeForm.querySelector('input[name="subscription[email]"').focus()
     }
 
     var stripe = Stripe('<%= @stripe_pub_key %>')
@@ -167,6 +179,7 @@
     }
 
     function initStripeForm (planId) {
+      console.log('initStripeForm, %s', planId)
       var elements = stripe.elements()
       var card = elements.create('card', {style: style})
       card.mount('#card-element-' + planId)

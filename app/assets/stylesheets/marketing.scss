@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,900");
+@import 'variables';
+@import 'utils';
+@import 'base';
+@import 'buttons';
+@import 'plans';
+
+body {
+  color: $color-grey;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+  color: $color-white;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 3rem;
+  font-weight: 100;
+}
+
+.evergreen-hero-1 {
+  background-color: $color-white;
+}
+
+.evergreen-hero-2 {
+  background-color: $color-evergreen;
+  color: $color-white;
+
+  .container {
+    height: 220px;
+  }
+}
+
+@media (min-width: 996px) {
+  .pricing-wrap {
+    position: relative;
+  }
+
+  .plans {
+    position: absolute;
+    top: -14rem;
+    left: 1rem;
+    width: 100%;
+  }
+}

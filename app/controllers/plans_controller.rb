@@ -8,5 +8,6 @@ class PlansController < ApplicationController
     @stripe_pub_key = ENV.fetch('STRIPE_PUB_KEY') {
       APP_CONFIG.dig(:stripe, :pub_key)
     }
+    render layout: 'evergreen_marketing'
   end
 end

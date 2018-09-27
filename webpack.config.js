@@ -73,7 +73,8 @@ module.exports = {
     'core-js': './app/assets/javascripts/core-js.js',
     digitalDisplay: './app/assets/stylesheets/digital_display.scss',
     facebookTab: './app/assets/stylesheets/facebook_tab.scss',
-    email: './vendor/bootstrap-email/core/bootstrap-email.scss'
+    email: './vendor/bootstrap-email/core/bootstrap-email.scss',
+    marketing: './app/assets/stylesheets/marketing.scss'
   },
   output: {
     path: __dirname + '/public',

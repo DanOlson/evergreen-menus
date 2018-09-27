@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <% if Rails.env.production? %>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118310782-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-118310782-1');
+  </script>
+  <% end %>
+  <meta charset="utf-8">
+  <title><%= @title || 'Evergreen Menus' %></title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+  <meta name="description" content="Evergreen Menus is a menu publishing platform that enables restaurants to publish consistent menu content across multiple advertising channels">
+  <meta name="keywords" content="" />
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
+      crossorigin="anonymous">
+  <meta property="og:url" content="https://evergreenmenus.com" />
+  <meta property="og:title" content="Plans | Evergeen Menus" />
+  <meta property="og:description" content="Evergreen Menus is a menu publishing platform that enables restaurants to publish consistent menu content across multiple advertising channels" />
+  <meta property="og:image" content="https://evergreenmenus.com/images/evergreen-full-green.png" />
+  <meta property="og:image:alt" content="Logo" />
+  <meta property="og:type" content="product" />
+  <meta property="fb:app_id" content="1838673429769675" />
+  <%= stylesheet_link_tag fingerprinted_asset(:marketing), skip_pipeline: true %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width">
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <% if Rails.env.production? %>
+  <script>
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2180075335648842');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2180075335648842&ev=PageView&noscript=1" /></noscript>
+  <% end %>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg evergreen-header-nav">
+    <a class="navbar-brand" href="https://evergreenmenus.com/">
+      <img src="https://evergreenmenus.com/images/evergreen-logo-green.png" width="172" height="50" alt="Evergreen Logo">
+    </a>
+    <div class="navbar-nav ml-auto">
+      <a class="nav-item nav-link" href="https://evergreenmenus.com/">Home</a>
+      <a class="nav-item nav-link" href="https://evergreenmenus.com/features">Features</a>
+      <a class="nav-item nav-link" href="https://admin.evergreenmenus.com/plans">Pricing</a>
+      <a class="nav-item nav-link" href="https://evergreenmenus.com/contact">Contact</a>
+      <a class="nav-item nav-link" href="https://admin.evergreenmenus.com/users/sign_in">Login</a>
+    </div>
+  </nav>
+
+  <%= yield %>
+  <%= content_for :javascripts %>
+</body>
+</html>
