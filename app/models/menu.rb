@@ -63,6 +63,10 @@ class Menu < ActiveRecord::Base
     self[:font_size] || DEFAULT_FONT_SIZE
   end
 
+  def template
+    self[:template] || TEMPLATES.first
+  end
+
   def restricted_availability?
     !!availability_start_time
   end

@@ -73,11 +73,11 @@ class MenuCenteredPdf < PdfTemplate
   end
 
   def menu_item(beer, show_price:)
-    Rails.logger.debug("\n\n\nrendering #{beer.name} at cursor: #{cursor}")
-    if @new_page
-      Rails.logger.debug("new page bounds.top #{bounds.top}, cursor: #{cursor}")
-      @new_page = false
-    end
+    # Rails.logger.debug("\n\n\nrendering #{beer.name} at cursor: #{cursor}")
+    # if @new_page
+    #   Rails.logger.debug("new page bounds.top #{bounds.top}, cursor: #{cursor}")
+    #   @new_page = false
+    # end
     verbose = beer.name == 'Rachel'
     font_size = menu.font_size
     fragments = [
@@ -123,16 +123,16 @@ class MenuCenteredPdf < PdfTemplate
     })
 
     # dry run the render to pre-calculate the height of the box
-    Rails.logger.debug("y: #{y}, cursor: #{cursor}") if verbose
+    # Rails.logger.debug("y: #{y}, cursor: #{cursor}") if verbose
     menu_item_box.render(dry_run: true)
-    Rails.logger.debug("y: #{y}, cursor: #{cursor}") if verbose
+    # Rails.logger.debug("y: #{y}, cursor: #{cursor}") if verbose
     descent_amount = menu_item_box.height + 10
     if y - descent_amount < bounds.bottom + 50
-      Rails.logger.debug("y: #{y}, cursor: #{cursor}") if verbose
-      Rails.logger.debug("descent_amount: #{descent_amount}") if verbose
-      Rails.logger.debug("starting new page...") if verbose
-      @new_page = true
-      # start_new_page
+      # Rails.logger.debug("y: #{y}, cursor: #{cursor}") if verbose
+      # Rails.logger.debug("descent_amount: #{descent_amount}") if verbose
+      # Rails.logger.debug("starting new page...") if verbose
+      # @new_page = true
+      start_new_page
       return menu_item beer, show_price: show_price
     end
     menu_item_box.render

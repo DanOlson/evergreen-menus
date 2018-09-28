@@ -44,6 +44,7 @@ feature 'menu management' do
     expect(menu_form).to be_displayed
     expect(menu_form).to have_no_download_button
     expect(menu_form).to have_menu_preview
+    menu_form.template = 'Basic'
     expect(menu_form.menu_preview).to have_font('Helvetica')
     expect(menu_form).to have_font_size(10)
 
