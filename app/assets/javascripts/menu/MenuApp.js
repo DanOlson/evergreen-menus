@@ -45,6 +45,7 @@ class MenuApp extends Component {
     this.addListToMenu = this.addListToMenu.bind(this)
     this.removeListFromMenu = this.removeListFromMenu.bind(this)
     this.onShowPriceChange = this.onShowPriceChange.bind(this)
+    this.onImagesListChange = this.onImagesListChange.bind(this)
     this.moveChosenList = this.moveChosenList.bind(this)
 
     this.state = {
@@ -142,6 +143,15 @@ class MenuApp extends Component {
       const { lists } = prevState
       const list = lists.find(list => list.id === listId)
       list.show_price_on_menu = showPrice
+      return { lists }
+    })
+  }
+
+  onImagesListChange (listId, itemIds) {
+    this.setState(prevState => {
+      const { lists } = prevState
+      const list = lists.find(list => list.id === listId)
+      list.items_with_images = itemIds
       return { lists }
     })
   }
@@ -346,6 +356,7 @@ class MenuApp extends Component {
               menuType='pdf'
               onRemove={this.removeListFromMenu}
               onShowPriceChange={this.onShowPriceChange}
+              onImagesListChange={this.onImagesListChange}
               moveItem={this.moveChosenList}
               onDrop={this.addListToMenu}
             />

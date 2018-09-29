@@ -45,10 +45,11 @@ class MenuSerializer
 
   def lists
     @menu.menu_lists.includes(list: :beers).map do |ml|
-      list = ListSerializer.new(ml.list).call(as_json: true)
+      list = ListSerializer.new(ml.list).call(as_json: true, include_items: true)
       {
         menu_list_id: ml.id,
-        show_price_on_menu: ml.show_price_on_menu
+        show_price_on_menu: ml.show_price_on_menu,
+        items_with_images: Array(ml.list_item_metadata['items_with_images']).map(&:to_i)
       }.merge(list)
     end
   end

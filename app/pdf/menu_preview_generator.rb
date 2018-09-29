@@ -23,8 +23,13 @@ class MenuPreviewGenerator
 
   def lists
     @lists ||= begin
-      list_ids = menu_lists_attributes.map { |attrs| attrs[:list_id] }
-      List.where(id: list_ids).accessible_by(@ability).select('lists.*, true as show_price_on_menu')
+      item_ids_by_list_id = menu_lists_attributes.index_by { |attrs| attrs[:list_id] }
+      lists = List.where(id: item_ids_by_list_id.keys).accessible_by(@ability).select("lists.*, true as show_price_on_menu, '{}'::json as list_item_metadata")
+      lists.each do |list|
+        metadata = item_ids_by_list_id[list.id.to_s][:list_item_metadata]
+        list.list_item_metadata = metadata
+      end
+      lists
     end
   end
 

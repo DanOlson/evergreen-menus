@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_20_012954) do
+ActiveRecord::Schema.define(version: 2018_09_28_023156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 2018_09_20_012954) do
     t.boolean "show_price_on_menu", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "list_item_metadata", default: {}
   end
 
   create_table "digital_display_menus", id: :serial, force: :cascade do |t|
@@ -142,26 +143,6 @@ ActiveRecord::Schema.define(version: 2018_09_20_012954) do
     t.string "facebook_page_id", limit: 30
   end
 
-  create_table "google_menu_lists", id: :serial, force: :cascade do |t|
-    t.integer "google_menu_id", null: false
-    t.integer "list_id", null: false
-    t.integer "position", null: false
-    t.boolean "show_price_on_menu", default: true, null: false
-    t.boolean "show_description_on_menu", default: true, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["google_menu_id"], name: "index_google_menu_lists_on_google_menu_id"
-    t.index ["list_id"], name: "index_google_menu_lists_on_list_id"
-  end
-
-  create_table "google_menus", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.integer "establishment_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["establishment_id"], name: "index_google_menus_on_establishment_id"
-  end
-
   create_table "invitation_establishment_assignments", id: :serial, force: :cascade do |t|
     t.integer "user_invitation_id", null: false
     t.integer "establishment_id", null: false
@@ -196,6 +177,7 @@ ActiveRecord::Schema.define(version: 2018_09_20_012954) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "show_price_on_menu", default: true, null: false
+    t.jsonb "list_item_metadata", default: {}
   end
 
   create_table "menus", id: :serial, force: :cascade do |t|
@@ -220,6 +202,7 @@ ActiveRecord::Schema.define(version: 2018_09_20_012954) do
     t.boolean "show_description_on_menu", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "list_item_metadata", default: {}
     t.index ["list_id"], name: "index_online_menu_lists_on_list_id"
     t.index ["online_menu_id"], name: "index_online_menu_lists_on_online_menu_id"
   end
@@ -345,6 +328,7 @@ ActiveRecord::Schema.define(version: 2018_09_20_012954) do
     t.boolean "show_description_on_menu", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "list_item_metadata", default: {}
   end
 
   create_table "web_menus", id: :serial, force: :cascade do |t|
@@ -364,9 +348,6 @@ ActiveRecord::Schema.define(version: 2018_09_20_012954) do
   add_foreign_key "establishment_staff_assignments", "establishments"
   add_foreign_key "establishment_staff_assignments", "users"
   add_foreign_key "establishments", "accounts"
-  add_foreign_key "google_menu_lists", "google_menus"
-  add_foreign_key "google_menu_lists", "lists"
-  add_foreign_key "google_menus", "establishments"
   add_foreign_key "invitation_establishment_assignments", "establishments"
   add_foreign_key "invitation_establishment_assignments", "user_invitations"
   add_foreign_key "lists", "establishments"

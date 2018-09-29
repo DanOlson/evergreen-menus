@@ -83,7 +83,8 @@ class MenusController < ApplicationController
           :list_id,
           :position,
           :show_price_on_menu,
-          :_destroy
+          :_destroy,
+          { items_with_images: [] }
         ]
       }
     )
@@ -92,6 +93,10 @@ class MenusController < ApplicationController
       # Unrestricted
       parameters[:availability_start_time] = nil
       parameters[:availability_end_time] = nil
+    end
+
+    Array(parameters[:menu_lists_attributes]).each do |_, attrs|
+      attrs[:list_item_metadata] = { items_with_images: Array(attrs.delete(:items_with_images)) }
     end
     parameters
   end

@@ -22,4 +22,29 @@
       margin-left: 0.25rem;
     }
   }
+
+  .image-toggle {
+    margin-left: 1rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .icon-images-shown {
+    color: #3d99f6;
+  }
+
+  .list-item-images-choices {
+    margin-top: 0.5rem;
+  }
+
+  .list-item-image-choice {
+    input {
+      margin-right: 0.5rem;
+    }
+    label {
+      font-weight: 300;
+    }
+  }
 }

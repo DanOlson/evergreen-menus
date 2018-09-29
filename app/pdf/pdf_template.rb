@@ -32,7 +32,7 @@ class PdfTemplate
   private
 
   def default_lists
-    menu.menu_lists.joins(:list).select('lists.*, menu_lists.show_price_on_menu')
+    menu.menu_lists.joins(:list).select('lists.*, menu_lists.show_price_on_menu, menu_lists.list_item_metadata')
   end
 
   def establishment_logo(menu)

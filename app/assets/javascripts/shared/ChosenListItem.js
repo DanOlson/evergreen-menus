@@ -8,6 +8,7 @@ import pluralize from './pluralize'
 import ListTypeIcon from './ListTypeIcon'
 import ShowPriceInput from './ShowPriceInput'
 import ShowDescriptionInput from './ShowDescriptionInput'
+import ListItemImageChoices from './ListItemImageChoices'
 import constants from './constants'
 
 const itemSource = {
@@ -88,7 +89,12 @@ class ChosenListItem extends Component {
     super(props)
     this.onShowPriceChange = this.onShowPriceChange.bind(this)
     this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this)
+    this.onImagesListChange = this.onImagesListChange.bind(this)
+    this.toggleImages = this.toggleImages.bind(this)
     this.onClick = this.onClick.bind(this)
+    this.state = {
+      showImages: false
+    }
   }
 
   onShowPriceChange (event) {
@@ -101,10 +107,27 @@ class ChosenListItem extends Component {
     onShowDescriptionChange(list.id, event.target.checked)
   }
 
+  onImagesListChange (itemIds) {
+    const { list, onImagesListChange } = this.props
+    onImagesListChange(list.id, itemIds)
+  }
+
+  toggleImages () {
+    this.setState(prevState => {
+      return { showImages: !prevState.showImages }
+    })
+  }
+
   onClick (event) {
     if (!confirm(constants.CONFIRM_TEXT)) {
       event.preventDefault()
     }
+  }
+
+  itemsWithImages () {
+    const { list } = this.props
+    if (!list.beers) return []
+    return list.beers.filter(item => !!item.imageUrl)
   }
 
   render () {
@@ -120,7 +143,7 @@ class ChosenListItem extends Component {
       isDragging
     } = this.props
 
-    let showDescriptionInput
+    let showDescriptionInput, imageIcon
 
     if (this.props.onShowDescriptionChange) {
       showDescriptionInput = (
@@ -131,6 +154,21 @@ class ChosenListItem extends Component {
           onChange={this.onShowDescriptionChange}
           value={list.show_description_on_menu}
         />
+      )
+    }
+
+    if (this.itemsWithImages().length) {
+      let wrapperClass
+      if (this.state.showImages) {
+        wrapperClass = 'icon-images-shown'
+      }
+      imageIcon = (
+        <span className={wrapperClass}>
+          <i
+            className="fa fa-image fa-lg image-toggle"
+            onClick={this.toggleImages}>
+          </i>
+        </span>
       )
     }
 
@@ -160,6 +198,7 @@ class ChosenListItem extends Component {
             onChange={this.onShowPriceChange}
             value={list.show_price_on_menu}
           />
+          {imageIcon}
           {showDescriptionInput}
           <ListTypeIcon listType={list.type} />
           <span
@@ -167,6 +206,15 @@ class ChosenListItem extends Component {
             className='badge badge-pill badge-success float-right mr-2'
           >{badgeContent}</span>
         </div>
+        <ListItemImageChoices
+          itemsWithAvailableImages={this.itemsWithImages()}
+          chosenItemIds={list.items_with_images}
+          entityName={entityName}
+          nestedAttrsName={nestedAttrsName}
+          index={index}
+          show={this.state.showImages}
+          onChange={this.onImagesListChange}
+        />
         <input
           type='hidden'
           name={`${entityName}[${nestedAttrsName}][${index}][id]`}
@@ -193,6 +241,7 @@ ChosenListItem.propTypes = {
   onRemove: PropTypes.func.isRequired,
   onShowPriceChange: PropTypes.func.isRequired,
   onShowDescriptionChange: PropTypes.func,
+  onImagesListChange: PropTypes.func,
   nestedAttrsName: PropTypes.string.isRequired,
   entityName: PropTypes.string.isRequired,
   nestedEntityIdName: PropTypes.string.isRequired,

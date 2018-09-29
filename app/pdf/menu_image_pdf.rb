@@ -57,8 +57,10 @@ class MenuImagePdf < PdfTemplate
     list_heading list: list
 
     beers = Beer.where(list: list).order(:position)
-    beers.each do |beer|
-      menu_item beer, show_price: list.show_price_on_menu?
+    items_with_images = Array(list.list_item_metadata['items_with_images']).map &:to_i
+    beers.each do |item|
+      show_image = items_with_images.include?(item.id)
+      menu_item item, show_price: list.show_price_on_menu?, show_image: show_image
     end
   end
 
@@ -75,7 +77,7 @@ class MenuImagePdf < PdfTemplate
     end
   end
 
-  def menu_item(beer, show_price:)
+  def menu_item(beer, show_price:, show_image:)
     font_size = menu.font_size
     current_y_pos = cursor
 
@@ -115,7 +117,7 @@ class MenuImagePdf < PdfTemplate
     descent_amount = name_box.height + 5
     if y - descent_amount < bounds.bottom + 20
       bounds.move_past_bottom
-      return menu_item beer, show_price: show_price
+      return menu_item beer, show_price: show_price, show_image: show_image
     end
     name_box.render
 
@@ -130,7 +132,7 @@ class MenuImagePdf < PdfTemplate
 
     move_down descent_amount
 
-    if beer.image.attached?
+    if show_image && beer.image.attached?
       if bounds.width + 50 > y
         bounds.move_past_bottom
       end
