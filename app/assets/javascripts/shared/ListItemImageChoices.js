@@ -10,15 +10,12 @@ class ListItemImageChoices extends Component {
   onChange (event) {
     const itemId = Number(event.target.value)
     const { chosenItemIds } = this.props
-    console.log(itemId)
-    console.log(chosenItemIds)
     let itemIds
     if (chosenItemIds.includes(itemId)) {
       itemIds = chosenItemIds.filter(id => id !== itemId)
     } else {
       itemIds = chosenItemIds.concat([itemId])
     }
-    console.log(`newIds: ${itemIds}`)
     this.props.onChange(itemIds)
   }
 

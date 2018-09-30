@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'open-uri'
 
 feature 'establishment website', :admin, :js do
   let(:user) { create :user, :manager }
@@ -28,6 +29,15 @@ feature 'establishment website', :admin, :js do
     create_beers taps_list
     create_beers bottles_list
 
+    beer = taps_list.beers.first
+    File.open(file_fixture('indeed-logo.png')) do |image|
+      beer.image.attach({
+        io: image,
+        filename: 'indeed-logo.png',
+        content_type: 'image/png'
+      })
+    end
+
     login user
     establishment_form.load({
       account_id: user.account_id,
@@ -44,6 +54,8 @@ feature 'establishment website', :admin, :js do
     menu_form.name = 'Beer Menu'
     menu_form.select_list 'Taps'
     menu_form.select_list 'Bottles'
+    beer_name = taps_list.beers.first.name
+    menu_form.selected_list_named('Taps').choose_images beer_name
     menu_form.submit
 
     embed_code = menu_form.get_embed_code
@@ -64,6 +76,13 @@ feature 'establishment website', :admin, :js do
 
     tap_names = site_taps_list.menu_items.map { |i| i.name.text }
     expect(tap_names).to match_array taps_list.beers.map &:name
+    expect(site_taps_list.item_named(beer_name)).to have_image
+    image_src = site_taps_list.item_named(beer_name).image.src
+    expect(image_src.host).to eq 'cdn.test.evergreenmenus.com'
+    expect(image_src.path).to end_with 'indeed-logo.png'
+    expect {
+      image_src.read
+    }.to_not raise_error
 
     bottle_names = site_bottles_list.menu_items.map { |i| i.name.text }
     expect(bottle_names).to match_array bottles_list.beers.map &:name

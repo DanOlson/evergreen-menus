@@ -5,7 +5,7 @@ FactoryGirl.define do
     username { Faker::Internet.user_name }
     email { Faker::Internet.safe_email }
     password 'password'
-    account
+    account { create :account, :with_subscription }
     role { Role.staff }
   end
 

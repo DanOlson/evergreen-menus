@@ -27,7 +27,8 @@ VCR.configure do |c|
     req.uri['menu_preview.pdf'] ||
     req.uri['/digital_display_menu_preview?'] ||
     req.uri['/web_menu_preview?'] ||
-    req.uri['/online_menu_preview?']
+    req.uri['/online_menu_preview?'] ||
+    req.uri['/rails/active_storage/']
   end
 end
 

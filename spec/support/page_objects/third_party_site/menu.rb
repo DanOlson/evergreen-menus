@@ -6,9 +6,17 @@ module PageObjects
       element :schema_dot_org_markup, '[data-test="json-linked-data"]', visible: false
 
       class MenuItem < SitePrism::Section
-        element :name, '.evergreen-menu-item-name'
-        element :price, '.evergreen-menu-item-price'
-        element :description, '.evergreen-menu-item-description'
+        class Image < SitePrism::Section
+          element :img, 'img'
+          def src
+            URI(img[:src])
+          end
+        end
+
+        element :name, '[data-test="list-item-name"]'
+        element :price, '[data-test="list-item-price"]'
+        element :description, '[data-test="list-item-description"]'
+        section :image, Image, '[data-test="list-item-image"]'
       end
 
       class List < SitePrism::Section

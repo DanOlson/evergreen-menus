@@ -5,7 +5,13 @@
     </span>
   <% end %>
   <% @web_menu.lists.each do |list| %>
-    <%= render partial: "list", locals: { beers: list.beers, show_description: list.show_description_on_menu?, show_price: list.show_price_on_menu?, title: list.name } %>
+    <%= render partial: "list", locals: {
+      beers: list.beers,
+      show_description: list.show_description_on_menu?,
+      show_price: list.show_price_on_menu?,
+      title: list.name,
+      items_with_images: Array(list.list_item_metadata['items_with_images']).map(&:to_i)
+    } %>
   <% end %>
   <div style="text-align:right;margin-top:4rem;">
     <p>Menu powered by <a href="https://evergreenmenus.com">Evergreen Menus</a></p>

@@ -69,7 +69,8 @@ class WebMenusController < ApplicationController
           :position,
           :show_price_on_menu,
           :show_description_on_menu,
-          :_destroy
+          :_destroy,
+          { items_with_images: [] }
         ]
       }
     )
@@ -78,6 +79,10 @@ class WebMenusController < ApplicationController
       # Unrestricted
       parameters[:availability_start_time] = nil
       parameters[:availability_end_time] = nil
+    end
+
+    parameters.fetch(:web_menu_lists_attributes, {}).each do |_, attrs|
+      attrs[:list_item_metadata] = { items_with_images: Array(attrs.delete(:items_with_images)) }
     end
     parameters
   end

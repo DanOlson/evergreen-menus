@@ -44,18 +44,19 @@ class WebMenuSerializer
 
   def lists
     @web_menu.web_menu_lists.includes(list: :beers).map do |ml|
-      list = ListSerializer.new(ml.list).call(as_json: true)
+      list = ListSerializer.new(ml.list).call(as_json: true, include_items: true)
       {
         web_menu_list_id: ml.id,
         show_price_on_menu: ml.show_price_on_menu,
-        show_description_on_menu: ml.show_description_on_menu
+        show_description_on_menu: ml.show_description_on_menu,
+        items_with_images: Array(ml.list_item_metadata['items_with_images']).map(&:to_i)
       }.merge(list)
     end
   end
 
   def available_lists
     available = establishment.lists.includes(:beers) - @web_menu.lists.includes(:beers)
-    available.map { |list| ListSerializer.new(list).call(as_json: true) }
+    available.map { |list| ListSerializer.new(list).call(as_json: true, include_items: true) }
   end
 
   def preview_path

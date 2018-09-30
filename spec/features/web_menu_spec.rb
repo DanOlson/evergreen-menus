@@ -8,7 +8,7 @@ feature 'web menu management' do
     taps_list = establishment.lists.create!({
       name: 'Taps'
     })
-    taps_list.beers.create!(
+    sweet_child = taps_list.beers.create!(
       name: 'Fulton Sweet Child of Vine',
       price: '5',
       position: 0
@@ -26,6 +26,13 @@ feature 'web menu management' do
       price: '7.50',
       position: 0
     )
+    File.open(file_fixture('indeed-logo.png')) do |image|
+      sweet_child.image.attach({
+        io: image,
+        filename: 'indeed-logo.png',
+        content_type: 'image/png'
+      })
+    end
   end
 
   def run_test(user)
@@ -133,7 +140,9 @@ feature 'web menu management' do
     expect(web_menu_form.preview).to_not have_list 'Bottles'
     preview_taps_list = web_menu_form.preview.list_named('Taps')
     expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to_not have_price
+    expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to_not have_image
     expect(preview_taps_list.item_named('Nitro Milk Stout')).to_not have_price
+    expect(preview_taps_list.item_named('Nitro Milk Stout')).to_not have_image
 
     ###
     # Restricted availability
@@ -190,7 +199,25 @@ feature 'web menu management' do
     expect(web_menu_form).to be_displayed
 
     ###
-    # TEST DELETE?
+    # Adding images
+    web_menu_form.selected_list_named('Taps').choose_images 'Fulton Sweet Child of Vine'
+    expect(web_menu_form.selected_list_named('Taps')).to have_chosen_images 'Fulton Sweet Child of Vine'
+    preview_taps_list = web_menu_form.preview.list_named('Taps')
+    expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to have_image
+    expect(preview_taps_list.item_named('Nitro Milk Stout')).to_not have_image
+
+    web_menu_form.selected_list_named('Taps').image_option_named('Fulton Sweet Child of Vine').remove
+    preview_taps_list = web_menu_form.preview.list_named('Taps')
+    expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to_not have_image
+
+    web_menu_form.selected_list_named('Taps').choose_images 'Fulton Sweet Child of Vine'
+    preview_taps_list = web_menu_form.preview.list_named('Taps')
+    expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to have_image
+
+    web_menu_form.submit
+    expect(web_menu_form.selected_list_named('Taps')).to have_chosen_images 'Fulton Sweet Child of Vine'
+    preview_taps_list = web_menu_form.preview.list_named('Taps')
+    expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to have_image
   end
 
   scenario 'manager can manage a web menu for their establishments', :js, :admin do
@@ -217,6 +244,9 @@ feature 'web menu management' do
     expect(web_menu_form).to have_canonical_embed_code
     expect(web_menu_form).to_not have_amp_head_embed_code
     expect(web_menu_form).to_not have_amp_body_embed_code
+
+    web_menu_form.delete
+    expect(page).to have_css '[data-test="flash-success"]', text: 'Web menu deleted'
   end
 
   scenario 'staff with establishment access can manage a web menu', :js, :admin do

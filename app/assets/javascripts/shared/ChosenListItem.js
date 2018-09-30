@@ -192,6 +192,7 @@ class ChosenListItem extends Component {
           </a>
         </div>
         <div className='valign-wrapper-w50'>
+          {imageIcon}
           <ShowPriceInput
             entityName={entityName}
             nestedAttrsName={nestedAttrsName}
@@ -199,7 +200,6 @@ class ChosenListItem extends Component {
             onChange={this.onShowPriceChange}
             value={list.show_price_on_menu}
           />
-          {imageIcon}
           {showDescriptionInput}
           <ListTypeIcon listType={list.type} />
           <span
@@ -234,6 +234,10 @@ class ChosenListItem extends Component {
       </li>
     ))
   }
+}
+
+ChosenListItem.defaultProps = {
+  onImagesListChange: () => {}
 }
 
 ChosenListItem.propTypes = {

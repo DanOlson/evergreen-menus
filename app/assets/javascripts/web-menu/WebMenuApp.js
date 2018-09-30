@@ -9,11 +9,12 @@ import AvailabilityInput from '../shared/AvailabilityInput'
 import ChosenListGroup from '../shared/ChosenListGroup'
 import Preview from './Preview'
 import generatePreviewPath from './previewPath'
-import { applyFind } from '../polyfills/Array'
+import { applyFind, applyIncludes } from '../polyfills/Array'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
 applyFind()
+applyIncludes()
 
 class WebMenuApp extends Component {
   constructor (props) {
@@ -36,6 +37,7 @@ class WebMenuApp extends Component {
     this.removeListFromMenu = this.removeListFromMenu.bind(this)
     this.onShowPriceChange = this.onShowPriceChange.bind(this)
     this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this)
+    this.onImagesListChange = this.onImagesListChange.bind(this)
     this.moveChosenList = this.moveChosenList.bind(this)
     this.toggleCodeVisibility = this.toggleCodeVisibility.bind(this)
 
@@ -125,6 +127,15 @@ class WebMenuApp extends Component {
       const { lists } = prevState
       const list = lists.find(list => list.id === listId)
       list.show_description_on_menu = showDesc
+      return { lists }
+    })
+  }
+
+  onImagesListChange(listId, itemIds) {
+    this.setState(prevState => {
+      const { lists } = prevState
+      const list = lists.find(list => list.id === listId)
+      list.items_with_images = itemIds
       return { lists }
     })
   }
@@ -223,6 +234,7 @@ class WebMenuApp extends Component {
               onRemove={this.removeListFromMenu}
               onShowPriceChange={this.onShowPriceChange}
               onShowDescriptionChange={this.onShowDescriptionChange}
+              onImagesListChange={this.onImagesListChange}
               moveItem={this.moveChosenList}
               onDrop={this.addListToMenu}
             />

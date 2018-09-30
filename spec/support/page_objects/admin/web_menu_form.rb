@@ -15,8 +15,10 @@ module PageObjects
             element :name_elem, '[data-test="list-item-name"]'
             element :price_elem, '[data-test="list-item-price"]'
             element :description_elem, '[data-test="list-item-description"]'
+            element :image_elem, '[data-test="list-item-image"]'
 
             alias_method :has_price?, :has_price_elem?
+            alias_method :has_image?, :has_image_elem?
 
             def name
               name_elem.text.strip

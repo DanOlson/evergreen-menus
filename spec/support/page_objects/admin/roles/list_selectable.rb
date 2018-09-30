@@ -99,6 +99,12 @@ module PageObjects
 
             image_chooser.chosen? list_items
           end
+
+          def image_option_named(name)
+            show_image_chooser
+
+            image_chooser.options.find { |o| o.name == name }
+          end
         end
 
         sections :lists, List, '[data-test="menu-list"]'
