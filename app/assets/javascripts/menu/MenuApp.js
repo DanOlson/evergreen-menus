@@ -9,11 +9,12 @@ import Preview from './MenuPreview'
 import Panel from '../shared/Panel'
 import generatePreviewPath from './previewPath'
 import Buttons from '../shared/MenuFormButtons'
-import { applyFind } from '../polyfills/Array'
+import { applyFind, applyIncludes } from '../polyfills/Array'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
 applyFind()
+applyIncludes()
 
 class MenuApp extends Component {
   constructor (props) {

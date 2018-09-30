@@ -35,12 +35,13 @@ class ListItemImageChoices extends Component {
       const isChecked = chosenItemIds.includes(item.id)
       const htmlId = `show-image-${item.name}`
       return (
-        <div className="list-item-image-choice" key={idx}>
+        <div className="list-item-image-choice" key={idx} data-test="list-item-image-option">
           <label
             htmlFor={htmlId}
             data-test="show-image-for-item">
             <input
               type="checkbox"
+              data-test="image-option-input"
               value={item.id}
               name={`${entityName}[${nestedAttrsName}][${index}][items_with_images][]`}
               defaultChecked={isChecked}
@@ -53,7 +54,7 @@ class ListItemImageChoices extends Component {
     })
     if (show) {
       return (
-        <div className="list-item-images-choices">
+        <div className="list-item-images-choices" data-test="list-item-image-choices">
           {inputs}
         </div>
       )

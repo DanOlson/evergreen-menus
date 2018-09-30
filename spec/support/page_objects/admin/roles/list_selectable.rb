@@ -1,6 +1,37 @@
 module PageObjects
   module Admin
     module ListSelectable
+      class ImageChooser < SitePrism::Section
+        class ImageOption < SitePrism::Section
+          element :input, '[data-test="image-option-input"]'
+
+          def name
+            text
+          end
+
+          def add
+            input.set true
+          end
+
+          def remove
+            input.set false
+          end
+        end
+
+        sections :options, ImageOption, '[data-test="list-item-image-option"]'
+
+        def choose(list_items)
+          options.each do |option|
+            list_items.include?(option.name) ? option.add : option.remove
+          end
+        end
+
+        def chosen?(list_items)
+          chosen_names = options.select { |o| o.input.checked? }.map &:name
+          chosen_names.sort == list_items.sort
+        end
+      end
+
       class ListsSelected < SitePrism::Section
         class List < SitePrism::Section
           element :remove_button, '[data-test="remove-list"]'
@@ -10,6 +41,8 @@ module PageObjects
           element :show_descriptions_input_label, '[data-test="show-descriptions-label"]'
           element :name_wrapper, '[data-test="list-name"]'
           element :badge, '[data-test="list-badge"]'
+          element :images_toggle, '[data-test="image-toggle"]'
+          section :image_chooser, ImageChooser, '[data-test="list-item-image-choices"]'
 
           def name
             name_wrapper.text
@@ -45,6 +78,26 @@ module PageObjects
 
           def show_descriptions
             show_descriptions_input.set true
+          end
+
+          def has_images_available?
+            has_images_toggle?
+          end
+
+          def show_image_chooser
+            images_toggle.trigger('click') unless has_image_chooser?
+          end
+
+          def choose_images(*list_items)
+            show_image_chooser
+
+            image_chooser.choose list_items
+          end
+
+          def has_chosen_images?(*list_items)
+            show_image_chooser
+
+            image_chooser.chosen? list_items
           end
         end
 

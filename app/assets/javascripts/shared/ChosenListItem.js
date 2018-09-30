@@ -166,7 +166,8 @@ class ChosenListItem extends Component {
         <span className={wrapperClass}>
           <i
             className="fa fa-image fa-lg image-toggle"
-            onClick={this.toggleImages}>
+            onClick={this.toggleImages}
+            data-test="image-toggle">
           </i>
         </span>
       )

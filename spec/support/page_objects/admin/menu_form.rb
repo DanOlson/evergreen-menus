@@ -21,6 +21,12 @@ module PageObjects
           pdf_reader.pages.map(&:text).join("\n")
         end
 
+        def image_count
+          pdf_reader.pages.reduce(0) do |count, page|
+            count + page.xobjects.count { |_, stream| stream.hash[:Subtype] == :Image }
+          end
+        end
+
         def has_font?(font)
           expected_font = font.to_sym
           actual_font = pdf_reader.page(1).fonts[:"F1.0"][:BaseFont]
@@ -39,6 +45,7 @@ module PageObjects
 
       element :name_input,      '[data-test="menu-name"]'
       element :template_input,  '[data-test="menu-template"]'
+      element :show_logo_input, '[data-test="menu-show-logo"]'
       element :font_input,      '[data-test="menu-font"]'
       element :font_size_input, '[data-test="menu-font-size"]'
       elements :columns_inputs, '[data-test^="menu-columns"]'
@@ -100,6 +107,18 @@ module PageObjects
 
       def has_font_size?(font_size)
         font_size_input.value == String(font_size)
+      end
+
+      def show_logo
+        show_logo_input.set true
+      end
+
+      def hide_logo
+        show_logo_input.set false
+      end
+
+      def has_logo?
+        show_logo_input.checked?
       end
 
       def submit

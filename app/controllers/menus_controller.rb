@@ -95,7 +95,7 @@ class MenusController < ApplicationController
       parameters[:availability_end_time] = nil
     end
 
-    Array(parameters[:menu_lists_attributes]).each do |_, attrs|
+    parameters.fetch(:menu_lists_attributes, {}).each do |_, attrs|
       attrs[:list_item_metadata] = { items_with_images: Array(attrs.delete(:items_with_images)) }
     end
     parameters

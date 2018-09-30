@@ -56,6 +56,6 @@ class MenuSerializer
 
   def available_lists
     available = establishment.lists.includes(:beers) - @menu.lists.includes(:beers)
-    available.map { |list| ListSerializer.new(list).call(as_json: true) }
+    available.map { |list| ListSerializer.new(list).call(as_json: true, include_items: true) }
   end
 end

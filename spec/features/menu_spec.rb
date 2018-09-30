@@ -138,6 +138,87 @@ feature 'menu management' do
     expect(menu_form).to have_preview_content '7.5'
   end
 
+  scenario 'adding images to the menu', :js, :admin do
+    File.open(file_fixture('logos/burger-man.png')) do |image_file|
+      establishment.logo.attach({
+        io: image_file,
+        filename: 'burger-man.png',
+        content_type: 'image/png'
+      })
+    end
+    burgers_list = establishment.lists.create!({
+      name: 'Burgers'
+    })
+    cheeseburger = burgers_list.beers.create!(
+      name: 'Cheeseburger',
+      position: 0
+    )
+    File.open(file_fixture('cowboy-burger.jpg')) do |image_file|
+      cheeseburger.image.attach({
+        io: image_file,
+        filename: 'cowboy-burger.jpg',
+        content_type: 'image/jpg'
+      })
+    end
+    jucy_lucy = burgers_list.beers.create!(
+      name: 'Jucy Lucy',
+      position: 1
+    )
+    File.open(file_fixture('juicy-lucy-burger.jpg')) do |image_file|
+      jucy_lucy.image.attach({
+        io: image_file,
+        filename: 'juicy-lucy-burger.jpg',
+        content_type: 'image/jpg'
+      })
+    end
+    manager = create :user, :manager, account: account
+    login manager
+
+    click_link establishment.name
+
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    establishment_form.add_menu
+
+    menu_form = PageObjects::Admin::MenuForm.new
+    menu_form.show_logo
+    menu_form.template = 'Image'
+    menu_form.columns = 2
+    menu_form.select_list('Burgers')
+
+    expect(menu_form).to have_logo
+    expect(menu_form).to have_selected_list 'Burgers'
+    burgers_list = menu_form.selected_list_named 'Burgers'
+    expect(burgers_list).to have_images_available
+
+    burgers_list.choose_images 'Cheeseburger'
+    expect(burgers_list).to have_chosen_images 'Cheeseburger'
+
+    menu_form.submit
+    expect(menu_form).to have_logo
+    burgers_list = menu_form.selected_list_named 'Burgers'
+    expect(burgers_list).to have_chosen_images 'Cheeseburger'
+    expect(menu_form.menu_preview.image_count).to eq 2
+
+    burgers_list.choose_images 'Cheeseburger', 'Jucy Lucy'
+    expect(menu_form.menu_preview.image_count).to eq 3
+
+    menu_form.submit
+    expect(menu_form.menu_preview.image_count).to eq 3
+
+    menu_form.selected_list_named('Burgers').choose_images 'Jucy Lucy'
+    expect(menu_form.menu_preview.image_count).to eq 2
+
+    menu_form.submit
+    expect(menu_form.menu_preview.image_count).to eq 2
+
+    menu_form.hide_logo
+    expect(menu_form).to_not have_logo
+    expect(menu_form.menu_preview.image_count).to eq 1
+
+    menu_form.delete
+    expect(page).to have_css '[data-test="flash-success"]', text: "Menu deleted"
+  end
+
   scenario 'staff with establishment access can manage a menu', :js, :admin do
     staff = create :user, account: account
     staff.establishments << establishment
