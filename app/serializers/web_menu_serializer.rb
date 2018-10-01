@@ -43,7 +43,7 @@ class WebMenuSerializer
   end
 
   def lists
-    @web_menu.web_menu_lists.includes(list: :beers).map do |ml|
+    @web_menu.web_menu_lists.includes(list: { beers: { image_attachment: :blob } }).map do |ml|
       list = ListSerializer.new(ml.list).call(as_json: true, include_items: true)
       {
         web_menu_list_id: ml.id,
@@ -55,7 +55,7 @@ class WebMenuSerializer
   end
 
   def available_lists
-    available = establishment.lists.includes(:beers) - @web_menu.lists.includes(:beers)
+    available = establishment.lists.includes(beers: { image_attachment: :blob }) - @web_menu.lists.includes(:beers)
     available.map { |list| ListSerializer.new(list).call(as_json: true, include_items: true) }
   end
 
