@@ -26,7 +26,7 @@ class OnlineMenusController < ApplicationController
   private
 
   def online_menu_params
-    params.require(:online_menu).permit(
+    parameters = params.require(:online_menu).permit(
       :id,
       {
         online_menu_lists_attributes: [
@@ -35,9 +35,16 @@ class OnlineMenusController < ApplicationController
           :position,
           :show_price_on_menu,
           :show_description_on_menu,
-          :_destroy
+          :_destroy,
+          { items_with_images: [] }
         ]
       }
     )
+
+    parameters.fetch(:online_menu_lists_attributes, {}).each do |_, attrs|
+      attrs[:list_item_metadata] = { items_with_images: Array(attrs.delete(:items_with_images)) }
+    end
+
+    parameters
   end
 end

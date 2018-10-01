@@ -5,7 +5,8 @@ class OnlineMenu < ActiveRecord::Base
         lists.*,
         online_menu_lists.position as position,
         online_menu_lists.show_price_on_menu as show_price_on_menu,
-        online_menu_lists.show_description_on_menu as show_description_on_menu
+        online_menu_lists.show_description_on_menu as show_description_on_menu,
+        online_menu_lists.list_item_metadata as list_item_metadata
       EOF
       )
     },

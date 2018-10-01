@@ -13,7 +13,7 @@ feature 'Online Menu management' do
       price: '5',
       position: 0
     )
-    taps_list.beers.create!(
+    milk_stout = taps_list.beers.create!(
       name: 'Nitro Milk Stout',
       price: '6.50',
       position: 1
@@ -26,6 +26,13 @@ feature 'Online Menu management' do
       price: '7.50',
       position: 0
     )
+    File.open(file_fixture('indeed-logo.png')) do |image|
+      milk_stout.image.attach({
+        io: image,
+        filename: 'indeed-logo.png',
+        content_type: 'image/png'
+      })
+    end
     create :online_menu, establishment: establishment
   end
 
@@ -105,7 +112,9 @@ feature 'Online Menu management' do
     expect(online_menu_form.preview).to_not have_list 'Bottles'
     preview_taps_list = online_menu_form.preview.list_named('Taps')
     expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to_not have_price
+    expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to_not have_image
     expect(preview_taps_list.item_named('Nitro Milk Stout')).to_not have_price
+    expect(preview_taps_list.item_named('Nitro Milk Stout')).to_not have_image
 
     # Submit new changes
     online_menu_form.submit
@@ -125,6 +134,27 @@ feature 'Online Menu management' do
     preview_taps_list = online_menu_form.preview.list_named('Taps')
     expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to_not have_price
     expect(preview_taps_list.item_named('Nitro Milk Stout')).to_not have_price
+
+    ###
+    # Adding images
+    online_menu_form.selected_list_named('Taps').choose_images 'Nitro Milk Stout'
+    expect(online_menu_form.selected_list_named('Taps')).to have_chosen_images 'Nitro Milk Stout'
+    preview_taps_list = online_menu_form.preview.list_named('Taps')
+    expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to_not have_image
+    expect(preview_taps_list.item_named('Nitro Milk Stout')).to have_image
+
+    online_menu_form.selected_list_named('Taps').image_option_named('Nitro Milk Stout').remove
+    preview_taps_list = online_menu_form.preview.list_named('Taps')
+    expect(preview_taps_list.item_named('Nitro Milk Stout')).to_not have_image
+
+    online_menu_form.selected_list_named('Taps').choose_images 'Nitro Milk Stout'
+    preview_taps_list = online_menu_form.preview.list_named('Taps')
+    expect(preview_taps_list.item_named('Nitro Milk Stout')).to have_image
+
+    online_menu_form.submit
+    expect(online_menu_form.selected_list_named('Taps')).to have_chosen_images 'Nitro Milk Stout'
+    preview_taps_list = online_menu_form.preview.list_named('Taps')
+    expect(preview_taps_list.item_named('Nitro Milk Stout')).to have_image
   end
 
   scenario 'manager can manage the Online Menu for their establishment', :js, :admin do

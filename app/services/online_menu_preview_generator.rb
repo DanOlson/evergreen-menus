@@ -19,9 +19,14 @@ class OnlineMenuPreviewGenerator
   # we expect to populate from the online_menu_list_item.
   def lists
     @lists ||= begin
-      list_ids = online_menu_lists_attributes.map { |attrs| attrs[:list_id] }
-      attrs = 'lists.*, 0 as position, true as show_price_on_menu, true as show_description_on_menu'
-      List.where(id: list_ids).accessible_by(@ability).select(attrs)
+      attrs_by_list_id = online_menu_lists_attributes.index_by { |attrs| attrs[:list_id] }
+      attrs = 'lists.*, 0 as position, true as show_price_on_menu, true as show_description_on_menu, \'{}\'::json as list_item_metadata'
+      lists = List.where(id: attrs_by_list_id.keys).accessible_by(@ability).select(attrs)
+      lists.each do |list|
+        list_attrs = attrs_by_list_id[list.id.to_s]
+        list.list_item_metadata = list_attrs.fetch(:list_item_metadata, {})
+      end
+      lists
     end
   end
 

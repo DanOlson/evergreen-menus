@@ -6,11 +6,12 @@ import AvailableListGroup from '../shared/AvailableListGroup'
 import ChosenListGroup from '../shared/ChosenListGroup'
 import Preview from './Preview'
 import generatePreviewPath from './previewPath'
-import { applyFind } from '../polyfills/Array'
+import { applyFind, applyIncludes } from '../polyfills/Array'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
 applyFind()
+applyIncludes()
 
 class App extends Component {
   constructor (props) {
@@ -25,6 +26,7 @@ class App extends Component {
     this.removeListFromMenu = this.removeListFromMenu.bind(this)
     this.onShowPriceChange = this.onShowPriceChange.bind(this)
     this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this)
+    this.onImagesListChange = this.onImagesListChange.bind(this)
     this.moveChosenList = this.moveChosenList.bind(this)
 
     this.state = {
@@ -86,6 +88,15 @@ class App extends Component {
     })
   }
 
+  onImagesListChange(listId, itemIds) {
+    this.setState(prevState => {
+      const { lists } = prevState
+      const list = lists.find(list => list.id === listId)
+      list.items_with_images = itemIds
+      return { lists }
+    })
+  }
+
   render () {
     const {
       lists,
@@ -112,6 +123,7 @@ class App extends Component {
               onRemove={this.removeListFromMenu}
               onShowPriceChange={this.onShowPriceChange}
               onShowDescriptionChange={this.onShowDescriptionChange}
+              onImagesListChange={this.onImagesListChange}
               moveItem={this.moveChosenList}
               onDrop={this.addListToMenu}
             />
