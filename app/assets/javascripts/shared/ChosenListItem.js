@@ -143,7 +143,7 @@ class ChosenListItem extends Component {
       isDragging
     } = this.props
 
-    let showDescriptionInput, imageIcon
+    let showDescriptionInput
 
     if (this.props.onShowDescriptionChange) {
       showDescriptionInput = (
@@ -156,6 +156,12 @@ class ChosenListItem extends Component {
         />
       )
     }
+
+    let imageIcon = (
+      <span className="hidden-image-toggle-wrapper">
+        <i className="fa fa-image fa-lg"></i>
+      </span>
+    )
 
     if (this.itemsWithImages().length) {
       let wrapperClass
