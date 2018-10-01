@@ -159,13 +159,17 @@ class ChosenListItem extends Component {
 
     if (this.itemsWithImages().length) {
       let wrapperClass
-      if (this.state.showImages) {
+      const isActive = this.state.showImages
+      if (isActive) {
         wrapperClass = 'icon-images-shown'
       }
       imageIcon = (
         <span className={wrapperClass}>
           <i
             className="fa fa-image fa-lg image-toggle"
+            title="Show Image Options"
+            role="button"
+            aria-pressed={isActive}
             onClick={this.toggleImages}
             data-test="image-toggle">
           </i>
