@@ -26,3 +26,16 @@
 <%= javascript_include_tag fingerprinted_asset('core-js'), skip_pipeline: true %>
 <%= javascript_include_tag fingerprinted_asset(:vendor), skip_pipeline: true %>
 <%= javascript_include_tag fingerprinted_asset(:lists), skip_pipeline: true %>
+
+<% content_for :javascripts do %>
+  <script type="text/javascript">
+    var form = document.querySelector('.list-form')
+    form.addEventListener('submit', function (event) {
+      var inputs = event.target.querySelectorAll('input.js-invalid')
+      if (inputs.length) {
+        event.preventDefault()
+        inputs[0].focus()
+      }
+    })
+  </script>
+<% end %>

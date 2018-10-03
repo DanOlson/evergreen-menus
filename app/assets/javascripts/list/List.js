@@ -6,10 +6,11 @@ import Panel from '../shared/Panel'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import { applyAssign } from '../polyfills/Object'
-import { applyFind } from '../polyfills/Array'
+import { applyFind, applyIncludes } from '../polyfills/Array'
 
 applyAssign()
 applyFind()
+applyIncludes()
 
 class List extends Component {
   constructor (props) {

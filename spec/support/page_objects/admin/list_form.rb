@@ -39,6 +39,10 @@ module PageObjects
         image_label.text
       end
 
+      def has_valid_image?
+        !image_input[:class].include?('js-invalid')
+      end
+
       def labels=(labels)
         toggle_flyout_button.click unless has_flyout?
 

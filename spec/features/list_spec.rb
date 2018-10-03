@@ -133,7 +133,7 @@ describe 'list management' do
     })
 
     form.submit
-    expect(page).to have_css "div.alert-success", text: "List created"
+    expect(page).to have_css "div.alert-success", text: 'List created'
     establishment_form.click_list_named 'Beers'
     expect(form.beers.size).to eq 3
 
@@ -145,6 +145,19 @@ describe 'list management' do
 
     fresh_squeezed = form.beer_named 'Deschutes Fresh Squeezed'
     expect(fresh_squeezed.image_label_text).to eq 'deschutes-logo.png'
+
+    fresh_squeezed.image = Rails.root.join('spec/fixtures/files/dinner-menu.pdf')
+    expect(fresh_squeezed).to_not have_valid_image
+
+    form.submit
+    expect(form).to be_displayed
+    expect(fresh_squeezed).to_not have_valid_image
+
+    fresh_squeezed.image = Rails.root.join('spec/fixtures/files/deschutes-logo.png')
+    expect(fresh_squeezed).to have_valid_image
+    form.submit
+
+    expect(page).to have_css "div.alert-success", text: 'List updated'
 
     establishment.beers.each do |item|
       expect(item.image).to be_attached
