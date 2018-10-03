@@ -8,9 +8,15 @@
     left: 15px;
     right: 15px;
     font-weight: inherit;
+    overflow: hidden;
 
     &:after {
       font-weight: 700;
     }
+  }
+
+  @include bootstrap-custom-file-input;
+  .custom-file {
+    position: inherit;
   }
 }

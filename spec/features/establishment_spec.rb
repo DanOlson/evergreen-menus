@@ -20,7 +20,7 @@ feature 'establishment management' do
     expect(form).to have_logo_label 'the-jesus.png'
   end
 
-  scenario 'editing an establishment' do
+  scenario 'editing an establishment', :js, :admin do
     establishment = create :establishment, account: account
     login user
 
@@ -37,6 +37,24 @@ feature 'establishment management' do
     expect(page).to have_css "div.alert-success", text: "Establishment updated"
     expect(page).to have_selector "input[value='Sobchak Security']"
     expect(form).to have_logo_label 'the-jesus.png'
+
+    ###
+    # Reload the page so the flash goes away
+    form.load account_id: account.id, establishment_id: establishment.id
+
+    form.set_logo Rails.root.join('spec/fixtures/files/dinner-menu.pdf')
+    expect(form).to_not have_valid_logo
+
+    form.submit
+    expect(page).to_not have_css "div.alert-success", text: "Establishment updated"
+    expect(form).to_not have_valid_logo
+
+    form.set_logo Rails.root.join('spec/fixtures/files/logos/burger-man.png')
+    expect(form).to have_valid_logo
+
+    form.submit
+    expect(page).to have_css "div.alert-success", text: "Establishment updated"
+    expect(form).to have_logo_label 'burger-man.png'
   end
 
   scenario 'deleting an establishment', :js, :admin do

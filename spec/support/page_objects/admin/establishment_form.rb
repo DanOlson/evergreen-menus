@@ -115,6 +115,10 @@ module PageObjects
         logo_label.text == label_text
       end
 
+      def has_valid_logo?
+        !logo_input[:class].include?('js-invalid')
+      end
+
       def lists
         lists_panel.lists
       end

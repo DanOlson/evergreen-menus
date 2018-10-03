@@ -4,13 +4,52 @@
 
 <% content_for :javascripts do %>
   <script type="text/javascript">
+    var defaultLabelText = 'Choose image...'
+    var maxFileSize = 1000000 // 1MB
+    var validTypes = ['image/jpeg', 'image/jpg', 'image/png']
     var fileInput = document.querySelector('.js-custom-file-input')
     var fileLabel = document.querySelector('.js-custom-file-label')
+    var fileWrapper = document.querySelector('.js-custom-file')
+    var form = document.querySelector('.js-establishment-form')
+    var logoImage = document.querySelector('.js-logo-image')
+
+    function isFileValid (file) {
+      var isValidSize = file.size <= maxFileSize
+      var isValidType = validTypes.indexOf(file.type) > -1
+      return isValidSize && isValidType
+    }
+
+    function submitHandler (event) {
+      var inputs = event.target.querySelectorAll('input.js-invalid')
+      if (inputs.length) {
+        event.preventDefault()
+        inputs[0].focus()
+      }
+    }
+
     fileInput.addEventListener('change', function (e) {
-      var filename = e.target.value.split(/\\/).pop()
-      fileLabel.innerText = filename;
-      var logoImage = document.querySelector('.js-logo-image')
-      logoImage.style.opacity = 0.5;
+      var file = e.target.files[0]
+      if (!file) {
+        fileLabel.innerText = defaultLabelText
+        logoImage.src = null
+        return
+      }
+      if (isFileValid(file)) {
+        form.querySelector('input[type="submit"]').removeAttribute('disabled')
+        fileInput.classList.remove('js-invalid')
+        fileWrapper.classList.remove('invalid')
+        form.removeEventListener('submit', submitHandler)
+        var reader = new FileReader()
+        reader.onload = function (e) {
+          fileLabel.innerText = file.name
+          logoImage.src = e.target.result
+        }
+        reader.readAsDataURL(file)
+      } else {
+        fileInput.classList.add('js-invalid')
+        fileWrapper.classList.add('invalid')
+        form.addEventListener('submit', submitHandler)
+      }
     });
   </script>
 <% end %>
@@ -18,7 +57,7 @@
 <div class="edit-establishment">
   <div class="row">
     <div class="col-sm-12">
-      <%= form_for [account, establishment], html: { class: 'establishment-form' } do |f| %>
+      <%= form_for [account, establishment], html: { class: 'establishment-form js-establishment-form' } do |f| %>
         <%= render 'shared/panel', title: 'Establishment Info' do %>
           <div class="row">
             <div class="col-sm-6">
@@ -36,17 +75,24 @@
               </div>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-3">
               <div class="form-group">
                 <%= f.label :logo, class: 'col-form-label' %>
-                <div className="custom-file">
+                <div class="custom-file js-custom-file">
                   <%= f.file_field :logo, class: 'custom-file-input js-custom-file-input', data: { test: 'establishment-logo' } %>
                   <%= label_tag nil, file_label_text, class: 'custom-file-label js-custom-file-label', data: { test: 'establishment-logo-label' } %>
+                  <div class="invalid-feedback">
+                    File must be PNG or JPG and no larger than 1MB
+                  </div>
                 </div>
               </div>
+            </div>
 
+            <div class="col-sm-3">
               <% if establishment.logo.attached? %>
                 <%= image_tag establishment.logo.variant(resize: "300X300"), class: 'img-fluid center js-logo-image', alt: 'Logo' %>
+              <% else %>
+                <img class="img-fluid center js-logo-image">
               <% end %>
             </div>
           </div>
