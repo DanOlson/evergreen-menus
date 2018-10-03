@@ -1,5 +1,5 @@
 module EstablishmentsHelper
-  def add_new_button(account, establishment, type, enabled: true, text: 'Add New')
+  def add_new_button(account, establishment, type, enabled: true, text: 'Add New', icon: nil)
     css_classes = %w(btn btn-evrgn-outline-primary)
     css_classes << 'disabled' unless enabled
     if establishment.persisted?
@@ -16,7 +16,14 @@ module EstablishmentsHelper
     }
     options.merge!(aria: { disabled: true }) unless enabled
 
-    link_to text, href, options
+    link_to(href, options) do
+      opts = {}.tap do |h|
+        h.merge!(class: "fa #{icon} btn-icon") if icon
+      end
+      tag.span do
+        tag.span(text) + tag.span(opts)
+      end
+    end
   end
 
   def add_list_button(account, establishment)
@@ -26,21 +33,24 @@ module EstablishmentsHelper
   def add_menu_button(account, establishment, enabled: true)
     add_new_button account, establishment, :menu, {
       enabled: enabled,
-      text: '+ Print Menu'
+      text: '+ Print',
+      icon: 'fa-file-pdf-o'
     }
   end
 
   def add_digital_display_menu_button(account, establishment, enabled: true)
     add_new_button account, establishment, :digital_display_menu, {
       enabled: enabled,
-      text: '+ Digital Display Menu'
+      text: '+ Digital Display',
+      icon: 'fa-tv'
     }
   end
 
   def add_web_menu_button(account, establishment, enabled: true)
     add_new_button account, establishment, :web_menu, {
       enabled: enabled,
-      text: '+ Web Menu'
+      text: '+ Web',
+      icon: 'fa-code'
     }
   end
 
