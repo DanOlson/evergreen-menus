@@ -166,7 +166,7 @@ class WebMenuApp extends Component {
     return (
       <div className='form-row'>
         <div className='col-sm-6'>
-          <Panel title={name}>
+          <Panel title={name} icon="fa-code">
             <div className='form-group'>
               <label htmlFor='menu_name'>Name</label>
               <input

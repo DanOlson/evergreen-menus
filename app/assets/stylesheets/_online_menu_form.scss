@@ -1,3 +1,4 @@
 .online-menu-form {
   @include draggable-list-item;
+  @include panel;
 }

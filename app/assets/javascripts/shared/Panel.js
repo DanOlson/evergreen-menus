@@ -10,18 +10,23 @@ class Panel extends Component {
       children,
       className,
       headerContent,
-      onToggleHelp
+      onToggleHelp,
+      icon
     } = this.props
 
-    let helpIcon
+    let helpIcon, headerIcon
     if (onToggleHelp) {
       helpIcon = <HelpIcon className='float-right' onClick={onToggleHelp} />
+    }
+    if (icon) {
+      headerIcon = <span className={`panel-header-icon fa ${icon}`}></span>
     }
     return (
       <div className={`card ${className}`} data-test={dataTest}>
         <div className='card-header'>
           {helpIcon}
           <h3 className='card-title'>
+            {headerIcon}
             {title}
             {headerContent}
           </h3>
@@ -43,7 +48,8 @@ Panel.propTypes = {
   title: PropTypes.string.isRequired,
   className: PropTypes.string,
   headerContent: PropTypes.element,
-  onToggleHelp: PropTypes.func
+  onToggleHelp: PropTypes.func,
+  icon: PropTypes.string
 }
 
 export default Panel

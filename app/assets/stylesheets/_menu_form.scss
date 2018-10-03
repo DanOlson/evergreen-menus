@@ -1,6 +1,7 @@
 .menu-form {
   @include draggable-list-item;
   @include time-picker;
+  @include panel;
 
   .menu-preview-wrapper {
     background: transparent url(/images/loading.gif) no-repeat;

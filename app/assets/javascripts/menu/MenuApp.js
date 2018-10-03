@@ -228,7 +228,7 @@ class MenuApp extends Component {
     return (
       <div className='form-row'>
         <div className='col-sm-6'>
-          <Panel title={name}>
+          <Panel title={name} icon="fa-file-pdf-o">
             <div className='form-group'>
               <div className='form-row'>
                 <div className='col-sm-8'>
