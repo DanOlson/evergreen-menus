@@ -62,7 +62,7 @@ describe 'staff management' do
     expect(list).to be_displayed
 
     staff_member.reload
-    expect(staff_member.role).to eq Role.manager
+    expect(staff_member.role).to eq Role.account_admin
 
     list.member_named('Walter Sobchak').click
     form.select_role 'staff'

@@ -17,13 +17,5 @@ class Role < ActiveRecord::Base
     def staff
       @staff ||= find_by name: STAFF
     end
-
-    def manager
-      STDERR.puts <<-WARN
-        [DEPRECATION WARNING] manager role has been renamed
-        #{caller.take(3).join("\n")}
-      WARN
-      account_admin
-    end
   end
 end

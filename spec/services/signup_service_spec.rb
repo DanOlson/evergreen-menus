@@ -65,7 +65,7 @@ describe SignupService do
         account = Account.last
 
         expect(signup_invitation.account).to eq account
-        expect(signup_invitation.role).to eq Role.manager
+        expect(signup_invitation.role).to eq Role.account_admin
         expect(signup_invitation.email).to eq 'bob@example.com'
         expect(signup_invitation.accepted).to eq false
         expect(signup_invitation.accepting_user_id).to be_nil

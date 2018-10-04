@@ -5,12 +5,12 @@ FactoryGirl.define do
     email { Faker::Internet.safe_email }
     account
     association :inviting_user, factory: :user
-    role { Role.manager }
+    role { Role.account_admin }
   end
 
   factory :signup_invitation do
     account
     email { Faker::Internet.safe_email }
-    role { Role.manager }
+    role { Role.account_admin }
   end
 end

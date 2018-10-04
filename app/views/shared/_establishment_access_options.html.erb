@@ -16,14 +16,14 @@
     var select = document.getElementsByClassName('js-role-select')[0];
     var checkboxWrapper = document.getElementsByClassName('js-establishment-checkboxes')[0];
     var checkboxes = checkboxWrapper.querySelectorAll('.js-establishment-checkbox');
-    var managerId = <%= Role.manager.id %>;
+    var accountAdminId = <%= Role.account_admin.id %>;
 
     select.addEventListener('change', handleChange, false);
     select.dispatchEvent(new Event('change'));
 
     function handleChange(event) {
       var targetValue = parseInt(event.target.value, 10);
-      if (targetValue === managerId) {
+      if (targetValue === accountAdminId) {
         checkboxWrapper.classList.add('hidden');
         for (var i = 0; i < checkboxes.length; i++) {
           checkboxes[i].setAttribute('disabled', 'disabled');
