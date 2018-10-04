@@ -5,7 +5,7 @@ describe 'associating establishments with GMB locations', :vcr do
   let(:establishment) { create :establishment, account: account }
   let(:token) { 'mock-access-token' }
   let(:location_id) { 'accounts/111337701469104826106/locations/17679890243424107126' }
-  let(:user) { create :user, :manager, account: account }
+  let(:user) { create :user, :account_admin, account: account }
 
   before do
     sign_in user
@@ -22,7 +22,7 @@ describe 'associating establishments with GMB locations', :vcr do
 
   context 'when not authorized' do
     context 'to access the account' do
-      let(:user) { create :user, :manager } # Other account
+      let(:user) { create :user, :account_admin } # Other account
 
       it 'returns 401' do
         post account_google_my_business_establishment_associations_path(account), {

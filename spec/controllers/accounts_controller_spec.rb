@@ -3,7 +3,7 @@ require 'spec_helper'
 describe AccountsController do
   describe 'PATCH to #update' do
     let(:account) { create :account }
-    let(:user) { create :user, :manager, account: account }
+    let(:user) { create :user, :account_admin, account: account }
 
     before do
       sign_in user

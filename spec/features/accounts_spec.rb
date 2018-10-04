@@ -6,7 +6,7 @@ feature 'account management' do
   let(:bar_1) { create :establishment, name: "Bar 1", account: account }
   let(:bar_2) { create :establishment, name: "Bar 2", account: account }
 
-  scenario 'admin can create, edit, and delete an account', :js, :admin do
+  scenario 'super admin can create, edit, and delete an account', :js, :admin do
     admin = create :user, :admin
     login admin
 
@@ -44,7 +44,7 @@ feature 'account management' do
     expect(account_list).to_not have_account_named 'Lebowski, Incorporated'
   end
 
-  scenario 'admin can invite manager' do
+  scenario 'super admin can invite account admin' do
     ActionMailer::Base.deliveries.clear
     admin = create :user, :admin
     login admin
@@ -97,9 +97,9 @@ feature 'account management' do
     expect(staff_form.role).to eq 'admin'
   end
 
-  scenario 'manager can edit their account, but cannot activate, deactivate or delete it' do
-    manager = create :user, :manager, account: account
-    login manager
+  scenario 'account admin can edit their account, but cannot activate, deactivate or delete it' do
+    account_admin = create :user, :account_admin, account: account
+    login account_admin
 
     account_details = PageObjects::Admin::AccountDetails.new
     account_details.edit_button.click
@@ -111,9 +111,9 @@ feature 'account management' do
   end
 
   describe 'access to accounts index' do
-    scenario 'manager does not have access' do
-      manager = create :user, :manager, account: account
-      login manager
+    scenario 'account admin does not have access' do
+      account_admin = create :user, :account_admin, account: account
+      login account_admin
 
       account_list = PageObjects::Admin::AccountsList.new
       account_list.load
@@ -163,13 +163,13 @@ feature 'account management' do
     end
 
     describe 'adding staff' do
-      let(:user) { create :user, :manager, account: account }
+      let(:user) { create :user, :account_admin, account: account }
 
       before do
         ActionMailer::Base.deliveries.clear
       end
 
-      scenario 'manager can invite staff' do
+      scenario 'account admin can invite staff' do
         click_link 'Staff'
 
         staff_list = PageObjects::Admin::StaffList.new
@@ -208,7 +208,7 @@ feature 'account management' do
         expect(walter_invite.from).to eq ['do-not-reply@evergreenmenus.com']
       end
 
-      scenario 'manager can edit staff invitations' do
+      scenario 'account admin can edit staff invitations' do
         click_link 'Staff'
 
         staff_list = PageObjects::Admin::StaffList.new
@@ -239,7 +239,7 @@ feature 'account management' do
         expect(invitation_form).to be_granted_access_to(bar_2)
       end
 
-      scenario 'manager can delete staff invitations', :js, :admin do
+      scenario 'account admin can delete staff invitations', :js, :admin do
         click_link 'Staff'
 
         staff_list = PageObjects::Admin::StaffList.new
@@ -384,9 +384,9 @@ feature 'account management' do
     end
   end
 
-  scenario 'manager has access to Web Integrations' do
-    manager = create :user, :manager, account: account
-    login manager
+  scenario 'account admin has access to Web Integrations' do
+    account_admin = create :user, :account_admin, account: account
+    login account_admin
 
     account_details = PageObjects::Admin::AccountDetails.new
     expect(account_details).to be_displayed

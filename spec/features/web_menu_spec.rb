@@ -220,10 +220,10 @@ feature 'web menu management' do
     expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to have_image
   end
 
-  scenario 'manager can manage a web menu for their establishments', :js, :admin do
-    manager = create :user, :manager, account: account
+  scenario 'account admin can manage a web menu for their establishments', :js, :admin do
+    account_admin = create :user, :account_admin, account: account
 
-    run_test manager
+    run_test account_admin
 
     web_menu_form = PageObjects::Admin::WebMenuForm.new
     expect(web_menu_form).to have_toggle_embed_code_button

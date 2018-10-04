@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'establishment management' do
   let(:account) { create :account, :with_subscription }
-  let(:user) { create :user, :manager, account: account }
+  let(:user) { create :user, :account_admin, account: account }
 
   scenario 'creating an establishment' do
     login user

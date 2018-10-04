@@ -30,10 +30,10 @@ feature 'menu management' do
     )
   end
 
-  scenario 'manager can manage a menu for their account', :js, :admin do
-    manager = create :user, :manager, account: account
+  scenario 'account admin can manage a menu for their account', :js, :admin do
+    account_admin = create :user, :account_admin, account: account
 
-    login manager
+    login account_admin
 
     click_link establishment.name
 
@@ -171,8 +171,8 @@ feature 'menu management' do
         content_type: 'image/jpg'
       })
     end
-    manager = create :user, :manager, account: account
-    login manager
+    account_admin = create :user, :account_admin, account: account
+    login account_admin
 
     click_link establishment.name
 

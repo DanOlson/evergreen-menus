@@ -2,11 +2,11 @@ require 'spec_helper'
 
 feature 'Google OAuth2' do
   let(:account) { create :account, :with_subscription, name: 'Green Plate, LLC' }
-  let(:manager) { create :user, :manager, account: account }
+  let(:account_admin) { create :user, :account_admin, account: account }
   let(:staff) { create :user, account: account }
 
-  scenario 'manager can connect their account with Google', :js, :admin do
-    login manager
+  scenario 'account admin can connect their account with Google', :js, :admin do
+    login account_admin
     account_details = PageObjects::Admin::AccountDetails.new
     expect(account_details).to be_displayed
     expect(account_details).to have_connect_with_google_button
@@ -15,7 +15,7 @@ feature 'Google OAuth2' do
     expect(account_details).to_not have_edit_google_link
   end
 
-  scenario 'manager can disconnect their account from Google', :js, :admin do
+  scenario 'account admin can disconnect their account from Google', :js, :admin do
     AuthToken.google.for_account(account).create!({
       access_token: 'asdf',
       token_data: {
@@ -26,7 +26,7 @@ feature 'Google OAuth2' do
       }
     })
 
-    login manager
+    login account_admin
     account_details = PageObjects::Admin::AccountDetails.new
     expect(account_details).to be_displayed
     expect(account_details).to have_edit_google_link

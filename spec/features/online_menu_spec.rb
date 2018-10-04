@@ -157,10 +157,10 @@ feature 'Online Menu management' do
     expect(preview_taps_list.item_named('Nitro Milk Stout')).to have_image
   end
 
-  scenario 'manager can manage the Online Menu for their establishment', :js, :admin do
-    manager = create :user, :manager, account: account
+  scenario 'account admin can manage the Online Menu for their establishment', :js, :admin do
+    account_admin = create :user, :account_admin, account: account
 
-    run_test manager
+    run_test account_admin
   end
 
   scenario 'staff with establishment access can manage the Online Menu', :js, :admin do

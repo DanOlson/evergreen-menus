@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'subscribing to select plans unlocks features', :admin, :js do
   let(:account) { create :account }
-  let(:user) { create :user, :manager, account: account }
+  let(:user) { create :user, :account_admin, account: account }
 
   before do
     Subscription.create!({

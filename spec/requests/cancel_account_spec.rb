@@ -4,7 +4,7 @@ describe 'cancel account', :vcr do
   let(:plan) { create :plan }
 
   context 'when the account is found' do
-    let(:user) { create :user, :manager, account: account }
+    let(:user) { create :user, :account_admin, account: account }
 
     context 'and has a stripe_id' do
       let(:account) { create :account, stripe_id: customer.id }

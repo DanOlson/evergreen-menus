@@ -39,12 +39,12 @@ describe 'staff management' do
     expect(staff_member.role).to eq Role.account_admin
   end
 
-  scenario 'manager can change role of other staff members', :js, :admin do
+  scenario 'account admin can change role of other staff members', :js, :admin do
     establishment = create :establishment, account: account
     staff_member.establishments << establishment
 
-    manager = create :user, :manager, account: account
-    login manager
+    account_admin = create :user, :account_admin, account: account
+    login account_admin
     click_link 'Staff'
 
     list = PageObjects::Admin::StaffList.new
@@ -76,8 +76,8 @@ describe 'staff management' do
     expect(staff_member.role).to eq Role.staff
   end
 
-  scenario 'manager can grant and revoke staff members access to establishments' do
-    manager = create :user, :manager, account: account
+  scenario 'account admin can grant and revoke staff members access to establishments' do
+    account_admin = create :user, :account_admin, account: account
 
     establishment_1 = create :establishment, account: account
     establishment_2 = create :establishment, account: account
@@ -88,7 +88,7 @@ describe 'staff management' do
     expect(account_page.establishments.size).to eq 0
     logout
 
-    login manager
+    login account_admin
     click_link 'Staff'
 
     list = PageObjects::Admin::StaffList.new
@@ -112,7 +112,7 @@ describe 'staff management' do
 
     logout
 
-    login manager
+    login account_admin
     click_link 'Staff'
 
     list = PageObjects::Admin::StaffList.new
@@ -133,10 +133,10 @@ describe 'staff management' do
     expect(account_page).to have_establishment establishment_2.name
   end
 
-  scenario 'manager can revoke staff account access (delete user)', :js, :admin do
-    manager = create :user, :manager, account: account
+  scenario 'account admin can revoke staff account access (delete user)', :js, :admin do
+    account_admin = create :user, :account_admin, account: account
 
-    login manager
+    login account_admin
 
     click_link 'Staff'
     staff_list = PageObjects::Admin::StaffList.new

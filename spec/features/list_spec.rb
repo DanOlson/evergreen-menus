@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'list management' do
   let(:account) { create :account, :with_subscription }
-  let(:user) { create :user, :manager, account: account }
+  let(:user) { create :user, :account_admin, account: account }
 
   scenario 'adding a list', :js, :admin do
     establishment = create :establishment, account: account

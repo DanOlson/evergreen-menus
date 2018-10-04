@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'accounts' do
   let(:account) { create :account, :with_subscription, stripe_id: 'cus_DHp2EbahQyQruN' }
-  let(:user) { create :user, :manager, account: account }
+  let(:user) { create :user, :account_admin, account: account }
 
   before do
     sign_in user

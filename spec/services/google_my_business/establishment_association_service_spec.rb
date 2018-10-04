@@ -4,7 +4,7 @@ module GoogleMyBusiness
   describe EstablishmentAssociationService do
     let(:account) { create :account }
     let(:establishment) { create :establishment, account: account }
-    let(:user) { create :user, :manager, account: account }
+    let(:user) { create :user, :account_admin, account: account }
     let(:ability) { Ability.new user }
 
     describe '#call' do

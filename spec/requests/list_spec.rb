@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'lists' do
   describe 'POST to #create' do
     let(:account) { create :account }
-    let(:user) { create :user, :manager, account: account }
+    let(:user) { create :user, :account_admin, account: account }
     let(:establishment) { create :establishment, account: account }
     let(:params) do
       {

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Facebook Establishment associations' do
   let(:account) { create :account }
   let(:establishment) { create :establishment, name: 'Tavern 42', account: account }
-  let(:user) { create :user, :manager, account: account }
+  let(:user) { create :user, :account_admin, account: account }
 
   before do
     sign_in user

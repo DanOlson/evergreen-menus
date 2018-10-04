@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'open-uri'
 
 feature 'establishment website', :admin, :js do
-  let(:user) { create :user, :manager }
+  let(:user) { create :user, :account_admin }
   let(:establishment) { create :establishment, account: user.account }
   let(:taps_list) do
     establishment.lists.create! name: 'Taps'

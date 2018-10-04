@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'accounts/edit' do
   before do
     allow(view).to receive(:can?) { false }
-    allow(view).to receive(:current_user) { build :user, :manager, account: account }
+    allow(view).to receive(:current_user) { build :user, :account_admin, account: account }
     allow(view).to receive(:after_sign_in_path_for) { '' }
     assign :account, account
     render

@@ -190,10 +190,10 @@ feature 'digital display menu management' do
     end
   end
 
-  scenario 'manager can manage a digital display menu for their establishments', :js, :admin do
-    manager = create :user, :manager, account: account
+  scenario 'account admin can manage a digital display menu for their establishments', :js, :admin do
+    account_admin = create :user, :account_admin, account: account
 
-    run_test manager
+    run_test account_admin
   end
 
   scenario 'staff with establishment access can manage a digital display menu', :js, :admin do

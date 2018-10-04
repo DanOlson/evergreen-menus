@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'establishment count is limited by subscription quantity', :admin, :js do
   let(:account) { create :account, :with_subscription, quantity: quantity }
-  let(:user) { create :user, :manager, account: account }
+  let(:user) { create :user, :account_admin, account: account }
 
   before do
     login user
