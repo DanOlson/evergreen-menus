@@ -1,21 +1,29 @@
 class Role < ActiveRecord::Base
   has_many :users
 
+  SUPER_ADMIN = 'super admin'
   ADMIN = 'admin'
   STAFF = 'staff'
-  MANAGER = 'manager'
 
   class << self
-    def admin
-      find_by name: ADMIN
+    def super_admin
+      @super_admin ||= find_by name: SUPER_ADMIN
     end
 
-    def manager
-      find_by name: MANAGER
+    def account_admin
+      @account_admin ||= find_by name: ADMIN
     end
 
     def staff
-      find_by name: STAFF
+      @staff ||= find_by name: STAFF
+    end
+
+    def manager
+      STDERR.puts <<-WARN
+        [DEPRECATION WARNING] manager role has been renamed
+        #{caller.take(3).join("\n")}
+      WARN
+      account_admin
     end
   end
 end

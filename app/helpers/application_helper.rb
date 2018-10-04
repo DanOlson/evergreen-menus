@@ -16,7 +16,7 @@ module ApplicationHelper
   def role_icon(user)
     if user.role == Role.manager
       css_class = 'float-right fa fa-user-o fa-lg'
-      title = 'Manager'
+      title = 'Admin'
     elsif current_user == user
       css_class = 'float-right fa fa-star fa-lg'
       title = 'You'
@@ -33,7 +33,7 @@ module ApplicationHelper
   end
 
   def admin_user?
-    user_signed_in? && current_user.role == Role.admin
+    user_signed_in? && current_user.role == Role.super_admin
   end
 
   def account_establishments(account)

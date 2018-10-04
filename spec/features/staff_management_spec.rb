@@ -28,7 +28,7 @@ describe 'staff management' do
     expect(form).to be_displayed
     form.wait_until_establishment_access_checkboxes_visible
 
-    form.select_role 'manager'
+    form.select_role 'admin'
     form.wait_until_establishment_access_checkboxes_invisible
     form.submit
 
@@ -36,7 +36,7 @@ describe 'staff management' do
     expect(list).to be_displayed
 
     staff_member.reload
-    expect(staff_member.role).to eq Role.manager
+    expect(staff_member.role).to eq Role.account_admin
   end
 
   scenario 'manager can change role of other staff members', :js, :admin do
@@ -54,7 +54,7 @@ describe 'staff management' do
 
     expect(form).to be_displayed
 
-    form.select_role 'manager'
+    form.select_role 'admin'
     form.wait_until_establishment_access_checkboxes_invisible
     form.submit
 

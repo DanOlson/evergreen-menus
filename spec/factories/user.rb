@@ -10,11 +10,11 @@ FactoryGirl.define do
   end
 
   trait :admin do
-    role { Role.admin }
+    role { Role.super_admin }
     account nil
   end
 
   trait :manager do
-    role { Role.manager }
+    role { Role.account_admin }
   end
 end

@@ -70,7 +70,7 @@ class SignupService
   def create_invitation(account:)
     SignupInvitation.create!({
       account: account,
-      role: Role.manager,
+      role: Role.account_admin,
       email: email
     })
   end

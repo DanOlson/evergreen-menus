@@ -58,7 +58,7 @@ feature 'account management' do
     invitation_form.first_name = 'Donny'
     invitation_form.last_name  = 'Kerabatsos'
     invitation_form.email      = 'donny@lebowski.me'
-    invitation_form.role       = 'manager'
+    invitation_form.role       = 'admin'
 
     invitation_form.submit
 
@@ -69,7 +69,7 @@ feature 'account management' do
     staff_list = PageObjects::Admin::StaffList.new
     staff_list.invitation_to('Donny Kerabatsos').click
 
-    expect(invitation_form.role).to eq 'manager'
+    expect(invitation_form.role).to eq 'admin'
 
     logout
 
@@ -94,7 +94,7 @@ feature 'account management' do
     staff_form = PageObjects::Admin::StaffForm.new
     expect(staff_form).to be_displayed
     expect(staff_form.name).to eq 'Donny Kerabatsos'
-    expect(staff_form.role).to eq 'manager'
+    expect(staff_form.role).to eq 'admin'
   end
 
   scenario 'manager can edit their account, but cannot activate, deactivate or delete it' do

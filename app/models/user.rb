@@ -23,6 +23,6 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    role == Role.admin
+    role == Role.super_admin
   end
 end
