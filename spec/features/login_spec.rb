@@ -52,8 +52,8 @@ feature 'logging in' do
     expect(page).to have_css '[data-test="flash-alert"]', text: 'Your account is not active'
   end
 
-  scenario 'as admin' do
-    admin = create :user, :admin, {
+  scenario 'as super admin' do
+    super_admin = create :user, :super_admin, {
       username: 'thedude',
       email: 'dude@lebowski.me',
       password: 'thedudeabides'

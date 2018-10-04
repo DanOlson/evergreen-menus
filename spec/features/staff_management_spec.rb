@@ -12,12 +12,12 @@ describe 'staff management' do
     }
   end
 
-  scenario "admin can change the role of an account's users", :js, :admin do
+  scenario "super admin can change the role of an account's users", :js, :admin do
     establishment = create :establishment, account: account
     staff_member.establishments << establishment
 
-    admin = create :user, :admin
-    login admin
+    super_admin = create :user, :super_admin
+    login super_admin
     visit "/accounts/#{account.id}/staff"
 
     list = PageObjects::Admin::StaffList.new

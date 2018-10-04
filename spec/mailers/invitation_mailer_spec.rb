@@ -3,8 +3,8 @@ require "spec_helper"
 describe InvitationMailer, type: :mailer do
   describe '#invitation_email' do
     let(:account) { build :account, name: 'The Lanes' }
-    let(:admin) do
-      build :user, :admin, first_name: 'Dude', last_name: 'Lebowski'
+    let(:super_admin) do
+      build :user, :super_admin, first_name: 'Dude', last_name: 'Lebowski'
     end
     let(:invitation) do
       UserInvitation.new({
@@ -12,7 +12,7 @@ describe InvitationMailer, type: :mailer do
         first_name: 'Walter',
         last_name: 'Sobchak',
         email: 'walter@lebowski.me',
-        inviting_user: admin,
+        inviting_user: super_admin,
         account: account
       })
     end

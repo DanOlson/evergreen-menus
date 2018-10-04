@@ -7,8 +7,8 @@ feature 'account management' do
   let(:bar_2) { create :establishment, name: "Bar 2", account: account }
 
   scenario 'super admin can create, edit, and delete an account', :js, :admin do
-    admin = create :user, :admin
-    login admin
+    super_admin = create :user, :super_admin
+    login super_admin
 
     account_list = PageObjects::Admin::AccountsList.new
     account_list.load
@@ -46,8 +46,8 @@ feature 'account management' do
 
   scenario 'super admin can invite account admin' do
     ActionMailer::Base.deliveries.clear
-    admin = create :user, :admin
-    login admin
+    super_admin = create :user, :super_admin
+    login super_admin
 
     invitation_form = PageObjects::Admin::StaffInvitationForm.new
     invitation_form.load(account_id: account.id)
@@ -86,7 +86,7 @@ feature 'account management' do
 
     logout
 
-    login admin
+    login super_admin
 
     staff_list.load(account_id: account.id)
     staff_list.member_named('Donny Kerabatsos').click
