@@ -15,7 +15,7 @@ class ToggleFlyoutButton extends Component {
 
   render () {
     const { flyoutShown } = this.props
-    const icon = flyoutShown ? 'fa-angle-double-up' : 'fa-angle-double-down'
+    const icon = flyoutShown ? 'fa-angle-up' : 'fa-angle-down'
     const activeState = flyoutShown ? 'active' : ''
     return (
       <a href=''
@@ -24,7 +24,7 @@ class ToggleFlyoutButton extends Component {
         data-test={`expand-list-item`}
         className={`btn btn-outline-secondary ${activeState}`}
         aria-pressed={flyoutShown}>
-        <span className={`fa ${icon} fa-lg`} />
+        <span className={`fas ${icon}`} />
       </a>
     )
   }

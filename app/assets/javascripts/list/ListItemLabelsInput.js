@@ -17,7 +17,7 @@ class ListItemLabelsInput extends Component {
     })
 
     return (
-      <div className='col-sm-4 col-xs-8'>
+      <div className='col-sm-2 col-xs-8'>
         <input type='hidden' name={`list[beers_attributes][${appId}][labels][]`} />
         {labelInputs}
       </div>

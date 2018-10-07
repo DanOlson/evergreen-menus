@@ -126,7 +126,7 @@ class List extends Component {
               title='Add item'
               onClick={this.addBeer}
               className='btn btn-success'>
-              <span className='fa fa-plus fa-lg' />
+              <span className='fas fa-plus fa-lg' />
             </button>
           </div>
         </div>

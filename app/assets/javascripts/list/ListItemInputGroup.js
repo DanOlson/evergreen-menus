@@ -149,46 +149,51 @@ class ListItemInputGroup extends Component {
     }
 
     return connectDragSource(connectDropTarget(
-      <div data-test='beer-input' className={className} style={style}>
-        <div className='form-row'>
-          <ListItemNameInput appId={appId} value={name} className={className} />
-          <ListItemPriceInput appId={appId} value={price} />
-          <ToggleFlyoutButton
-            flyoutShown={showFlyout}
-            onClick={this.toggleFlyout}
+      <div data-test='beer-input' className={`list-item-input ${className}`} style={style}>
+        <div className="drag-handle">
+          <span className="fas fa-bars"></span>
+        </div>
+        <div className="item-input-wrap">
+          <div className='form-row'>
+            <ListItemNameInput appId={appId} value={name} className={className} />
+            <ListItemPriceInput appId={appId} value={price} />
+            <ToggleFlyoutButton
+              flyoutShown={showFlyout}
+              onClick={this.toggleFlyout}
+            />
+            <ListItemAction
+              appId={appId}
+              markedForRemoval={markedForRemoval}
+              onKeep={this.onKeep}
+              onRemove={this.onRemove}
+            />
+          </div>
+          <Flyout show={showFlyout}>
+            <ListItemDescriptionInput appId={appId} value={description} />
+            <ListItemLabelsInput appId={appId} menuItemLabels={menuItemLabels} appliedLabels={labels} />
+            <ListItemImageInput appId={appId} filename={imageFilename} url={imageUrl} />
+          </Flyout>
+          <div className='form-row'>
+            <div className='col-sm-10 col-xs-12 beer-separator' />
+          </div>
+          <input
+            type='hidden'
+            defaultValue={this.state.id}
+            name={`list[beers_attributes][${appId}][id]`}
+            id={`list_beers_attributes_${appId}_id`}
           />
-          <ListItemAction
-            appId={appId}
-            markedForRemoval={markedForRemoval}
-            onKeep={this.onKeep}
-            onRemove={this.onRemove}
+          <input
+            type='hidden'
+            defaultValue={index}
+            name={`list[beers_attributes][${appId}[position]`}
+          />
+          <input
+            type='hidden'
+            data-test='marked-for-removal'
+            defaultValue={markedForRemoval}
+            name={`list[beers_attributes][${appId}][_destroy]`}
           />
         </div>
-        <Flyout show={showFlyout}>
-          <ListItemDescriptionInput appId={appId} value={description} />
-          <ListItemImageInput appId={appId} filename={imageFilename} url={imageUrl} />
-          <ListItemLabelsInput appId={appId} menuItemLabels={menuItemLabels} appliedLabels={labels} />
-        </Flyout>
-        <div className='form-row'>
-          <div className='col-sm-10 col-xs-12 beer-separator' />
-        </div>
-        <input
-          type='hidden'
-          defaultValue={this.state.id}
-          name={`list[beers_attributes][${appId}][id]`}
-          id={`list_beers_attributes_${appId}_id`}
-        />
-        <input
-          type='hidden'
-          defaultValue={index}
-          name={`list[beers_attributes][${appId}[position]`}
-        />
-        <input
-          type='hidden'
-          data-test='marked-for-removal'
-          defaultValue={markedForRemoval}
-          name={`list[beers_attributes][${appId}][_destroy]`}
-        />
       </div>
     ))
   }

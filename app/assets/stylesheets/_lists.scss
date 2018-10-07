@@ -1,4 +1,8 @@
 .list-form {
+  .list-item-input {
+    display: flex;
+  }
+
   .price-input {
     -moz-appearance: textfield;
     &::-webkit-outer-spin-button {
@@ -13,10 +17,36 @@
 
   .flyout {
     padding-top: 0.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .drag-handle {
+    cursor: move;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: color .15s;
+  }
+
+  .item-input-wrap {
+    width: 100%;
   }
 
   .form-check-label {
     padding-left: 0.5rem;
+  }
+
+  .form-check {
+    padding-left: 0;
   }
 
   .beer-separator {
@@ -28,6 +58,19 @@
   .list-item-image {
     max-width: 100px;
     max-height: 100px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  .list-item-image-frame {
+    text-align: center;
+    border: 1px dotted #cecece;
+    border-radius: 5px;
+    position: relative;
   }
 
   .custom-file-label {

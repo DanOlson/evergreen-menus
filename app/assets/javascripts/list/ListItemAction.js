@@ -19,7 +19,7 @@ class ListItemAction extends Component {
           onClick={onRemove}
           data-test={`remove-beer-${appId}`}
           className='btn btn-outline-secondary'>
-          <span className='fa fa-remove fa-lg' />
+          <span className='fas fa-times' />
         </a>
       )
     }
