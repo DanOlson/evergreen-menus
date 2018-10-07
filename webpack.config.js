@@ -14,14 +14,6 @@ const plugins = [
     {
       from: path.join(__dirname, 'app', 'assets', 'images'),
       to: 'images/'
-    },
-    {
-      from: path.join(__dirname, 'app', 'assets', 'font-awesome-4.7.0/css'),
-      to: 'font-awesome/css'
-    },
-    {
-      from: path.join(__dirname, 'app', 'assets', 'font-awesome-4.7.0/fonts'),
-      to: 'font-awesome/fonts'
     }
   ]),
   new ExtractTextPlugin({
