@@ -109,7 +109,7 @@ class App extends Component {
     return (
       <div className='form-row'>
         <div className='col-sm-6'>
-          <Panel title="Online Menu" icon="fa-globe">
+          <Panel title="Online Menu" icon="fas fa-globe">
             <AvailableListGroup
               totalListCount={totalListCount}
               lists={listsAvailable}

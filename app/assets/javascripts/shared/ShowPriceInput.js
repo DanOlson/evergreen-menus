@@ -35,7 +35,7 @@ class ShowPriceInput extends Component {
           htmlFor={showPriceInputId}
           className='menu-list-show-price'
           data-test='show-price-label'>
-          <span className='fa fa-usd' title='show price' aria-hidden='true' />
+          <span className='fas fa-dollar-sign' title='show price' aria-hidden='true' />
           <input {...showPrice} />
         </label>
       </span>

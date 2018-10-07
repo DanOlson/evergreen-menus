@@ -14,12 +14,12 @@ module ApplicationHelper
   end
 
   def role_icon(user)
-    if user.role == Role.account_admin
-      css_class = 'float-right fa fa-user-o fa-lg'
-      title = 'Admin'
-    elsif current_user == user
-      css_class = 'float-right fa fa-star fa-lg'
+    if current_user == user
+      css_class = 'float-right far fa-star fa-lg'
       title = 'You'
+    elsif user.role == Role.account_admin
+      css_class = 'float-right far fa-user fa-lg'
+      title = 'Admin'
     else
       return
     end

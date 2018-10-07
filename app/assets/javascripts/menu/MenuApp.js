@@ -228,7 +228,7 @@ class MenuApp extends Component {
     return (
       <div className='form-row'>
         <div className='col-sm-6'>
-          <Panel title={name} icon="fa-file-pdf-o">
+          <Panel title={name} icon="far fa-file-pdf">
             <div className='form-group'>
               <div className='form-row'>
                 <div className='col-sm-8'>
@@ -312,7 +312,7 @@ class MenuApp extends Component {
                   value='0'
                 />
                 <label htmlFor='menu-restricted-availability'>
-                  <span>Restrict <span className='fa fa-clock-o fa-lg' aria-hidden='true' /></span>
+                  <span>Restrict <span className='far fa-clock fa-lg' aria-hidden='true' /></span>
                 </label>
                 <input
                   type='checkbox'

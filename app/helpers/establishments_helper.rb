@@ -18,7 +18,7 @@ module EstablishmentsHelper
 
     link_to(href, options) do
       opts = {}.tap do |h|
-        h.merge!(class: "fa #{icon} btn-icon") if icon
+        h.merge!(class: "#{icon} btn-icon") if icon
       end
       tag.span do
         tag.span(text) + tag.span(opts)
@@ -34,7 +34,7 @@ module EstablishmentsHelper
     add_new_button account, establishment, :menu, {
       enabled: enabled,
       text: '+ Print',
-      icon: 'fa-file-pdf-o'
+      icon: 'far fa-file-pdf'
     }
   end
 
@@ -42,7 +42,7 @@ module EstablishmentsHelper
     add_new_button account, establishment, :digital_display_menu, {
       enabled: enabled,
       text: '+ Digital Display',
-      icon: 'fa-tv'
+      icon: 'fas fa-tv'
     }
   end
 
@@ -50,7 +50,7 @@ module EstablishmentsHelper
     add_new_button account, establishment, :web_menu, {
       enabled: enabled,
       text: '+ Web',
-      icon: 'fa-code'
+      icon: 'fas fa-code'
     }
   end
 

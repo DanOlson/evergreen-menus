@@ -54,16 +54,16 @@ class FacebookPage extends Component {
       return e.id.toString() === newValue
     }) || nullEstablishment
 
-    this.setState(prevState => {
+    this.setState(() => {
       return { selectedEstablishment }
     })
   }
 
   renderLinkStatus () {
     if (this.isAssociationDirty()) {
-      return <i className='fa fa-2x fa-times status-unlinked' aria-hidden title='Not Linked' />
+      return <i className='fas fa-2x fa-times status-unlinked' aria-hidden title='Not Linked' />
     } else {
-      return <i className='fa fa-2x fa-check status-linked' aria-hidden title='Linked' />
+      return <i className='fas fa-2x fa-check status-linked' aria-hidden title='Linked' />
     }
   }
 
@@ -101,7 +101,7 @@ class FacebookPage extends Component {
     if (this.restrictionApplies()) {
       restrictionWarning = (
         <a target='_blank' href={tabRestrictionsPath}>
-          <i className='icon fa fa-2x fa-exclamation-triangle' title='Restrictions Apply' />
+          <i className='icon fas fa-2x fa-exclamation-triangle' title='Restrictions Apply' />
         </a>
       )
     }
@@ -149,7 +149,7 @@ class FacebookPage extends Component {
       <tr>
         <td>
           <h4 className='my-auto'>
-            <i className='facebook-icon fa fa-2x fa-facebook-square' aria-hidden />
+            <i className='facebook-icon fab fa-2x fa-facebook-square' aria-hidden />
             <span className='page-name'>{page.name}</span>
           </h4>
         </td>

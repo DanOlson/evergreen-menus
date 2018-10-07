@@ -166,7 +166,7 @@ class WebMenuApp extends Component {
     return (
       <div className='form-row'>
         <div className='col-sm-6'>
-          <Panel title={name} icon="fa-code">
+          <Panel title={name} icon="fas fa-code">
             <div className='form-group'>
               <label htmlFor='menu_name'>Name</label>
               <input
@@ -188,7 +188,7 @@ class WebMenuApp extends Component {
                   value='0'
                 />
                 <label htmlFor='web-menu-restricted-availability'>
-                  <span>Restrict <span className='fa fa-clock-o fa-lg' aria-hidden='true' /></span>
+                  <span>Restrict <span className='far fa-clock fa-lg' aria-hidden='true' /></span>
                 </label>
                 <input
                   type='checkbox'

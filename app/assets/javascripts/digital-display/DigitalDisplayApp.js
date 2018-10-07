@@ -198,7 +198,7 @@ class DigitalDisplayApp extends Component {
     return (
       <div className='form-row'>
         <div className='col-sm-6'>
-          <Panel title={name} icon="fa-tv">
+          <Panel title={name} icon="fas fa-tv">
             <div className='form-group'>
               <label htmlFor='digital_display_menu_name'>Name</label>
               <input

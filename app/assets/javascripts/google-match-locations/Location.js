@@ -60,9 +60,9 @@ class Location extends Component {
 
   renderLinkStatus () {
     if (this.isAssociationDirty()) {
-      return <i className='fa fa-2x fa-times status-unlinked' aria-hidden title='Not Linked' />
+      return <i className='fas fa-2x fa-times status-unlinked' aria-hidden title='Not Linked' />
     } else {
-      return <i className='fa fa-2x fa-check status-linked' aria-hidden title='Linked' />
+      return <i className='fas fa-2x fa-check status-linked' aria-hidden title='Linked' />
     }
   }
 
@@ -102,7 +102,7 @@ class Location extends Component {
       <tr>
         <td>
           <h4 className='my-auto'>
-            <i className='google-icon fa fa-2x fa-google' aria-hidden />
+            <i className='google-icon fab fa-2x fa-google' aria-hidden />
             <span className='location-name'>{location.location_name}</span>
           </h4>
         </td>

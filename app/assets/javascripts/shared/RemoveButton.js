@@ -22,7 +22,7 @@ class RemoveButton extends Component {
         title='Remove list'
         onClick={this.handleClick}
         className={`btn btn-outline-secondary btn-sm move-list-button`}>
-        <span className='fa fa-minus fa-lg' />
+        <span className='fas fa-minus fa-lg' />
       </a>
     )
   }

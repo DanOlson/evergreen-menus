@@ -35,7 +35,7 @@ class ShowDescriptionInput extends Component {
           htmlFor={showDescriptionInputId}
           className='menu-list-show-description'
           data-test='show-descriptions-label'>
-          <span className='fa fa-comment-o' title='show description' aria-hidden='true' />
+          <span className='far fa-comment' title='show description' aria-hidden='true' />
           <input {...showDescription} />
         </label>
       </span>

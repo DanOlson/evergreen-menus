@@ -159,7 +159,7 @@ class ChosenListItem extends Component {
 
     let imageIcon = (
       <span className="hidden-image-toggle-wrapper">
-        <i className="fa fa-image fa-lg"></i>
+        <i className="far fa-image fa-lg"></i>
       </span>
     )
 
@@ -172,7 +172,7 @@ class ChosenListItem extends Component {
       imageIcon = (
         <span className={wrapperClass}>
           <i
-            className="fa fa-image fa-lg image-toggle"
+            className="far fa-image fa-lg image-toggle"
             title="Show Image Options"
             role="button"
             aria-pressed={isActive}

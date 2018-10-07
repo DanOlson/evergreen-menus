@@ -22,7 +22,7 @@ class AddButton extends Component {
         title='Add list'
         onClick={this.handleClick}
         className={`btn btn-outline-secondary btn-sm move-list-button`}>
-        <span className='fa fa-plus fa-lg' />
+        <span className='fas fa-plus fa-lg' />
       </a>
     )
   }
