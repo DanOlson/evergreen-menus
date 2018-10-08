@@ -1,6 +1,6 @@
 module ListHelper
-  BEER_GLASS     = 'icon-beer';
-  CUTLERY        = 'fa-cutlery';
+  BEER_GLASS     = 'fa-beer';
+  CUTLERY        = 'fa-utensils';
   COFFEE         = 'fa-coffee';
 
   ICONS_BY_TYPE = {
@@ -21,7 +21,7 @@ module ListHelper
   def list_type_icon(list)
     icon = ICONS_BY_TYPE.fetch(list.type) { CUTLERY }
     content_tag(:span, nil, {
-      class: "fa #{icon} fa-lg float-right",
+      class: "fas #{icon} fa-lg float-right",
       aria: {
         hidden: 'true'
       },

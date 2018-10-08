@@ -1,24 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-const cocktailGlass = 'fa-glass'
-const wineGlass = 'icon-glass'
-const beerGlass = 'icon-beer'
-const cutlery = 'fa-cutlery'
-const moon = 'fa-moon-o'
+const beerGlass = 'fa-beer'
+const cutlery = 'fa-utensils'
 const coffee = 'fa-coffee'
 
 const ICONS_BY_TYPE = {
-  'beer': beerGlass,
-  'wine': wineGlass,
-  'spirits': cocktailGlass,
-  'cocktails': cocktailGlass,
-  'appetizers': cutlery,
-  'breakfast': cutlery,
-  'lunch': cutlery,
-  'dinner': cutlery,
-  'happy-hour': wineGlass,
-  'late-night': moon,
+  'drink': beerGlass,
+  'food': cutlery,
   'other': coffee
 }
 
@@ -32,7 +21,7 @@ class ListTypeIcon extends Component {
     const icon = iconFromType(listType)
     return (
       <span
-        className={`fa ${icon} ${className}`}
+        className={`fas ${icon} ${className}`}
         aria-hidden='true'
         title={listType} />
     )
