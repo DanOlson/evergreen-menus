@@ -29,8 +29,8 @@ class EmbedCode extends Component {
     const embedCode = { __html: this.props.embedCode }
     const { targetElement, dataTest } = this.props
     const title = `Place this code into your HTML's ${targetElement} tag`
-    const iconClass = this.state.isCopied ? 'fa-thumbs-o-up fa-lg' : 'fa-clipboard'
-    const copyButtonIcon = <span className={`fa ${iconClass}`} aria-hidden='true' />
+    const iconClass = this.state.isCopied ? 'fa-thumbs-up fa-lg' : 'fa-clipboard'
+    const copyButtonIcon = <span className={`far ${iconClass}`} aria-hidden='true' />
     return (
       <div className='card bg-light' data-test={dataTest}>
         <div className='card-header'>
