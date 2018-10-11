@@ -36,8 +36,18 @@ These are example styles we could recommend for common styling of web menus
     page-break-inside: avoid;
     break-inside: avoid;
   }
+  .evergreen-menu-item {
+    margin-bottom: 1rem;
+  }
   .evergreen-menu-title, .evergreen-menu-item-price {
     color: #954900;
+  }
+  .evergreen-menu-item-image img {
+    max-width: 200px;
+    max-height: 200px;
+  }
+  .evergreen-menu-item-price {
+    float: right;
   }
 </style>
 ```

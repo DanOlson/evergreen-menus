@@ -17,6 +17,19 @@
     page-break-inside: avoid;
     break-inside: avoid;
   }
+
+  .evergreen-menu-item {
+    margin-bottom: 1rem;
+  }
+
+  .evergreen-menu-item-image img {
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  .evergreen-menu-item-price {
+    float: right;
+  }
 }
 
 .evergreen-menu-title, .evergreen-menu-item-price {
