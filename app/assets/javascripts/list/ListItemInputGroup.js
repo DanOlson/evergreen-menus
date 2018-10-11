@@ -140,6 +140,7 @@ class ListItemInputGroup extends Component {
       connectDragSource,
       connectDropTarget,
       isDragging,
+      isActive,
       index
     } = this.props
 
@@ -155,7 +156,7 @@ class ListItemInputGroup extends Component {
         </div>
         <div className="item-input-wrap">
           <div className='form-row'>
-            <ListItemNameInput appId={appId} value={name} className={className} />
+            <ListItemNameInput appId={appId} value={name} className={className} focus={isActive} />
             <ListItemPriceInput appId={appId} value={price} />
             <ToggleFlyoutButton
               flyoutShown={showFlyout}
@@ -206,7 +207,8 @@ ListItemInputGroup.propTypes = {
   deleteBeer: PropTypes.func.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   isDragging: PropTypes.bool.isRequired,
-  moveItem: PropTypes.func.isRequired
+  moveItem: PropTypes.func.isRequired,
+  isActive: PropTypes.bool
 }
 
 const dropTarget = DropTarget(

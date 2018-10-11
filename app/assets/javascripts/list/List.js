@@ -46,9 +46,13 @@ class List extends Component {
       if (aPos < bPos) return -1
       return 0
     })
-    return sorted.map((beer, index) => {
-      beer.appId = index
-      return beer
+    return this.applyAppId(sorted)
+  }
+
+  applyAppId (items) {
+    return items.map((item, index) => {
+      item.appId = index
+      return item
     })
   }
 
@@ -85,7 +89,8 @@ class List extends Component {
         index,
         moveItem: this.reorderItems,
         deleteBeer: this.deleteBeer,
-        key: beer.appId
+        key: beer.appId,
+        isActive: !beer.id && beer.appId === array.length - 1 // last unsaved list item gets autofocused
       }
 
       return <ListItemInputGroup {...listItemInputProps} />
