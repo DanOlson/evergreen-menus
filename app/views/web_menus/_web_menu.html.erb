@@ -14,7 +14,5 @@
       items_with_images: Array(list.list_item_metadata['items_with_images']).map(&:to_i)
     } %>
   <% end %>
-  <div style="text-align:right;margin-top:4rem;">
-    <p>Menu powered by <a href="https://evergreenmenus.com">Evergreen Menus</a></p>
-  </div>
+  <%= render 'shared/evergreen_attribution' %>
 </div>
