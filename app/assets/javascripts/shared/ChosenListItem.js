@@ -191,8 +191,10 @@ class ChosenListItem extends Component {
     }
     return connectDragSource(connectDropTarget(
       <li className='list-group-item list-group-item-action' data-test='menu-list' style={style}>
-        <div className='valign-wrapper-w50'>
+        <div className='valign-wrapper-w10'>
           <RemoveButton onClick={onRemove} listId={list.id} />
+        </div>
+        <div className="valign-wrapper-w40">
           <a
             href={list.href}
             onClick={this.onClick}

@@ -61,8 +61,10 @@ class AvailableListItem extends Component {
 
     return connectDragSource(
       <li className='list-group-item list-group-item-action' data-test='menu-list' style={style}>
-        <div className='valign-wrapper-w60'>
+        <div className='valign-wrapper-w10'>
           <AddButton onClick={onAdd} listId={list.id} />
+        </div>
+        <div className='valign-wrapper-w70'>
           <a
             href={list.href}
             onClick={this.onClick}
@@ -71,7 +73,7 @@ class AvailableListItem extends Component {
             {list.name}
           </a>
         </div>
-        <div className='valign-wrapper-w40'>
+        <div className='valign-wrapper-w20'>
           <ListTypeIcon listType={list.type} />
           <span
             data-test='list-badge'
