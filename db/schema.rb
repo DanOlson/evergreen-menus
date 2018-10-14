@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_14_024936) do
+ActiveRecord::Schema.define(version: 2018_10_14_153906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -179,6 +179,7 @@ ActiveRecord::Schema.define(version: 2018_10_14_024936) do
     t.datetime "updated_at", null: false
     t.boolean "show_price_on_menu", default: true, null: false
     t.jsonb "list_item_metadata", default: {}
+    t.boolean "show_description_on_menu", default: true, null: false
   end
 
   create_table "menus", id: :serial, force: :cascade do |t|

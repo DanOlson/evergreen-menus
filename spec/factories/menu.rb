@@ -12,11 +12,16 @@ FactoryGirl.define do
         list_names = %w(Appetizers Salads Sandwiches Burgers Entrees)
 
         evaluator.list_count.times do |t|
-          list = create :list, :with_items, name: list_names[t], establishment: menu.establishment
+          list_name = list_names[t]
+          list = create :list, :with_items, {
+            name: list_name,
+            description: "Our #{list_name.downcase} are made fresh daily",
+            establishment: menu.establishment
+          }
           menu.menu_lists.create({
             position: t,
             show_price_on_menu: true,
-            # show_description_on_menu: true, # TODO: not yet implemented
+            show_description_on_menu: true,
             list: list
           })
         end
