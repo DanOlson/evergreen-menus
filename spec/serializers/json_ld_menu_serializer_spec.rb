@@ -44,6 +44,12 @@ describe JsonLdMenuSerializer do
       expect(menu_section_names).to match_array list_names
     end
 
+    it 'uses lists[n].description to populate hasMenuSection[n].description' do
+      list_descriptions = menu.lists.map &:description
+      menu_section_descriptions = parsed_result['hasMenuSection'].map { |ms| ms['description'] }
+      expect(menu_section_descriptions).to match_array list_descriptions
+    end
+
     it 'represents menu items within each list using the correct type' do
       parsed_result['hasMenuSection'].each do |menu_section|
         menu_item_types = menu_section['hasMenuItem'].map { |i| i['@type'] }

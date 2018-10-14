@@ -82,12 +82,13 @@ module PageObjects
     class ListForm < SitePrism::Page
       set_url '/accounts{/account_id}/establishments{/establishment_id}/lists{/list_id}/edit'
 
-      element :list_name_input, '[data-test="list-name"]'
-      element :list_type_input, '[data-test="list-type"]'
-      element :add_beer_button, '[data-test="add-beer"]'
-      element :submit_button,   '[data-test="list-form-submit"]'
-      element :cancel_link,     '[data-test="list-form-cancel"]'
-      element :delete_link,     '[data-test="list-form-delete"]'
+      element :list_name_input,        '[data-test="list-name"]'
+      element :list_type_input,        '[data-test="list-type"]'
+      element :list_description_input, '[data-test="list-description"]'
+      element :add_beer_button,        '[data-test="add-beer"]'
+      element :submit_button,          '[data-test="list-form-submit"]'
+      element :cancel_link,            '[data-test="list-form-cancel"]'
+      element :delete_link,            '[data-test="list-form-delete"]'
 
       sections :beers, BeerInput, '[data-test="beer-input"]'
 
@@ -106,6 +107,14 @@ module PageObjects
 
       def set_name(list_name)
         list_name_input.set list_name
+      end
+
+      def description=(description)
+        list_description_input.set description
+      end
+
+      def description
+        list_description_input.value
       end
 
       def add_beer(beer_name, price: nil, description: nil, image: nil, labels: [])

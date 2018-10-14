@@ -51,6 +51,7 @@ class ListsController < ApplicationController
       :id,
       :name,
       :type,
+      :description,
       {
         beers_attributes: [
           :id,

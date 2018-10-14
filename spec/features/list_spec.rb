@@ -23,6 +23,7 @@ describe 'list management' do
     expect(form.list_type).to eq 'Food'
 
     form.set_name 'Beers'
+    form.description = 'Our tap lines are cleaned at least twice per year'
 
     form.add_beer 'Bear Republic Racer 5'
     form.add_beer 'Indeed Day Tripper'
@@ -35,6 +36,7 @@ describe 'list management' do
     establishment_form.click_list_named('Beers')
     expect(form).to be_displayed
     expect(form.beers.size).to eq 3
+    expect(form.description).to eq 'Our tap lines are cleaned at least twice per year'
 
     beers = establishment.beers.map &:name
     expect(beers).to match_array [
@@ -54,7 +56,7 @@ describe 'list management' do
     expect(form.beers.size).to eq 2
   end
 
-  scenario 'a list can have prices and descriptions', :js, :admin do
+  scenario 'list items can have prices and descriptions', :js, :admin do
     establishment = create :establishment, account: account
     login user
 
@@ -235,6 +237,7 @@ describe 'list management' do
 
     form = PageObjects::Admin::ListForm.new
     form.set_name 'Beers'
+    form.description = 'We carry the best beers in town'
 
     form.add_beer 'Deschutes Pinedrops', price: '6', description: 'IPA'
     form.add_beer 'Deschutes Mirror Pond', price: '6', description: 'APA'
@@ -267,6 +270,8 @@ describe 'list management' do
     menu.load
 
     list = menu.lists.first
+    expect(list.title).to eq 'Beers'
+    expect(list.description).to eq 'We carry the best beers in town'
     expect(list).to have_item_named 'Deschutes Pinedrops'
     pinedrops = list.item_named 'Deschutes Pinedrops'
     expect(pinedrops.price.text).to eq '$6'

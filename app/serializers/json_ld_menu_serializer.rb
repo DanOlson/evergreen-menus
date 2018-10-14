@@ -45,6 +45,7 @@ class JsonLdMenuSerializer
       {
         '@type': MENU_SECTION_TYPE,
         name: list.name,
+        description: list.description,
         hasMenuItem: render_items(list)
       }
     end

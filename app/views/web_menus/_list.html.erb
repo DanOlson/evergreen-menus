@@ -1,6 +1,11 @@
 <% items_with_images ||= [] %>
 <div class="evergreen-menu" data-test="list">
   <h3 class="evergreen-menu-title" data-test="list-title"><%= title %></h3>
+  <% if show_description && list_description.present? %>
+  <p class="evergreen-menu-list-description" data-test="list-description">
+    <%= list_description %>
+  </p>
+  <% end %>
   <ul style="list-style: none;">
     <% beers.each do |beer| %>
       <% show_image = items_with_images.include?(beer.id) %>

@@ -15,11 +15,12 @@ applyIncludes()
 class List extends Component {
   constructor (props) {
     super(props)
-    const { name, type } = props
+    const { name, type, description } = props
     this.state = {
       beers: this.sortBeers(this.props.beers),
       name,
-      type
+      type,
+      description
     }
     this.deleteBeer = this.deleteBeer.bind(this)
     this.addBeer = this.addBeer.bind(this)
@@ -80,7 +81,7 @@ class List extends Component {
 
   render () {
     const { listId, typeOptions, menuItemLabels } = this.props
-    const { name, type } = this.state
+    const { name, type, description } = this.state
     const inputs = this.state.beers.map((beer, index, array) => {
       const listItemInputProps = {
         beer,
@@ -120,6 +121,19 @@ class List extends Component {
                 onChange={this.handleTypeChange}
               />
             </div>
+
+            <div className='form-row'>
+              <div className='col-sm-9 list-description-input'>
+                <label htmlFor='list_description'>Description</label>
+                <textarea
+                  name='list[description]'
+                  id='list_description'
+                  className='form-control'
+                  data-test='list-description'
+                  defaultValue={description}
+                />
+              </div>
+            </div>
           </div>
           <div className='form-group'>
             {inputs}
@@ -143,6 +157,7 @@ class List extends Component {
 List.propTypes = {
   beers: PropTypes.array.isRequired,
   name: PropTypes.string.isRequired,
+  description: PropTypes.string,
   typeOptions: PropTypes.array.isRequired,
   menuItemLabels: PropTypes.array.isRequired,
   listId: PropTypes.number

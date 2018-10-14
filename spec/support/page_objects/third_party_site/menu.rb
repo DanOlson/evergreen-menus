@@ -20,8 +20,9 @@ module PageObjects
       end
 
       class List < SitePrism::Section
-        sections :menu_items, MenuItem, '.evergreen-menu-item'
-        element :title, '.evergreen-menu-title'
+        sections :menu_items, MenuItem, '[data-test="list-item"]'
+        element :_title, '[data-test="list-title"]'
+        element :_description, '[data-test="list-description"]'
 
         def has_prices?
           menu_items.any? &:has_price?
@@ -38,12 +39,20 @@ module PageObjects
         def item_named(name)
           menu_items.find { |item| item.name.text == name }
         end
+
+        def description
+          _description.text
+        end
+
+        def title
+          _title.text
+        end
       end
 
       sections :lists, List, '.evergreen-menu'
 
       def list_named(name)
-        lists.find { |l| l.title.text == name }
+        lists.find { |l| l.title == name }
       end
 
       def has_list_named?(name)

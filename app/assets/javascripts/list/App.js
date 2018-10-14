@@ -5,12 +5,13 @@ import List from './List'
 class App extends Component {
   render () {
     const { list, typeOptions, menuItemLabels } = this.props
-    const { beers, name, type } = list
+    const { beers, name, type, description } = list
     const listProps = {
       listId: list.id,
       beers,
       name,
       type,
+      description,
       typeOptions,
       menuItemLabels
     }
