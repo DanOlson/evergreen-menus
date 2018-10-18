@@ -4,7 +4,7 @@ import ListItemLabelInput from './ListItemLabelInput'
 
 class ListItemLabelsInput extends Component {
   render () {
-    const { appId, menuItemLabels, appliedLabels } = this.props
+    const { appId, menuItemLabels, appliedLabels, className } = this.props
     const labelInputs = menuItemLabels.map((label, idx) => {
       const isChecked = !!appliedLabels.find(l => l.name === label.name)
       const labelProps = {
@@ -17,7 +17,7 @@ class ListItemLabelsInput extends Component {
     })
 
     return (
-      <div className='col-sm-2 col-xs-8'>
+      <div className={className}>
         <input type='hidden' name={`list[beers_attributes][${appId}][labels][]`} />
         {labelInputs}
       </div>
@@ -26,13 +26,15 @@ class ListItemLabelsInput extends Component {
 }
 
 ListItemLabelsInput.defaultProps = {
-  appliedLabels: []
+  appliedLabels: [],
+  className: 'col-sm-2 col-xs-8'
 }
 
 ListItemLabelsInput.propTypes = {
   appId: PropTypes.number.isRequired,
   menuItemLabels: PropTypes.array.isRequired,
-  appliedLabels: PropTypes.array
+  appliedLabels: PropTypes.array,
+  className: PropTypes.string
 }
 
 export default ListItemLabelsInput

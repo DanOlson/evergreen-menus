@@ -23,16 +23,21 @@ describe PriceOption do
       expect(instance.price).to eq 5.95
     end
 
-    it 'cannot be missing' do
-      expect {
-        PriceOption.new
-      }.to raise_error(ArgumentError, 'missing keyword: price')
+    it 'can be set to nil' do
+      instance.price = nil
+      expect(instance.price).to eq nil
     end
 
-    it 'cannot be set to nil' do
-      expect {
-        instance.price = nil
-      }.to raise_error TypeError
+    context 'when given empty string' do
+      it 'is set to nil' do
+        instance.price = ''
+        expect(instance.price).to eq nil
+      end
+
+      it 'constructor sets emtpy to nil' do
+        instance = PriceOption.new price: ''
+        expect(instance.price).to eq nil
+      end
     end
   end
 
@@ -53,11 +58,21 @@ describe PriceOption do
     it 'has a default value' do
       expect(instance.unit).to eq 'Serving'
     end
+
+    it 'strips whitespace from the given value' do
+      instance = PriceOption.new price: 4, unit: '16oz   '
+      expect(instance.unit).to eq '16oz'
+    end
   end
 
   describe '#unit=' do
     it 'sets the unit' do
       instance.unit = 'Bottle'
+      expect(instance.unit).to eq 'Bottle'
+    end
+
+    it 'strips the value of leading and trailing whitespace' do
+      instance.unit = ' Bottle '
       expect(instance.unit).to eq 'Bottle'
     end
   end
@@ -103,6 +118,16 @@ describe PriceOption do
         expect(instance.price).to eq 7.0
         expect(instance.unit).to eq 'Glass'
         expect(instance.currency).to eq 'USD'
+      end
+
+      context 'with string keys' do
+        let(:arg) { super().stringify_keys }
+
+        it 'returns a PriceOption from the hash data' do
+          expect(instance.price).to eq 7.0
+          expect(instance.unit).to eq 'Glass'
+          expect(instance.currency).to eq 'USD'
+        end
       end
     end
   end

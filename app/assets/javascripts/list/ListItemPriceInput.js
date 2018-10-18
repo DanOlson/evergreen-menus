@@ -2,26 +2,51 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 class ListItemPriceInput extends Component {
+  constructor (props) {
+    super(props)
+    this.handlePriceChange = this.handlePriceChange.bind(this)
+    this.handleUnitChange = this.handleUnitChange.bind(this)
+  }
+
+  handlePriceChange (event) {
+    const { onChange, id } = this.props
+    onChange(id, { price: event.target.value })
+  }
+
+  handleUnitChange (event) {
+    const { onChange, id } = this.props
+    onChange(id, { unit: event.target.value })
+  }
+
   render () {
-    const { appId, value } = this.props
+    const { value, unit } = this.props
     return (
-      <div className='col-sm-2 col-xs-4'>
-        <div className='input-group'>
-          <label htmlFor={`list_beers_attributes_${appId}_price`} className='sr-only'>
+      <div className="form-row menu-item-price-option">
+        <div className="input-group">
+          <label className="sr-only">
             Price
           </label>
-          <div className='input-group-prepend'>
-            <span className='beer-input-price-currency input-group-text'>$</span>
+          <div className="input-group-prepend">
+            <span className="beer-input-price-currency input-group-text">$</span>
           </div>
           <input
-            type='number'
-            step='0.01'
-            min='0'
-            data-test={`beer-price-input-${appId}`}
+            type="number"
+            step="0.01"
+            min="0"
             defaultValue={value}
-            name={`list[beers_attributes][${appId}][price]`}
-            id={`list_beers_attributes_${appId}_price`}
-            className='form-control price-input'
+            className="form-control price-input"
+            data-test="price-input-amount"
+            onChange={this.handlePriceChange}
+            />
+          <div className="input-group-prepend">
+            <span className="input-group-text">per</span>
+          </div>
+          <input
+            type="text"
+            defaultValue={unit}
+            className="form-control"
+            data-test="price-input-unit"
+            onChange={this.handleUnitChange}
           />
         </div>
       </div>
@@ -30,12 +55,17 @@ class ListItemPriceInput extends Component {
 }
 
 ListItemPriceInput.defaultProps = {
-  value: null
+  value: null,
+  unit: 'Serving',
+  className: 'col-sm-2 col-xs-4'
 }
 
 ListItemPriceInput.propTypes = {
-  appId: PropTypes.number.isRequired,
-  value: PropTypes.number
+  value: PropTypes.number,
+  unit: PropTypes.string,
+  className: PropTypes.string,
+  id: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 export default ListItemPriceInput

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 const defaultLabelText = 'Choose image...'
@@ -57,43 +57,45 @@ class ListItemImageInput extends Component {
   }
 
   render () {
-    const { appId } = this.props
+    const { appId, className } = this.props
     const { labelText, isValid, url } = this.state
     return (
-      <Fragment>
-        <div className='col-sm-3 col-xs-8'>
-          <div className={`custom-file ${isValid ? '' : 'invalid'}`}>
-            <input
-              type='file'
-              name={`list[beers_attributes][${appId}][image]`}
-              data-test='beer-image-input'
-              id={`list_beers_attributes_${appId}_image`}
-              className={`custom-file-input ${isValid ? '': 'js-invalid'}`}
-              onChange={this.handleFileChange}
-            />
-            <label
-              htmlFor={`list_beers_attributes_${appId}_image`}
-              className='custom-file-label'
-              data-test='beer-image-label'>
-              {labelText}
-            </label>
-            <div className="invalid-feedback">
-              File must be PNG or JPG and no larger than 1MB
-            </div>
+      <div className={className}>
+        <div className={`custom-file ${isValid ? '' : 'invalid'}`}>
+          <input
+            type='file'
+            name={`list[beers_attributes][${appId}][image]`}
+            data-test='beer-image-input'
+            id={`list_beers_attributes_${appId}_image`}
+            className={`custom-file-input ${isValid ? '': 'js-invalid'}`}
+            onChange={this.handleFileChange}
+          />
+          <label
+            htmlFor={`list_beers_attributes_${appId}_image`}
+            className='custom-file-label'
+            data-test='beer-image-label'>
+            {labelText}
+          </label>
+          <div className="invalid-feedback">
+            File must be PNG or JPG and no larger than 1MB
           </div>
         </div>
-        <div className="col list-item-image-frame">
+        <div className="list-item-image-frame">
           <img className="list-item-image" src={url} />
         </div>
-      </Fragment>
+      </div>
     )
   }
 }
 
+ListItemImageInput.defaultProps = {
+  className: 'col'
+}
 ListItemImageInput.propTypes = {
   appId: PropTypes.number.isRequired,
   filename: PropTypes.string,
-  url: PropTypes.string
+  url: PropTypes.string,
+  className: PropTypes.string
 }
 
 export default ListItemImageInput

@@ -12,15 +12,15 @@ describe 'lists' do
         list: {
           name: 'Zerts',
           type: 'other',
-          beers_attributes: [
-            {
+          beers_attributes: {
+            "0" => {
               name: 'Ice Cream',
               price: '6.50',
               description: 'A chilly treat',
               position: 0,
               labels: ['Gluten Free', 'Vegetarian']
             }
-          ]
+          }
         }
       }
     end

@@ -106,9 +106,13 @@ describe 'MenuItem' do
   describe '#price_options=' do
     let(:instance) { Beer.new }
 
+    before do
+      instance.price_options = options
+    end
+
     context 'when given an array of valid hashes' do
-      before do
-        instance.price_options = [
+      let(:options) do
+        [
           { price: 4, unit: '16oz' },
           { price: 7, unit: '32oz' }
         ]
@@ -128,29 +132,66 @@ describe 'MenuItem' do
           }
         ]
       end
+
+      context 'and some are missing prices' do
+        let(:options) do
+          [
+            { price: 4, unit: '16oz' },
+            { price: nil, unit: '32oz' }
+          ]
+        end
+
+        it 'rejects those that are missing a price value' do
+          expect(instance.read_attribute(:price_options)).to eq [
+            {
+              'price' => 4.0,
+              'currency' => 'USD',
+              'unit' => '16oz'
+            }
+          ]
+        end
+      end
     end
 
     context 'when given an array of PriceOptions' do
-      before do
-        instance.price_options = [
-          PriceOption.new(price: 1, unit: 'foo'),
-          PriceOption.new(price: 3, unit: 'bar'),
-          PriceOption.new(price: 5, unit: 'baz'),
-        ]
+      context 'that are all valid' do
+        let(:options) do
+          [
+            PriceOption.new(price: 1, unit: 'foo'),
+            PriceOption.new(price: 3, unit: 'bar'),
+            PriceOption.new(price: 5, unit: 'baz'),
+          ]
+        end
+
+        it 'accepts the data' do
+          expect(instance.read_attribute(:price_options)).to eq [
+            { 'price' => 1.0, 'currency' => 'USD', 'unit' => 'foo' },
+            { 'price' => 3.0, 'currency' => 'USD', 'unit' => 'bar' },
+            { 'price' => 5.0, 'currency' => 'USD', 'unit' => 'baz' }
+          ]
+        end
       end
 
-      it 'accepts the data' do
-        expect(instance.read_attribute(:price_options)).to eq [
-          { 'price' => 1.0, 'currency' => 'USD', 'unit' => 'foo' },
-          { 'price' => 3.0, 'currency' => 'USD', 'unit' => 'bar' },
-          { 'price' => 5.0, 'currency' => 'USD', 'unit' => 'baz' }
-        ]
+      context 'and some have no price value' do
+        let(:options) do
+          [
+            PriceOption.new(price: nil, unit: 'foo'),
+            PriceOption.new(price: nil, unit: 'bar'),
+            PriceOption.new(price: 5, unit: 'baz'),
+          ]
+        end
+
+        it 'rejects options with no price value' do
+          expect(instance.read_attribute(:price_options)).to eq [
+            { 'price' => 5.0, 'currency' => 'USD', 'unit' => 'baz' }
+          ]
+        end
       end
     end
 
     context 'when given a single hash value' do
-      before do
-        instance.price_options = { price: 6, unit: 'Lb' }
+      let(:options) do
+        { price: 6, unit: 'Lb' }
       end
 
       it 'transforms it to an array' do
@@ -161,9 +202,7 @@ describe 'MenuItem' do
     end
 
     context 'when given a single PriceOption' do
-      before do
-        instance.price_options = PriceOption.new(price: 6, unit: 'Lb')
-      end
+      let(:options) { PriceOption.new(price: 6, unit: 'Lb') }
 
       it 'transforms it to an array' do
         expect(instance.read_attribute(:price_options)).to eq [
@@ -174,16 +213,14 @@ describe 'MenuItem' do
 
     context 'when given multiple options of the same unit' do
       let(:instance) { build :menu_item }
-
-      before do
-        expect(instance).to be_valid
-      end
-
-      it 'invalidates the menu item' do
-        instance.price_options = [
+      let(:options) do
+        [
           { price: 4, unit: 'bowl' },
           { price: 7, unit: 'bowl' }
         ]
+      end
+
+      it 'invalidates the menu item' do
         expect(instance).to_not be_valid
       end
     end

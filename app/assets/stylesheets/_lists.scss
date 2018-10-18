@@ -3,6 +3,11 @@
     display: flex;
   }
 
+  .menu-item-price-option {
+    margin-bottom: 0.2rem;
+    padding-left: 0.35rem;
+  }
+
   .price-input {
     -moz-appearance: textfield;
     &::-webkit-outer-spin-button {
@@ -60,8 +65,8 @@
   @include bootstrap-custom-file-input;
 
   .list-item-image {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 175px;
+    max-height: 175px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -75,6 +80,8 @@
     border: 1px dotted #cecece;
     border-radius: 5px;
     position: relative;
+    padding-top: 65px;
+    height: 200px;
   }
 
   .custom-file-label {

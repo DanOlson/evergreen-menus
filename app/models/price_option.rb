@@ -7,17 +7,21 @@ class PriceOption
   class << self
     def from(other)
       return other if other.is_a?(PriceOption)
-      new other
+      new other.symbolize_keys
     end
   end
 
-  def initialize(price:, currency: USD, unit: SERVING)
+  def initialize(price: nil, currency: USD, unit: SERVING)
     self.price = price
     @currency = currency
-    @unit = unit
+    self.unit = unit
   end
 
   def price=(price)
-    @price = Float(price)
+    @price = price.present? ? Float(price) : nil
+  end
+
+  def unit=(unit)
+    @unit = unit.strip
   end
 end

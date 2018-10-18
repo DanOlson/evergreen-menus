@@ -1,6 +1,27 @@
 module PageObjects
   module Admin
     class BeerInput < SitePrism::Section
+      class PriceOption < SitePrism::Section
+        element :price_input, '[data-test="price-input-amount"]'
+        element :unit_input, '[data-test="price-input-unit"]'
+
+        def price=(price)
+          price_input.set price
+        end
+
+        def unit=(unit)
+          unit_input.set unit
+        end
+
+        def price
+          price_input.value
+        end
+
+        def unit
+          price_input.unit
+        end
+      end
+
       element :name_input, '[data-test^="beer-name-input-"]'
       element :price_input, '[data-test^="beer-price-input-"]'
       element :description_input, '[data-test^="beer-description-input-"]'
@@ -12,13 +33,14 @@ module PageObjects
       element :keep_button, '[data-test^="keep-beer-"]'
       element :destroy_flag, '[data-test="marked-for-removal"]', visible: false
       elements :label_inputs, '[data-test="menu-item-label-input"]'
+      sections :price_options, PriceOption, '[data-test="menu-item-price-options"]'
 
       def name=(name)
         name_input.set name
       end
 
       def price=(price)
-        price_input.set price
+        price_options.first.price = price
       end
 
       def description=(description)
@@ -126,6 +148,7 @@ module PageObjects
         new_beer.image       = image
         new_beer.labels      = labels
       end
+      alias_method :add_item, :add_beer
 
       def remove_beer(beer_name)
         beer = beer_named beer_name

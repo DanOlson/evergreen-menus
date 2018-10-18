@@ -1,7 +1,7 @@
 class ListsController < ApplicationController
   load_and_authorize_resource :account
   load_and_authorize_resource :establishment, through: :account
-  load_and_authorize_resource :list, through: :establishment
+  load_and_authorize_resource :list, through: :establishment, except: :edit
 
   def new
     @list.name = 'New List'
@@ -9,6 +9,11 @@ class ListsController < ApplicationController
   end
 
   def edit
+    @list = List
+      .accessible_by(current_ability)
+      .where(establishment: @establishment, id: params[:id])
+      .includes(beers: { image_attachment: :blob })
+      .first
   end
 
   def show
@@ -61,9 +66,16 @@ class ListsController < ApplicationController
           :position,
           { labels: [] },
           :image,
+          :price_options,
           :_destroy
         ]
       }
-    )
+    ).tap do |hsh|
+      hsh[:beers_attributes].each do |(idx, beer_attrs)|
+        if price_options = beer_attrs[:price_options]
+          beer_attrs.merge!(price_options: JSON.parse(price_options))
+        end
+      end
+    end
   end
 end

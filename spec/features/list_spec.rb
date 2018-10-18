@@ -88,11 +88,11 @@ describe 'list management' do
     establishment_form.click_list_named 'Beers'
     expect(form.beers.size).to eq 3
 
-    beers = establishment.beers.order(:created_at).map { |b| [b.name, b.price_in_cents, b.description] }
+    beers = establishment.beers.order(:created_at).map { |b| [b.name, b.price, b.description] }
     expect(beers).to eq([
-      ['Bear Republic Racer 5', 550, 'A crowd favorite'],
-      ['Indeed Day Tripper', 500, 'The gold standard'],
-      ['Deschutes Fresh Squeezed', 600, 'The biggest IPA this side of the Mississippi']
+      ['Bear Republic Racer 5', 5.5, 'A crowd favorite'],
+      ['Indeed Day Tripper', 5, 'The gold standard'],
+      ['Deschutes Fresh Squeezed', 6, 'The biggest IPA this side of the Mississippi']
     ])
 
     form.remove_beer 'Bear Republic Racer 5'
