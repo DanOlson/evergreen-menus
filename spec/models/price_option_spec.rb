@@ -23,16 +23,9 @@ describe PriceOption do
       expect(instance.price).to eq 5.95
     end
 
-    it 'cannot be missing' do
-      expect {
-        PriceOption.new
-      }.to raise_error(ArgumentError, 'missing keyword: price')
-    end
-
-    it 'cannot be set to nil' do
-      expect {
-        instance.price = nil
-      }.to raise_error TypeError
+    it 'can be set to nil' do
+      instance.price = nil
+      expect(instance.price).to eq nil
     end
   end
 
@@ -103,6 +96,16 @@ describe PriceOption do
         expect(instance.price).to eq 7.0
         expect(instance.unit).to eq 'Glass'
         expect(instance.currency).to eq 'USD'
+      end
+
+      context 'with string keys' do
+        let(:arg) { super().stringify_keys }
+
+        it 'returns a PriceOption from the hash data' do
+          expect(instance.price).to eq 7.0
+          expect(instance.unit).to eq 'Glass'
+          expect(instance.currency).to eq 'USD'
+        end
       end
     end
   end

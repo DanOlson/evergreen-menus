@@ -63,14 +63,16 @@ class Beer < ActiveRecord::Base
 
   def price_options=(options)
     price_options = Array.wrap(options).map { |o| PriceOption.from o }
+    price_options = price_options.reject { |o| o.price.nil? }
     write_attribute :price_options, price_options
   end
 
   def as_json(*)
     super().merge({
-      "price" => price,
-      "labels" => Array(labels)
-    }).tap do |h|
+      'price' => price,
+      'labels' => Array(labels),
+      }).tap do |h|
+      h["priceOptions"] = h.delete('price_options')
       if image.attached?
         h['imageUrl'] = Rails.application.routes.url_helpers.rails_representation_url(image.variant(resize: '100X100'))
         h['imageFilename'] = image.filename

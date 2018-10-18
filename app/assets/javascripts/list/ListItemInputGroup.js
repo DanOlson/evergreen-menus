@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ListItemNameInput from './ListItemNameInput'
 import ListItemPriceInput from './ListItemPriceInput'
+import PriceOptions from './PriceOptions'
 import ListItemDescriptionInput from './ListItemDescriptionInput'
 import ListItemLabelsInput from './ListItemLabelsInput'
 import ListItemImageInput from './ListItemImageInput'
@@ -128,6 +129,7 @@ class ListItemInputGroup extends Component {
       markedForRemoval,
       name,
       price,
+      priceOptions,
       description,
       labels,
       showFlyout,
@@ -156,8 +158,12 @@ class ListItemInputGroup extends Component {
         </div>
         <div className="item-input-wrap">
           <div className='form-row'>
-            <ListItemNameInput appId={appId} value={name} className={className} focus={isActive} />
-            <ListItemPriceInput appId={appId} value={price} />
+            <ListItemNameInput
+              appId={appId}
+              value={name}
+              className={className}
+              focus={isActive}
+            />
             <ToggleFlyoutButton
               flyoutShown={showFlyout}
               onClick={this.toggleFlyout}
@@ -170,9 +176,26 @@ class ListItemInputGroup extends Component {
             />
           </div>
           <Flyout show={showFlyout}>
-            <ListItemDescriptionInput appId={appId} value={description} />
-            <ListItemLabelsInput appId={appId} menuItemLabels={menuItemLabels} appliedLabels={labels} />
-            <ListItemImageInput appId={appId} filename={imageFilename} url={imageUrl} />
+            <ListItemImageInput
+              appId={appId}
+              filename={imageFilename}
+              url={imageUrl}
+              className="col-sm-3 col-xs-8"
+            />
+            <div className="col">
+              <div className="row">
+                <ListItemDescriptionInput appId={appId} value={description} className="col" />
+                <ListItemLabelsInput
+                  appId={appId}
+                  menuItemLabels={menuItemLabels}
+                  appliedLabels={labels}
+                  className="col-sm-4"
+                />
+              </div>
+              <div className="row">
+                <PriceOptions options={priceOptions} className="col-sm-6" appId={appId} theLegacyPrice={price} />
+              </div>
+            </div>
           </Flyout>
           <div className='form-row'>
             <div className='col-sm-10 col-xs-12 beer-separator' />
