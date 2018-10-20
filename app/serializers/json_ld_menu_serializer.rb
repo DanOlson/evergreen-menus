@@ -54,15 +54,27 @@ class JsonLdMenuSerializer
   def render_items(list)
     list.beers.map do |item|
       label = Array(item.labels).first
-      {
-        '@type': MENU_ITEM_TYPE,
-        name: item.name,
-        description: item.description,
-        offers: {
+      offers = if item.price_options.one?
+        {
           '@type': OFFER_TYPE,
           price: item.price,
           priceCurrency: USD
         }
+      else
+        item.price_options.map do |option|
+          {
+            '@type': OFFER_TYPE,
+            price: option.price,
+            priceCurrency: USD,
+            description: option.unit
+          }
+        end
+      end
+      {
+        '@type': MENU_ITEM_TYPE,
+        name: item.name,
+        description: item.description,
+        offers: offers
       }.tap do |h|
         if item.image.attached?
           h['image'] = rails_representation_url(item.image.variant(resize: '300X300'))

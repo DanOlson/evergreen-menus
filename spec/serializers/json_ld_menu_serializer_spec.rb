@@ -132,6 +132,33 @@ describe JsonLdMenuSerializer do
       it { is_expected.to end_with('indeed-logo.png') }
     end
 
+    context 'when some of the menu items have multiple price options' do
+      before do
+        list = menu.lists.first
+        item = list.beers.first
+        item.price_options = [
+          PriceOption.new(price: 9, unit: 'Glass'),
+          PriceOption.new(price: 44, unit: 'Bottle')
+        ]
+        item.save
+      end
+
+      it 'represents each price option as an offer' do
+        offers = parsed_result['hasMenuSection'][0]['hasMenuItem'][0]['offers']
+        per_glass, per_bottle = offers
+
+        expect(per_glass['@type']).to eq 'Offer'
+        expect(per_glass['priceCurrency']).to eq 'USD'
+        expect(per_glass['price']).to eq 9.0
+        expect(per_glass['description']).to eq 'Glass'
+
+        expect(per_bottle['@type']).to eq 'Offer'
+        expect(per_bottle['priceCurrency']).to eq 'USD'
+        expect(per_bottle['price']).to eq 44.0
+        expect(per_bottle['description']).to eq 'Bottle'
+      end
+    end
+
     describe 'representing dietary restrictions' do
       let(:menu) do
         menu = create :menu, name: 'Dinner'
