@@ -18,7 +18,7 @@ module PageObjects
         end
 
         def unit
-          price_input.unit
+          unit_input.value
         end
       end
 
@@ -33,14 +33,27 @@ module PageObjects
       element :keep_button, '[data-test^="keep-beer-"]'
       element :destroy_flag, '[data-test="marked-for-removal"]', visible: false
       elements :label_inputs, '[data-test="menu-item-label-input"]'
-      sections :price_options, PriceOption, '[data-test="menu-item-price-options"]'
+      element :add_price_option_button, '[data-test="add-price-option"]'
+      sections :_price_options, PriceOption, '[data-test="menu-item-price-option"]'
 
       def name=(name)
         name_input.set name
       end
 
+      ###
+      # Deprecated - shim to enable API to work with price_options
       def price=(price)
         price_options.first.price = price
+      end
+
+      def price_options
+        toggle_flyout_button.click unless has_description_input?
+        _price_options
+      end
+
+      def add_price_option
+        toggle_flyout_button.click unless has_description_input?
+        add_price_option_button.click
       end
 
       def description=(description)
@@ -139,14 +152,20 @@ module PageObjects
         list_description_input.value
       end
 
-      def add_beer(beer_name, price: nil, description: nil, image: nil, labels: [])
+      def add_beer(beer_name, price: nil, description: nil, image: nil, labels: [], price_options: [])
         add_beer_button.click
         new_beer             = beers.last
         new_beer.name        = beer_name
-        new_beer.price       = price
+        new_beer.price       = price if price
         new_beer.description = description
         new_beer.image       = image
         new_beer.labels      = labels
+        price_options.each do |option|
+          new_price_option = new_beer.price_options.last
+          new_price_option.price = option[:price]
+          new_price_option.unit = option[:unit]
+          new_beer.add_price_option
+        end
       end
       alias_method :add_item, :add_beer
 
@@ -154,19 +173,23 @@ module PageObjects
         beer = beer_named beer_name
         beer.remove
       end
+      alias_method :remove_item, :remove_beer
 
       def keep_beer(beer_name)
         beer = beer_named beer_name
         beer.keep
       end
+      alias_method :keep_item, :keep_beer
 
       def beer_named(beer_name)
         beers.find { |beer| beer.name_input.value == beer_name }
       end
+      alias_method :item_named, :beer_named
 
       def has_beer_named?(beer_name)
         !!beer_named(beer_name)
       end
+      alias_method :has_item_named?, :has_beer_named?
 
       def submit
         submit_button.click

@@ -62,12 +62,13 @@ class PriceOptions extends Component {
       )
     })
     return (
-      <div className={this.props.className} data-test="menu-item-price-options">
+      <div className={this.props.className}>
         {priceInputs}
         <div className="add-price">
           <a
             href=''
             onClick={this.addPrice}
+            data-test="add-price-option"
             className='btn btn-sm btn-outline-secondary'
           ><span className='fas fa-plus' /></a>
         </div>

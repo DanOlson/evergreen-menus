@@ -21,7 +21,7 @@ class ListItemPriceInput extends Component {
   render () {
     const { value, unit } = this.props
     return (
-      <div className="form-row menu-item-price-option">
+      <div className="form-row menu-item-price-option" data-test="menu-item-price-option">
         <div className="input-group">
           <label className="sr-only">
             Price

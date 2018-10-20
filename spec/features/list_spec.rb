@@ -31,7 +31,7 @@ describe 'list management' do
 
     form.submit
 
-    expect(page).to have_css 'div.alert-success', text: 'List created'
+    expect(page).to have_css '[data-test="flash-success"]', text: 'List created'
     expect(establishment_form).to be_displayed
     establishment_form.click_list_named('Beers')
     expect(form).to be_displayed
@@ -49,7 +49,7 @@ describe 'list management' do
     expect(form.beer_named('Bear Republic Racer 5')).to be_marked_for_removal
 
     form.submit
-    expect(page).to have_css "div.alert-success", text: "List updated"
+    expect(page).to have_css "[data-test="flash-success"]", text: "List updated"
     expect(establishment_form).to be_displayed
     establishment_form.click_list_named('Beers')
     expect(form).to be_displayed
@@ -84,7 +84,7 @@ describe 'list management' do
     })
 
     form.submit
-    expect(page).to have_css "div.alert-success", text: "List created"
+    expect(page).to have_css "[data-test="flash-success"]", text: "List created"
     establishment_form.click_list_named 'Beers'
     expect(form.beers.size).to eq 3
 
@@ -99,7 +99,7 @@ describe 'list management' do
     expect(form.beer_named('Bear Republic Racer 5')).to be_marked_for_removal
 
     form.submit
-    expect(page).to have_css "div.alert-success", text: "List updated"
+    expect(page).to have_css "[data-test="flash-success"]", text: "List updated"
     establishment_form.click_list_named 'Beers'
     expect(all('[data-test="beer-input"]').size).to eq 2
   end
@@ -135,7 +135,7 @@ describe 'list management' do
     })
 
     form.submit
-    expect(page).to have_css "div.alert-success", text: 'List created'
+    expect(page).to have_css "[data-test="flash-success"]", text: 'List created'
     establishment_form.click_list_named 'Beers'
     expect(form.beers.size).to eq 3
 
@@ -159,7 +159,7 @@ describe 'list management' do
     expect(fresh_squeezed).to have_valid_image
     form.submit
 
-    expect(page).to have_css "div.alert-success", text: 'List updated'
+    expect(page).to have_css "[data-test="flash-success"]", text: 'List updated'
 
     establishment.beers.each do |item|
       expect(item.image).to be_attached
@@ -181,7 +181,7 @@ describe 'list management' do
     form.add_beer 'Indeed Day Tripper'
 
     form.submit
-    expect(page).to have_css "div.alert-success", text: "List created"
+    expect(page).to have_css "[data-test="flash-success"]", text: "List created"
     expect(establishment_form).to be_displayed
     establishment_form.click_list_named('Beers')
     expect(form).to be_displayed
@@ -201,7 +201,7 @@ describe 'list management' do
     expect(day_tripper).to_not be_marked_for_removal
 
     form.submit
-    expect(page).to have_css "div.alert-success", text: "List updated"
+    expect(page).to have_css "[data-test="flash-success"]", text: "List updated"
     expect(establishment_form).to be_displayed
     establishment_form.click_list_named('Beers')
     expect(form).to be_displayed
@@ -247,7 +247,7 @@ describe 'list management' do
     form.add_beer 'Budweiser', price: '4.5', description: 'Meh'
 
     form.submit
-    expect(page).to have_css "div.alert-success", text: "List created"
+    expect(page).to have_css "[data-test="flash-success"]", text: "List created"
     establishment_form.click_list_named 'Beers'
     expect(form.beers.size).to eq 6
     form.cancel
@@ -346,7 +346,7 @@ describe 'list management' do
 
     expect(page.current_path).to eq "/accounts/#{establishment.account_id}/establishments/#{establishment.id}/edit"
 
-    expect(page).to have_css "div.alert-success", text: "List deleted"
+    expect(page).to have_css "[data-test="flash-success"]", text: "List deleted"
   end
 
   scenario 'labels can be applied to list items', :admin, :js do
@@ -376,7 +376,7 @@ describe 'list management' do
     })
 
     form.submit
-    expect(page).to have_css "div.alert-success", text: "List created"
+    expect(page).to have_css '[data-test="flash-success"]', text: 'List created'
     establishment_form.click_list_named('Apps')
 
     tuna = form.beer_named('Tuna Tartare')
@@ -392,5 +392,48 @@ describe 'list management' do
 
     wings = form.beer_named('Buffalo Wings')
     expect(wings).to have_no_labels
+  end
+
+  scenario 'list items can have multiple price options', :js, :admin do
+    establishment = create :establishment, name: "Wally's", account: account
+    login user
+
+    click_link "Wally's"
+    establishment_form = PageObjects::Admin::EstablishmentForm.new
+    establishment_form.add_list
+
+    form = PageObjects::Admin::ListForm.new
+
+    form.set_name 'Red Wine'
+
+    form.add_item('Carmenere', {
+      price_options: [
+        { price: '9', unit: 'Glass' },
+        { price: '44', unit: 'Bottle' },
+      ]
+    })
+
+    form.submit
+    expect(page).to have_css '[data-test="flash-success"]', text: 'List created'
+
+    establishment_form.click_list_named('Red Wine')
+
+    carmenere = form.item_named('Carmenere')
+    opt1 = carmenere.price_options[0]
+    opt2 = carmenere.price_options[1]
+
+    expect(opt1.price).to eq '9'
+    expect(opt1.unit).to eq 'Glass'
+
+    expect(opt2.price).to eq '44'
+    expect(opt2.unit).to eq 'Bottle'
+
+    opt2.unit = 'Glass'
+    form.submit
+    expect(page).to have_css '[data-test="flash-alert"]', text: 'Item price options may not have duplicate units'
+    bottle_price = form.item_named('Carmenere').price_options.find { |o| o.price == '44' }
+    bottle_price.unit = 'Bottle'
+    form.submit
+    expect(page).to have_css '[data-test="flash-success"]', text: 'List updated'
   end
 end
