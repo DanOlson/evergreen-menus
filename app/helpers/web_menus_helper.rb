@@ -8,6 +8,12 @@ module WebMenusHelper
     }).call
   end
 
+  def price_options(menu_item)
+    menu_item.price_options.map do |option|
+      number_to_currency option.price, precision: option.price % 1 > 0 ? 2 : 0
+    end.join(' / ')
+  end
+
   private
 
   def web_menu_host

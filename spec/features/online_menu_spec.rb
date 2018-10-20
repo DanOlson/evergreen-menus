@@ -18,6 +18,14 @@ feature 'Online Menu management' do
       price: '6.50',
       position: 1
     )
+    taps_list.beers.create!(
+      name: 'Coors Light',
+      price_options: [
+        PriceOption.new(price: '4', unit: 'Pint'),
+        PriceOption.new(price: '6.50', unit: 'Quart')
+      ],
+      position: 2
+    )
     bottles_list = establishment.lists.create!({
       name: 'Bottles'
     })
@@ -56,7 +64,7 @@ feature 'Online Menu management' do
     available_taps_list = online_menu_form.available_list_named('Taps')
     available_bottles_list = online_menu_form.available_list_named('Bottles')
 
-    expect(available_taps_list.badge_text).to eq '2 items'
+    expect(available_taps_list.badge_text).to eq '3 items'
     expect(available_bottles_list.badge_text).to eq '1 item'
 
     # Manipulate the form
@@ -72,7 +80,7 @@ feature 'Online Menu management' do
     selected_taps_list = online_menu_form.selected_list_named('Taps')
     selected_bottles_list = online_menu_form.selected_list_named('Bottles')
 
-    expect(selected_taps_list.badge_text).to eq '2 items'
+    expect(selected_taps_list.badge_text).to eq '3 items'
     expect(selected_bottles_list.badge_text).to eq '1 item'
 
     # Query preview
@@ -85,6 +93,7 @@ feature 'Online Menu management' do
     expect(preview_bottles_list).to have_item 'Arrogant Bastard'
     expect(preview_taps_list.item_named('Fulton Sweet Child of Vine').price).to eq '$5'
     expect(preview_taps_list.item_named('Nitro Milk Stout').price).to eq '$6.50'
+    expect(preview_taps_list.item_named('Coors Light').price).to eq '$4 / $6.50'
     expect(preview_bottles_list.item_named('Arrogant Bastard').price).to eq '$7.50'
 
     # Submit
