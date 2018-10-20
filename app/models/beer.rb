@@ -55,6 +55,7 @@ class Beer < ActiveRecord::Base
     return if price.empty?
     converted = Float(price) * 100
     self.price_in_cents = Integer(converted)
+    self.price_options = PriceOption.new price: price
   end
 
   def price_options

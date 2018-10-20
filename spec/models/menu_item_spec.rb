@@ -247,4 +247,32 @@ describe 'MenuItem' do
       end
     end
   end
+
+  describe '#price=' do
+    let(:instance) { Beer.new }
+
+    it 'adds a price option' do
+      instance.price = '44'
+      option = instance.price_options.first
+      expect(option.price).to eq 44.0
+    end
+
+    context 'with attribute assignment via constructor' do
+      let(:instance) { Beer.new price: '4.50' }
+
+      it 'adds a price option' do
+        option = instance.price_options.first
+        expect(option.price).to eq 4.5
+      end
+    end
+
+    context 'with a factory' do
+      let(:instance) { build :menu_item, price: '4.50' }
+
+      it 'adds a price option' do
+        option = instance.price_options.first
+        expect(option.price).to eq 4.5
+      end
+    end
+  end
 end
