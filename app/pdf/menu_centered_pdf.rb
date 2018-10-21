@@ -62,7 +62,7 @@ class MenuCenteredPdf < PdfTemplate
   def list_heading(list:)
     font_size = menu.font_size + 2
     pad_bottom(15) do
-      text "<u>#{list.name.upcase}</u>", {
+      text "<u>#{list_name(list).upcase}</u>", {
         size: font_size,
         color: 'c7254e',
         style: :bold,
@@ -78,7 +78,7 @@ class MenuCenteredPdf < PdfTemplate
     #   Rails.logger.debug("new page bounds.top #{bounds.top}, cursor: #{cursor}")
     #   @new_page = false
     # end
-    verbose = beer.name == 'Rachel'
+    # verbose = beer.name == 'Rachel'
     font_size = menu.font_size
     fragments = [
       {
@@ -135,7 +135,7 @@ class MenuCenteredPdf < PdfTemplate
       return menu_item beer, show_price: show_price
     end
     menu_item_box.render
-    Rails.logger.debug("descending by #{descent_amount}") if verbose
+    # Rails.logger.debug("descending by #{descent_amount}") if verbose
     move_down descent_amount
   end
 

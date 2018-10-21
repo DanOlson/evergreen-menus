@@ -42,6 +42,10 @@ class PdfTemplate
     }.join(' / ')
   end
 
+  def list_name(list)
+    list.list_item_metadata.fetch('display_name') { list.name }
+  end
+
   def default_lists
     menu.menu_lists.joins(:list).select('lists.*, menu_lists.show_price_on_menu, menu_lists.list_item_metadata')
   end

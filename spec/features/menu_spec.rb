@@ -136,6 +136,11 @@ feature 'menu management' do
 
     expect(menu_form.selected_list_named('Bottles')).to have_price_shown
     expect(menu_form).to have_preview_content '7.5'
+
+    bottles_list = menu_form.selected_list_named 'Bottles'
+    bottles_list.display_name = 'Glass Containers'
+    expect(menu_form).to have_preview_content 'Glass Containers', case_sensitive: false
+    expect(menu_form).to_not have_preview_content 'Bottles'
   end
 
   scenario 'adding images to the menu', :js, :admin do

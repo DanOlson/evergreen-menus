@@ -65,7 +65,7 @@ class MenuStandardPdf < PdfTemplate
   def list_heading(list:)
     font_size = menu.font_size + 2
     pad_bottom(15) do
-      text list.name.upcase, {
+      text list_name(list).upcase, {
         size: font_size,
         color: 'c7254e',
         style: :bold

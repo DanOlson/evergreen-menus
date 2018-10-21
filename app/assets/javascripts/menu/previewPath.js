@@ -5,7 +5,8 @@ const {
   buildMenuListListId,
   buildMenuListPosition,
   buildMenuListShowPrice,
-  buildMenuListItemsWithImages
+  buildMenuListItemsWithImages,
+  buildMenuListDisplayName
 } = initPreviewUtils('pdf')
 
 function buildQueryString (lists, base) {
@@ -14,7 +15,8 @@ function buildQueryString (lists, base) {
       buildMenuListListId(list, idx),
       buildMenuListPosition(list, idx),
       buildMenuListShowPrice(list, idx),
-      buildMenuListItemsWithImages(list, idx)
+      buildMenuListItemsWithImages(list, idx),
+      buildMenuListDisplayName(list, idx, list.displayName)
     ]
     if (list.menu_list_id) {
       params.push(buildMenuListId(list, idx))

@@ -77,7 +77,7 @@ class MenuBasicPdf < PdfTemplate
 
   def list_heading(list:)
     font_size = menu.font_size + 2
-    pad(20) { text "<u>#{list.name}</u>", size: font_size, inline_format: true }
+    pad(20) { text "<u>#{list_name(list)}</u>", size: font_size, inline_format: true }
   end
 
   def menu_item(beer, show_price:)

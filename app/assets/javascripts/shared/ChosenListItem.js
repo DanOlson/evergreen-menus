@@ -188,7 +188,7 @@ class ChosenListItem extends Component {
             className="form-control"
             aria-describedby={`html-classes-help-${index}`}
             defaultValue={list.htmlClasses}
-            onChange={this.onHtmlClassesChange}
+            onBlur={this.onHtmlClassesChange}
             data-test="html-classes-input"
           />
           <small id={`html-classes-help-${index}`} className="form-text text-muted">
@@ -283,7 +283,7 @@ class ChosenListItem extends Component {
               className="form-control"
               aria-describedby={`display-name-help-${index}`}
               defaultValue={list.displayName}
-              onChange={this.onDisplayNameChange}
+              onBlur={this.onDisplayNameChange}
               data-test="display-name-input"
               />
             <small id={`display-name-help-${index}`} className="form-text text-muted">

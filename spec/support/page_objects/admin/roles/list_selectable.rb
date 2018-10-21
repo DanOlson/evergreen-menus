@@ -42,6 +42,7 @@ module PageObjects
 
         def display_name=(name)
           display_name_input.set name
+          display_name_input.trigger 'blur'
         end
 
         def display_name
@@ -50,6 +51,7 @@ module PageObjects
 
         def html_classes=(classes)
           html_classes_input.set classes
+          html_classes_input.trigger 'blur'
         end
 
         def html_classes

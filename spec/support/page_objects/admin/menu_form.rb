@@ -67,8 +67,12 @@ module PageObjects
         menu_preview.pdf_content
       end
 
-      def has_preview_content?(content)
-        preview_content.include? content
+      def has_preview_content?(content, case_sensitive: true)
+        if case_sensitive
+          preview_content.include? content
+        else
+          preview_content.downcase.include? content.downcase
+        end
       end
 
       def name=(string)

@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'pdf/dietary_restriction_icon_pdf_examples'
 require 'pdf/list_item_ordering_pdf_examples'
 require 'pdf/price_option_pdf_examples'
+require 'pdf/display_name_pdf_examples'
 
 describe MenuStandardPdf do
   let(:menu) { create :menu, :with_lists, list_count: 5, name: 'Test Standard Menu' }
@@ -28,5 +29,6 @@ describe MenuStandardPdf do
 
   it_behaves_like 'rendering dietary restriction icons'
   it_behaves_like 'list item ordering'
+  it_behaves_like 'PDF display name'
   it_behaves_like 'PDF multiple price options'
 end
