@@ -4,6 +4,7 @@ module PageObjects
       class PriceOption < SitePrism::Section
         element :price_input, '[data-test="price-input-amount"]'
         element :unit_input, '[data-test="price-input-unit"]'
+        element :remove_button, '[data-test="remove-price-option"]'
 
         def price=(price)
           price_input.set price
@@ -54,6 +55,11 @@ module PageObjects
       def add_price_option
         toggle_flyout_button.click unless has_description_input?
         add_price_option_button.click
+      end
+
+      def remove_price_option(unit_name)
+        option = price_options.find { |o| o.unit == unit_name }
+        option.remove_button.click
       end
 
       def description=(description)

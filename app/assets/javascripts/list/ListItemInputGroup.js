@@ -182,19 +182,21 @@ class ListItemInputGroup extends Component {
               url={imageUrl}
               className="col-sm-3 col-xs-8"
             />
-            <div className="col">
+            <div className="col-sm-6">
               <div className="row">
                 <ListItemDescriptionInput appId={appId} value={description} className="col" />
-                <ListItemLabelsInput
-                  appId={appId}
-                  menuItemLabels={menuItemLabels}
-                  appliedLabels={labels}
-                  className="col-sm-4"
-                />
               </div>
               <div className="row">
-                <PriceOptions options={priceOptions} className="col-sm-6" appId={appId} theLegacyPrice={price} />
+                <PriceOptions options={priceOptions} className="col-sm-10 menu-item-price-options" appId={appId} theLegacyPrice={price} />
               </div>
+            </div>
+            <div className="col">
+              <ListItemLabelsInput
+                appId={appId}
+                menuItemLabels={menuItemLabels}
+                appliedLabels={labels}
+                className=""
+              />
             </div>
           </Flyout>
           <div className='form-row'>

@@ -6,6 +6,7 @@ class ListItemPriceInput extends Component {
     super(props)
     this.handlePriceChange = this.handlePriceChange.bind(this)
     this.handleUnitChange = this.handleUnitChange.bind(this)
+    this.remove = this.remove.bind(this)
   }
 
   handlePriceChange (event) {
@@ -16,6 +17,12 @@ class ListItemPriceInput extends Component {
   handleUnitChange (event) {
     const { onChange, id } = this.props
     onChange(id, { unit: event.target.value })
+  }
+
+  remove (event) {
+    event.preventDefault()
+    const { onRemove, id } = this.props
+    onRemove(id)
   }
 
   render () {
@@ -48,6 +55,15 @@ class ListItemPriceInput extends Component {
             data-test="price-input-unit"
             onChange={this.handleUnitChange}
           />
+          <div className="remove-price-option">
+            <a
+              href=''
+              onClick={this.remove}
+              data-test="remove-price-option"
+              className="btn btn-outline-secondary">
+              <span className="fas fa-times" />
+            </a>
+          </div>
         </div>
       </div>
     )
@@ -65,7 +81,8 @@ ListItemPriceInput.propTypes = {
   unit: PropTypes.string,
   className: PropTypes.string,
   id: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired
 }
 
 export default ListItemPriceInput

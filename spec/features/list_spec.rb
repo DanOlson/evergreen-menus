@@ -435,5 +435,19 @@ describe 'list management' do
     bottle_price.unit = 'Bottle'
     form.submit
     expect(page).to have_css '[data-test="flash-success"]', text: 'List updated'
+
+    establishment_form.click_list_named('Red Wine')
+    expect(form).to be_displayed
+    carmenere = form.item_named('Carmenere')
+    expect(carmenere.price_options.size).to eq 2
+    carmenere.remove_price_option('Bottle')
+    expect(carmenere.price_options.size).to eq 1
+    form.submit
+    expect(page).to have_css '[data-test="flash-success"]', text: 'List updated'
+
+    establishment_form.click_list_named('Red Wine')
+    carmenere = form.item_named('Carmenere')
+    expect(carmenere.price_options.size).to eq 1
+    expect(carmenere.price_options.first.unit).to eq 'Glass'
   end
 end

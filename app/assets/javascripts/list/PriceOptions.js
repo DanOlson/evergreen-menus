@@ -11,6 +11,7 @@ class PriceOptions extends Component {
 
     this.addPrice = this.addPrice.bind(this)
     this.handlePriceOptionChange = this.handlePriceOptionChange.bind(this)
+    this.removePriceOption = this.removePriceOption.bind(this)
   }
 
   newPriceOption () {
@@ -30,6 +31,14 @@ class PriceOptions extends Component {
       const changedOption = newOptions[position]
       const updated = Object.assign({}, changedOption, data)
       newOptions.splice(position, 1, updated)
+      return { options: newOptions }
+    })
+  }
+
+  removePriceOption (position) {
+    this.setState(prevState => {
+      const newOptions = [...prevState.options]
+      newOptions.splice(position, 1)
       return { options: newOptions }
     })
   }
@@ -58,6 +67,7 @@ class PriceOptions extends Component {
           value={option.price}
           unit={option.unit}
           onChange={this.handlePriceOptionChange}
+          onRemove={this.removePriceOption}
         />
       )
     })
