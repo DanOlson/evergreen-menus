@@ -31,6 +31,17 @@ class PdfTemplate
 
   private
 
+  def formatted_price(item, show_currency: true)
+    item.price_options.map { |o|
+      precision = o.price % 1 > 0 ? 2 : 0
+      if show_currency
+        number_to_currency(o.price, precision: precision)
+      else
+        number_with_precision(o.price, precision: precision, significant: false)
+      end
+    }.join(' / ')
+  end
+
   def default_lists
     menu.menu_lists.joins(:list).select('lists.*, menu_lists.show_price_on_menu, menu_lists.list_item_metadata')
   end

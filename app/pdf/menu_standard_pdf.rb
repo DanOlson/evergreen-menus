@@ -120,7 +120,7 @@ class MenuStandardPdf < PdfTemplate
     name_box.render
 
     if beer.price && show_price
-      text_box number_to_currency(beer.price), {
+      text_box formatted_price(beer), {
         at: [bounds.left, current_y_pos],
         size: font_size,
         style: :bold,

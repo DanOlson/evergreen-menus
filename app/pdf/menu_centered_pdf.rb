@@ -108,9 +108,8 @@ class MenuCenteredPdf < PdfTemplate
     end
 
     if show_price && beer.price
-      precision = (beer.price % 1).zero? ? 0 : 1
       fragments << {
-        text: number_with_precision(beer.price, precision: precision, significant: false),
+        text: formatted_price(beer, show_currency: false),
         size: font_size
       }
     end
