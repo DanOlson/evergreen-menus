@@ -6,6 +6,7 @@
       show_description: list.show_description_on_menu?,
       show_price: list.show_price_on_menu?,
       items_with_images: Array(list.list_item_metadata['items_with_images']).map(&:to_i),
+      html_classes: list.list_item_metadata['html_classes'],
       title: list.name,
       list_description: list.description
     } %>

@@ -6,7 +6,9 @@ const {
   buildMenuListPosition,
   buildMenuListShowPrice,
   buildMenuListShowDescription,
-  buildMenuListItemsWithImages
+  buildMenuListItemsWithImages,
+  buildMenuListDisplayName,
+  buildMenuListHtmlClasses
 } = initPreviewUtils('web')
 
 function buildQueryString (lists, base) {
@@ -16,6 +18,8 @@ function buildQueryString (lists, base) {
       buildMenuListPosition(list, idx),
       buildMenuListShowPrice(list, idx),
       buildMenuListShowDescription(list, idx),
+      buildMenuListDisplayName(list, idx, list.displayName),
+      buildMenuListHtmlClasses(list, idx, list.htmlClasses),
       buildMenuListItemsWithImages(list, idx)
     ]
     if (list.web_menu_list_id) {

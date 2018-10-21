@@ -37,6 +37,8 @@ class WebMenuApp extends Component {
     this.removeListFromMenu = this.removeListFromMenu.bind(this)
     this.onShowPriceChange = this.onShowPriceChange.bind(this)
     this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this)
+    this.onDisplayNameChange = this.onDisplayNameChange.bind(this)
+    this.onHtmlClassesChange = this.onHtmlClassesChange.bind(this)
     this.onImagesListChange = this.onImagesListChange.bind(this)
     this.moveChosenList = this.moveChosenList.bind(this)
     this.toggleCodeVisibility = this.toggleCodeVisibility.bind(this)
@@ -108,7 +110,7 @@ class WebMenuApp extends Component {
 
   handleRestrictedAvailChange (event) {
     const { checked } = event.target
-    this.setState(prevState => {
+    this.setState(() => {
       return { restrictedAvailability: checked }
     })
   }
@@ -127,6 +129,24 @@ class WebMenuApp extends Component {
       const { lists } = prevState
       const list = lists.find(list => list.id === listId)
       list.show_description_on_menu = showDesc
+      return { lists }
+    })
+  }
+
+  onDisplayNameChange (listId, displayName) {
+    this.setState(prevState => {
+      const { lists } = prevState
+      const list = lists.find(list => list.id === listId)
+      list.displayName = displayName
+      return { lists }
+    })
+  }
+
+  onHtmlClassesChange(listId, htmlClasses) {
+    this.setState(prevState => {
+      const { lists } = prevState
+      const list = lists.find(list => list.id === listId)
+      list.htmlClasses = htmlClasses
       return { lists }
     })
   }
@@ -235,6 +255,8 @@ class WebMenuApp extends Component {
               onShowPriceChange={this.onShowPriceChange}
               onShowDescriptionChange={this.onShowDescriptionChange}
               onImagesListChange={this.onImagesListChange}
+              onDisplayNameChange={this.onDisplayNameChange}
+              onHtmlClassesChange={this.onHtmlClassesChange}
               moveItem={this.moveChosenList}
               onDrop={this.addListToMenu}
             />

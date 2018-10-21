@@ -12,24 +12,28 @@
   }
 
   .chosen-list-toggle-detail {
-    margin-left: 1rem;
-
-    input {
-      margin-left: 0.25rem;
-    }
+    margin-bottom: 0.5rem;
   }
 
-  .image-toggle {
+  .image-toggle, .settings-toggle {
     &:hover {
       cursor: pointer;
     }
+  }
+
+  .toggle-settings {
+    margin-left: 0.5rem;
+  }
+
+  .settings {
+    padding-top: 0.5rem;
   }
 
   .hidden-image-toggle-wrapper i {
     visibility: hidden;
   }
 
-  .icon-images-shown {
+  .icon-images-shown, .toggle-settings-shown {
     color: #3d99f6;
   }
 

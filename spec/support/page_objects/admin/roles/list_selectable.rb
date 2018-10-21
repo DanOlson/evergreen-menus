@@ -32,17 +32,40 @@ module PageObjects
         end
       end
 
+      class Settings < SitePrism::Section
+        element :show_price_input, '[data-test="show-price"]'
+        element :show_price_input_label, '[data-test="show-price-label"]'
+        element :show_descriptions_input, '[data-test="show-descriptions"]'
+        element :show_descriptions_input_label, '[data-test="show-descriptions-label"]'
+        element :display_name_input, '[data-test="display-name-input"]'
+        element :html_classes_input, '[data-test="html-classes-input"]'
+
+        def display_name=(name)
+          display_name_input.set name
+        end
+
+        def display_name
+          display_name_input.value
+        end
+
+        def html_classes=(classes)
+          html_classes_input.set classes
+        end
+
+        def html_classes
+          html_classes_input.value
+        end
+      end
+
       class ListsSelected < SitePrism::Section
         class List < SitePrism::Section
           element :remove_button, '[data-test="remove-list"]'
-          element :show_price_input, '[data-test="show-price"]'
-          element :show_price_input_label, '[data-test="show-price-label"]'
-          element :show_descriptions_input, '[data-test="show-descriptions"]'
-          element :show_descriptions_input_label, '[data-test="show-descriptions-label"]'
           element :name_wrapper, '[data-test="list-name"]'
           element :badge, '[data-test="list-badge"]'
           element :images_toggle, '[data-test="image-toggle"]'
+          element :settings_toggle, '[data-test="settings-toggle"]'
           section :image_chooser, ImageChooser, '[data-test="list-item-image-choices"]'
+          section :_settings, Settings, '[data-test="list-item-settings"]'
 
           def name
             name_wrapper.text
@@ -56,28 +79,33 @@ module PageObjects
             name_wrapper.click
           end
 
+          def settings
+            settings_toggle.trigger('click') unless has__settings?
+            _settings
+          end
+
           def has_price_shown?
-            show_price_input.checked?
+            settings.show_price_input.checked?
           end
 
           def hide_prices
-            show_price_input.set false
+            settings.show_price_input.set false
           end
 
           def show_prices
-            show_price_input.set true
+            settings.show_price_input.set true
           end
 
           def has_descriptions_shown?
-            show_descriptions_input.checked?
+            settings.show_descriptions_input.checked?
           end
 
           def hide_descriptions
-            show_descriptions_input.set false
+            settings.show_descriptions_input.set false
           end
 
           def show_descriptions
-            show_descriptions_input.set true
+            settings.show_descriptions_input.set true
           end
 
           def has_images_available?
@@ -104,6 +132,22 @@ module PageObjects
             show_image_chooser
 
             image_chooser.options.find { |o| o.name == name }
+          end
+
+          def display_name=(name)
+            settings.display_name = name
+          end
+
+          def display_name
+            settings.display_name
+          end
+
+          def html_classes=(classes)
+            settings.html_classes = classes
+          end
+
+          def html_classes
+            settings.html_classes
           end
         end
 

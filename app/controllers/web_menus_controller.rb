@@ -69,6 +69,8 @@ class WebMenusController < ApplicationController
           :position,
           :show_price_on_menu,
           :show_description_on_menu,
+          :display_name,
+          :html_classes,
           :_destroy,
           { items_with_images: [] }
         ]
@@ -82,7 +84,12 @@ class WebMenusController < ApplicationController
     end
 
     parameters.fetch(:web_menu_lists_attributes, {}).each do |_, attrs|
-      attrs[:list_item_metadata] = { items_with_images: Array(attrs.delete(:items_with_images)) }
+      attrs[:list_item_metadata] = {
+        items_with_images: Array(attrs.delete(:items_with_images))
+      }
+      attrs[:list_item_metadata][:display_name] = attrs.delete(:display_name) if attrs[:display_name].present?
+      attrs[:list_item_metadata][:html_classes] = attrs.delete(:html_classes) if attrs[:html_classes].present?
+      attrs.permit!
     end
     parameters
   end

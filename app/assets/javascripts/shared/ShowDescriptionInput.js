@@ -25,20 +25,20 @@ class ShowDescriptionInput extends Component {
     }
 
     return (
-      <span className='chosen-list-toggle-detail'>
+      <div className="form-check chosen-list-toggle-detail">
         <input
           type='hidden'
           name={`${entityName}[${nestedAttrsName}][${index}][show_description_on_menu]`}
           value='0'
         />
+        <input {...showDescription} className="form-check-input" />
         <label
           htmlFor={showDescriptionInputId}
-          className='menu-list-show-description'
-          data-test='show-descriptions-label'>
-          <span className='far fa-comment' title='show description' aria-hidden='true' />
-          <input {...showDescription} />
+          className="menu-list-show-description form-check-label"
+          data-test="show-descriptions-label">
+          Show description
         </label>
-      </span>
+      </div>
     )
   }
 }

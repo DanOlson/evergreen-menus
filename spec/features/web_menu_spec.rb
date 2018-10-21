@@ -228,6 +228,22 @@ feature 'web menu management' do
     expect(web_menu_form.selected_list_named('Taps')).to have_chosen_images 'Fulton Sweet Child of Vine'
     preview_taps_list = web_menu_form.preview.list_named('Taps')
     expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to have_image
+
+    ###
+    # Display name, html classes
+    taps_list = web_menu_form.selected_list_named 'Taps'
+    taps_list.display_name = "What's on tap"
+    expect(web_menu_form.preview).to have_list "What's on tap"
+    expect(web_menu_form.preview).to_not have_list 'Taps'
+    taps_list.html_classes = 'col-4'
+    expect(web_menu_form.preview.list_named("What's on tap")).to have_html_classes 'col-4'
+    web_menu_form.submit
+
+    taps_list = web_menu_form.selected_list_named 'Taps'
+    expect(taps_list.display_name).to eq "What's on tap"
+    expect(taps_list.html_classes).to eq 'col-4'
+    preview_taps_list = web_menu_form.preview.list_named "What's on tap"
+    expect(preview_taps_list).to have_html_classes 'col-4'
   end
 
   scenario 'account admin can manage a web menu for their establishments', :js, :admin do

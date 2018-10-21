@@ -26,6 +26,18 @@ export default function initUtils (menuType) {
   }
 
   return {
+    buildMenuListDisplayName (list, index, displayName) {
+      if (!displayName) return ''
+      const listRep = buildMenuListRep(index)
+      return `${listRep}[display_name]=${displayName}`
+    },
+
+    buildMenuListHtmlClasses (list, index, htmlClasses) {
+      if (!htmlClasses) return ''
+      const listRep = buildMenuListRep(index)
+      return `${listRep}[html_classes]=${htmlClasses}`
+    },
+
     buildMenuListItemsWithImages (list, index) {
       if (!list.items_with_images) return ''
 

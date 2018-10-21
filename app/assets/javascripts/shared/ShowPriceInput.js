@@ -25,20 +25,19 @@ class ShowPriceInput extends Component {
     }
 
     return (
-      <span className='chosen-list-toggle-detail'>
+      <div className="form-check chosen-list-toggle-detail">
         <input
           type='hidden'
           name={`${entityName}[${nestedAttrsName}][${index}][show_price_on_menu]`}
           value='0'
         />
+        <input {...showPrice} className="form-check-input" />
         <label
           htmlFor={showPriceInputId}
-          className='menu-list-show-price'
-          data-test='show-price-label'>
-          <span className='fas fa-dollar-sign' title='show price' aria-hidden='true' />
-          <input {...showPrice} />
-        </label>
-      </span>
+          className="menu-list-show-price form-check-label"
+          data-test="show-price-label">
+        Show price</label>
+      </div>
     )
   }
 }

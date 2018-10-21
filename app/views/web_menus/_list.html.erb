@@ -1,5 +1,5 @@
 <% items_with_images ||= [] %>
-<div class="evergreen-menu" data-test="list">
+<div class="evergreen-menu <%= html_classes %>" data-test="list">
   <h3 class="evergreen-menu-title" data-test="list-title"><%= title %></h3>
   <% if show_description && list_description.present? %>
   <p class="evergreen-menu-list-description" data-test="list-description">

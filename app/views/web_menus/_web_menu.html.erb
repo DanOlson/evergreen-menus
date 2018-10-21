@@ -9,7 +9,8 @@
       beers: list.beers,
       show_description: list.show_description_on_menu?,
       show_price: list.show_price_on_menu?,
-      title: list.name,
+      title: list.list_item_metadata.fetch('display_name') { list.name },
+      html_classes: list.list_item_metadata['html_classes'],
       list_description: list.description,
       items_with_images: Array(list.list_item_metadata['items_with_images']).map(&:to_i)
     } %>

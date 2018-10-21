@@ -40,6 +40,14 @@ class WebMenuPreview < SitePrism::Section
     def item_named(name)
       items.find { |i| i.name == name }
     end
+
+    def html_classes
+      root_element['class']
+    end
+
+    def has_html_classes?(candidate)
+      html_classes.include? candidate
+    end
   end
 
   element :availability_restriction_el, '[data-test="availability-restriction"]'

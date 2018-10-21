@@ -89,11 +89,15 @@ class ChosenListItem extends Component {
     super(props)
     this.onShowPriceChange = this.onShowPriceChange.bind(this)
     this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this)
+    this.onDisplayNameChange = this.onDisplayNameChange.bind(this)
+    this.onHtmlClassesChange = this.onHtmlClassesChange.bind(this)
     this.onImagesListChange = this.onImagesListChange.bind(this)
     this.toggleImages = this.toggleImages.bind(this)
+    this.toggleSettings = this.toggleSettings.bind(this)
     this.onClick = this.onClick.bind(this)
     this.state = {
-      showImages: false
+      showImages: false,
+      showSettings: false
     }
   }
 
@@ -107,6 +111,16 @@ class ChosenListItem extends Component {
     onShowDescriptionChange(list.id, event.target.checked)
   }
 
+  onDisplayNameChange (event) {
+    const { list, onDisplayNameChange } = this.props
+    onDisplayNameChange(list.id, event.target.value)
+  }
+
+  onHtmlClassesChange(event) {
+    const { list, onHtmlClassesChange } = this.props
+    onHtmlClassesChange(list.id, event.target.value)
+  }
+
   onImagesListChange (itemIds) {
     const { list, onImagesListChange } = this.props
     onImagesListChange(list.id, itemIds)
@@ -115,6 +129,12 @@ class ChosenListItem extends Component {
   toggleImages () {
     this.setState(prevState => {
       return { showImages: !prevState.showImages }
+    })
+  }
+
+  toggleSettings () {
+    this.setState(prevState => {
+      return { showSettings: !prevState.showSettings }
     })
   }
 
@@ -143,7 +163,7 @@ class ChosenListItem extends Component {
       isDragging
     } = this.props
 
-    let showDescriptionInput
+    let showDescriptionInput, htmlClassesInput
 
     if (this.props.onShowDescriptionChange) {
       showDescriptionInput = (
@@ -157,8 +177,29 @@ class ChosenListItem extends Component {
       )
     }
 
+    if (this.props.onHtmlClassesChange) {
+      htmlClassesInput = (
+        <div className="form-group">
+          <label htmlFor={`list-html-classes-${index}`}>HTML classes</label>
+          <input
+            id={`list-html-classes-${index}`}
+            type="text"
+            name={`${entityName}[${nestedAttrsName}][${index}][html_classes]`}
+            className="form-control"
+            aria-describedby={`html-classes-help-${index}`}
+            defaultValue={list.htmlClasses}
+            onChange={this.onHtmlClassesChange}
+            data-test="html-classes-input"
+          />
+          <small id={`html-classes-help-${index}`} className="form-text text-muted">
+            HTML classes to help your designer style this list on your site
+          </small>
+        </div>
+      )
+    }
+
     let imageIcon = (
-      <span className="hidden-image-toggle-wrapper">
+      <span className="hidden-image-toggle-wrapper ml-2">
         <i className="far fa-image fa-lg"></i>
       </span>
     )
@@ -172,7 +213,7 @@ class ChosenListItem extends Component {
       imageIcon = (
         <span className={wrapperClass}>
           <i
-            className="far fa-image fa-lg image-toggle"
+            className="far fa-image fa-lg image-toggle ml-2"
             title="Show Image Options"
             role="button"
             aria-pressed={isActive}
@@ -182,6 +223,18 @@ class ChosenListItem extends Component {
         </span>
       )
     }
+    const settingsCog = (
+      <span className={`toggle-settings toggle-settings-${this.state.showSettings ? 'shown' : 'hidden'}`}>
+        <i
+          className="fas fa-cog settings-toggle"
+          title="Show Settings"
+          role="button"
+          aria-pressed={this.state.showSettings}
+          onClick={this.toggleSettings}
+          data-test="settings-toggle">
+        </i>
+      </span>
+    )
 
     const badgeContent = `${list.itemCount} ${pluralize('item', list.itemCount)}`
 
@@ -194,7 +247,7 @@ class ChosenListItem extends Component {
         <div className='valign-wrapper-w10'>
           <RemoveButton onClick={onRemove} listId={list.id} />
         </div>
-        <div className="valign-wrapper-w40">
+        <div className="valign-wrapper-w50">
           <a
             href={list.href}
             onClick={this.onClick}
@@ -203,8 +256,16 @@ class ChosenListItem extends Component {
             {list.name}
           </a>
         </div>
-        <div className='valign-wrapper-w50'>
+        <div className='valign-wrapper-w40'>
           {imageIcon}
+          {settingsCog}
+          <ListTypeIcon listType={list.type} />
+          <span
+            data-test='list-badge'
+            className='badge badge-pill badge-success float-right mr-2'
+          >{badgeContent}</span>
+        </div>
+        <div className={`settings ${this.state.showSettings ? 'show' : 'hidden'}`} data-test="list-item-settings">
           <ShowPriceInput
             entityName={entityName}
             nestedAttrsName={nestedAttrsName}
@@ -213,11 +274,23 @@ class ChosenListItem extends Component {
             value={list.show_price_on_menu}
           />
           {showDescriptionInput}
-          <ListTypeIcon listType={list.type} />
-          <span
-            data-test='list-badge'
-            className='badge badge-pill badge-success float-right mr-2'
-          >{badgeContent}</span>
+          <div className="form-group">
+            <label htmlFor={`list-display-name-${index}`}>Display Name</label>
+            <input
+              id={`list-display-name-${index}`}
+              type="text"
+              name={`${entityName}[${nestedAttrsName}][${index}][display_name]`}
+              className="form-control"
+              aria-describedby={`display-name-help-${index}`}
+              defaultValue={list.displayName}
+              onChange={this.onDisplayNameChange}
+              data-test="display-name-input"
+              />
+            <small id={`display-name-help-${index}`} className="form-text text-muted">
+              Customize your list's name for just this menu
+            </small>
+          </div>
+          {htmlClassesInput}
         </div>
         <ListItemImageChoices
           itemsWithAvailableImages={this.itemsWithImages()}
@@ -258,6 +331,8 @@ ChosenListItem.propTypes = {
   onRemove: PropTypes.func.isRequired,
   onShowPriceChange: PropTypes.func.isRequired,
   onShowDescriptionChange: PropTypes.func,
+  onDisplayNameChange: PropTypes.func,
+  onHtmlClassesChange: PropTypes.func,
   onImagesListChange: PropTypes.func,
   nestedAttrsName: PropTypes.string.isRequired,
   entityName: PropTypes.string.isRequired,

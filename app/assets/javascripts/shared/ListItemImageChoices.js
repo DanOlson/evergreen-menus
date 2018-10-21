@@ -49,15 +49,11 @@ class ListItemImageChoices extends Component {
         </div>
       )
     })
-    if (show) {
-      return (
-        <div className="list-item-images-choices" data-test="list-item-image-choices">
-          {inputs}
-        </div>
-      )
-    } else {
-      return null
-    }
+    return (
+      <div className={`list-item-images-choices ${show ? 'show' : 'hidden'}`} data-test="list-item-image-choices">
+        {inputs}
+      </div>
+    )
   }
 }
 
