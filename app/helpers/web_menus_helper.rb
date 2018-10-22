@@ -10,7 +10,7 @@ module WebMenusHelper
 
   def price_options(menu_item)
     menu_item.price_options.map do |option|
-      number_to_currency option.price, precision: option.price % 1 > 0 ? 2 : 0
+      number_with_precision option.price, strip_insignificant_zeros: true, precision: option.price % 1 > 0 ? 2 : 0
     end.join(' / ')
   end
 

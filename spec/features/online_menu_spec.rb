@@ -91,10 +91,10 @@ feature 'Online Menu management' do
     expect(preview_taps_list).to have_item 'Fulton Sweet Child of Vine'
     expect(preview_taps_list).to have_item 'Nitro Milk Stout'
     expect(preview_bottles_list).to have_item 'Arrogant Bastard'
-    expect(preview_taps_list.item_named('Fulton Sweet Child of Vine').price).to eq '$5'
-    expect(preview_taps_list.item_named('Nitro Milk Stout').price).to eq '$6.50'
-    expect(preview_taps_list.item_named('Coors Light').price).to eq '$4 / $6.50'
-    expect(preview_bottles_list.item_named('Arrogant Bastard').price).to eq '$7.50'
+    expect(preview_taps_list.item_named('Fulton Sweet Child of Vine').price).to eq '5'
+    expect(preview_taps_list.item_named('Nitro Milk Stout').price).to eq '6.5'
+    expect(preview_taps_list.item_named('Coors Light').price).to eq '4 / 6.5'
+    expect(preview_bottles_list.item_named('Arrogant Bastard').price).to eq '7.5'
 
     # Submit
     online_menu_form.submit

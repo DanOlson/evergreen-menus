@@ -274,32 +274,32 @@ describe 'list management' do
     expect(list.description).to eq 'We carry the best beers in town'
     expect(list).to have_item_named 'Deschutes Pinedrops'
     pinedrops = list.item_named 'Deschutes Pinedrops'
-    expect(pinedrops.price.text).to eq '$6'
+    expect(pinedrops.price.text).to eq '6'
     expect(pinedrops.description.text).to eq 'IPA'
 
     expect(list).to have_item_named 'Deschutes Mirror Pond'
     mirror_pond = list.item_named 'Deschutes Mirror Pond'
-    expect(mirror_pond.price.text).to eq '$6'
+    expect(mirror_pond.price.text).to eq '6'
     expect(mirror_pond.description.text).to eq 'APA'
 
     expect(list).to have_item_named 'Deschutes Big Rig'
     big_rig = list.item_named 'Deschutes Big Rig'
-    expect(big_rig.price.text).to eq '$6'
+    expect(big_rig.price.text).to eq '6'
     expect(big_rig.description.text).to eq '???'
 
     expect(list).to have_item_named 'Indeed Stir Crazy'
     stir_crazy = list.item_named 'Indeed Stir Crazy'
-    expect(stir_crazy.price.text).to eq '$7'
+    expect(stir_crazy.price.text).to eq '7'
     expect(stir_crazy.description.text).to eq 'Winter Seasonal'
 
     expect(list).to have_item_named 'Surly Stout'
     surly_stout = list.item_named 'Surly Stout'
-    expect(surly_stout.price.text).to eq '$6.50'
+    expect(surly_stout.price.text).to eq '6.5'
     expect(surly_stout.description.text).to eq 'Stout'
 
     expect(list).to have_item_named 'Budweiser'
     bud = list.item_named 'Budweiser'
-    expect(bud.price.text).to eq '$4.50'
+    expect(bud.price.text).to eq '4.5'
     expect(bud.description.text).to eq 'Meh'
 
     visit web_menu_url
