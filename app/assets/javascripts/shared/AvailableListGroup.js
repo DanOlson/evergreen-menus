@@ -36,7 +36,7 @@ class AvailableListGroup extends Component {
     }
 
     return (
-      <ul className='list-group list-group-flush'>
+      <ul className='list-group list-group-flush' style={{ 'max-height': '500px', 'overflow': 'scroll' }}>
         {itemsToRender}
       </ul>
     )
