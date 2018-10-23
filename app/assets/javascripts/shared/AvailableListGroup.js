@@ -36,7 +36,7 @@ class AvailableListGroup extends Component {
     }
 
     return (
-      <ul className='list-group list-group-flush' style={{ 'max-height': '500px', 'overflow': 'scroll' }}>
+      <ul className='list-group list-group-flush' style={{ maxHeight: '500px', overflow: 'scroll' }}>
         {itemsToRender}
       </ul>
     )
@@ -59,7 +59,12 @@ class AvailableListGroup extends Component {
     const nestedAttrsName = attributeNameResolver.resolveNestedAttrName(menuType)
     const entityName = attributeNameResolver.resolveEntityName(menuType)
     const nestedEntityIdName = attributeNameResolver.resolveNestedEntityIdName(menuType)
-    const listGroupItems = lists.map((list, index) => {
+    const sortedLists = lists.sort((l1, l2) => {
+      if (l1.name < l2.name) return -1
+      if (l1.name > l2.name) return 1
+      return 0
+    })
+    const listGroupItems = sortedLists.map((list, index) => {
       const listItemProps = {
         index,
         list,
