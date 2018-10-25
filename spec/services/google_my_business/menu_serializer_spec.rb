@@ -25,7 +25,8 @@ module GoogleMyBusiness
         list: appetizers,
         position: 0,
         show_price_on_menu: show_price,
-        show_description_on_menu: show_description
+        show_description_on_menu: show_description,
+        display_name: 'Apps'
       })
     end
 
@@ -45,7 +46,7 @@ module GoogleMyBusiness
                   "sectionId": "appetizers",
                   "labels": [
                     {
-                      "displayName": "Appetizers"
+                      "displayName": "Apps"
                     }
                   ],
                   "items": [
@@ -144,7 +145,7 @@ module GoogleMyBusiness
                   "sectionId": "appetizers",
                   "labels": [
                     {
-                      "displayName": "Appetizers"
+                      "displayName": "Apps"
                     }
                   ],
                   "items": [
@@ -239,7 +240,7 @@ module GoogleMyBusiness
                   "sectionId": "appetizers",
                   "labels": [
                     {
-                      "displayName": "Appetizers"
+                      "displayName": "Apps"
                     }
                   ],
                   "items": [
