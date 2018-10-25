@@ -164,6 +164,17 @@ feature 'Online Menu management' do
     expect(online_menu_form.selected_list_named('Taps')).to have_chosen_images 'Nitro Milk Stout'
     preview_taps_list = online_menu_form.preview.list_named('Taps')
     expect(preview_taps_list.item_named('Nitro Milk Stout')).to have_image
+
+    ###
+    # Display name
+    taps_list = online_menu_form.selected_list_named 'Taps'
+    taps_list.display_name = "What's on tap"
+    expect(online_menu_form.preview).to have_list "What's on tap"
+    expect(online_menu_form.preview).to_not have_list 'Taps'
+    online_menu_form.submit
+
+    taps_list = online_menu_form.selected_list_named 'Taps'
+    expect(taps_list.display_name).to eq "What's on tap"
   end
 
   scenario 'account admin can manage the Online Menu for their establishment', :js, :admin do

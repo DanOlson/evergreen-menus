@@ -6,7 +6,8 @@ const {
   buildMenuListPosition,
   buildMenuListShowPrice,
   buildMenuListShowDescription,
-  buildMenuListItemsWithImages
+  buildMenuListItemsWithImages,
+  buildMenuListDisplayName
 } = initPreviewUtils('online')
 
 function buildQueryString (lists, base) {
@@ -16,6 +17,7 @@ function buildQueryString (lists, base) {
       buildMenuListPosition(list, idx),
       buildMenuListShowPrice(list, idx),
       buildMenuListShowDescription(list, idx),
+      buildMenuListDisplayName(list, idx, list.displayName),
       buildMenuListItemsWithImages(list, idx)
     ]
     if (list.online_menu_list_id) {

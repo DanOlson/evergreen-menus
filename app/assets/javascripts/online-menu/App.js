@@ -27,6 +27,7 @@ class App extends Component {
     this.onShowPriceChange = this.onShowPriceChange.bind(this)
     this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this)
     this.onImagesListChange = this.onImagesListChange.bind(this)
+    this.onDisplayNameChange = this.onDisplayNameChange.bind(this)
     this.moveChosenList = this.moveChosenList.bind(this)
 
     this.state = {
@@ -88,11 +89,20 @@ class App extends Component {
     })
   }
 
-  onImagesListChange(listId, itemIds) {
+  onImagesListChange (listId, itemIds) {
     this.setState(prevState => {
       const { lists } = prevState
       const list = lists.find(list => list.id === listId)
       list.items_with_images = itemIds
+      return { lists }
+    })
+  }
+
+  onDisplayNameChange (listId, displayName) {
+    this.setState(prevState => {
+      const { lists } = prevState
+      const list = lists.find(list => list.id === listId)
+      list.displayName = displayName
       return { lists }
     })
   }
@@ -124,6 +134,7 @@ class App extends Component {
               onShowPriceChange={this.onShowPriceChange}
               onShowDescriptionChange={this.onShowDescriptionChange}
               onImagesListChange={this.onImagesListChange}
+              onDisplayNameChange={this.onDisplayNameChange}
               moveItem={this.moveChosenList}
               onDrop={this.addListToMenu}
             />

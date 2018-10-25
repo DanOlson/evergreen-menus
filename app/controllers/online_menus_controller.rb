@@ -35,6 +35,7 @@ class OnlineMenusController < ApplicationController
           :position,
           :show_price_on_menu,
           :show_description_on_menu,
+          :display_name,
           :_destroy,
           { items_with_images: [] }
         ]
@@ -42,7 +43,11 @@ class OnlineMenusController < ApplicationController
     )
 
     parameters.fetch(:online_menu_lists_attributes, {}).each do |_, attrs|
-      attrs[:list_item_metadata] = { items_with_images: Array(attrs.delete(:items_with_images)) }
+      attrs[:list_item_metadata] = {
+        items_with_images: Array(attrs.delete(:items_with_images))
+      }
+      attrs[:list_item_metadata][:display_name] = attrs.delete(:display_name) if attrs[:display_name].present?
+      attrs.permit!
     end
 
     parameters
