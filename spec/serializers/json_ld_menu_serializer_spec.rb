@@ -159,12 +159,29 @@ describe JsonLdMenuSerializer do
       end
     end
 
+    context 'when the lists have customized display names' do
+      let(:menu) { create :web_menu, :with_lists, list_count: 1 }
+
+      before do
+        web_menu_list = menu.web_menu_lists.first
+        web_menu_list.update(display_name: 'Customized Display Name™')
+      end
+
+      it 'uses the custom name as the menu section name' do
+        menu_section = parsed_result['hasMenuSection'].first
+        expect(menu_section['name']).to eq 'Customized Display Name™'
+      end
+    end
+
     describe 'representing dietary restrictions' do
       let(:menu) do
-        menu = create :menu, name: 'Dinner'
+        menu = create :web_menu, name: 'Dinner'
         list = create :list, name: 'Entrees', establishment: menu.establishment
         create :menu_item, name: 'some dish', list: list, labels: [label]
-        menu.add_list list
+        menu.web_menu_lists.create!(
+          position: 0,
+          list: list
+        )
         menu
       end
 
