@@ -9,7 +9,7 @@
           data-test="digital-display-menu-list">
 
           <h4 class="list-title" data-test="digital-display-menu-list-name">
-            <%= list.list_item_metadata.fetch('display_name') { list.name } %>
+            <%= ListDisplayName.new(list) %>
             <% if index > 0 %>
               <small class="list-title__list-continued text-muted">Continued</small>
             <% end %>

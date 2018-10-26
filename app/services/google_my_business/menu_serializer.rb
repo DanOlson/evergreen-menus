@@ -15,10 +15,9 @@ module GoogleMyBusiness
     end
 
     def generate_section(list)
-      display_name = list.list_item_metadata.fetch('display_name') { list.name }
       {
         sectionId: list.name.gsub(' ', '_').downcase,
-        labels: [{ displayName: display_name }],
+        labels: [{ displayName: ListDisplayName.new(list) }],
         items: list.beers.map { |item| generate_item item, list }
       }
     end

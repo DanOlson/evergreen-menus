@@ -43,7 +43,7 @@ class PdfTemplate
   end
 
   def list_name(list)
-    list.list_item_metadata.fetch('display_name') { list.name }
+    String(ListDisplayName.new(list))
   end
 
   def default_lists

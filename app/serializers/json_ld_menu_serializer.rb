@@ -42,10 +42,9 @@ class JsonLdMenuSerializer
 
   def render_lists
     @menu.lists.map do |list|
-      display_name = list.list_item_metadata.fetch('display_name') { list.name }
       {
         '@type': MENU_SECTION_TYPE,
-        name: display_name,
+        name: ListDisplayName.new(list),
         description: list.description,
         hasMenuItem: render_items(list)
       }
