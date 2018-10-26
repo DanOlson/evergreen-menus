@@ -48,7 +48,7 @@ class DigitalDisplayMenusController < ApplicationController
   private
 
   def digital_display_menu_params
-    params.require(:digital_display_menu).permit(
+    parameters = params.require(:digital_display_menu).permit(
       :id,
       :name,
       :horizontal_orientation,
@@ -64,9 +64,18 @@ class DigitalDisplayMenusController < ApplicationController
           :list_id,
           :position,
           :show_price_on_menu,
+          :display_name,
           :_destroy
         ]
       }
     )
+
+    parameters.fetch(:digital_display_menu_lists_attributes, {}).each do |_, attrs|
+      attrs[:list_item_metadata] = {}
+      attrs[:list_item_metadata][:display_name] = attrs.delete(:display_name) if attrs[:display_name].present?
+      attrs.permit!
+    end
+
+    parameters
   end
 end

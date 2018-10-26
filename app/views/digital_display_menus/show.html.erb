@@ -1,16 +1,15 @@
 <% orientation = @digital_display_menu.horizontal_orientation? ? 'horizontal' : 'vertical' %>
 <div class="digital-display-menu-container">
   <% @digital_display_menu.lists.each do |list| %>
-    <% logger.debug(list.position) %>
     <% list_class = list.beers.count > 8 && orientation == 'horizontal' ? 'two-column-list' : 'one-column-list' %>
     <% list.beers.each_slice(24).with_index do |slice, index| %>
       <div class="list-card js-card" id="card-<%= list.position %>-<%= index %>">
-        <div 
+        <div
           class="digital-display-menu-list mx-auto <%= list_class %> <%= orientation %>"
           data-test="digital-display-menu-list">
 
           <h4 class="list-title" data-test="digital-display-menu-list-name">
-            <%= list.name %>
+            <%= list.list_item_metadata.fetch('display_name') { list.name } %>
             <% if index > 0 %>
               <small class="list-title__list-continued text-muted">Continued</small>
             <% end %>

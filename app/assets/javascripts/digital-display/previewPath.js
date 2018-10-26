@@ -4,7 +4,8 @@ const {
   buildMenuListId,
   buildMenuListListId,
   buildMenuListPosition,
-  buildMenuListShowPrice
+  buildMenuListShowPrice,
+  buildMenuListDisplayName
 } = initPreviewUtils('digitalDisplay')
 
 function buildQueryString (lists, base) {
@@ -12,7 +13,8 @@ function buildQueryString (lists, base) {
     let params = [
       buildMenuListListId(list, idx),
       buildMenuListPosition(list, idx),
-      buildMenuListShowPrice(list, idx)
+      buildMenuListShowPrice(list, idx),
+      buildMenuListDisplayName(list, idx, list.displayName)
     ]
     if (list.menu_list_id) {
       params.push(buildMenuListId(list, idx))

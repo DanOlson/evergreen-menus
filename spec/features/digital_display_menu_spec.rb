@@ -146,6 +146,13 @@ feature 'digital display menu management' do
     end
     expect(display_form).to be_displayed
 
+    ###
+    # Display name
+    taps_list = display_form.selected_list_named 'Taps'
+    taps_list.display_name = "What's on Tap"
+    expect(display_form.preview).to have_list "What's on Tap"
+    expect(display_form.preview).to_not have_list 'Taps'
+
     # Submit new changes
     display_form.submit
 
@@ -166,10 +173,10 @@ feature 'digital display menu management' do
     expect(display_form).to_not have_list_title_color_input
 
     # Verify preview
-    expect(display_form.preview).to have_list 'Taps'
+    expect(display_form.preview).to have_list "What's on Tap"
     expect(display_form.preview).to_not have_list 'Bottles'
     expect(display_form.preview).to be_oriented_vertically
-    preview_taps_list = display_form.preview.list_named('Taps')
+    preview_taps_list = display_form.preview.list_named "What's on Tap"
     expect(preview_taps_list.beer_named('Fulton Sweet Child of Vine')).to_not have_price
     expect(preview_taps_list.beer_named('Nitro Milk Stout')).to_not have_price
 
@@ -179,10 +186,10 @@ feature 'digital display menu management' do
     within_window new_tab do
       digital_display = PageObjects::Admin::DigitalDisplayMenu.new
       expect(digital_display).to be_displayed
-      expect(digital_display).to have_list_named('Taps')
+      expect(digital_display).to have_list_named "What's on Tap"
       expect(digital_display).to be_oriented_vertically
 
-      taps_list = digital_display.list_named('Taps')
+      taps_list = digital_display.list_named "What's on Tap"
       expect(taps_list).to have_beer_named 'Fulton Sweet Child of Vine'
       expect(taps_list).to have_beer_named 'Nitro Milk Stout'
       expect(taps_list.beer_named('Fulton Sweet Child of Vine')).to_not have_price

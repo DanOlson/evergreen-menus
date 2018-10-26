@@ -20,7 +20,8 @@ class DigitalDisplayMenu < ActiveRecord::Base
     select(<<-EOF
       lists.*,
       digital_display_menu_lists.position as position,
-      digital_display_menu_lists.show_price_on_menu as show_price_on_menu
+      digital_display_menu_lists.show_price_on_menu as show_price_on_menu,
+      digital_display_menu_lists.list_item_metadata as list_item_metadata
     EOF
     )
   },

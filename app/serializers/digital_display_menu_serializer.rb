@@ -50,7 +50,8 @@ class DigitalDisplayMenuSerializer
       list = ListSerializer.new(ml.list).call(as_json: true)
       {
         digital_display_menu_list_id: ml.id,
-        show_price_on_menu: ml.show_price_on_menu
+        show_price_on_menu: ml.show_price_on_menu,
+        displayName: ml.list_item_metadata['display_name']
       }.merge(list)
     end
   end

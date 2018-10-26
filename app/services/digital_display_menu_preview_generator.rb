@@ -18,7 +18,7 @@ class DigitalDisplayMenuPreviewGenerator
   def lists
     @lists ||= begin
       list_ids = digital_display_menu_lists_attributes.map { |attrs| attrs[:list_id] }
-      List.where(id: list_ids).accessible_by(@ability).select('lists.*, 0 as position, true as show_price_on_menu')
+      List.where(id: list_ids).accessible_by(@ability).select('lists.*, 0 as position, true as show_price_on_menu, \'{}\'::json as list_item_metadata')
     end
   end
 
@@ -29,6 +29,7 @@ class DigitalDisplayMenuPreviewGenerator
     digital_display_menu_lists_attributes.inject([]) do |memo, dd_menu_list_attr|
       list = lists.find { |l| dd_menu_list_attr[:list_id].to_i == l.id }
       list.show_price_on_menu = dd_menu_list_attr[:show_price_on_menu] == 'true'
+      list.list_item_metadata = dd_menu_list_attr[:list_item_metadata]
       list.position = dd_menu_list_attr[:position]
       memo << list
     end.sort_by &:position

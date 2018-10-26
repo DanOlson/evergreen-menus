@@ -44,6 +44,7 @@ class DigitalDisplayApp extends Component {
     this.addListToDisplay = this.addListToDisplay.bind(this)
     this.removeListFromDisplay = this.removeListFromDisplay.bind(this)
     this.handleShowPriceChange = this.handleShowPriceChange.bind(this)
+    this.handleDisplayNameChange = this.handleDisplayNameChange.bind(this)
     this.moveChosenList = this.moveChosenList.bind(this)
 
     this.state = {
@@ -168,6 +169,15 @@ class DigitalDisplayApp extends Component {
     })
   }
 
+  handleDisplayNameChange (listId, displayName) {
+    this.setState(prevState => {
+      const { lists } = prevState
+      const list = lists.find(list => list.id === listId)
+      list.displayName = displayName
+      return { lists }
+    })
+  }
+
   render () {
     const {
       lists,
@@ -285,6 +295,7 @@ class DigitalDisplayApp extends Component {
               menuType='digitalDisplay'
               onRemove={this.removeListFromDisplay}
               onShowPriceChange={this.handleShowPriceChange}
+              onDisplayNameChange={this.handleDisplayNameChange}
               moveItem={this.moveChosenList}
               onDrop={this.addListToDisplay}
             />
