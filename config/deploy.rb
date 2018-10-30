@@ -9,6 +9,7 @@ set :rvm_type,        :system
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+set :branch, ENV.fetch('RELEASE_VERSION') { raise "You must set RELEASE_VERSION" }
 
 set :deploy_to, "/var/apps/beermapper"
 
@@ -33,5 +34,3 @@ append :linked_files, "config/database.yml", "config/app_config.yml"
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
-
-after 'deploy:updated', 'deploy:assets:precompile'
