@@ -6,6 +6,7 @@
   "scripts": {
     "test": "npm run lint",
     "build": "webpack",
+    "build:prod": "webpack --progress --colors -p",
     "dev": "webpack --watch",
     "lint": "standard app/assets/javascripts/**/*.js | snazzy"
   },
