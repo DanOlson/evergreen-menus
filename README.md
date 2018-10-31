@@ -98,7 +98,7 @@ sudo apachectl restart
 
 ```
 brew install nvm
-nvm install 6.3.1
+nvm install 10.11.0
 npm i
 ```
 
