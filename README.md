@@ -125,3 +125,20 @@ We've been getting icons from [The Noun Project](https://thenounproject.com) and
 
 Current food intolerance icons were from:
 https://thenounproject.com/olguioo/collection/food-intolerances/?i=979944
+
+## Deployment
+
+Capistrano is used for deploys. We build all the front end assets locally, then commit them on a dedicated branch where they're tracked by Git. We then tag the repo where we built the assets and push everything to the remote. We use Capistrano to deploy that tag. The benefit of this approach is we don't have to tie up the CPU of the production servers building assets. We can simply pull a git repo where the assets are already built and be off to the races.
+
+Workflow:
+
+```bash
+# Run the build script from the master branch.
+# This will checkout the 'build' branch, build assets,
+# commit, tag, push, and checkout master again.
+./build.sh
+
+# The last line of the build script is the tag name to deploy
+# It looks like "build-XX", where XX is a number.
+RELEASE_VERSION=build-10 cap [staging|production] deploy
+```
