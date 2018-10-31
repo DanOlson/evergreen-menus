@@ -21,7 +21,7 @@ fi
 
 ###
 # Infer new version
-last_version=$(git tag | grep build- | sort | tail -n1 | sed 's/build-//')
+last_version=$(git tag | grep build- | tr -d 'build-' | sort -n | tail -n1)
 version="build-$((last_version+1))"
 
 git checkout build
@@ -33,8 +33,9 @@ npm install && npm run build:prod
 
 ###
 # Check for changes from webpack compilation
-if ! git diff-index --quiet HEAD --
-then
+# if ! git diff-index --quiet HEAD --
+change_count=$(git ls-files --exclude-standard --others | wc -l)
+if (($change_count > 0)); then
   echo "Noticed the following changes as a result of the build:"
   git status
   ###
