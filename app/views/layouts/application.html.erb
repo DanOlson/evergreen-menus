@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <%= render('layouts/google_analytics') if Rails.env.production? %>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name='description' content='Evergreen Menus simplifies menu manangement in the restaurant industry.'>
@@ -37,7 +38,6 @@
     <%= render 'layouts/flash_messages' %>
     <%= yield %>
   </div>
-  <%= render('layouts/google_analytics') if Rails.env.production? %>
   <%= content_for :javascripts %>
   <footer>
     <span>
