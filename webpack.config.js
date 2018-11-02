@@ -1,13 +1,13 @@
-'use strict';
+'use strict'
 
-const isProd  = process.argv.indexOf('-p') !== -1;
-const fs      = require('fs');
-const path    = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const isProd = process.argv.indexOf('-p') !== -1
+const fs = require('fs')
+const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
-const jsOutputFile  = isProd ? 'javascripts/[name]-[hash].js' : 'javascripts/[name].js';
-const cssOutputFile = isProd ? 'stylesheets/[name]-[hash].css' : 'stylesheets/[name].css';
+const jsOutputFile = isProd ? 'javascripts/[name]-[hash].js' : 'javascripts/[name].js'
+const cssOutputFile = isProd ? 'stylesheets/[name]-[hash].css' : 'stylesheets/[name].css'
 
 const plugins = [
   new CopyWebpackPlugin([
@@ -20,33 +20,34 @@ const plugins = [
     filename: cssOutputFile
   }),
 
-  function() {
-    if (!isProd) return;
+  function () {
+    if (!isProd) return
     // delete previous outputs
-    this.plugin("compile", function() {
-      let basepath = __dirname + "/public";
-      let paths = ["/javascripts", "/stylesheets"];
+    this.plugin('compile', function () {
+      let basepath = path.join(__dirname, '/public')
+      let paths = ['/javascripts', '/stylesheets']
 
       paths.forEach(path => {
-        const asset_path = basepath + path;
+        const assetPath = basepath + path
 
-        fs.readdir(asset_path, function(err, files) {
+        fs.readdir(assetPath, function (err, files) {
+          console.error(`ERROR: ${err.message}`)
           if (files === undefined) {
-            return;
+            return
           }
 
           files.forEach(file => {
-            fs.unlinkSync(asset_path + "/" + file);
+            fs.unlinkSync(path.join(assetPath, file))
           })
-        });
+        })
       })
-    });
+    })
 
     // output the fingerprint
-    this.plugin("done", function(stats) {
-      let output = "ASSET_FINGERPRINT = \"" + stats.hash + "\""
-      fs.writeFileSync("config/initializers/fingerprint.rb", output, "utf8");
-    });
+    this.plugin('done', function (stats) {
+      let output = 'ASSET_FINGERPRINT = "' + stats.hash + '"'
+      fs.writeFileSync('config/initializers/fingerprint.rb', output, 'utf8')
+    })
   }
 ]
 
@@ -69,7 +70,7 @@ module.exports = {
     marketing: './app/assets/stylesheets/marketing.scss'
   },
   output: {
-    path: __dirname + '/public',
+    path: path.join(__dirname, '/public'),
     filename: jsOutputFile
   },
   devtool: 'source-map',
@@ -92,13 +93,13 @@ module.exports = {
       {
         test: /\.(ttf|woff(2)?)(\?[a-z0-9]+)?$/,
         use: {
-          loader: "url-loader?limit=10000&mimetype=application/font-woff"
+          loader: 'url-loader?limit=10000&mimetype=application/font-woff'
         }
       },
       {
         test: /\.(eot|svg)(\?[a-z0-9]+)?$/,
         use: {
-          loader: "file-loader"
+          loader: 'file-loader'
         }
       }
     ]
@@ -115,4 +116,4 @@ module.exports = {
       }
     }
   }
-};
+}

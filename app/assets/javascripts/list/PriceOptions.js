@@ -15,7 +15,7 @@ class PriceOptions extends Component {
   }
 
   newPriceOption () {
-    return { price: null, unit: 'Serving '}
+    return { price: null, unit: 'Serving ' }
   }
 
   addPrice (event) {
@@ -74,15 +74,15 @@ class PriceOptions extends Component {
     return (
       <div className={this.props.className}>
         {priceInputs}
-        <div className="add-price">
+        <div className='add-price'>
           <a
             href=''
             onClick={this.addPrice}
-            data-test="add-price-option"
+            data-test='add-price-option'
             className='btn btn-sm btn-outline-secondary'
           ><span className='fas fa-plus' /></a>
         </div>
-        <input type="hidden" value={value} name={`list[beers_attributes][${appId}][price_options]`} />
+        <input type='hidden' value={value} name={`list[beers_attributes][${appId}][price_options]`} />
       </div>
     )
   }

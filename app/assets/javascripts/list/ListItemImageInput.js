@@ -1,3 +1,4 @@
+/* global FileReader */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
@@ -67,7 +68,7 @@ class ListItemImageInput extends Component {
             name={`list[beers_attributes][${appId}][image]`}
             data-test='beer-image-input'
             id={`list_beers_attributes_${appId}_image`}
-            className={`custom-file-input ${isValid ? '': 'js-invalid'}`}
+            className={`custom-file-input ${isValid ? '' : 'js-invalid'}`}
             onChange={this.handleFileChange}
           />
           <label
@@ -76,12 +77,12 @@ class ListItemImageInput extends Component {
             data-test='beer-image-label'>
             {labelText}
           </label>
-          <div className="invalid-feedback">
+          <div className='invalid-feedback'>
             File must be PNG or JPG and no larger than 1MB
           </div>
         </div>
-        <div className="list-item-image-frame">
-          <img className="list-item-image" src={url} />
+        <div className='list-item-image-frame'>
+          <img className='list-item-image' src={url} />
         </div>
       </div>
     )
