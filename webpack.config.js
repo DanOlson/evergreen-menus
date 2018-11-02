@@ -31,7 +31,10 @@ const plugins = [
         const assetPath = basepath + path
 
         fs.readdir(assetPath, function (err, files) {
-          console.error(`ERROR: ${err.message}`)
+          if (err) {
+            console.error(`ERROR: ${err.message}`)
+            return
+          }
           if (files === undefined) {
             return
           }
