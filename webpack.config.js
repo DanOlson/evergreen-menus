@@ -27,8 +27,8 @@ const plugins = [
       let basepath = path.join(__dirname, '/public')
       let paths = ['/javascripts', '/stylesheets']
 
-      paths.forEach(path => {
-        const assetPath = basepath + path
+      paths.forEach(_path => {
+        const assetPath = basepath + _path
 
         fs.readdir(assetPath, function (err, files) {
           if (err) {
