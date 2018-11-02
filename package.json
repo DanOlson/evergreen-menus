@@ -8,6 +8,7 @@
     "build": "webpack",
     "build:prod": "webpack --progress --colors -p",
     "dev": "webpack --watch",
+    "standard": "standard",
     "lint": "standard app/assets/javascripts/**/*.js | snazzy"
   },
   "repository": {

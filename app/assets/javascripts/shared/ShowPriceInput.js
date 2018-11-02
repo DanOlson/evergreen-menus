@@ -25,17 +25,17 @@ class ShowPriceInput extends Component {
     }
 
     return (
-      <div className="form-check chosen-list-toggle-detail">
+      <div className='form-check chosen-list-toggle-detail'>
         <input
           type='hidden'
           name={`${entityName}[${nestedAttrsName}][${index}][show_price_on_menu]`}
           value='0'
         />
-        <input {...showPrice} className="form-check-input" />
+        <input {...showPrice} className='form-check-input' />
         <label
           htmlFor={showPriceInputId}
-          className="menu-list-show-price form-check-label"
-          data-test="show-price-label">
+          className='menu-list-show-price form-check-label'
+          data-test='show-price-label'>
         Show price</label>
       </div>
     )

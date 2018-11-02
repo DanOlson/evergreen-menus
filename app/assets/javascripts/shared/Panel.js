@@ -19,7 +19,7 @@ class Panel extends Component {
       helpIcon = <HelpIcon className='float-right' onClick={onToggleHelp} />
     }
     if (icon) {
-      headerIcon = <span className={`panel-header-icon ${icon}`}></span>
+      headerIcon = <span className={`panel-header-icon ${icon}`} />
     }
     return (
       <div className={`card ${className}`} data-test={dataTest}>

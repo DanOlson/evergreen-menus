@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ListItemNameInput from './ListItemNameInput'
-import ListItemPriceInput from './ListItemPriceInput'
 import PriceOptions from './PriceOptions'
 import ListItemDescriptionInput from './ListItemDescriptionInput'
 import ListItemLabelsInput from './ListItemLabelsInput'
@@ -153,10 +152,10 @@ class ListItemInputGroup extends Component {
 
     return connectDragSource(connectDropTarget(
       <div data-test='beer-input' className={`list-item-input ${className}`} style={style}>
-        <div className="drag-handle">
-          <span className="fas fa-bars"></span>
+        <div className='drag-handle'>
+          <span className='fas fa-bars' />
         </div>
-        <div className="item-input-wrap">
+        <div className='item-input-wrap'>
           <div className='form-row'>
             <ListItemNameInput
               appId={appId}
@@ -180,22 +179,22 @@ class ListItemInputGroup extends Component {
               appId={appId}
               filename={imageFilename}
               url={imageUrl}
-              className="col-sm-3 col-xs-8"
+              className='col-sm-3 col-xs-8'
             />
-            <div className="col-sm-6">
-              <div className="row">
-                <ListItemDescriptionInput appId={appId} value={description} className="col" />
+            <div className='col-sm-6'>
+              <div className='row'>
+                <ListItemDescriptionInput appId={appId} value={description} className='col' />
               </div>
-              <div className="row">
-                <PriceOptions options={priceOptions} className="col-sm-10 menu-item-price-options" appId={appId} theLegacyPrice={price} />
+              <div className='row'>
+                <PriceOptions options={priceOptions} className='col-sm-10 menu-item-price-options' appId={appId} theLegacyPrice={price} />
               </div>
             </div>
-            <div className="col">
+            <div className='col'>
               <ListItemLabelsInput
                 appId={appId}
                 menuItemLabels={menuItemLabels}
                 appliedLabels={labels}
-                className=""
+                className=''
               />
             </div>
           </Flyout>

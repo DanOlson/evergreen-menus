@@ -142,7 +142,7 @@ class WebMenuApp extends Component {
     })
   }
 
-  onHtmlClassesChange(listId, htmlClasses) {
+  onHtmlClassesChange (listId, htmlClasses) {
     this.setState(prevState => {
       const { lists } = prevState
       const list = lists.find(list => list.id === listId)
@@ -151,7 +151,7 @@ class WebMenuApp extends Component {
     })
   }
 
-  onImagesListChange(listId, itemIds) {
+  onImagesListChange (listId, itemIds) {
     this.setState(prevState => {
       const { lists } = prevState
       const list = lists.find(list => list.id === listId)
@@ -186,7 +186,7 @@ class WebMenuApp extends Component {
     return (
       <div className='form-row'>
         <div className='col-sm-6'>
-          <Panel title={name} icon="fas fa-code">
+          <Panel title={name} icon='fas fa-code'>
             <div className='form-group'>
               <label htmlFor='menu_name'>Name</label>
               <input
