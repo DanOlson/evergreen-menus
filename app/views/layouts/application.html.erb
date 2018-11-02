@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <%= render 'layouts/google_analytics', tracking_id: GoogleAnalytics.tracking_id_for(:admin) %>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name='description' content='Evergreen Menus simplifies menu manangement in the restaurant industry.'>
@@ -25,7 +26,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
   <meta name="theme-color" content="#ffffff">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <%= render 'layouts/bootstrap_css' %>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <%= stylesheet_link_tag fingerprinted_asset(:application), skip_pipeline: true %>
   <%= csrf_meta_tags %>
@@ -37,7 +38,6 @@
     <%= render 'layouts/flash_messages' %>
     <%= yield %>
   </div>
-  <%= render('layouts/google_analytics') if Rails.env.production? %>
   <%= content_for :javascripts %>
   <footer>
     <span>
