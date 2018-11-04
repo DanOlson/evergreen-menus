@@ -69,4 +69,30 @@ describe Account do
       expect(account2).to be_valid
     end
   end
+
+  describe '#trial_strategy' do
+    let(:account) { build :account }
+    subject { account.trial_strategy }
+
+    context 'by default' do
+      it { is_expected.to eq 'without_credit_card' }
+    end
+
+    it 'can be with_credit_card' do
+      account.trial_strategy = :with_credit_card
+      expect(account.trial_strategy).to eq 'with_credit_card'
+    end
+
+    it 'can\'t just be anything' do
+      expect {
+        account.trial_strategy = 'asdf'
+      }.to raise_error ArgumentError
+    end
+  end
+
+  describe '.current_trial_strategy' do
+    subject { Account.current_trial_strategy }
+
+    it { is_expected.to eq :without_credit_card }
+  end
 end
