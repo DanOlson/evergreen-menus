@@ -45,6 +45,7 @@ describe SignupService do
         expect(subscription.remote_id).to start_with 'sub_'
         expect(subscription.payment_method).to eq 'stripe'
         expect(subscription.status).to eq 'pending_initial_payment'
+        expect(subscription.trial_strategy).to eq 'without_credit_card'
 
         expect(instance).to be_success
       end

@@ -7,7 +7,7 @@ class StripeSubscription < SimpleDelegator
         customer: customer.id,
         plan: plan.remote_id,
         quantity: quantity,
-        trial_end: TRIAL_DURATION.to_i
+        trial_end: TRIAL_DURATION.from_now.to_i
       })
 
       new subscription
