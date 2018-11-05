@@ -44,7 +44,10 @@ class SignupService
   end
 
   def create_stripe_customer
-    StripeCustomer.create email: email, source: credit_card_token
+    customer_attrs = { email: email }.tap do |hsh|
+      hsh.merge!(source: credit_card_token) if credit_card_token.present?
+    end
+    StripeCustomer.create customer_attrs
   end
 
   def link_customer_to_account(account:, customer:)
@@ -63,7 +66,8 @@ class SignupService
       quantity: quantity,
       remote_id: stripe_subscription.id,
       payment_method: 'stripe',
-      status: :pending_initial_payment
+      status: :pending_initial_payment,
+      trial_strategy: Subscription.current_trial_strategy
     })
   end
 

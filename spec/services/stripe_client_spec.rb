@@ -12,6 +12,18 @@ describe StripeClient, :vcr do
       expect(customer.id).to start_with 'cus_'
       expect(customer.email).to eq 'jeff@lebowski.me'
     end
+
+    context 'when no payment information is provided' do
+      it 'creates the customer' do
+        customer = StripeClient.create_customer({
+          email: 'donny@lebowski.me'
+        })
+
+        expect(customer).to be_a Stripe::Customer
+        expect(customer.id).to start_with 'cus_'
+        expect(customer.email).to eq 'donny@lebowski.me'
+      end
+    end
   end
 
   describe '.update_customer' do

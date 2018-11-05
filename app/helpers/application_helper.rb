@@ -39,4 +39,8 @@ module ApplicationHelper
   def account_establishments(account)
     account.establishments.accessible_by(current_ability)
   end
+
+  def trial_with_credit_card?
+    Subscription.current_trial_strategy == :with_credit_card
+  end
 end
