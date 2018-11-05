@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 2018_11_04_033802) do
     t.datetime "updated_at", null: false
     t.string "google_my_business_account_id"
     t.string "stripe_id"
-    t.integer "trial_strategy", default: 0
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -283,6 +282,7 @@ ActiveRecord::Schema.define(version: 2018_11_04_033802) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "quantity", default: 1
+    t.integer "trial_strategy", default: 0
     t.index ["account_id"], name: "index_subscriptions_on_account_id"
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
   end

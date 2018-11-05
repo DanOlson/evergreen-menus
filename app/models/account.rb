@@ -10,17 +10,6 @@ class Account < ActiveRecord::Base
   has_one :plan, through: :subscription
   accepts_nested_attributes_for :establishments
 
-  enum trial_strategy: {
-    without_credit_card: 0,
-    with_credit_card: 1
-  }
-
-  class << self
-    def current_trial_strategy
-      :without_credit_card
-    end
-  end
-
   def google_my_business_enabled?
     AuthToken.google.for_account(self).exists?
   end
