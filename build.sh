@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 ###
 # Check we're on master
