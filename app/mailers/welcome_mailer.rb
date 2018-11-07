@@ -6,4 +6,12 @@ class WelcomeMailer < ApplicationMailer
       subject: 'Welcome to Evergreen Menus!'
     })
   end
+
+  def trial_will_end_email(email_address)
+    make_bootstrap_mail({
+      to: email_address,
+      subject: 'Your Evergreen Menus trial is coming to an end',
+      bcc: [DAN, TAM]
+    })
+  end
 end

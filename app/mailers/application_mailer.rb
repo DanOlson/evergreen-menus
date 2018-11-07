@@ -1,6 +1,8 @@
 class ApplicationMailer < ActionMailer::Base
-  ADMIN_EMAIL_ADDR = 'admin@evergreenmenus.com'
-  DO_NOT_REPLY_EMAIL_ADDR = 'do-not-reply@evergreenmenus.com'
+  ADMIN_EMAIL_ADDR = 'admin@evergreenmenus.com'.freeze
+  DO_NOT_REPLY_EMAIL_ADDR = 'do-not-reply@evergreenmenus.com'.freeze
+  DAN = 'dan@evergreenmenus.com'.freeze
+  TAM = 'tam@evergreenmenus.com'.freeze
 
   default from: ADMIN_EMAIL_ADDR
   helper_method :fingerprinted_asset
