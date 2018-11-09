@@ -4,12 +4,19 @@ module StripeEvent
 
     def call
       if invitation = signup_invitation
-        WelcomeMailer.trial_will_end_email(invitation.email).deliver_now
+        WelcomeMailer.trial_will_end_email(
+          recipient: invitation.email,
+          trial_end_time: trial_end_time
+        ).deliver_now
       end
     end
 
     def customer_id
-      customer.customer
+      subscription.customer
+    end
+
+    def trial_end_time
+      Time.at subscription.trial_end
     end
 
     private
@@ -22,7 +29,7 @@ module StripeEvent
         .first
     end
 
-    def customer
+    def subscription
       event.data.object
     end
   end

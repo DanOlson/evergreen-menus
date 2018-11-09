@@ -52,5 +52,11 @@ module StripeEvent
         expect(instance.customer_id).to eq 'cus_00000000000000'
       end
     end
+
+    describe '#trial_end_time' do
+      it 'uses the timestamp from the event data' do
+        expect(instance.trial_end_time).to eq Time.at(1541816458)
+      end
+    end
   end
 end
