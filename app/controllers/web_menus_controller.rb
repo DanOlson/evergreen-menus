@@ -32,6 +32,9 @@ class WebMenusController < ApplicationController
   end
 
   def show
+    ###
+    # Don't set a session cookie for web menus
+    request.session_options[:skip] = true
     @web_menu = WebMenu.find params[:id]
     @web_menu_json_ld = JsonLdMenuSerializer.new({
       menu: @web_menu,

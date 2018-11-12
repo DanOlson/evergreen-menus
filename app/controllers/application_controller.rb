@@ -7,14 +7,17 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :store_requested_location, if: :storable_location?
 
   helper_method :after_sign_in_path_for, :entitled_to?
 
   rescue_from CanCan::AccessDenied do |exception|
+    delete_stored_location
     redirect_to current_user.account, alert: MESSAGE_UNAUTHORIZED
   end
 
   rescue_from EntitlementException do |exception|
+    delete_stored_location
     redirect_to after_sign_in_path_for(current_user), alert: exception.message
   end
 
@@ -45,7 +48,24 @@ class ApplicationController < ActionController::Base
     current_entitlements.validate! privilege
   end
 
+  def storable_location?
+    request.fullpath != root_path &&
+    request.get? &&
+    is_navigational_format? &&
+    !devise_controller? &&
+    !request.xhr?
+  end
+
+  def store_requested_location
+    store_location_for(:user, request.fullpath)
+  end
+
+  def delete_stored_location
+    session.delete stored_location_key_for(current_user)
+  end
+
   def after_sign_in_path_for(user)
+    stored_location = stored_location_for(user) and return stored_location
     if account = user.account
       account_path account
     else
