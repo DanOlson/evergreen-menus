@@ -1,4 +1,8 @@
 class Plan < ActiveRecord::Base
+  TIER_1_REMOTE_ID = "t1-#{Rails.env}-2018-11-14".freeze
+  TIER_2_REMOTE_ID = "t2-#{Rails.env}-2018-11-14".freeze
+  TIER_3_REMOTE_ID = "t3-#{Rails.env}-2018-11-14".freeze
+
   enum status: { inactive: 0, active: 1 }
   enum interval: { day: 0, week: 1, month: 2, year: 3 }
 
@@ -8,15 +12,15 @@ class Plan < ActiveRecord::Base
 
   class << self
     def tier_1
-      active.find_by remote_id: "t1-#{Rails.env}"
+      active.find_by remote_id: TIER_1_REMOTE_ID
     end
 
     def tier_2
-      active.find_by remote_id: "t2-#{Rails.env}"
+      active.find_by remote_id: TIER_2_REMOTE_ID
     end
 
     def tier_3
-      active.find_by remote_id: "t3-#{Rails.env}"
+      active.find_by remote_id: TIER_3_REMOTE_ID
     end
   end
 end
