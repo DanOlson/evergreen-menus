@@ -3,9 +3,9 @@ require 'spec_helper'
 describe 'subscriptions' do
   describe 'GET to /plans' do
     before do
-      create :plan, remote_id: 't1-test'
-      create :plan, remote_id: 't2-test'
-      create :plan, remote_id: 't3-test'
+      create :plan, :tier_1
+      create :plan, :tier_2
+      create :plan, :tier_3
       get plans_path
     end
 
