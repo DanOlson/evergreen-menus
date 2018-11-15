@@ -20,7 +20,7 @@
   }
 
   .plan-details {
-    min-height: 23rem;
+    min-height: 25rem;
     position: relative;
   }
 
@@ -35,6 +35,10 @@
   .plan-price {
     font-weight: 300;
     text-align: center;
+  }
+
+  .regular-price {
+    text-decoration: line-through solid red;
   }
 
   .value-checks {

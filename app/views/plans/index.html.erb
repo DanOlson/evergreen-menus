@@ -14,7 +14,7 @@
         <div class="card plan">
           <div class="plan-details">
             <h4 class="plan-name"><%= @plan_1.name %></h4>
-            <p class="plan-price"><%= number_to_currency @plan_1.price, precision: 0 %> / establishment / <%= @plan_1.interval %></p>
+            <%= render 'plan_price', plan: @plan_1 %>
             <div class="plan-description">
               <ul class="value-checks">
                 <li class="value-add-item">
@@ -48,7 +48,7 @@
         <div class="card plan">
           <div class="plan-details">
             <h4 class="plan-name"><%= @plan_2.name %></h4>
-            <p class="plan-price"><%= number_to_currency @plan_2.price, precision: 0 %> / establishment / <%= @plan_2.interval %></p>
+            <%= render 'plan_price', plan: @plan_2 %>
             <div class="plan-description">
               <ul class="value-checks">
                 <li class="value-add-item">
@@ -90,7 +90,7 @@
         <div class="card plan">
           <div class="plan-details">
             <h4 class="plan-name"><%= @plan_3.name %></h4>
-            <p class="plan-price"><%= number_to_currency @plan_3.price, precision: 0 %> / establishment / <%= @plan_3.interval %></p>
+            <%= render 'plan_price', plan: @plan_3 %>
             <div class="plan-description">
               <ul class="value-checks">
                 <li class="value-add-item">
