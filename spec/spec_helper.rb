@@ -3,6 +3,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'vcr'
+require 'webmock/rspec'
 require Rails.root.join 'db/seeds/role_seeder'
 require Rails.root.join 'lib/services/third_party_site_generator'
 

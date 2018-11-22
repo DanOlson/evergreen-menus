@@ -57,6 +57,8 @@ EvergreenMenus::Application.routes.draw do
       post 'menu_tabs' => 'establishment_associations#tab'
     end
   end
+
+  post '/sandbox/signup' => 'sandbox_signups#create', as: 'sandbox_signups'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
