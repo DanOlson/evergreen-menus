@@ -28,6 +28,15 @@ describe SandboxSignupService, :vcr do
       expect(instance.user.email).to eq 'dude@lebowski.me'
     end
 
+    it 'creates an establishment with menus' do
+      expect {
+        instance.call
+      }.to change(Establishment, :count).by(1)
+        .and change(WebMenu, :count).by(1)
+        .and change(Menu, :count).by(1)
+        .and change(DigitalDisplayMenu, :count).by(1)
+    end
+
     context 'when the given email address belongs to an existing user' do
       let(:email) { 'walter@lebowski.me' }
       let(:instance) { SandboxSignupService.new email }

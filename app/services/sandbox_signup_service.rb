@@ -10,9 +10,11 @@ class SandboxSignupService
   def call
     raise EmailTakenError if email_taken?
     signup_service.call
-    if signup_service.success?
-      create_registration_form signup_service.signup_invitation
-    end
+    return unless signup_service.success?
+    registration_form = create_registration_form signup_service.signup_invitation
+    @user = registration_form.model
+    account = registration_form.account
+    AccountScaffoldingService.call account
   end
 
   private
@@ -35,6 +37,6 @@ class SandboxSignupService
     registration_form.password = password
     registration_form.password_confirmation = password
     registration_form.save
-    @user = registration_form.model
+    registration_form
   end
 end
