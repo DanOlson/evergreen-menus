@@ -13,8 +13,8 @@ class SandboxSignupService
     return unless signup_service.success?
     registration_form = create_registration_form signup_service.signup_invitation
     @user = registration_form.model
-    account = registration_form.account
-    AccountScaffoldingService.call account
+    scaffold_account registration_form.account
+    send_notification_email
   end
 
   private
@@ -38,5 +38,13 @@ class SandboxSignupService
     registration_form.password_confirmation = password
     registration_form.save
     registration_form
+  end
+
+  def scaffold_account(account)
+    AccountScaffoldingService.call account
+  end
+
+  def send_notification_email
+    EvergreenMailer.new_sandbox_signup_email(@email).deliver_now
   end
 end

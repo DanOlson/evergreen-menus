@@ -37,6 +37,12 @@ describe SandboxSignupService, :vcr do
         .and change(DigitalDisplayMenu, :count).by(1)
     end
 
+    it 'sends an email to Dan and Tam' do
+      instance.call
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.to).to eq ['dan@evergreenmenus.com', 'tam@evergreenmenus.com']
+    end
+
     context 'when the given email address belongs to an existing user' do
       let(:email) { 'walter@lebowski.me' }
       let(:instance) { SandboxSignupService.new email }

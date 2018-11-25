@@ -31,10 +31,11 @@ describe 'sandbox signup', :vcr do
         .and change(DigitalDisplayMenu, :count).by(1)
     end
 
-    xit 'sends an email to the provided address' do
+    it 'sends an email to the Dan and Tam' do
       post sandbox_signups_path, params: { signup: { email: email } }
       mail = ActionMailer::Base.deliveries.last
-      expect(mail.to).to eq 'mike@restaurant.com'
+      expect(mail.to).to eq ['dan@evergreenmenus.com', 'tam@evergreenmenus.com']
+      expect(mail.subject).to eq '[Evergreen Menus] New Sandbox Signup'
     end
   end
 
