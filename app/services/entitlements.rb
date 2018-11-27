@@ -53,7 +53,7 @@ class Entitlements
   end
 
   def web_integration_plans
-    @web_integration_plans ||= [Plan.tier_2, Plan.tier_3]
+    @web_integration_plans ||= Plan.where("remote_id not like 't1-%'").to_a
   end
 
   def valid_subscription?
