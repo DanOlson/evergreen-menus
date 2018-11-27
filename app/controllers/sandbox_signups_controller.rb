@@ -3,6 +3,7 @@ class SandboxSignupsController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :sign_out_all_scopes, if: :user_signed_in?
   before_action :forget_return_to
+  before_action :check_honeypot
 
   def create
     service = SandboxSignupService.new signup_params[:email]
@@ -16,11 +17,17 @@ class SandboxSignupsController < ApplicationController
 
   private
 
+  def check_honeypot
+    if signup_params.key?(:enable)
+      head :created and return
+    end
+  end
+
   def forget_return_to
     session.delete :user_return_to
   end
 
   def signup_params
-    params[:signup].permit(:email)
+    params[:signup].permit(:email, :enable)
   end
 end

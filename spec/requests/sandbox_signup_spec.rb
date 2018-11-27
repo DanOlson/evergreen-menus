@@ -37,6 +37,15 @@ describe 'sandbox signup', :vcr do
       expect(mail.to).to eq ['dan@evergreenmenus.com', 'tam@evergreenmenus.com']
       expect(mail.subject).to eq '[Evergreen Menus] New Sandbox Signup'
     end
+
+    context 'when the honeypot parameter "enable" is present' do
+      it 'does not create an account' do
+        expect {
+          post sandbox_signups_path, params: { signup: { email: email, enable: '1' } }
+        }.not_to change(Account, :count)
+        expect(response).to have_http_status :created
+      end
+    end
   end
 
   context 'with an email address that has already been used' do
