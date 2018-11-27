@@ -51,7 +51,7 @@ class UserRegistrationForm
 
   def save
     ActiveRecord::Base.transaction do
-      model.save
+      model.save!
       invitation.accepting_user = model
       invitation.accepted = true
       invitation.save

@@ -2,7 +2,7 @@ class SignupService
   attr_reader :email, :credit_card_token, :plan_id, :quantity, :signup_invitation
 
   def initialize(email:,
-                 credit_card_token:,
+                 credit_card_token: nil,
                  plan_id:,
                  quantity:,
                  logger: default_logger)
