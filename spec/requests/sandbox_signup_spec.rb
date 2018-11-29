@@ -56,8 +56,11 @@ describe 'sandbox signup', :vcr do
       post sandbox_signups_path, params: { signup: { email: email } }
     end
 
-    it 'redirects' do
-      expect(response).to redirect_to 'https://evergreenmenus.com?alert=Email%20has%20already%20been%20taken'
+    it 'redirects to the sign in page' do
+      expect(response).to redirect_to new_user_session_path
+      follow_redirect!
+      sign_in_page = Capybara::Node::Simple.new response.body
+      expect(sign_in_page).to have_selector '[data-test="flash-alert"]', text: 'We could not sign up cheryl@restaurant.com at this time'
     end
   end
 end
