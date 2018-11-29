@@ -11,8 +11,11 @@ class SandboxSignupsController < ApplicationController
     user = service.user
     sign_in user, scope: :user
     redirect_to after_sign_in_path_for(user), notice: 'Welcome to Evergreen Menus!'
-  rescue SandboxSignupService::EmailTakenError
-    redirect_to 'https://evergreenmenus.com?alert=Email%20has%20already%20been%20taken'
+  rescue => e
+    logger.error "Error signing up email #{signup_params[:email]}"
+    logger.error e.message
+    logger.error e.backtrace.join("\n")
+    redirect_to new_user_session_path, alert: "We could not sign up #{signup_params[:email]} at this time"
   end
 
   private
