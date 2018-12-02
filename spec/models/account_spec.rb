@@ -1,6 +1,97 @@
 require 'spec_helper'
 
 describe Account do
+  describe 'deleting' do
+    let(:account) { create :account }
+
+    context 'when the account has an establishment' do
+      before do
+        create :establishment, account: account
+      end
+
+      it 'can be deleted' do
+        expect {
+          account.destroy
+        }.to change(Account, :count).by(-1)
+          .and change(Establishment, :count).by(-1)
+      end
+    end
+
+    context 'when the account has a user' do
+      before do
+        create :user, :account_admin, account: account
+      end
+
+      it 'can be deleted' do
+        expect {
+          account.destroy
+        }.to change(Account, :count).by(-1)
+          .and change(User, :count).by(-1)
+      end
+    end
+
+    context 'when the account has a user_invitation' do
+      before do
+        create :user_invitation, account: account
+      end
+
+      it 'can be deleted' do
+        expect {
+          account.destroy
+        }.to change(Account, :count).by(-1)
+          .and change(UserInvitation, :count).by(-1)
+      end
+    end
+
+    context 'when the account has a payment' do
+      before do
+        Payment.create! account: account
+      end
+
+      it 'can be deleted' do
+        expect {
+          account.destroy
+        }.to change(Account, :count).by(-1)
+          .and change(Payment, :count).by(-1)
+      end
+    end
+
+    context 'when the account has a subscription' do
+      before do
+        plan = create :plan, :tier_1
+        Subscription.create! account: account, plan: plan, remote_id: '123'
+      end
+
+      it 'can be deleted' do
+        expect {
+          account.destroy
+        }.to change(Account, :count).by(-1)
+          .and change(Subscription, :count).by(-1)
+          .and change(Plan, :count).by(0)
+      end
+    end
+
+    context 'when the account has a signup_invitation' do
+      before do
+        user = create :user, :account_admin, account: account
+        SignupInvitation.create!({
+          account: account,
+          role: Role.account_admin,
+          accepting_user: user
+        })
+      end
+
+      it 'can be deleted' do
+        expect {
+          account.destroy
+        }.to change(Account, :count).by(-1)
+          .and change(SignupInvitation, :count).by(-1)
+          .and change(User, :count).by(-1)
+          .and change(Role, :count).by(0)
+      end
+    end
+  end
+
   describe '#google_my_business_enabled?' do
     let(:account) { create :account }
 

@@ -6,6 +6,7 @@ class MenuEmbedCode
       <div class="evergreen" id="evergreen-menu-%<menu_id>s">
       </div>
       <script
+        async
         type="text/javascript"
         src="%<menu_url>s">
       </script>
