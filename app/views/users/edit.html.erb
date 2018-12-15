@@ -4,7 +4,7 @@
       <%= f.label :role, class: 'control-label' %>
       <%= f.select :role_id, options_for_select(role_options, selected: @user.role_id), {}, class: 'form-control js-role-select', data: { test: 'staff-role-select' } %>
       <small class="form-text text-muted">
-        Manager can perform all operations for the account. Staff access is limited to chosen establishments.
+        Admin can perform all operations for the account. Staff access is limited to chosen establishments.
       </small>
     </div>
 
