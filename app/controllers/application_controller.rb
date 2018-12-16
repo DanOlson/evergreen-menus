@@ -5,9 +5,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  before_action :store_requested_location, if: :storable_location?
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :store_requested_location, if: :storable_location?
 
   helper_method :after_sign_in_path_for, :entitled_to?
 
@@ -57,15 +57,15 @@ class ApplicationController < ActionController::Base
   end
 
   def store_requested_location
-    store_location_for(:user, request.fullpath)
+    session[:return_to] = request.fullpath
   end
 
   def delete_stored_location
-    session.delete stored_location_key_for(current_user)
+    session.delete :return_to
   end
 
   def after_sign_in_path_for(user)
-    stored_location = stored_location_for(user) and return stored_location
+    stored_location = session.delete(:return_to) and return stored_location
     if account = user.account
       account_path account
     else

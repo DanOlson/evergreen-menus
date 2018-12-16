@@ -1,4 +1,5 @@
 class OnlineMenusController < ApplicationController
+  skip_before_action :store_requested_location, only: :preview
   load_and_authorize_resource :account, except: :show
   load_and_authorize_resource :establishment, through: :account, except: :show
   load_and_authorize_resource :online_menu, through: :establishment, except: :show, singleton: true
