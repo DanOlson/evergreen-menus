@@ -1,4 +1,5 @@
 class DigitalDisplayMenusController < ApplicationController
+  skip_before_action :store_requested_location, only: :preview
   load_and_authorize_resource :account
   load_and_authorize_resource :establishment, through: :account
   load_and_authorize_resource :digital_display_menu, through: :establishment

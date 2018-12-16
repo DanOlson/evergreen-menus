@@ -1,9 +1,10 @@
 class WebMenusController < ApplicationController
+  skip_before_action :verify_authenticity_token, :authenticate_user!, only: :show
+  skip_before_action :store_requested_location, only: :preview
+
   load_and_authorize_resource :account, except: :show
   load_and_authorize_resource :establishment, through: :account, except: :show
   load_and_authorize_resource :web_menu, through: :establishment, except: :show
-
-  skip_before_action :verify_authenticity_token, :authenticate_user!, only: :show
 
   def new
     @web_menu.name = 'New Web Menu'
