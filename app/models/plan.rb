@@ -1,7 +1,7 @@
 class Plan < ActiveRecord::Base
-  TIER_1_REMOTE_ID = "t1-#{Rails.env}-2018-11-14".freeze
-  TIER_2_REMOTE_ID = "t2-#{Rails.env}-2018-11-14".freeze
-  TIER_3_REMOTE_ID = "t3-#{Rails.env}-2018-11-14".freeze
+  TIER_1_REMOTE_ID = "t1-#{Rails.env}".freeze
+  TIER_2_REMOTE_ID = "t2-#{Rails.env}".freeze
+  TIER_3_REMOTE_ID = "t3-#{Rails.env}".freeze
 
   enum status: { inactive: 0, active: 1 }
   enum interval: { day: 0, week: 1, month: 2, year: 3 }
