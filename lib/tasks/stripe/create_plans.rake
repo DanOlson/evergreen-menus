@@ -26,16 +26,16 @@ class PlanCreator
   end
 
   def call
-    Stripe::Plan.create({
-      id: remote_id,
-      nickname: name,
-      amount: price_cents,
-      currency: 'usd',
-      interval: interval,
-      product: product_id,
-      usage_type: 'licensed',
-      trial_period_days: trial_period_days
-    })
+    # stripe_plan = Stripe::Plan.create({
+    #   id: remote_id,
+    #   nickname: name,
+    #   amount: price_cents,
+    #   currency: 'usd',
+    #   interval: interval,
+    #   product: product_id,
+    #   usage_type: 'licensed',
+    #   trial_period_days: trial_period_days
+    # })
     Plan.create({
       remote_id: remote_id,
       name: name,
@@ -62,23 +62,23 @@ namespace :stripe do
 
     plans = [
       {
-        remote_id: "t1-#{Rails.env}-2018-11-14",
+        remote_id: "t1-#{Rails.env}",
         name: 'The Snack',
-        price_cents: 2400,
+        price_cents: 3000,
         product_id: product.id,
         description: 'Basic, in-house functions like print menus, digital displays, and website integration'
       },
       {
-        remote_id: "t2-#{Rails.env}-2018-11-14",
+        remote_id: "t2-#{Rails.env}",
         name: 'The Meal',
-        price_cents: 4000,
+        price_cents: 5000,
         product_id: product.id,
         description: 'Print menus, digital displays, website integration, Google My Business, and social media integrations'
       },
       {
-        remote_id: "t3-#{Rails.env}-2018-11-14",
+        remote_id: "t3-#{Rails.env}",
         name: 'The Feast',
-        price_cents: 6000,
+        price_cents: 7500,
         product_id: product.id,
         description: 'All features, plus white glove setup and premium support'
       }
