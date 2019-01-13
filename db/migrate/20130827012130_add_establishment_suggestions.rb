@@ -1,4 +1,4 @@
-class AddEstablishmentSuggestions < ActiveRecord::Migration
+class AddEstablishmentSuggestions < ActiveRecord::Migration[4.2]
   def change
     create_table :establishment_suggestions do |t|
       t.string :name,          null: false

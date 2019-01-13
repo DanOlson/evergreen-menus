@@ -1,4 +1,4 @@
-class AddScrapers < ActiveRecord::Migration
+class AddScrapers < ActiveRecord::Migration[4.2]
   def change
     create_table :scrapers do |t|
       t.references :establishment
