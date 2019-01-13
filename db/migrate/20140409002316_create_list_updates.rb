@@ -1,4 +1,4 @@
-class CreateListUpdates < ActiveRecord::Migration
+class CreateListUpdates < ActiveRecord::Migration[4.2]
   def change
     create_table :list_updates do |t|
       t.references :establishment

@@ -1,4 +1,4 @@
-class CreateBeersEstablishmentsAndBeerEstablishments < ActiveRecord::Migration
+class CreateBeersEstablishmentsAndBeerEstablishments < ActiveRecord::Migration[4.2]
   def up
     create_table :beers do |t|
       t.string :name
