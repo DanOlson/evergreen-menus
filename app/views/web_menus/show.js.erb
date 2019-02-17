@@ -1,5 +1,18 @@
 (function() {
-  var target = document.getElementById('<%= "evergreen-menu-#{params[:id]}" %>');
+  var target = document.getElementById('<%= "evergreen-menu-#{@web_menu.id}" %>');
+  var head = document.querySelector('head');
+  var stylesheetId = 'evergreen-menus-establishment-<%= @web_menu.establishment_id %>';
+  var stylesheet = head.querySelector('link#' + stylesheetId);
+  var hasStylesheet = <%= @web_menu.stylesheet.present? %>
+
+  if (!stylesheet && hasStylesheet) {
+    stylesheet = document.createElement('link');
+    stylesheet.id = stylesheetId;
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = '<%= web_menu_url(@web_menu, host: web_menu_host, protocol: url_options[:protocol], format: :css) %>';
+    stylesheet.setAttribute('data-test', 'evergreen-global-stylesheet');
+    head.appendChild(stylesheet);
+  }
 
   target.innerHTML = '<%=j render @web_menu %>';
 
@@ -7,5 +20,5 @@
   script.type = 'application/ld+json';
   script.text = JSON.stringify(<%= raw @web_menu_json_ld %>);
   script.setAttribute('data-test', 'json-linked-data');
-  document.querySelector('head').appendChild(script);
+  head.appendChild(script);
 })();

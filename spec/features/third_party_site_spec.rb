@@ -88,6 +88,31 @@ feature 'establishment website', :admin, :js do
     expect(bottle_names).to match_array bottles_list.beers.map &:name
 
     expect(website).to have_schema_dot_org_markup
+    expect(website).to_not have_stylesheet
+  end
+
+  scenario 'stylesheet is applied when it exists' do
+    establishment.create_global_stylesheet!({
+      css: '.evergreen-menus .evergreen-menu-title { color: blue; }'
+    })
+    establishment_form.add_web_menu
+    menu_form = PageObjects::Admin::WebMenuForm.new
+    expect(menu_form).to be_displayed
+    menu_form.select_list 'Taps'
+    menu_form.submit
+
+    embed_code = menu_form.get_embed_code
+
+    ThirdPartySiteGenerator.call({
+      establishment: establishment,
+      list_snippets: [embed_code]
+    })
+
+    website = PageObjects::ThirdPartySite::Menu.new
+    website.load
+
+    expect(website).to have_list_named 'Taps'
+    expect(website).to have_stylesheet
   end
 
   scenario 'list item content is escaped' do
@@ -124,6 +149,9 @@ feature 'establishment website', :admin, :js do
   end
 
   scenario 'displaying multiple menus' do
+    establishment.create_global_stylesheet!({
+      css: '.evergreen-menus { color: red; }'
+    })
     expect(establishment_form).to be_displayed
 
     establishment_form.add_web_menu
@@ -165,5 +193,6 @@ feature 'establishment website', :admin, :js do
 
     bottle_names = site_bottles_list.menu_items.map { |i| i.name.text }
     expect(bottle_names).to match_array bottles_list.beers.map &:name
+    expect(website.stylesheets.count).to eq 1
   end
 end

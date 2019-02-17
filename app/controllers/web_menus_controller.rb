@@ -43,6 +43,7 @@ class WebMenusController < ApplicationController
     }).call
     respond_to do |format|
       format.js
+      format.css
     end
   end
 
