@@ -8,6 +8,10 @@ module WebMenusHelper
     }).call
   end
 
+  def web_menu_css(web_menu)
+    stylesheet = web_menu.stylesheet and stylesheet.css
+  end
+
   def price_options(menu_item)
     menu_item.price_options.map do |option|
       number_with_precision option.price, strip_insignificant_zeros: true, precision: option.price % 1 > 0 ? 2 : 0

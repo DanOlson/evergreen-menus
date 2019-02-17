@@ -14,6 +14,7 @@ class Establishment < ActiveRecord::Base
   has_many :digital_display_menus, dependent: :destroy
   has_many :web_menus, dependent: :destroy
   has_one :online_menu, dependent: :destroy
+  has_one :global_stylesheet, dependent: :destroy
 
   accepts_nested_attributes_for :lists, allow_destroy: true
 

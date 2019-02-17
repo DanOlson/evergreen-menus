@@ -12,6 +12,7 @@ class WebMenu < ActiveRecord::Base
   },
   through: :web_menu_lists
   belongs_to :establishment
+  has_one :stylesheet, through: :establishment, source: :global_stylesheet
 
   accepts_nested_attributes_for :web_menu_lists, allow_destroy: true
 

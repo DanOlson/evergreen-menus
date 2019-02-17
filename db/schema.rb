@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_04_033802) do
+ActiveRecord::Schema.define(version: 2019_02_17_020955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,14 @@ ActiveRecord::Schema.define(version: 2018_11_04_033802) do
     t.string "facebook_page_id", limit: 30
   end
 
+  create_table "global_stylesheets", force: :cascade do |t|
+    t.bigint "establishment_id"
+    t.text "css"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["establishment_id"], name: "index_global_stylesheets_on_establishment_id"
+  end
+
   create_table "invitation_establishment_assignments", id: :serial, force: :cascade do |t|
     t.integer "user_invitation_id", null: false
     t.integer "establishment_id", null: false
@@ -180,6 +188,7 @@ ActiveRecord::Schema.define(version: 2018_11_04_033802) do
     t.datetime "updated_at", null: false
     t.boolean "show_price_on_menu", default: true, null: false
     t.jsonb "list_item_metadata", default: {}
+    t.boolean "show_description_on_menu", default: true, null: false
   end
 
   create_table "menus", id: :serial, force: :cascade do |t|

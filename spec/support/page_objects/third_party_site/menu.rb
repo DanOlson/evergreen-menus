@@ -4,6 +4,8 @@ module PageObjects
       set_url 'http://test.my-bar.locl'
 
       element :schema_dot_org_markup, '[data-test="json-linked-data"]', visible: false
+      element :stylesheet, '[data-test="evergreen-global-stylesheet"]', visible: false
+      elements :stylesheets, '[data-test="evergreen-global-stylesheet"]', visible: false
 
       class MenuItem < SitePrism::Section
         class Image < SitePrism::Section
