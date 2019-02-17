@@ -9,7 +9,7 @@ module WebMenusHelper
   end
 
   def web_menu_css(web_menu)
-    stylesheet = web_menu.stylesheet and stylesheet.css
+    stylesheet = web_menu.stylesheet and stylesheet.css.html_safe
   end
 
   def price_options(menu_item)
