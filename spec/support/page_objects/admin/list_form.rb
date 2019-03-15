@@ -126,6 +126,7 @@ module PageObjects
       element :list_name_input,        '[data-test="list-name"]'
       element :list_type_input,        '[data-test="list-type"]'
       element :list_description_input, '[data-test="list-description"]'
+      element :list_notes_input,       '[data-test="list-notes"]'
       element :add_beer_button,        '[data-test="add-beer"]'
       element :submit_button,          '[data-test="list-form-submit"]'
       element :cancel_link,            '[data-test="list-form-cancel"]'
@@ -156,6 +157,14 @@ module PageObjects
 
       def description
         list_description_input.value
+      end
+
+      def notes=(notes)
+        list_notes_input.set notes
+      end
+
+      def notes
+        list_notes_input.value
       end
 
       def add_beer(beer_name, price: nil, description: nil, image: nil, labels: [], price_options: [])
