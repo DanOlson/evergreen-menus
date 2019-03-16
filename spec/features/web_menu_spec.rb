@@ -6,7 +6,9 @@ feature 'web menu management' do
 
   before do
     taps_list = establishment.lists.create!({
-      name: 'Taps'
+      name: 'Taps',
+      description: 'Fine tap beers from the best breweries',
+      notes: 'No complaining'
     })
     sweet_child = taps_list.beers.create!(
       name: 'Fulton Sweet Child of Vine',
@@ -27,7 +29,9 @@ feature 'web menu management' do
       position: 2
     )
     bottles_list = establishment.lists.create!({
-      name: 'Bottles'
+      name: 'Bottles',
+      description: 'Decent selection of regional bottled beer',
+      notes: 'No judgements'
     })
     bottles_list.beers.create!(
       name: 'Arrogant Bastard',
@@ -79,6 +83,11 @@ feature 'web menu management' do
     expect(selected_taps_list.badge_text).to eq '3 items'
     expect(selected_bottles_list.badge_text).to eq '1 item'
 
+    expect(selected_taps_list).to have_descriptions_shown
+    expect(selected_taps_list).to have_notes_shown
+    expect(selected_bottles_list).to have_descriptions_shown
+    expect(selected_bottles_list).to have_notes_shown
+
     # Query preview
     expect(web_menu_form.preview).to have_list 'Taps'
     expect(web_menu_form.preview).to have_list 'Bottles'
@@ -92,6 +101,10 @@ feature 'web menu management' do
     expect(preview_taps_list.item_named('Nitro Milk Stout').price).to eq '6.5'
     expect(preview_taps_list.item_named('Coors Light').price).to eq '4 / 6.5'
     expect(preview_bottles_list.item_named('Arrogant Bastard').price).to eq '7.5'
+    expect(preview_taps_list.description).to eq 'Fine tap beers from the best breweries'
+    expect(preview_taps_list.notes).to eq 'No complaining'
+    expect(preview_bottles_list.description).to eq 'Decent selection of regional bottled beer'
+    expect(preview_bottles_list.notes).to eq 'No judgements'
 
     # What's up with the preview styles?
     web_menu_form.show_help_text
@@ -116,21 +129,31 @@ feature 'web menu management' do
     # Manipulate the form some more
     web_menu_form.name = 'Beer Menu'
     web_menu_form.remove_list 'Bottles'
+
+    expect(web_menu_form.preview).to have_list 'Taps'
+    expect(web_menu_form.preview).to_not have_list 'Bottles'
+
+
     web_menu_form.hide_prices(list: 'Taps')
+    expect(web_menu_form.selected_list_named('Taps')).to_not have_price_shown
+
+    preview_taps_list = web_menu_form.preview.list_named('Taps')
+    expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to_not have_price
+    expect(preview_taps_list.item_named('Nitro Milk Stout')).to_not have_price
+
+    web_menu_form.hide_descriptions(list: 'Taps')
+    expect(web_menu_form.selected_list_named('Taps')).to_not have_descriptions_shown
+    expect(web_menu_form.preview.list_named('Taps')).to_not have_description
+
+    web_menu_form.hide_notes(list: 'Taps')
+    expect(web_menu_form.selected_list_named('Taps')).to_not have_notes_shown
+    expect(web_menu_form.preview.list_named('Taps')).to_not have_notes
 
     # Query the form
     expect(web_menu_form).to have_selected_list 'Taps'
     expect(web_menu_form).to have_available_list 'Bottles'
     expect(web_menu_form).to_not have_selected_list 'Bottles'
     expect(web_menu_form).to_not have_available_list 'Taps'
-    expect(web_menu_form.selected_list_named('Taps')).to_not have_price_shown
-
-    # Query the preview
-    expect(web_menu_form.preview).to have_list 'Taps'
-    expect(web_menu_form.preview).to_not have_list 'Bottles'
-    preview_taps_list = web_menu_form.preview.list_named('Taps')
-    expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to_not have_price
-    expect(preview_taps_list.item_named('Nitro Milk Stout')).to_not have_price
 
     # Submit new changes
     web_menu_form.submit
@@ -144,6 +167,8 @@ feature 'web menu management' do
     expect(web_menu_form).to_not have_selected_list 'Bottles'
     expect(web_menu_form).to_not have_available_list 'Taps'
     expect(web_menu_form.selected_list_named('Taps')).to_not have_price_shown
+    expect(web_menu_form.selected_list_named('Taps')).to_not have_descriptions_shown
+    expect(web_menu_form.selected_list_named('Taps')).to_not have_notes_shown
 
     # Verify preview
     expect(web_menu_form.preview).to have_list 'Taps'
@@ -153,6 +178,8 @@ feature 'web menu management' do
     expect(preview_taps_list.item_named('Fulton Sweet Child of Vine')).to_not have_image
     expect(preview_taps_list.item_named('Nitro Milk Stout')).to_not have_price
     expect(preview_taps_list.item_named('Nitro Milk Stout')).to_not have_image
+    expect(preview_taps_list).to_not have_description
+    expect(preview_taps_list).to_not have_notes
 
     ###
     # Restricted availability

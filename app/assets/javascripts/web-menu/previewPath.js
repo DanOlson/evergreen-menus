@@ -6,6 +6,7 @@ const {
   buildMenuListPosition,
   buildMenuListShowPrice,
   buildMenuListShowDescription,
+  buildMenuListShowNotes,
   buildMenuListItemsWithImages,
   buildMenuListDisplayName,
   buildMenuListHtmlClasses
@@ -18,6 +19,7 @@ function buildQueryString (lists, base) {
       buildMenuListPosition(list, idx),
       buildMenuListShowPrice(list, idx),
       buildMenuListShowDescription(list, idx),
+      buildMenuListShowNotes(list, idx),
       buildMenuListDisplayName(list, idx, list.displayName),
       buildMenuListHtmlClasses(list, idx, list.htmlClasses),
       buildMenuListItemsWithImages(list, idx)

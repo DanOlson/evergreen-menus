@@ -20,7 +20,7 @@ class WebMenuPreviewGenerator
   def lists
     @lists ||= begin
       item_ids_by_list_id = web_menu_lists_attributes.index_by { |attrs| attrs[:list_id] }
-      attrs = 'lists.*, 0 as position, true as show_price_on_menu, true as show_description_on_menu, \'{}\'::json as list_item_metadata'
+      attrs = 'lists.*, 0 as position, true as show_price_on_menu, true as show_description_on_menu, true as show_notes_on_menu, \'{}\'::json as list_item_metadata'
       lists = List.where(id: item_ids_by_list_id.keys).accessible_by(@ability).select(attrs)
       lists.each do |list|
         metadata = item_ids_by_list_id[list.id.to_s][:list_item_metadata] || {}
@@ -38,6 +38,7 @@ class WebMenuPreviewGenerator
       list = lists.find { |l| web_menu_list_attr[:list_id].to_i == l.id }
       list.show_price_on_menu = web_menu_list_attr[:show_price_on_menu] == 'true'
       list.show_description_on_menu = web_menu_list_attr[:show_description_on_menu] == 'true'
+      list.show_notes_on_menu = web_menu_list_attr[:show_notes_on_menu] == 'true'
       list.list_item_metadata = web_menu_list_attr[:list_item_metadata]
       list.position = web_menu_list_attr[:position]
       memo << list

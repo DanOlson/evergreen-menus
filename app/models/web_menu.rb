@@ -6,6 +6,7 @@ class WebMenu < ActiveRecord::Base
       web_menu_lists.position as position,
       web_menu_lists.show_price_on_menu as show_price_on_menu,
       web_menu_lists.show_description_on_menu as show_description_on_menu,
+      web_menu_lists.show_notes_on_menu as show_notes_on_menu,
       web_menu_lists.list_item_metadata as list_item_metadata
     EOF
     )

@@ -27,10 +27,23 @@ class WebMenuPreview < SitePrism::Section
     end
 
     element :title_elem, '[data-test="list-title"]'
+    element :description_element, '[data-test="list-description"]'
+    element :notes_element, '[data-test="list-notes"]'
     sections :items, ListItem, '[data-test="list-item"]'
+
+    alias_method :has_description?, :has_description_element?
+    alias_method :has_notes?, :has_notes_element?
 
     def title
       title_elem.text
+    end
+
+    def description
+      description_element.text.strip
+    end
+
+    def notes
+      notes_element.text.strip
     end
 
     def has_item?(name)

@@ -74,6 +74,7 @@ class WebMenusController < ApplicationController
           :position,
           :show_price_on_menu,
           :show_description_on_menu,
+          :show_notes_on_menu,
           :display_name,
           :html_classes,
           :_destroy,

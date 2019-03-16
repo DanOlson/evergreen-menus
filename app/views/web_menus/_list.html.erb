@@ -1,4 +1,7 @@
-<% items_with_images ||= [] %>
+<%
+  items_with_images ||= []
+  show_notes ||= false
+%>
 <div class="evergreen-menu <%= html_classes %>" data-test="list">
   <h3 class="evergreen-menu-title" data-test="list-title"><%= title %></h3>
   <% if show_description && list_description.present? %>
@@ -36,4 +39,9 @@
       </li>
     <% end %>
   </ul>
+  <% if show_notes && list_notes.present? %>
+  <p class="evergreen-menu-list-notes" data-test="list-notes">
+    <%= list_notes %>
+  </p>
+  <% end %>
 </div>

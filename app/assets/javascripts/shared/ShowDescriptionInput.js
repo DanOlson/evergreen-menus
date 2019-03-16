@@ -15,7 +15,7 @@ class ShowDescriptionInput extends Component {
       type: 'checkbox',
       name: `${entityName}[${nestedAttrsName}][${index}][show_description_on_menu]`,
       id: showDescriptionInputId,
-      'data-test': 'show-descriptions',
+      'data-test': 'show-description',
       value: '1',
       onChange
     }
@@ -35,7 +35,7 @@ class ShowDescriptionInput extends Component {
         <label
           htmlFor={showDescriptionInputId}
           className='menu-list-show-description form-check-label'
-          data-test='show-descriptions-label'>
+          data-test='show-description-label'>
           Show description
         </label>
       </div>
