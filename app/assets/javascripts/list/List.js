@@ -15,12 +15,13 @@ applyIncludes()
 class List extends Component {
   constructor (props) {
     super(props)
-    const { name, type, description } = props
+    const { name, type, description, notes } = props
     this.state = {
       beers: this.sortBeers(this.props.beers),
       name,
       type,
-      description
+      description,
+      notes
     }
     this.deleteBeer = this.deleteBeer.bind(this)
     this.addBeer = this.addBeer.bind(this)
@@ -81,7 +82,7 @@ class List extends Component {
 
   render () {
     const { listId, typeOptions, menuItemLabels } = this.props
-    const { name, type, description } = this.state
+    const { name, type, description, notes } = this.state
     const inputs = this.state.beers.map((beer, index, array) => {
       const listItemInputProps = {
         beer,
@@ -123,7 +124,7 @@ class List extends Component {
             </div>
 
             <div className='form-row'>
-              <div className='col-sm-9 list-description-input'>
+              <div className='col-sm-6 list-description-input'>
                 <label htmlFor='list_description'>Description</label>
                 <textarea
                   name='list[description]'
@@ -131,7 +132,28 @@ class List extends Component {
                   className='form-control'
                   data-test='list-description'
                   defaultValue={description}
+                  aria-describedby='list-description-help-text'
                 />
+                <small id='list-description-help-text' className='form-text text-muted'>
+                  (Optional) Use this to describe your list. You might use this to describe your
+                  ingredients or cooking methods, or that each item includes your choice of sides.
+                  Appears below the list name on a menu.
+                </small>
+              </div>
+              <div className='col-sm-6 list-description-input'>
+                <label htmlFor='list_notes'>Notes</label>
+                <textarea
+                  name='list[notes]'
+                  id='list_notes'
+                  className='form-control'
+                  data-test='list-notes'
+                  defaultValue={notes}
+                  aria-describedby='list-notes-help-text'
+                />
+                <small id='list-notes-help-text' className='form-text text-muted'>
+                  (Optional) Notes typically appear below a list on a menu. You might use
+                  this to warn customers about consuming raw or undercooked meat, for example.
+                </small>
               </div>
             </div>
           </div>

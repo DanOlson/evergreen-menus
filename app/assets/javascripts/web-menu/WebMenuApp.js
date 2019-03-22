@@ -37,6 +37,7 @@ class WebMenuApp extends Component {
     this.removeListFromMenu = this.removeListFromMenu.bind(this)
     this.onShowPriceChange = this.onShowPriceChange.bind(this)
     this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this)
+    this.onShowNotesChange = this.onShowNotesChange.bind(this)
     this.onDisplayNameChange = this.onDisplayNameChange.bind(this)
     this.onHtmlClassesChange = this.onHtmlClassesChange.bind(this)
     this.onImagesListChange = this.onImagesListChange.bind(this)
@@ -129,6 +130,15 @@ class WebMenuApp extends Component {
       const { lists } = prevState
       const list = lists.find(list => list.id === listId)
       list.show_description_on_menu = showDesc
+      return { lists }
+    })
+  }
+
+  onShowNotesChange (listId, showNotes) {
+    this.setState(prevState => {
+      const { lists } = prevState
+      const list = lists.find(list => list.id === listId)
+      list.show_notes_on_menu = showNotes
       return { lists }
     })
   }
@@ -254,6 +264,7 @@ class WebMenuApp extends Component {
               onRemove={this.removeListFromMenu}
               onShowPriceChange={this.onShowPriceChange}
               onShowDescriptionChange={this.onShowDescriptionChange}
+              onShowNotesChange={this.onShowNotesChange}
               onImagesListChange={this.onImagesListChange}
               onDisplayNameChange={this.onDisplayNameChange}
               onHtmlClassesChange={this.onHtmlClassesChange}

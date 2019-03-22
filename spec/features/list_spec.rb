@@ -23,7 +23,8 @@ describe 'list management' do
     expect(form.list_type).to eq 'Food'
 
     form.set_name 'Beers'
-    form.description = 'Our tap lines are cleaned at least twice per year'
+    form.description = 'All our beer is locally sourced and grass-fed.'
+    form.notes = 'Our tap lines are cleaned at least twice per year'
 
     form.add_beer 'Bear Republic Racer 5'
     form.add_beer 'Indeed Day Tripper'
@@ -36,7 +37,8 @@ describe 'list management' do
     establishment_form.click_list_named('Beers')
     expect(form).to be_displayed
     expect(form.beers.size).to eq 3
-    expect(form.description).to eq 'Our tap lines are cleaned at least twice per year'
+    expect(form.description).to eq 'All our beer is locally sourced and grass-fed.'
+    expect(form.notes).to eq 'Our tap lines are cleaned at least twice per year'
 
     beers = establishment.beers.map &:name
     expect(beers).to match_array [

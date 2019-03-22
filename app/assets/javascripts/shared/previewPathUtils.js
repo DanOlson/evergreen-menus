@@ -16,6 +16,14 @@ function shouldShowDescription (list) {
   }
 }
 
+function shouldShowNotes (list) {
+  if (list.show_notes_on_menu === undefined) {
+    return true
+  } else {
+    return list.show_notes_on_menu
+  }
+}
+
 export default function initUtils (menuType) {
   const nestedAttrsName = attributeNameResolver.resolveNestedAttrName(menuType)
   const entityName = attributeNameResolver.resolveEntityName(menuType)
@@ -57,6 +65,12 @@ export default function initUtils (menuType) {
       const listRep = buildMenuListRep(index)
       const showDesc = shouldShowDescription(list)
       return `${listRep}[show_description_on_menu]=${showDesc}`
+    },
+
+    buildMenuListShowNotes (list, index) {
+      const listRep = buildMenuListRep(index)
+      const showNotes = shouldShowNotes(list)
+      return `${listRep}[show_notes_on_menu]=${showNotes}`
     },
 
     buildMenuListPosition (list, index) {

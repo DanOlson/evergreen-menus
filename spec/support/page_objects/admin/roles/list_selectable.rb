@@ -35,8 +35,10 @@ module PageObjects
       class Settings < SitePrism::Section
         element :show_price_input, '[data-test="show-price"]'
         element :show_price_input_label, '[data-test="show-price-label"]'
-        element :show_descriptions_input, '[data-test="show-descriptions"]'
-        element :show_descriptions_input_label, '[data-test="show-descriptions-label"]'
+        element :show_item_descriptions_input, '[data-test="show-description"]'
+        element :show_item_descriptions_input_label, '[data-test="show-description-label"]'
+        element :show_notes_input, '[data-test="show-notes"]'
+        element :show_notes_input_label, '[data-test="show-notes-label"]'
         element :display_name_input, '[data-test="display-name-input"]'
         element :html_classes_input, '[data-test="html-classes-input"]'
 
@@ -99,15 +101,27 @@ module PageObjects
           end
 
           def has_descriptions_shown?
-            settings.show_descriptions_input.checked?
+            settings.show_item_descriptions_input.checked?
           end
 
           def hide_descriptions
-            settings.show_descriptions_input.set false
+            settings.show_item_descriptions_input.set false
           end
 
           def show_descriptions
-            settings.show_descriptions_input.set true
+            settings.show_item_descriptions_input.set true
+          end
+
+          def has_notes_shown?
+            settings.show_notes_input.checked?
+          end
+
+          def hide_notes
+            settings.show_notes_input.set false
+          end
+
+          def show_notes
+            settings.show_notes_input.set true
           end
 
           def has_images_available?
@@ -233,6 +247,14 @@ module PageObjects
 
       def show_descriptions(list:)
         selected_list_named(list).show_descriptions
+      end
+
+      def hide_notes(list:)
+        selected_list_named(list).hide_notes
+      end
+
+      def show_notes(list:)
+        selected_list_named(list).show_notes
       end
     end
   end

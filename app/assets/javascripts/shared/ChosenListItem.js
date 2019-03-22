@@ -8,6 +8,7 @@ import pluralize from './pluralize'
 import ListTypeIcon from './ListTypeIcon'
 import ShowPriceInput from './ShowPriceInput'
 import ShowDescriptionInput from './ShowDescriptionInput'
+import ShowNotesInput from './ShowNotesInput'
 import ListItemImageChoices from './ListItemImageChoices'
 import constants from './constants'
 
@@ -89,6 +90,7 @@ class ChosenListItem extends Component {
     super(props)
     this.onShowPriceChange = this.onShowPriceChange.bind(this)
     this.onShowDescriptionChange = this.onShowDescriptionChange.bind(this)
+    this.onShowNotesChange = this.onShowNotesChange.bind(this)
     this.onDisplayNameChange = this.onDisplayNameChange.bind(this)
     this.onHtmlClassesChange = this.onHtmlClassesChange.bind(this)
     this.onImagesListChange = this.onImagesListChange.bind(this)
@@ -109,6 +111,11 @@ class ChosenListItem extends Component {
   onShowDescriptionChange (event) {
     const { list, onShowDescriptionChange } = this.props
     onShowDescriptionChange(list.id, event.target.checked)
+  }
+
+  onShowNotesChange (event) {
+    const { list, onShowNotesChange } = this.props
+    onShowNotesChange(list.id, event.target.checked)
   }
 
   onDisplayNameChange (event) {
@@ -163,7 +170,7 @@ class ChosenListItem extends Component {
       isDragging
     } = this.props
 
-    let showDescriptionInput, htmlClassesInput
+    let showDescriptionInput, showNotesInput, htmlClassesInput
 
     if (this.props.onShowDescriptionChange) {
       showDescriptionInput = (
@@ -173,6 +180,18 @@ class ChosenListItem extends Component {
           index={index}
           onChange={this.onShowDescriptionChange}
           value={list.show_description_on_menu}
+        />
+      )
+    }
+
+    if (this.props.onShowNotesChange) {
+      showNotesInput = (
+        <ShowNotesInput
+          entityName={entityName}
+          nestedAttrsName={nestedAttrsName}
+          index={index}
+          onChange={this.onShowNotesChange}
+          value={list.show_notes_on_menu}
         />
       )
     }
@@ -272,6 +291,7 @@ class ChosenListItem extends Component {
             value={list.show_price_on_menu}
           />
           {showDescriptionInput}
+          {showNotesInput}
           <div className='form-group'>
             <label htmlFor={`list-display-name-${index}`}>Display Name</label>
             <input
@@ -329,6 +349,7 @@ ChosenListItem.propTypes = {
   onRemove: PropTypes.func.isRequired,
   onShowPriceChange: PropTypes.func.isRequired,
   onShowDescriptionChange: PropTypes.func,
+  onShowNotesChange: PropTypes.func,
   onDisplayNameChange: PropTypes.func,
   onHtmlClassesChange: PropTypes.func,
   onImagesListChange: PropTypes.func,

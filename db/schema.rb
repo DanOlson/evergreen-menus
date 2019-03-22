@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_17_020955) do
+ActiveRecord::Schema.define(version: 2019_03_15_015145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -177,6 +177,7 @@ ActiveRecord::Schema.define(version: 2019_02_17_020955) do
     t.datetime "updated_at", null: false
     t.string "type", limit: 40
     t.text "description"
+    t.text "notes"
     t.index ["type"], name: "index_lists_on_type"
   end
 
@@ -341,6 +342,7 @@ ActiveRecord::Schema.define(version: 2019_02_17_020955) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "list_item_metadata", default: {}
+    t.boolean "show_notes_on_menu", default: true, null: false
   end
 
   create_table "web_menus", id: :serial, force: :cascade do |t|

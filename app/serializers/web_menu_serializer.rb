@@ -49,6 +49,7 @@ class WebMenuSerializer
         web_menu_list_id: ml.id,
         show_price_on_menu: ml.show_price_on_menu,
         show_description_on_menu: ml.show_description_on_menu,
+        show_notes_on_menu: ml.show_notes_on_menu,
         items_with_images: Array(ml.list_item_metadata['items_with_images']).map(&:to_i),
         displayName: ml.list_item_metadata['display_name'],
         htmlClasses: ml.list_item_metadata['html_classes']
