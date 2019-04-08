@@ -50,6 +50,7 @@ class WebMenusController < ApplicationController
   def preview
     preview = WebMenuPreviewGenerator.new(web_menu_params, current_ability)
     @web_menu = preview.call
+    @web_menu.establishment = @establishment
     render layout: false
   end
 

@@ -17,6 +17,7 @@
           <div class="evergreen-menu-item-info">
             <span class="evergreen-menu-item-name" data-test="list-item-name">
               <strong><%= item.name %></strong>
+              <%= render Array(item.labels) %>
             </span>
           <% if show_price && item.price %>
             <span class="evergreen-menu-item-price" data-test="list-item-price">

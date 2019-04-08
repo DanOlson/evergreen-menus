@@ -39,12 +39,20 @@ class Label
     @name = name
   end
 
+  def to_partial_path
+    'labels/label'
+  end
+
   def icon
     data = ICON_DATA_BY_NAME[name] and data[:icon]
   end
 
   def glyph
     data = ICON_DATA_BY_NAME[name] and data[:glyph]
+  end
+
+  def html_class
+    "evergreen-menu-item-label evergreen-menu-item-label--#{name.downcase.gsub(' ', '-')}"
   end
 
   def as_json(*)
